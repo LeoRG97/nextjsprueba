@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+   "baseUrl": ".",
+   "paths": {
+     "@/components/*": ["src/components/*"],
+     "@/services/*": ["src/services/*"],
+     "@/global/*": ["src/global/*"],
+     "@/reducers/*": ["src/reducers/*"],
+     "@/store": ["src/store.js"]
+   },
+ },
+ "exclude": ["node_modules"]
+}

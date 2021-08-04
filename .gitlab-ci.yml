@@ -1,0 +1,17 @@
+image: node:latest
+
+before_script:
+  - yarn install
+
+stages:
+  - integration-code
+
+lint:
+  stage: integration-code
+  script:
+    - yarn lint
+
+build:
+  stage: integration-code
+  script:
+    - yarn build
