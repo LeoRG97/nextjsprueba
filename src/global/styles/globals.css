@@ -1,20 +1,201 @@
+@font-face {
+  font-family: Roboto-Bold;
+  src: url("/fonts/Roboto-Bold.ttf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Roboto-Regular;
+  src: url("/fonts/Roboto-Regular.ttf");
+  font-display: swap;
+}
+
+:root {
+  --blue: #6785c1;
+  --black: #0d0c22;
+  --gray: #6e6d7a;
+  --white-20: #e7e7e9;
+  --white-10: #f3f3f4;
+  --white: #ffffff;
+
+  --colorPrimary: var(--blue); /* color corporativo */
+  --colorPrimaryDark: var(--black); /* Iconos y texto primario */
+  --colorSecondary: var(--gray); /* Iconos y texto secundario */
+  --colorLight: var(--white); /* Iconos, textos y fondos claros */
+  --colorLightFaint: var(--white-20); /* Contornos y subrayados */
+  --colorItemBg: var(--white-10); /* Fondo no blanco */
+
+  --text-color-dark: var(--black);
+  --text-color-light: var(--white);
+  --text-color-secondary: var(--gray);
+  --text-color-highlight: var(--blue);
+
+  --btnBorderRadius: 7px;
+  --inputBorderRadius: 7px;
+
+  --font-bold: Roboto-Bold;
+  --font-regular: Roboto-Regular;
+
+  --font-size-xl: 3.5rem; /* 56px */
+  --font-size-lg: 1.75rem; /* 28px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-sm: 0.875rem; /* 14px */
+
+  --icon-size-sm: 0.875rem; /* 14px */
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  display: flex;
-  justify-content: center;
+  font-family: var(--font-regular), -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
   height: 100vh;
-  align-items: center;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 * {
   box-sizing: border-box;
+}
+
+/* Global styles */
+
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* TEXT */
+.title-xl {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-xl);
+  color: var(--text-color-dark);
+}
+
+.title {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-lg);
+  color: var(--text-color-dark);
+}
+
+.subtitle {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-md);
+  color: var(--text-color-dark);
+}
+
+.text-md {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  color: var(--text-color-dark);
+}
+
+.text-sm {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+}
+
+.text--theme-light {
+  color: var(--text-color-light);
+}
+
+.text--theme-highlight {
+  color: var(--text-color-highlight);
+}
+
+/* BUTTON */
+.button {
+  background-color: var(--btnBgPrimary);
+  border: 0;
+  border-radius: var(--btnBorderRadius);
+  color: var(--btnTextPrimary);
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  letter-spacing: -0.4px;
+  min-height: 38px;
+}
+
+.button--theme-primary {
+  color: var(--colorLight);
+  background-color: var(--colorPrimary);
+}
+
+.button--theme-secondary {
+  color: var(--colorPrimaryDark);
+  background-color: var(--colorItemBg);
+}
+
+.button:active {
+  filter: brightness(85%);
+}
+
+.input {
+  height: 38px;
+  background-color: var(--colorItemBg);
+  border: 0;
+  color: var(--colorSecondary);
+  font-family: var(--font-regular);
+  font-size: var(--font-size-sm);
+  border: 1px solid transparent;
+  border-radius: var(--inputBorderRadius);
+  padding: 0.5rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.input:focus {
+  background-color: var(--colorLight);
+  outline: none;
+  border: 1px solid var(--colorPrimary);
+}
+
+.input-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.input__icon {
+  width: 2.5rem;
+  height: 38px;
+  background-color: var(--colorItemBg);
+  border: 1px solid transparent;
+  border-left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  cursor: pointer;
+}
+
+.input-container .input {
+  border-top-left-radius: var(--inputBorderRadius);
+  border-bottom-left-radius: var(--inputBorderRadius);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-left: 0.5rem;
+  padding-right: 0rem;
+}
+
+.input-container .input:focus {
+  border: 1px solid var(--colorPrimary);
+  border-right: 0;
+}
+
+.input-container .input:focus ~ .input__icon {
+  background-color: var(--colorLight);
+  border: 1px solid var(--colorPrimary);
+  border-left: 0;
+}
+
+.input-container .input__icon {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: var(--inputBorderRadius);
+  border-bottom-right-radius: var(--inputBorderRadius);
 }

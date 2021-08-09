@@ -42,5 +42,8 @@ module.exports = {
     'react/jsx-props-no-spreading': 'off',
     'import/prefer-default-export': 'off',
     'no-underscore-dangle': 'off',
+    'arrow-body-style': 'off',
+    'react/button-has-type': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
   },
 };

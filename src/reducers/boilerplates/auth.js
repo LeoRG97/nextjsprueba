@@ -1,6 +1,6 @@
 import { makeType, makeActionCreator, makeReducer } from '../creators';
 
-export default (resource) => {
+const AuthThunk = (resource) => {
   const { POST_SUCCESS, POST_ERROR, POST_START } = makeType(resource);
 
   const LOGOUT = 'LOGOUT';
@@ -56,3 +56,5 @@ export default (resource) => {
     },
   };
 };
+
+export default AuthThunk;

@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
-// import { useMemo } from 'react';
 import * as reducers from '@/reducers/index';
 
 const rootReducer = combineReducers({ ...reducers });
