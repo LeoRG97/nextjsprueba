@@ -10,6 +10,11 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: Icons;
+  src: url("/fonts/IconosFuenteNTT.otf");
+}
+
 :root {
   --blue: #6785c1;
   --black: #0d0c22;
@@ -17,6 +22,7 @@
   --white-20: #e7e7e9;
   --white-10: #f3f3f4;
   --white: #ffffff;
+  --red: #ff5555;
 
   --colorPrimary: var(--blue); /* color corporativo */
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
@@ -24,6 +30,7 @@
   --colorLight: var(--white); /* Iconos, textos y fondos claros */
   --colorLightFaint: var(--white-20); /* Contornos y subrayados */
   --colorItemBg: var(--white-10); /* Fondo no blanco */
+  --colorError: var(--red); /* Indicadores de error */
 
   --text-color-dark: var(--black);
   --text-color-light: var(--white);
@@ -41,7 +48,7 @@
   --font-size-md: 1rem; /* 16px */
   --font-size-sm: 0.875rem; /* 14px */
 
-  --icon-size-sm: 0.875rem; /* 14px */
+  --icon-size-sm: 1rem; /* 16px */
 }
 
 html,
@@ -63,6 +70,18 @@ body {
 .main-container {
   width: 100%;
   min-height: 100vh;
+}
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.background-gray {
+  background-color: var(--colorItemBg);
 }
 
 /* TEXT */
@@ -101,6 +120,20 @@ body {
 }
 
 .text--theme-highlight {
+  color: var(--text-color-highlight);
+}
+
+.icon {
+  font-family: Icons;
+  font-size: var(--icon-size-sm);
+  color: var(--text-color-dark);
+}
+
+.icon--theme-secondary {
+  color: var(--text-color-secondary);
+}
+
+.icon--theme-highlight {
   color: var(--text-color-highlight);
 }
 
