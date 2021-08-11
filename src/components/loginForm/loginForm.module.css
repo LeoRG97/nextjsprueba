@@ -1,0 +1,48 @@
+.container {
+  width: 30rem;
+  min-height: 30rem;
+  background-color: var(--colorLight);
+  padding: 2rem;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+}
+
+.link {
+  color: var(--colorPrimary);
+  text-decoration: none;
+}
+
+.floatRight {
+  display: block;
+  /* float: right; */
+}
+
+.link:hover {
+  color: var(--colorPrimary);
+  text-decoration: underline;
+}
+
+.submit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.submit button {
+  flex: 0.5;
+}
+
+.error {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--colorError);
+}
+
+@media screen and (min-width: 576px) {
+  .container {
+    padding: 60px;
+  }
+  .floatRight {
+    float: right;
+  }
+}
