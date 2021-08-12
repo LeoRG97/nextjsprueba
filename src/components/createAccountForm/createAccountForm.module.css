@@ -1,0 +1,27 @@
+.container {
+  width: 30rem;
+  min-height: 30rem;
+  background-color: var(--colorLight);
+  padding: 2rem;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+}
+
+.link {
+  color: var(--colorPrimary);
+  text-decoration: none;
+}
+
+.check {
+  display: inline-flex;
+}
+
+.buttonChek {
+  display: contents;
+}
+
+.buttonContinue {
+  display: flex;
+  justify-content: flex-end;
+}
