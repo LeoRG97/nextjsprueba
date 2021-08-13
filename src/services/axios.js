@@ -16,9 +16,8 @@ const axiosInstance = () => {
     async (error) => {
       if (error.response.status === 401) {
         signOut({ callbackUrl: `${window.location.origin}/login` });
-        return error.response.data;
       }
-      return false;
+      return Promise.reject(error.response.data);
     });
   return config;
 };
