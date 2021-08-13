@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import Head from 'next/head';
+// eslint-disable-next-line import/extensions
 import { Footer } from '@/components';
 
 export default function Home() {
