@@ -43,10 +43,14 @@
   --font-bold: Roboto-Bold;
   --font-regular: Roboto-Regular;
 
-  --font-size-xl: 3.5rem; /* 56px */
-  --font-size-lg: 1.75rem; /* 28px */
-  --font-size-md: 1rem; /* 16px */
-  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-xl: 3.5rem;
+  /* 56px */
+  --font-size-lg: 1.75rem;
+  /* 28px */
+  --font-size-md: 1rem;
+  /* 16px */
+  --font-size-sm: 0.875rem;
+  /* 14px */
 
   --icon-size-sm: 1rem; /* 16px */
 }
@@ -152,7 +156,7 @@ body {
 }
 
 .button--theme-primary {
-  color: var(--colorLight);
+  color: var(--colorLight) !important;
   background-color: var(--colorPrimary);
 }
 
@@ -220,7 +224,7 @@ body {
   border-right: 0;
 }
 
-.input-container .input:focus ~ .input__icon {
+.input-container .input:focus~.input__icon {
   background-color: var(--colorLight);
   border: 1px solid var(--colorPrimary);
   border-left: 0;
@@ -232,3 +236,24 @@ body {
   border-top-right-radius: var(--inputBorderRadius);
   border-bottom-right-radius: var(--inputBorderRadius);
 }
+
+/* SEARCH INPUT =========================== */
+.input-group-text{
+  background-color: #F3F3F4;
+  border: 1px solid #E7E7E9;
+}
+/* =========================== */
+
+/* WORLD MAP ============================================================================ */
+.observablehq--collapsed,
+.observablehq--expanded,
+.observablehq--function,
+.observablehq--gray,
+.observablehq--import,
+.observablehq--string:after,
+.observablehq--string:before,
+.observablehq--inspect {
+  display: none !important;
+  color:#1b1e23;
+}
+/* WORLD MAP ============================================================================ */

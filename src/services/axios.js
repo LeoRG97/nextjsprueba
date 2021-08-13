@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+// eslint-disable-next-line import/order
 import { BASE_URL } from '@/global/constants';
 import axios from 'axios';
 import { getSession, signOut } from 'next-auth/client';
