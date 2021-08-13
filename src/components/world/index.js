@@ -65,6 +65,11 @@ const countrysEveris = [
 ];
 
 export default function define(runtime, observer) {
+  const bodyId = document.getElementById('body');
+  if (bodyId !== undefined) {
+    bodyId.style.transition = '0.5s';
+    bodyId.style.opacity = '1';
+  }
   const main = runtime.module();
 
   main.variable(observer('canvas')).define('canvas', ['DOM', 'width', 'd3', 'land', 'borders', 'countries', 'mutable name', 'Versor'], async function* (DOM, width, d3, land, borders, countries, $0, Versor) {
@@ -100,8 +105,8 @@ export default function define(runtime, observer) {
     let r1;
     let r2 = [0, 0, 0];
 
-    for (let i = 0; i < countrysEveris.length; i++) {
-      const cE = countrysEveris[i];
+    let i = 0;
+    for (const cE of countrysEveris) {
       for (const country of countries) {
         if (country.properties.name === cE.countryE) {
           $0.value = country.properties.name;
@@ -128,6 +133,17 @@ export default function define(runtime, observer) {
               render(country, { type: 'LineString', coordinates: [ip(t), p2] });
             })
             .end();
+        }
+      }
+      i += 1;
+      if (i === countrysEveris.length) {
+        if (bodyId !== undefined) {
+          bodyId.style.transition = '0.5s';
+          bodyId.style.opacity = '0';
+          setTimeout(function () {
+            bodyId.innerHTML = '';
+            define(runtime, observer);
+          }, 1500);
         }
       }
     }
