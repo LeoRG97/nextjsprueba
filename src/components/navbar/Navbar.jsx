@@ -37,7 +37,7 @@ const NavbarComponent = () => {
         fixed="top"
       >
         <Container fluid className={styles.navContentStyle}>
-          <Navbar.Brand class={styles.a} href="#home">
+          <Navbar.Brand className={styles.a} href="#home">
             <Image
               src="/images/logos/NTT-Data-Logo.png"
               alt="Logo"
