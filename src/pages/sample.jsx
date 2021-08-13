@@ -1,3 +1,4 @@
+/* eslint-disable import/extensions */
 import Head from 'next/head';
 import { Footer } from '@/components';
 
