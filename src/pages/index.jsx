@@ -1,6 +1,7 @@
+import Head from 'next/head';
+// eslint-disable-next-line import/extensions
 import { Footer } from '@/components';
 import styles from '@/global/styles/Home.module.css';
-import Head from 'next/head';
 
 export default function Home() {
   return (

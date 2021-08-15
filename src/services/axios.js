@@ -1,7 +1,24 @@
 import axios from 'axios';
+import { getSession, signOut } from 'next-auth/client';
+// eslint-disable-next-line import/extensions
+import { BASE_URL } from '@/global/constants';
 
 const axiosInstance = () => {
   const config = axios.create();
+  config.defaults.baseURL = BASE_URL;
+  config.interceptors.request.use(async (request) => {
+    const session = await getSession();
+    request.headers.Authorization = session?.accessToken;
+    return request;
+  });
+  config.interceptors.response.use((res) => res.data,
+    async (error) => {
+      if (error.response.status === 401) {
+        signOut({ callbackUrl: `${window.location.origin}/login` });
+        return error.response.data;
+      }
+      return false;
+    });
   return config;
 };
 

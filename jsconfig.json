@@ -3,12 +3,13 @@
    "baseUrl": ".",
    "paths": {
      "@/components": ["src/components/index"],
-    "@/components/*": ["src/components/*"],
+     "@/components/*": ["src/components/*"],
      "@/global/*": ["src/global/*"],
      "@/reducers/*": ["src/reducers/*"],
      "@/services": ["src/services/index"],
      "@/services/*": ["src/services/*"],
-     "@/store": ["src/store.js"]
+     "@/store": ["src/store.js"],
+     "@/helpers/*": ["src/helpers/*"],
    },
  },
  "exclude": ["node_modules"]

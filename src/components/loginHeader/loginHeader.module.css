@@ -1,0 +1,15 @@
+.header {
+  border-bottom: 1px solid var(--colorLightFaint);
+  display: flex;
+  height: 4rem;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.logo {
+  width: 120px;
+  height: auto;
+  object-fit: contain;
+}

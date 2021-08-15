@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper';
+// eslint-disable-next-line import/extensions
 import * as reducers from '@/reducers/index';
 
 const rootReducer = combineReducers({ ...reducers });
