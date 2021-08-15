@@ -1,8 +1,8 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
-// eslint-disable-next-line import/extensions
 import { BASE_URL } from '@/global/constants';
 
 const providers = [

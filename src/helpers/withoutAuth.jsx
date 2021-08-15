@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 
-const withAuth = (WrappedComponent) => (props) => {
+const withoutAuth = (WrappedComponent) => (props) => {
   const router = useRouter();
   const [session, loading] = useSession();
 
@@ -17,4 +17,4 @@ const withAuth = (WrappedComponent) => (props) => {
   return <WrappedComponent {...props} />;
 };
 
-export default withAuth;
+export default withoutAuth;

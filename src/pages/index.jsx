@@ -1,6 +1,6 @@
 import Head from 'next/head';
-// eslint-disable-next-line import/extensions
-import { Footer } from '@/components';
+/* eslint-disable import/extensions */
+import { Footer, NavbarComponent } from '@/components';
 import styles from '@/global/styles/Home.module.css';
 
 export default function Home() {
@@ -12,6 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <NavbarComponent />
       <main className={`main-container ${styles.centered}`}>
         <h1>Index page</h1>
       </main>

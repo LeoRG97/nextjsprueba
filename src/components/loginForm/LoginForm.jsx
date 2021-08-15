@@ -25,6 +25,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     const res = await signIn('credentials', {
       email: formData.email,
       password: formData.password,
@@ -33,7 +34,7 @@ const LoginForm = () => {
     });
 
     if (res?.error) {
-      setError('Dirección de correo electrónico y/o contraseña incorrectos');
+      setError('Dirección de correo electrónico y/o contraseña incorrectos.');
     }
     if (res.url) {
       router.push('/articulos');
@@ -60,7 +61,7 @@ const LoginForm = () => {
           />
         </label>
         <label className="d-block subtitle mb-4" htmlFor="passwd">Contraseña
-          <Link href="#" passHref>
+          <Link href="/forgot-password" passHref>
             <a className={`text-md ${styles.link} ${styles.floatRight}`}>
               ¿Olvidaste tu contraseña?
             </a>

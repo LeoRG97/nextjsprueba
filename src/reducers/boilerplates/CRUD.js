@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/order */
 /* eslint-disable no-underscore-dangle */
 import { getSession } from 'next-auth/client';
 // eslint-disable-next-line import/extensions

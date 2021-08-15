@@ -45,19 +45,16 @@
 
   --font-size-xl: 3.5rem; /* 56px */
   --font-size-lg: 1.75rem; /* 28px */
-  --font-size-md: 1rem; /* 16px */
+  --font-size-md: 1rem;  /* 16px */
   --font-size-sm: 0.875rem; /* 14px */
 
   --icon-size-sm: 1rem; /* 16px */
 }
 
-html,
-body {
+html, body {
   padding: 0;
   margin: 0;
-  font-family: var(--font-regular), -apple-system, BlinkMacSystemFont, Segoe UI,
-    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-    sans-serif;
+  font-family: var(--font-regular), -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   height: 100vh;
 }
 
@@ -85,6 +82,7 @@ body {
 }
 
 /* TEXT */
+
 .title-xl {
   font-family: var(--font-bold);
   font-size: var(--font-size-xl);
@@ -138,6 +136,7 @@ body {
 }
 
 /* BUTTON */
+
 .button {
   background-color: var(--btnBgPrimary);
   border: 0;
@@ -152,7 +151,7 @@ body {
 }
 
 .button--theme-primary {
-  color: var(--colorLight);
+  color: var(--colorLight) !important;
   background-color: var(--colorPrimary);
 }
 
@@ -220,7 +219,7 @@ body {
   border-right: 0;
 }
 
-.input-container .input:focus ~ .input__icon {
+.input-container .input:focus~.input__icon {
   background-color: var(--colorLight);
   border: 1px solid var(--colorPrimary);
   border-left: 0;
@@ -537,3 +536,83 @@ html {
 *:before, *:after {
   box-sizing: inherit;
 }
+.Btn-outline-light {
+  border-radius: 10px;
+  background-color: transparent;
+  border: 1px solid #6E6D7A;
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  padding: 10px 40px;
+  color: var(--white);
+}
+
+.Btn-outline-light:hover {
+  background-color: #ffffff2f;
+}
+
+/*EMBLA CAROUSEL*/
+
+.embla {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  max-width: 670px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.embla__container {
+  display: flex;
+  max-width: 350px;
+}
+
+.embla__slide {
+  position: relative;
+  flex: 0 0 100%;
+  min-width: 50%;
+  padding-left: 10px;
+}
+
+.embla__slide__inner {
+  position: relative;
+  overflow: hidden;
+  height: 190px;
+}
+
+.embla__viewport {
+  overflow: hidden;
+  max-width: 1050px;
+  margin: auto;
+}
+
+.embla__viewport.is-draggable {
+  cursor: move;
+  cursor: url(/images/cursor.cur);
+}
+
+.embla__viewport.is-dragging {
+  cursor: url(/images/cursor.cur);
+}
+
+/*******************/
+
+/* SEARCH INPUT =========================== */
+.input-group-text{
+  background-color: #F3F3F4;
+  border: 1px solid #E7E7E9;
+}
+/* =========================== */
+
+/* WORLD MAP ============================================================================ */
+.observablehq--collapsed,
+.observablehq--expanded,
+.observablehq--function,
+.observablehq--gray,
+.observablehq--import,
+.observablehq--string:after,
+.observablehq--string:before,
+.observablehq--inspect {
+  display: none !important;
+  color:#1b1e23;
+}
+/* WORLD MAP ============================================================================ */
