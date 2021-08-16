@@ -1,5 +1,5 @@
-import { BASE_URL } from '@/global/constants';
 import vanillaAxios from 'axios';
+import { BASE_URL } from '@/global/constants';
 import axios from './axios';
 
 export const forgotPasswordService = async (email) => {

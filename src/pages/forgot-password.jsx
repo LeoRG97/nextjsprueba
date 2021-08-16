@@ -1,6 +1,6 @@
+import React from 'react';
 import { ForgotPasswordForm, LoginHeader } from '@/components';
 import withoutAuth from '@/helpers/withoutAuth';
-import React from 'react';
 
 const ResetPassword = () => {
   return (

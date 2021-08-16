@@ -1,7 +1,7 @@
-import { validateEmail } from '@/helpers/validateEmail';
-import { forgotPasswordService } from '@/services/password';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import { validateEmail } from '@/helpers/validateEmail';
+import { forgotPasswordService } from '@/services/password';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 import styles from './forgotPassword.module.css';
 
