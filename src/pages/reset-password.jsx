@@ -1,4 +1,3 @@
-/* eslint-disable import/extensions */
 import React from 'react';
 import { LoginHeader, ResetPasswordForm } from '@/components';
 
