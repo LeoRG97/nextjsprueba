@@ -1,0 +1,51 @@
+.container {
+  width: 30rem;
+  min-height: 30rem;
+  background-color: var(--colorLight);
+  padding: 2rem;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+}
+
+.containerCreate {
+  width: 30rem;
+  min-height: 30rem;
+  background-color: var(--colorLight);
+  padding: 2rem;
+  padding-top: 60px;
+  padding-bottom: 60px;
+  border-radius: 10px;
+  margin-top: 5rem;
+  margin-bottom: 3rem;
+}
+
+.link {
+  color: var(--colorPrimary);
+  text-decoration: none;
+}
+
+.check {
+  display: inline-flex;
+}
+
+.buttonChek {
+  display: contents;
+}
+
+.buttonContinue {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.error {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--colorError);
+}
+
+@media screen and (min-width: 576px) {
+  .container {
+    padding: 60px;
+  }
+}

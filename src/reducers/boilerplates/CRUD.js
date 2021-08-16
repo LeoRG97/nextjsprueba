@@ -1,8 +1,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/order */
 /* eslint-disable no-underscore-dangle */
-import axios from '@/services/axios';
 import { getSession } from 'next-auth/client';
+// eslint-disable-next-line import/extensions
+import axios from '@/services/axios';
 import { makeType, makeActionCreator, makeReducer } from '../creators';
 
 const CRUD = (resource) => {

@@ -1,10 +1,9 @@
 /* eslint-disable import/extensions */
 /* eslint-disable no-param-reassign */
-// eslint-disable-next-line import/order
-import { BASE_URL } from '@/global/constants';
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
+import { BASE_URL } from '@/global/constants';
 
 const providers = [
   Providers.Credentials({

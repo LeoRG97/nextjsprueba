@@ -45,7 +45,7 @@ const LoginForm = () => {
     <div className={styles.container}>
       <h1 className="title mb-3">Inicio de sesión</h1>
       <span className="text-md d-block mb-4">
-        ¿Aún no eres miembro? <Link href="#" passHref><a className={styles.link}>Regístrate ahora</a></Link>
+        ¿Aún no eres miembro? <Link href="/create-account" passHref><a className={styles.link}>Regístrate ahora</a></Link>
       </span>
       <form onSubmit={handleSubmit}>
         <label className="d-block subtitle mb-4" htmlFor="email">Correo electrónico
