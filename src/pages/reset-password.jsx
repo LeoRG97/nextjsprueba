@@ -1,5 +1,5 @@
-import { LoginHeader, ResetPasswordForm } from '@/components';
 import React from 'react';
+import { LoginHeader, ResetPasswordForm } from '@/components';
 
 const ResetPasswordPage = () => {
   return (
