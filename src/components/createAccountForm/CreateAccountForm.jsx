@@ -1,12 +1,17 @@
+/* eslint-disable import/extensions */
 import React, { useState } from 'react';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
 import Script from 'next/script';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
+import { useRouter } from 'next/router';
 import styles from './createAccountForm.module.css';
+import { registerService } from '@/services/register';
+import { LoadingIndicator } from '..';
 
-const CreateAccountForm = () => {
-  const [nextStep, setNextStep] = useState(true);
+const CreateAccountForm = ({ preferences }) => {
+  const [nextStep, setNextStep] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -21,8 +26,13 @@ const CreateAccountForm = () => {
   const [country, setCountry] = useState('');
   const [state, setState] = useState('');
   const [city, setCity] = useState('');
-  const [preferences, setPreferences] = useState([]);
+  const [preferencesState, setPreferencesState] = useState(preferences);
   const [newsLetter, setNewsletterState] = useState(false);
+  const [error, setError] = useState('');
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [status, setStatus] = useState('idle');
+
+  const router = useRouter();
 
   const handleChangeName = (value, type) => {
     if (type === 'firstName') {
@@ -55,14 +65,21 @@ const CreateAccountForm = () => {
       setBirthDay(`${yyyy}-${mm}-${dd}`);
     }
 
-    setNextStep(true);
+    if (tel.length !== 10) {
+      setError('El número de telefóno debe contener solo 10 digitos');
+      setErrorStatus(true);
+    } else {
+      setError('');
+      setErrorStatus(false);
+      setNextStep(true);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const options = document.getElementById('preferences').selectedOptions;
     const values = Array.from(options).map(({ value }) => value);
-    setPreferences(values);
+    setPreferencesState(values);
     const model = {
       email,
       password,
@@ -77,8 +94,23 @@ const CreateAccountForm = () => {
       birthDay,
       preferences: values,
     };
-    // eslint-disable-next-line no-console
-    console.log(model);
+
+    if (values.length < 3) {
+      setError('Por favor, selecciona por lo menos 3 preferencias');
+      setErrorStatus(true);
+    } else {
+      setError('');
+      setErrorStatus(false);
+      setStatus('loading');
+      const res = await registerService(model);
+      if (res.token) {
+        setStatus('success');
+        router.push('/login');
+      } else {
+        setStatus('error');
+        setError('Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde');
+      }
+    }
   };
 
   return (
@@ -94,6 +126,13 @@ const CreateAccountForm = () => {
                 ¿Ya eres miembro? <Link href="/login" passHref><a className={styles.link}> Inicia sesión</a></Link>
               </span>
               <form onSubmit={handleFirstForm}>
+                {
+                  errorStatus ? (
+                    <span className={`text-sm ${styles.error}`}>{error}</span>
+                  ) : (
+                    <div />
+                  )
+                }
                 <div className="row">
                   <div className="col-6">
                     <label className="d-block subtitle mb-2" htmlFor="name">Nombre*
@@ -301,6 +340,13 @@ const CreateAccountForm = () => {
                   las <Link href="#" passHref><a className={styles.link}> Condiciones de uso</a></Link>
                   y la <Link href="#" passHref><a className={styles.link}> Política de Privacidada</a></Link>
                 </span>
+                {
+                  errorStatus ? (
+                    <span className={`text-sm ${styles.error}`}>{error}</span>
+                  ) : (
+                    <div />
+                  )
+                }
                 <div className={styles.buttonContinue}>
                   <button className="button button--theme-primary" type="submit">
                     Crear cuenta
@@ -317,23 +363,46 @@ const CreateAccountForm = () => {
               </h1>
               <span className="text-sm d-block mb-5">
                 Antes de continuar, es necesario que elijas al menos tres categorías de tu
-                preferencia, de esta manera, podremos mostrarte contenido que sea relevante para ti.
+                preferencia, de esta manera, podremos mostrarte contenido que sea relevante
+                para ti.
                 Recuerda que siempre podrás modificarlas o añadir más ingresando a la opción
                 Editar perfil.
               </span>
               <form onSubmit={handleSubmit} className="mt-3">
+                {
+                  errorStatus || status === 'error' ? (
+                    <p className={`text-sm ${styles.error}`}>{error}</p>
+                  ) : (
+                    <p />
+                  )
+                }
                 <span className="d-block subtitle mb-2">Me interesa el contenido relacionado con</span>
-                <select id="preferences" defaultValue={preferences} multiple data-placeholder="+3 categorías">
-                  <option value="a">Tecnología</option>
-                  <option value="b">Innovación</option>
-                  <option value="c">Negocios</option>
-                  <option value="d">Finanzas</option>
-                  <option value="e">Sutentabilidad</option>
+                <select id="preferences" defaultValue={preferencesState} multiple data-placeholder="+3 categorías">
+                  {
+                    preferences.length > 0 ? (
+                      preferences.map((preference) => (
+                        <option
+                          key={preference._id}
+                          value={preference._id}
+                        >
+                          {preference.nombre}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="0">No se encontraron resultados</option>
+                    )
+                  }
                 </select>
                 <div className={styles.buttonContinue}>
-                  <button id="btnPreferences" className="button button--theme-primary" type="submit">
-                    Finalizar
-                  </button>
+                  {
+                    status === 'loading' ? (
+                      <LoadingIndicator />
+                    ) : (
+                      <button id="btnPreferences" className="button button--theme-primary" type="submit">
+                        Finalizar
+                      </button>
+                    )
+                  }
                 </div>
               </form>
             </div>
@@ -465,6 +534,11 @@ const CreateAccountForm = () => {
       }
     </div>
   );
+};
+
+CreateAccountForm.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  preferences: PropTypes.array.isRequired,
 };
 
 export default CreateAccountForm;

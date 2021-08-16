@@ -1,8 +1,9 @@
+/* eslint-disable import/extensions */
 import Head from 'next/head';
-// eslint-disable-next-line import/extensions
 import { CreateAccountForm, LoginHeader } from '@/components';
+import { getPreferencesService } from '@/services/preferences';
 
-export default function CreateAccounst() {
+const CreateAccounst = ({ preferences }) => {
   return (
     <div className="background-gray">
       <Head>
@@ -10,8 +11,19 @@ export default function CreateAccounst() {
       </Head>
       <LoginHeader />
       <div className="main-container centered-content">
-        <CreateAccountForm />
+        <CreateAccountForm preferences={preferences.data} />
       </div>
     </div>
   );
+};
+
+export async function getStaticProps() {
+  const preferences = await getPreferencesService();
+  return {
+    props: {
+      preferences,
+    },
+  };
 }
+
+export default CreateAccounst;

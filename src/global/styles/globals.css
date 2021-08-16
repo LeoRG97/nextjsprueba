@@ -252,9 +252,6 @@ html, body {
   outline: none;
   border: 1px solid var(--colorPrimary);
 }
-.option:active{
-  background-color: #ff5555 !important;
-}
 
 .selectMultiple {
   width: 100%;
