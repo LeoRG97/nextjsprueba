@@ -3,7 +3,7 @@ import { LoginHeader, ResetPasswordForm } from '@/components';
 
 const ResetPasswordPage = () => {
   return (
-    <div className="background-gray">
+    <div className="main-bg">
       <LoginHeader />
       <div className="main-container centered-content">
         <ResetPasswordForm />

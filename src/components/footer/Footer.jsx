@@ -10,7 +10,7 @@ const Footer = () => {
       <Container className={styles.footer_container}>
         <Row className={styles.footer_container_row}>
           <Col sm="12" lg="auto">
-            <img src="/images/logos/NTT-Data-Logo.png" alt="NTT" className={styles.img_NTT} />
+            <img src="/images/logos/NTTBlanco.png" alt="NTT" className={styles.img_NTT} />
           </Col>
           <Col sm="auto" lg="auto">
             <Row className={styles.footer_container_row_links}>
