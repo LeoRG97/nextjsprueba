@@ -1,8 +1,7 @@
 /* eslint-disable import/extensions */
-// eslint-disable-next-line import/order
-import { BASE_URL } from '@/global/constants';
 import axios from 'axios';
 import { getSession, signOut } from 'next-auth/client';
+import { BASE_URL } from '@/global/constants';
 
 const axiosInstance = () => {
   const config = axios.create();
@@ -16,9 +15,8 @@ const axiosInstance = () => {
     async (error) => {
       if (error.response.status === 401) {
         signOut({ callbackUrl: `${window.location.origin}/login` });
-        return error.response.data;
       }
-      return false;
+      return Promise.reject(error.response.data);
     });
   return config;
 };

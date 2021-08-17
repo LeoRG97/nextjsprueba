@@ -1,10 +1,8 @@
 /* eslint-disable import/extensions */
-import withoutAuth from '@/helpers/withoutAuth';
-// eslint-disable-next-line import/order
 import React from 'react';
-import { LoginForm, LoginHeader } from '@/components';
-// eslint-disable-next-line import/order
 import Head from 'next/head';
+import withoutAuth from '@/helpers/withoutAuth';
+import { LoginForm, LoginHeader } from '@/components';
 
 const LoginPage = () => {
   return (
