@@ -1,7 +1,7 @@
 .navC {
   position: fixed;
   cursor: pointer;
-  height: 7%;
+  height: 6%;
   top: 0;
   width: 100%;
 }
@@ -13,6 +13,7 @@
 .navbar {
   padding-left: 60px;
   padding-right: 60px;
+  background-color: var(--colorItemBg);
 }
 
 .a {
@@ -38,20 +39,19 @@
   justify-content: flex-end;
 }
 
-
 .divNavItemStyle .inputGroupStyle {
   width: 70% !important;
 }
 
 .navInputStyle {
   border-radius: 5%;
-  border: 1px solid #E7E7E9;
-  background-color: #F3F3F4;
+  border: 1px solid #e7e7e9;
+  background-color: #f3f3f4;
   height: 38px;
 }
 
 .navInputStyle::placeholder {
-  color: #6E6D7A;
+  color: #6e6d7a;
   font-size: 14px;
 }
 
@@ -66,7 +66,6 @@
     text-align: center;
   }
 }
-
 
 @media (max-width: 1200px) {
   .navbar {

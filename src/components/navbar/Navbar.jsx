@@ -2,9 +2,9 @@ import Script from 'next/script';
 import Image from 'next/image';
 import React from 'react';
 import {
-  Container, Navbar, Nav, InputGroup,
-  Form,
+  Container, Navbar, Nav,
 } from 'react-bootstrap';
+import Link from 'next/link';
 import styles from './navbar.module.css';
 
 const NavbarComponent = () => {
@@ -18,11 +18,13 @@ const NavbarComponent = () => {
                   // Obtenemos la posicion del scroll en pantall
                   const scroll = document.documentElement.scrollTop || document.body.scrollTop;
                   // Realizamos alguna accion cuando el scroll este entre la posicion 300 y 400
-                   if (scroll >= 100) {
-                    document.getElementById('navbar').style.transition = '0.5s';
-                    document.getElementById('navbar').style.top = '-200px';
-                   } else {
-                    document.getElementById('navbar').style.top = '0';
+                   if (document.getElementById('navbar')) {
+                    if (scroll >= 100) {
+                      document.getElementById('navbar').style.transition = '0.5s';
+                      document.getElementById('navbar').style.top = '-200px';
+                    } else {
+                      document.getElementById('navbar').style.top = '0';
+                    }
                   }
                 }
               }
@@ -32,44 +34,58 @@ const NavbarComponent = () => {
       <Navbar
         className={styles.navbar}
         id="navbar"
-        bg="light"
         expand="lg"
         fixed="top"
       >
         <Container fluid className={styles.navContentStyle}>
-          <Navbar.Brand className={styles.a} href="#home">
-            <Image
-              src="/images/logos/NTT-Data-Logo.png"
-              alt="Logo"
-              width={130}
-              height={20}
-            />
-          </Navbar.Brand>
+          <Link href="/" passHref>
+            <Navbar.Brand className={styles.a}>
+              <Image
+                src="/images/logos/NTTBlanco.png"
+                alt="Logo"
+                width={130}
+                height={20}
+              />
+            </Navbar.Brand>
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={styles.linksContainer}>
               <div className={styles.divNavItemStyle}>
-                <Nav.Link className="text-sm" href="#home">Acerca de</Nav.Link>
-                <Nav.Link className="text-sm" href="#link">Trending Topics</Nav.Link>
-                <Nav.Link className="text-sm" href="#link">Think tools</Nav.Link>
+                <Link href="/nosotros" passHref>
+                  <Nav.Link className="text-md text--theme-light">Acerca de</Nav.Link>
+                </Link>
+                <Link href="#" passHref>
+                  <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
+                </Link>
+                <Link href="#" passHref>
+                  <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
+                </Link>
               </div>
 
               <div className={styles.divNavItemStyle}>
-                <InputGroup className={styles.inputGroupStyle}>
-                  <Form.Control
+                <div className="input-container w-75">
+                  <input
                     type="text"
                     placeholder="Buscar..."
-                    className={styles.navInputStyle}
+                    className="input"
+                    required
                   />
-                  <InputGroup.Text className="icon" id="inputGroupPrepend">7</InputGroup.Text>
-                </InputGroup>
+                  <button className="input__icon" type="button">
+                    <span className="icon icon--theme-secondary">7</span>
+                  </button>
+                </div>
               </div>
 
               <div className={styles.divNavItemStyle}>
-                <Nav.Link className="text-sm" href="#link">Iniciar sesión</Nav.Link>
-                <Nav.Link className="text-sm button button--theme-primary" href="#link">
-                  Regístrate
-                </Nav.Link>
+                <Link href="/login" passHref>
+                  <Nav.Link className="text-md text--theme-light">Iniciar sesión</Nav.Link>
+                </Link>
+                <Link href="/create-account" passHref>
+                  <Nav.Link className="button button--theme-primary" href="#link">
+                    Regístrate
+                  </Nav.Link>
+                </Link>
               </div>
             </Nav>
           </Navbar.Collapse>

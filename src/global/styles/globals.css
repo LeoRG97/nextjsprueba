@@ -1,12 +1,18 @@
 @font-face {
-  font-family: Roboto-Bold;
-  src: url("/fonts/Roboto-Bold.ttf");
+  font-family: BasierCircle-Medium;
+  src: url("/fonts/BasierCircle-Medium.otf");
   font-display: swap;
 }
 
 @font-face {
-  font-family: Roboto-Regular;
-  src: url("/fonts/Roboto-Regular.ttf");
+  font-family: BasierCircle-Regular;
+  src: url("/fonts/BasierCircle-Regular.otf");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Gilroy-Medium;
+  src: url("/fonts/Gilroy-Medium.otf");
   font-display: swap;
 }
 
@@ -16,45 +22,62 @@
 }
 
 :root {
-  --blue: #6785c1;
+  --blue: #0080b1;
   --black: #0d0c22;
-  --gray: #6e6d7a;
-  --white-20: #e7e7e9;
-  --white-10: #f3f3f4;
+  --black-10: #232739;
+  --black-20: #393f5b;
+  --gray: #757e94;
+  /* --white-20: #e7e7e9;
+  --white-10: #f3f3f4; */
   --white: #ffffff;
-  --red: #ff5555;
+  --orange: #bc4328;
+  --yellow: #e6b600;
+  --green: #83b254;
+  --magenta: #aa3c80;
+
+  --blue-20: #0080b133;
+  --orange-20: #bc432833;
+  --yellow-20: #e6b60033;
+  --green-20: #bc432833;
+  --magenta-20: #aa3c8033;
 
   --colorPrimary: var(--blue); /* color corporativo */
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
   --colorSecondary: var(--gray); /* Iconos y texto secundario */
   --colorLight: var(--white); /* Iconos, textos y fondos claros */
-  --colorLightFaint: var(--white-20); /* Contornos y subrayados */
-  --colorItemBg: var(--white-10); /* Fondo no blanco */
-  --colorError: var(--red); /* Indicadores de error */
+  --colorItemBorder: var(--black-20); /* Contornos y subrayados */
+  --colorItemBg: var(--black-10); /* Fondo no negro */
+  --colorError: var(--orange); /* Indicadores de error */
+  --colorSuccess: var(--green); /* Elementos de acción */
 
   --text-color-dark: var(--black);
   --text-color-light: var(--white);
   --text-color-secondary: var(--gray);
   --text-color-highlight: var(--blue);
+  --text-color-error: var(--orange);
 
-  --btnBorderRadius: 7px;
+  --btnBorderRadius: 50vh;
   --inputBorderRadius: 7px;
 
-  --font-bold: Roboto-Bold;
-  --font-regular: Roboto-Regular;
+  --font-bold: Gilroy-Medium;
+  --font-medium: BasierCircle-Medium;
+  --font-regular: BasierCircle-Regular;
 
   --font-size-xl: 3.5rem; /* 56px */
   --font-size-lg: 1.75rem; /* 28px */
-  --font-size-md: 1rem;  /* 16px */
+  --font-size-md: 1rem; /* 16px */
   --font-size-sm: 0.875rem; /* 14px */
 
   --icon-size-sm: 1rem; /* 16px */
 }
 
-html, body {
+html,
+body {
   padding: 0;
   margin: 0;
-  font-family: var(--font-regular), -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: var(--font-regular), -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
   height: 100vh;
 }
 
@@ -77,8 +100,8 @@ html, body {
   padding-right: 1rem;
 }
 
-.background-gray {
-  background-color: var(--colorItemBg);
+.main-bg {
+  background-color: var(--colorPrimaryDark);
 }
 
 /* TEXT */
@@ -86,25 +109,25 @@ html, body {
 .title-xl {
   font-family: var(--font-bold);
   font-size: var(--font-size-xl);
-  color: var(--text-color-dark);
+  color: var(--text-color-light);
 }
 
 .title {
-  font-family: var(--font-bold);
+  font-family: var(--font-medium);
   font-size: var(--font-size-lg);
-  color: var(--text-color-dark);
+  color: var(--text-color-light);
 }
 
 .subtitle {
   font-family: var(--font-bold);
   font-size: var(--font-size-md);
-  color: var(--text-color-dark);
+  color: var(--text-color-light);
 }
 
 .text-md {
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
-  color: var(--text-color-dark);
+  color: var(--text-color-light);
 }
 
 .text-sm {
@@ -114,7 +137,11 @@ html, body {
 }
 
 .text--theme-light {
-  color: var(--text-color-light);
+  color: var(--text-color-light) !important;
+}
+
+.text--theme-dark {
+  color: var(--text-color-dark) !important;
 }
 
 .text--theme-highlight {
@@ -124,7 +151,7 @@ html, body {
 .icon {
   font-family: Icons;
   font-size: var(--icon-size-sm);
-  color: var(--text-color-dark);
+  color: var(--text-color-secondary);
 }
 
 .icon--theme-secondary {
@@ -148,6 +175,8 @@ html, body {
   padding-right: 0.7rem;
   letter-spacing: -0.4px;
   min-height: 38px;
+  min-width: 7rem;
+  text-align: center;
 }
 
 .button--theme-primary {
@@ -156,8 +185,14 @@ html, body {
 }
 
 .button--theme-secondary {
-  color: var(--colorPrimaryDark);
+  color: var(--text-color-secondary);
   background-color: var(--colorItemBg);
+  border: 1px solid var(--colorItemBorder);
+}
+
+.button--theme-success {
+  color: var(--text-color-light);
+  background-color: var(--colorSuccess);
 }
 
 .button:active {
@@ -167,11 +202,10 @@ html, body {
 .input {
   height: 38px;
   background-color: var(--colorItemBg);
-  border: 0;
-  color: var(--colorSecondary);
+  color: var(--text-color-secondary);
   font-family: var(--font-regular);
   font-size: var(--font-size-sm);
-  border: 1px solid transparent;
+  border: 1px solid var(--colorItemBorder);
   border-radius: var(--inputBorderRadius);
   padding: 0.5rem;
   margin-top: 5px;
@@ -180,9 +214,9 @@ html, body {
 }
 
 .input:focus {
-  background-color: var(--colorLight);
+  color: var(--colorLight);
   outline: none;
-  border: 1px solid var(--colorPrimary);
+  border: 1px solid var(--colorLight);
 }
 
 .input-container {
@@ -195,7 +229,7 @@ html, body {
   width: 2.5rem;
   height: 38px;
   background-color: var(--colorItemBg);
-  border: 1px solid transparent;
+  border: 1px solid var(--colorItemBorder);
   border-left: 0;
   display: flex;
   justify-content: center;
@@ -210,18 +244,19 @@ html, body {
   border-bottom-left-radius: var(--inputBorderRadius);
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+  border-right: 0;
   padding-left: 0.5rem;
   padding-right: 0rem;
 }
 
 .input-container .input:focus {
-  border: 1px solid var(--colorPrimary);
+  border: 1px solid var(--colorLight);
   border-right: 0;
 }
 
-.input-container .input:focus~.input__icon {
-  background-color: var(--colorLight);
-  border: 1px solid var(--colorPrimary);
+.input-container .input:focus ~ .input__icon {
+  /* background-color: var(--colorLight); */
+  border: 1px solid var(--colorLight);
   border-left: 0;
 }
 
@@ -236,7 +271,7 @@ html, body {
   height: 38px;
   background-color: var(--colorItemBg);
   border: 0;
-  color: var(--colorSecondary);
+  color: var(--text-color-secondary);
   font-family: var(--font-regular);
   font-size: var(--font-size-sm);
   border: 1px solid transparent;
@@ -248,9 +283,9 @@ html, body {
 }
 
 .select:focus {
-  background-color: var(--colorLight);
+  /* background-color: var(--colorLight); */
   outline: none;
-  border: 1px solid var(--colorPrimary);
+  border: 1px solid var(--colorLight);
 }
 
 .selectMultiple {
@@ -266,10 +301,10 @@ html, body {
   z-index: 2;
   padding: 8px 12px 2px 12px;
   border-radius: 8px;
-  background: #fff;
+  background: var(--colorItemBg);
   font-size: 14px;
   min-height: 44px;
-  border: 1px solid var(--colorLightFaint);
+  border: 1px solid var(--colorItemBorder);
 }
 .selectMultiple > div .arrow {
   right: 1px;
@@ -279,8 +314,9 @@ html, body {
   width: 28px;
   position: absolute;
 }
-.selectMultiple > div .arrow:before, .selectMultiple > div .arrow:after {
-  content: '';
+.selectMultiple > div .arrow:before,
+.selectMultiple > div .arrow:after {
+  content: "";
   position: absolute;
   display: block;
   width: 2px;
@@ -328,14 +364,14 @@ html, body {
   white-space: nowrap;
 }
 .selectMultiple > div a:before {
-  content: '';
+  content: "";
   left: 0;
   top: 0;
   bottom: 6px;
   width: 100%;
   position: absolute;
   display: block;
-  background: var(--colorLightFaint);
+  background: var(--colorItemBorder);
   z-index: -1;
   border-radius: 4px;
 }
@@ -348,8 +384,9 @@ html, body {
   height: 28px;
   display: block;
 }
-.selectMultiple > div a i:before, .selectMultiple > div a i:after {
-  content: '';
+.selectMultiple > div a i:before,
+.selectMultiple > div a i:after {
+  content: "";
   display: block;
   width: 2px;
   height: 10px;
@@ -427,17 +464,19 @@ html, body {
   border-radius: 8px;
   transform: translate(0, 20px) scale(0.8);
   transform-origin: 0 0;
-  transition: all 0.4s ease, transform 0.4s cubic-bezier(0.87, -0.41, 0.19, 1.44), filter 0.3s ease 0.2s;
+  transition: all 0.4s ease,
+    transform 0.4s cubic-bezier(0.87, -0.41, 0.19, 1.44), filter 0.3s ease 0.2s;
 }
 .selectMultiple > ul li {
   color: var(--colorSecondary);
   text-decoration: none;
-  background: #fff;
+  background: var(--colorItemBg);
   padding: 12px 16px;
   cursor: pointer;
   overflow: hidden;
   position: relative;
-  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease 0.3s, opacity 0.5s ease 0.3s, border-radius 0.3s ease 0.3s;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease 0.3s,
+    opacity 0.5s ease 0.3s, border-radius 0.3s ease 0.3s;
 }
 .selectMultiple > ul li:first-child {
   border-radius: 8px 8px 0 0;
@@ -452,17 +491,17 @@ html, body {
   border-radius: 8px;
 }
 .selectMultiple > ul li:hover {
-  background: var(--colorLightFaint);
+  background: var(--colorItemBorder);
   color: var(--colorSecondary);
 }
 .selectMultiple > ul li:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   width: 6px;
   height: 6px;
-  background: var(--colorLightFaint);
+  background: var(--colorItemBorder);
   opacity: 0;
   border-radius: 100%;
   transform: scale(1, 1) translate(-50%, -50%);
@@ -507,21 +546,21 @@ html, body {
   transform: translate(0, 12px) scale(1);
   opacity: 1;
   visibility: visible;
-  border: 1px solid var(--colorLightFaint);
+  border: 1px solid var(--colorItemBorder);
 }
 @keyframes ripple {
   0% {
     transform: scale(0, 0);
     opacity: 1;
- }
+  }
   25% {
     transform: scale(30, 30);
     opacity: 1;
- }
+  }
   100% {
     opacity: 0;
     transform: scale(50, 50);
- }
+  }
 }
 html {
   box-sizing: border-box;
@@ -530,13 +569,14 @@ html {
 * {
   box-sizing: inherit;
 }
-*:before, *:after {
+*:before,
+*:after {
   box-sizing: inherit;
 }
 .Btn-outline-light {
   border-radius: 10px;
   background-color: transparent;
-  border: 1px solid #6E6D7A;
+  border: 1px solid #6e6d7a;
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
   padding: 10px 40px;
@@ -594,9 +634,9 @@ html {
 /*******************/
 
 /* SEARCH INPUT =========================== */
-.input-group-text{
-  background-color: #F3F3F4;
-  border: 1px solid #E7E7E9;
+.input-group-text {
+  background-color: #f3f3f4;
+  border: 1px solid #e7e7e9;
 }
 /* =========================== */
 
@@ -610,6 +650,6 @@ html {
 .observablehq--string:before,
 .observablehq--inspect {
   display: none !important;
-  color:#1b1e23;
+  color: #1b1e23;
 }
 /* WORLD MAP ============================================================================ */
