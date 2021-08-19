@@ -3,8 +3,8 @@ import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '@/global/styles/Us.module.css';
-import WorldComponent from '../components/world/World';
 import { Footer, Layout } from '@/components';
+import WorldComponent from '../components/world/World';
 
 export default function Home() {
   const [viewportRef] = useEmblaCarousel({
@@ -21,50 +21,27 @@ export default function Home() {
       </Head>
       <main>
         <Container fluid className={styles.content_no_padd}>
-          <Container className={styles.content_title}>
+          <Container fluid className={styles.content_title}>
             <Row>
               <div className={styles.content_title_text}>
                 <small className="text-sm text--theme-light">Somos NTT DATA</small>
-                <h1 className="title-xl text--theme-light">Su socio <br />en innovación</h1>
+                <h1 className="title-xl text--theme-light">Su socio global <br />en innovación</h1>
               </div>
             </Row>
           </Container>
           <Container>
             <Row className={styles.content_mt_sect}>
               <Col xl="6" lg="6" sm="12">
-                <div className={`${styles.content_m_text} ${styles.example}`}>
-                  <small className="text-sm text--theme-highlight">Perfil de la empresa</small>
+                <div className={`${styles.content_m_text} `}>
+                  <small className="text-sm ">Filosofía</small>
+                  <h1 className="title-xl text--theme-light">Hacemos aquello <br />en lo que creemos</h1>
                 </div>
               </Col>
               <Col xl="6" lg="6" sm="12"> </Col>
               <Col xl="6" lg="6" sm="12">
-                <div className={`${styles.content_m_text} ${styles.example}`}>
-                  <h6 className="title">Su innovador global de confianza <br />en cualquier parte del mundo</h6>
-                  {
-                    // eslint-disable-next-line max-len
-                    <p className="text-md">NTT DATA es su socio de innovación en cualquier parte del mundo. Con sede en Tokio, con operaciones comerciales en más de 50 países y regiones, enfatizamos el compromiso a largo plazo y combinamos el alcance global y la intimidad local para proporcionar servicios profesionales de primer nivel, desde consultoría, desarrollo de sistemas hasta externalización de TI empresarial.</p>
-                  }
-                </div>
-              </Col>
-              <Col xl="6" lg="6" sm="12">
-                <div className={styles.image_content}>
-                  <img src="/images/imgpr2.jpg" alt="" className={styles.image_1} />
-                </div>
-              </Col>
-            </Row>
-            <Row className={styles.content_mt_sect}>
-              <Col>
-                <div className={styles.content_m_text}>
-                  <small className="text-sm text--theme-highlight">Filosofía</small>
-                  <h6 className="title">Hacemos aquello <br />en lo que creemos</h6>
-                </div>
-              </Col>
-              <Col> </Col>
-            </Row>
-            <Row>
-              <Col xl="6" lg="6" sm="12">
-                <div className={styles.content_m_text}>
-                  <small className="subtitle">Visión de grupo</small>
+                <div className={`${styles.content_m_text} `}>
+                  <div className={`${styles.content_icon} ${styles.pink_icon}`}><span className="icon">C</span></div>
+                  <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>
                   {
                     // eslint-disable-next-line max-len
                     <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo a través de relaciones a largo plazo, desarrollamos ecosistemas en evolución con nuestros clientes a través de tecnologías de vanguardia y potenciamos nuestra creatividad respetando la diversidad.</p>
@@ -72,8 +49,9 @@ export default function Home() {
                 </div>
               </Col>
               <Col xl="6" lg="6" sm="12">
-                <div className={styles.content_mr_text}>
-                  <small className="subtitle">Declaración de misión</small>
+                <div className={`${styles.content_mr_text} `}>
+                  <div className={`${styles.content_icon} ${styles.green_icon}`}><span className="icon">9</span></div>
+                  <h6 className={`${styles.title_disp_text} title`}>Declaración de misión</h6>
                   {
                     // eslint-disable-next-line max-len
                     <p className="text-md">NTT DATA utiliza la tecnología de la información para crear nuevos paradigmas y valores, que ayudan a contribuir a una sociedad más próspera y armoniosa.</p>
@@ -82,84 +60,98 @@ export default function Home() {
               </Col>
             </Row>
             <Row className={styles.content_mt_sect}>
-              <Col xl="6" lg="6" sm="12">
-                <div className={styles.content_m_text}>
-                  <small className="text-sm text--theme-highlight">NTT DATA Customer Experience</small>
-                </div>
-              </Col>
-              <Col xl="6" lg="6" sm="12"> </Col>
-              <Col xl="6" lg="6" sm="12">
-                <div className={styles.content_m_text}>
-                  <h6 className="title">Un espacio <br />para mirar al futuro</h6>
-                  {
-                    // eslint-disable-next-line max-len
-                    <p className="text-md">NTT DATA es su socio de innovación en cualquier parte del mundo. Con sede en Tokio, con operaciones comerciales en más de 50 países y regiones, enfatizamos el compromiso a largo plazo y combinamos el alcance global y la intimidad local para proporcionar servicios profesionales de primer nivel, desde consultoría, desarrollo de sistemas hasta externalización de TI empresarial.</p>
-                  }
-                </div>
-              </Col>
-              <Col xl="6" lg="6" sm="12">
-                <div>
-                  <img src="/images/imgpr2.jpg" alt="" className={styles.image_2} />
-                </div>
-              </Col>
-            </Row>
-            <Row className={styles.content_mt_sect}>
               <div className={styles.content_video}>
                 <div className={styles.content_title_text}>
-                  <small className="text-sm text--theme-light">Propósito</small>
-                  <h5 className="title text--theme-light">Guiarte a través <br />de la innovación</h5>
-                  <button className="Btn-outline-light">Ver video</button>
+                  <small className="text-sm text--theme-light">Nuestro propósito</small>
+                  <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
+                  <button className="Btn-outline-light"><span className="icon">F</span>Muéstrame cómo</button>
                 </div>
               </div>
             </Row>
           </Container>
-          <Container fluid className={styles.content_map}>
-            <Container className={`${styles.content_mt_sect} `}>
-              <Row>
-                <Col xl="12" lg="12" sm="12">
-                  <div className={`${styles.content_mt_sect} ${styles.content_map_text}`}>
-                    <small className="text-sm text--theme-highlight">Impacto geográfico</small>
-                    <h5 className="title">Una empresa <br />de clase mundial</h5>
-                    {
-                      // eslint-disable-next-line max-len
-                      <p className="text-md">Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero, así como facilitando colaboraciones comerciales entre naciones y empresas que fortalecen el poder de marca mundial de NTT DATA Group como &quot;One NTT DATA&quot;.</p>
-                    }
-                  </div>
-                  <WorldComponent />
-                  <div className={styles.content_mt_sect}>
-                    <small className="text-sm text--theme-highlight">Aliados</small>
-                    <h5 className="title ">Más relaciones, <br />mejores resultados</h5>
+          <Container fluid className={styles.content_observatory}>
+            <Container>
+              <Row className={`${styles.content_pt_sect} ${styles.content_pb_sect}`}>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={`${styles.content_m_img} ${styles.image_content} `}>
+                    <img src="/images/imgpr2.jpg" alt="" className={styles.image_1} />
                   </div>
                 </Col>
-                <Col xl="12" lg="12" sm="12">
-                  <Row>
-                    <div className="embla">
-                      <div className="embla__viewport" ref={viewportRef}>
-                        <div className="embla__container">
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
-                          <div className="embla__slide">
-                            <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                          </div>
+                <Col xl="6" lg="6" sm="12" className="p-r">
+                  <div className={`${styles.content_v_a_m} `}>
+                    <div className={`${styles.content_mr_text} `}>
+                      <small className="text-sm ">El observatorio</small>
+                    </div>
+                    <div className={`${styles.content_mr_text} `}>
+                      <h6 className="title-xl text--theme-light">Un espacio para <br />mirar al futuro</h6>
+                      {
+                        // eslint-disable-next-line max-len
+                        <p className="text-md">NTT DATA es su socio de innovación en cualquier parte del mundo. Con sede en Tokio, con operaciones comerciales en más de 50 países y regiones, enfatizamos el compromiso a largo plazo y combinamos el alcance global y la intimidad local para proporcionar servicios profesionales de primer nivel, desde consultoría, desarrollo de sistemas hasta externalización de TI empresarial.</p>
+                      }
+                      <button className="Btn-outline-light">Ir al observatorio</button>
+                    </div>
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </Container>
+          <Container fluid className={styles.content_map}>
+            <Container className={`${styles.content_pt_sect} `}>
+              <Row>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={` ${styles.content_map_text}`}>
+                    <small className="text-sm ">Impacto geográfico</small>
+                    <h1 className="title-xl text--theme-dark ">Una empresa <br />de clase mundial</h1>
+                    {
+                      // eslint-disable-next-line max-len
+                      <p className="text-md text--theme-dark ">Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero, así como facilitando colaboraciones comerciales entre naciones y empresas que fortalecen el poder de marca mundial de NTT DATA Group como &quot;One NTT DATA&quot;.</p>
+                    }
+                  </div>
+                </Col>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={`${styles.content_map_canvas} `}>
+                    <WorldComponent />
+                  </div>
+                </Col>
+              </Row>
+            </Container>
+          </Container>
+          <Container fluid>
+            <Container>
+              <Col xl="12" lg="12" sm="12">
+                <Row>
+                  <div className={styles.content_carousel}>
+                    <small className="text-sm">Aliados</small>
+                    <h1 className="title-xl text--theme-light ">Más relaciones, <br />mejores resultados</h1>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="embla">
+                    <div className="embla__viewport" ref={viewportRef}>
+                      <div className="embla__container">
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className="embla__slide">
+                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
                         </div>
                       </div>
                     </div>
-                  </Row>
-                </Col>
-              </Row>
+                  </div>
+                </Row>
+              </Col>
             </Container>
           </Container>
         </Container>
