@@ -1,11 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '@/global/styles/globals.css';
 import { Provider } from 'next-auth/client';
+import autosize from 'autosize';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 import { wrapper } from '../store';
 
 function MyApp({ Component, pageProps }) {
+  useEffect(() => {
+    autosize(document.querySelector('textarea'));
+  }, []);
+
   return (
     <Provider
       session={pageProps.session}

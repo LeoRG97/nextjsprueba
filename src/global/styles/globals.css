@@ -81,9 +81,6 @@ body {
   height: 100vh;
 }
 
-* {
-  box-sizing: border-box;
-}
 
 /* Global styles */
 
@@ -563,28 +560,39 @@ body {
   }
 }
 html {
-  box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
-* {
-  box-sizing: inherit;
-}
-*:before,
-*:after {
-  box-sizing: inherit;
-}
+
 .Btn-outline-light {
-  border-radius: 10px;
+  border-radius: 50px;
   background-color: transparent;
-  border: 1px solid #6e6d7a;
+  border: 1px solid var(--colorLight);
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
-  padding: 10px 40px;
+  padding: 10px 23px;
   color: var(--white);
+  height: 3rem;
+}
+
+.Btn-outline-light .icon {
+  color: var(--white);
+  position: relative;
+  top: -5px;
+  font-size: 1.5rem;
+  height: 0;
+  margin-right: 5px;
 }
 
 .Btn-outline-light:hover {
   background-color: #ffffff2f;
+}
+
+.m-a {
+  margin: auto;
+}
+
+.p-r {
+  position: relative;
 }
 
 /*EMBLA CAROUSEL*/
@@ -653,3 +661,132 @@ html {
   color: #1b1e23;
 }
 /* WORLD MAP ============================================================================ */
+
+
+/*EDITOR**************************/
+.purple-content {
+  background-color: var(--black-10);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.Edit-btn {
+  padding: 10px 20px;
+  background-color: var(--black-20);
+  border: none;
+  height: 44px;
+  margin: auto;
+  opacity: 0;
+}
+
+.Edit-btn.move-btn{
+  cursor: n-resize;
+}
+
+.Edit-btn:hover {
+  filter: brightness(200%);
+}
+
+.Editor-content {
+  display: flex;
+}
+
+.Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
+  opacity: 1;
+}
+
+.Editor-content button, .Editor-container  {
+  display: inline-grid;
+}
+
+.Editor-container {
+  width: calc(100% - 115px);
+  max-width: calc(100% - 115px);
+  margin: auto;
+}
+
+.Edit-area {
+  width: 98%;
+  margin: auto;
+}
+
+.Editor-container textarea {
+  border-radius: 5px;
+  color: var(--white);
+  border: 1px solid transparent;
+  background-color: var(--black-20);
+  padding: 12px;
+}
+
+.Editor-container textarea:focus {
+  outline: none !important;
+  border: 1px solid var(--white);
+
+}
+
+.Edit-dropdown-content {
+  margin: auto;
+  width: 56px;
+}
+
+.Edit-dropbtn {
+  padding: 10px 20px;
+  background-color: var(--black-20);
+  border: none;
+  height: 44px;
+  margin: auto;
+  filter: brightness(110%);
+  opacity: 0;
+}
+
+.Edit-dropdown {
+  position: relative;
+  display: inline-grid;
+  filter: brightness(100%);
+}
+
+.Edit-dropdown-container {
+  display: none;
+  position: absolute;
+  background-color: var(--black-20);
+  min-width: 140px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  top: 43px;
+}
+
+.Edit-dropdown-container a {
+  color: var(--white);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  filter: brightness(50%);
+}
+
+.Edit-dropdown-container span {
+  display: inline;
+  position: absolute;
+  color: var(--white);
+}
+
+.Edit-dropdown-container a:hover {
+  background-color: var(--black-20);
+  filter: brightness(200%);
+  color: var(--white);
+}
+
+.Edit-dropdown:hover .Edit-dropdown-container {
+  display: block;
+}
+
+.Edit-dropdown:hover .Edit-dropbtn {
+  background-color: var(--white-10);
+}
+
+.Edit-dropbtn:hover {
+  background-color: var(--black-20) !important;
+  filter: brightness(200%) !important;
+}
+
+/*********************************/
