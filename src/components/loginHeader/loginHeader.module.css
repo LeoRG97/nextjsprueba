@@ -1,7 +1,7 @@
 .header {
   border-bottom: 1px solid var(--colorLightFaint);
   display: flex;
-  height: 4rem;
+  height: 7%;
   justify-content: center;
   position: fixed;
   top: 0;

@@ -3,9 +3,9 @@ import styles from './loginHeader.module.css';
 
 const LoginHeader = () => {
   return (
-    <div className={`background-gray ${styles.header}`}>
+    <div className={`main-bg ${styles.header}`}>
       <img
-        src="/images/logos/NTT-Data-Logo.png"
+        src="/images/logos/NTTBlanco.png"
         alt="NTT Data"
         className={styles.logo}
       />

@@ -1,6 +1,7 @@
 import { signOut } from 'next-auth/client';
 // eslint-disable-next-line import/extensions
 import withAuth from '@/helpers/withAuth';
+import { Layout } from '@/components';
 
 const ArticlesPage = () => {
   const handleClick = async () => {
@@ -8,12 +9,14 @@ const ArticlesPage = () => {
   };
 
   return (
-    <div className="main-container">
-      <h1 className="title-xl">¡Bienvenido!</h1>
-      <button className="button button--theme-primary" onClick={handleClick}>
-        Log out
-      </button>
-    </div>
+    <Layout className="d-flex justify-content-center align-items-center">
+      <div className="text-center">
+        <h1 className="title-xl">¡Bienvenido!</h1>
+        <button className="button button--theme-primary" onClick={handleClick}>
+          Log out
+        </button>
+      </div>
+    </Layout>
   );
 };
 

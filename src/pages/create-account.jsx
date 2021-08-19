@@ -5,7 +5,7 @@ import { getPreferencesService } from '@/services/preferences';
 
 const CreateAccounst = ({ preferences }) => {
   return (
-    <div className="background-gray">
+    <div className="main-bg">
       <Head>
         <title>Crear cuenta</title>
       </Head>
