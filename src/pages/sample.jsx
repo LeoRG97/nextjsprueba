@@ -1,5 +1,6 @@
 /* eslint-disable import/extensions */
 import Head from 'next/head';
+import { Container, Row, Col } from 'react-bootstrap';
 // eslint-disable-next-line import/extensions
 import { Footer } from '@/components';
 
@@ -62,7 +63,29 @@ export default function Home() {
         </div>
 
       </main>
-
+      <br />
+      <Container className="purple-content" style={{ minHeight: '200px' }}>
+        <Row>
+          <Col>
+            <div className="Editor-content">
+              <button className="Edit-btn move-btn icon">4</button>
+              <div className="Editor-container">
+                <textarea className="Edit-area" defaultValue="" />
+              </div>
+              <div className="Edit-dropdown-content">
+                <div className="Edit-dropdown">
+                  <button className="Edit-dropbtn icon">0</button>
+                  <div className="Edit-dropdown-container">
+                    <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                    <a href="#"><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+      <br />
       <Footer />
     </div>
   );

@@ -4,17 +4,28 @@
 
 .content_title {
   background-image: url('/images/imgpr2.jpg');
-  border-radius: 0px 0px 50px 50px;
   background-repeat: no-repeat;
-  background-size: auto 100%;
+  background-size: 100% auto;
   background-position: center;
   min-height: 765px;
+  text-align: center;
+}
+
+.content_title::after {
+  content: "";
+  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(13 13 34) 100%);
+  position: absolute;
+  max-height: 765px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  filter: brightness(90%);
 }
 
 .content_title_text {
   margin-top: 20%;
-  margin-left: 105px;
-  width: auto;
+  z-index: 1;
 }
 
 .content_title_text h1, .content_title_text h5 {
@@ -29,8 +40,20 @@
   margin-right: 105px;
 }
 
+.content_m_img {
+  margin-left: 105px;
+}
+
 .content_mt_sect {
   margin-top: 90px;
+}
+
+.content_pt_sect {
+  padding-top: 90px;
+}
+
+.content_pb_sect {
+  padding-bottom: 90px;
 }
 
 .content_video {
@@ -40,25 +63,80 @@
   background-size: 100% auto;
   background-position: center;
   height: 720px;
+  text-align: center;
 }
 
 .content_map {
   text-align: center;
-  background-color: var(--white-10);
+  background-color: var(--white);
 }
 
 .content_map_text {
-  max-width: 489px;
   margin: auto;
-  margin-top: 90px;
+  margin-left: 105px;
+  margin-top: 140px;
+  text-align: left;
 }
 
 .content_map canvas {
   max-width: 100%;
 }
 
+.content_map_canvas {
+  max-width: 475px;
+  min-height: 475px;
+  margin-top: 85px;
+  margin-bottom: 50px;
+}
+
+.content_icon {
+  border: none;
+  border-radius: 65px;
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+}
+
+.content_icon span {
+  font-size: 3rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 47px;
+  height: 72px;
+  margin: auto;
+}
+
+.pink_icon {
+  background-color: #AA3C8033;
+}
+
+.pink_icon span {
+  color: #AA3C80;
+}
+
+.green_icon {
+  background-color: #83b2546b;
+}
+
+.green_icon span {
+  color: #83B254;
+}
+
+.title_disp_text {
+  display: inline-block;
+  margin-bottom: 24px;
+  top: -30px;
+  position: relative;
+  margin-left: 15px;
+}
+
 .image_1 {
   max-width: 475px;
+  min-height: 650px;
 }
 
 .image_2 {
@@ -69,7 +147,56 @@
   max-width: 300px;
 }
 
+.content_carousel {
+  text-align: center;
+  padding-top: 90px;
+}
+
+.content_v_a_m {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: fit-content;
+  margin: auto;
+  z-index: 1;
+}
+
+.content_observatory {
+  background-image: url('/images/imgpr3.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: bottom;
+  min-height: 765px;
+  position: relative;
+}
+
+.content_observatory::after {
+  content: "";
+  background-image: linear-gradient(to bottom, rgb(13 13 34), rgba(0, 0, 0, 0), rgb(13 13 34));
+  position: absolute;
+  max-height: 100%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  filter: brightness(80%);
+}
+
+.image_content {
+  z-index: 1;
+  position: relative;
+}
+
+@media(max-width: 1400px) {
+  .content_m_img {
+    margin-left: 0;
+  }
+}
+
 @media(max-width: 991px) {
+  .content_title {
+    background-size: auto 100%;
+  }
   .content_m_text {
     margin-left: 0;
     text-align: justify;
@@ -91,12 +218,32 @@
     text-align: center;
   }
   .image_1 {
+    width: auto;
     max-width: 100%;
+    height: auto;
+    min-height: 100%;
     margin: auto;
   }
   .image_2 {
     max-width: 100%;
     margin: auto;
+  }
+  .content_v_a_m {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    position: relative;
+  }
+  .content_map_text {
+    margin-left: 0;
+    margin-top: 50px;
+  }
+  .content_map_canvas {
+    max-width: 360px;
+    max-height: 600px;
+    margin: auto;
+  }
+  .content_observatory {
+    background-size: 100% 100%;
   }
 }
 
@@ -109,9 +256,37 @@
     margin-bottom: -130px;
     z-index: 1;
   }
-}
-@media(max-width: 380px) {
+  .content_map_canvas {
+    margin-top: -255px;
+    margin-bottom: 70px;
+  }
+  .content_title_text {
+    margin-top: 200px;
+  }
+  .content_title {
+    height: auto;
+    min-height: 720px;
+  }
+  .content_title::after {
+    height: 100%;
+    max-height: 100%;
+    min-height: 720px;
+  }
 
+  /* delete this when mobile desing was ready */
+  .content_no_padd h1 {
+    font-size: 220%;
+  }
+  .content_no_padd h6 {
+    font-size: 140%;
+  }
+  .content_no_padd p {
+    font-size: 100%;
+  }
+  /*###########################################*/
+}
+
+@media(max-width: 380px) {
   .content_map canvas {
     margin-top: -150px;
     margin-bottom: -220px;
