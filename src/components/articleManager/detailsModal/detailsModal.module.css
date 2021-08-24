@@ -1,0 +1,14 @@
+.modalContainer {
+  background-color: var(--colorItemBg);
+  padding: 2.5rem;
+}
+
+.descriptionInput {
+  min-height: 6rem;
+}
+
+.footer {
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+}
