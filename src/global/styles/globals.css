@@ -877,6 +877,7 @@ html {
   padding: 10px;
   display: block;
   overflow: hidden;
+  max-width: 59px;
 }
 
 .select-dropdown {
@@ -907,6 +908,12 @@ html {
   cursor: pointer;
   float: right;
   line-height: 20px;
+  font-style: normal;
+}
+
+.dropdown .dropdown-select small {
+  font-size: 54%;
+  margin-left: -1px;
 }
 
 .select-dropdown > li {
@@ -1148,15 +1155,15 @@ html {
 
 .Editor-container textarea {
   border-radius: 5px;
-  color: var(--colorLight);
   border: 1px solid transparent;
-  background-color: var(--colorBackgroundDarkSec);
+  background-color: var(--backgroung-color-dark);
   padding: 12px;
 }
 
 .Editor-container textarea:focus {
   outline: none !important;
   border: 1px solid var(--colorLight);
+  background-color: var(--colorBackgroundDarkSec);
 }
 
 .Editor-container iframe[title="video"] {
@@ -1235,8 +1242,3 @@ html {
 }
 
 /*********************************/
-/*###############BLOG TEXT CLASSES#######################*/
-
-
-
-/*#######################################################*/

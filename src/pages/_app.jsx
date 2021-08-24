@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import '@/global/styles/globals.css';
+import '@/global/styles/blog.css';
 import { Provider } from 'next-auth/client';
 import autosize from 'autosize';
 import { useEffect } from 'react';

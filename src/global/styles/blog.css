@@ -1,0 +1,27 @@
+/*###############BLOG TEXT CLASSES#######################*/
+
+.BLOG .title, .title-editor {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-lg);
+  color: var(--text-color-light);
+}
+
+.BLOG .subtitle, .subtitle-editor {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-md);
+  color: var(--text-color-light);
+}
+
+.BLOG .paragraph, .paragraph-editor {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  color: var(--text-color-light);
+}
+
+.BLOG .footer-text, .footer-text-editor {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+}
+
+/*#######################################################*/
