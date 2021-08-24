@@ -4,11 +4,13 @@
 import React, { useState, useEffect } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import AudioModalComponent from './AudioModal';
+import DetailsModal from './detailsModal/DetailsModal';
 import ModalVideo from './addVideoModal/addVideoModal';
 import styles from './editor.module.css';
 
 const EditorComponent = () => {
   const [modalShow, setModalShow] = useState(false);
+  const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
 
@@ -276,7 +278,7 @@ const EditorComponent = () => {
           delay={{ show: 250, hide: 200 }}
           overlay={renderTooltip('Publicar')}
         >
-          <div className="option-content">
+          <div className="option-content" onClick={() => setShowPublish(true)}>
             <div className="icon-content icon icon-toolBackgournd-1 colorLight">
               H
             </div>
@@ -315,6 +317,10 @@ const EditorComponent = () => {
           </div>
         </OverlayTrigger>
       </div>
+      <DetailsModal
+        show={showPublish}
+        onClose={() => setShowPublish(false)}
+      />
     </div>
   );
 };

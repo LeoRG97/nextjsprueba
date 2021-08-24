@@ -1,5 +1,4 @@
 import { signOut } from 'next-auth/client';
-// eslint-disable-next-line import/extensions
 import withAuth from '@/helpers/withAuth';
 import { Layout } from '@/components';
 
