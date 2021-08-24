@@ -3,6 +3,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import TextareaAutosize from 'react-textarea-autosize';
 import AudioModalComponent from './AudioModal';
 import DetailsModal from './detailsModal/DetailsModal';
 import ModalVideo from './addVideoModal/addVideoModal';
@@ -42,7 +43,8 @@ const EditorComponent = () => {
     elementOptionM.appendChild(elementIconM);
   };
 
-  const elementsGenerator = () => {
+  /*
+    const elementsGenerator = () => {
     const canvas = document.getElementById('canvas');
     if (canvas.children.length === 0) {
       canvas.innerHTML = '';
@@ -61,6 +63,19 @@ const EditorComponent = () => {
     elementG.classList = 'textarea';
     elementGeContainer.appendChild(elementG);
     elementsOptions('0', elementGeContainer);
+  }; */
+
+  const handleChange = (idContent, e) => {
+    // e.persist();
+    arrayItemsEditor.html.forEach((item, index) => {
+      if (item.id === idContent) {
+        // eslint-disable-next-line prefer-const
+        let modText = arrayItemsEditor;
+        modText.html[index].content = e.target.value;
+        setItems(modText);
+        localStorage.setItem('contentEditor', JSON.stringify(modText));
+      }
+    });
   };
 
   const elementAudio = (tag) => {
@@ -107,6 +122,35 @@ const EditorComponent = () => {
     setItems(obj);
   };
 
+  const addTextFunct = (optionText) => {
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const idContainer = makeid();
+    if (optionText === 'h1') {
+      obj.html.push({ id: idContainer, type: 'textHeader', content: '' });
+    } else if (optionText === 'h3') {
+      obj.html.push({ id: idContainer, type: 'textSubHeader', content: '' });
+    } else if (optionText === 'p') {
+      obj.html.push({ id: idContainer, type: 'textParagraph', content: '' });
+    } else if (optionText === 'small') {
+      obj.html.push({ id: idContainer, type: 'textFooter', content: '' });
+    }
+    localStorage.setItem('contentEditor', JSON.stringify(obj));
+    setItems(obj);
+  };
+
+  const deleteComponentEditor = (idContent) => {
+    // eslint-disable-next-line prefer-const
+    let newArrayContent = { html: [] };
+    arrayItemsEditor.html.forEach((item) => {
+      if (item.id !== idContent) {
+        newArrayContent.html.push(item);
+      }
+    });
+    setItems(newArrayContent);
+    localStorage.setItem('contentEditor', JSON.stringify(newArrayContent));
+  };
+
   useEffect(() => {
     const EditorContent = localStorage.getItem('contentEditor');
     if (EditorContent === null) {
@@ -136,7 +180,7 @@ const EditorComponent = () => {
                       <button className="Edit-dropbtn icon">0</button>
                       <div className="Edit-dropdown-container">
                         <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#"><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
                       </div>
                     </div>
                   </div>
@@ -160,7 +204,123 @@ const EditorComponent = () => {
                       <button className="Edit-dropbtn icon">0</button>
                       <div className="Edit-dropdown-container">
                         <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#"><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'textHeader':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <TextareaAutosize
+                      className="Edit-area title-editor"
+                      defaultValue={item.content}
+                      placeholder="Agrega una cabecera"
+                      onChange={(e) => handleChange(item.id, e)}
+                    />
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'textSubHeader':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <TextareaAutosize
+                      className="Edit-area subtitle-editor"
+                      defaultValue={item.content}
+                      placeholder="Agrega una subcabecera"
+                      onChange={(e) => handleChange(item.id, e)}
+                    />
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'textParagraph':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <TextareaAutosize
+                      className="Edit-area paragraph-editor"
+                      defaultValue={item.content}
+                      placeholder="Agrega un párrafo"
+                      onChange={(e) => handleChange(item.id, e)}
+                    />
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'textFooter':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <TextareaAutosize
+                      className="Edit-area footer-text-editor"
+                      defaultValue={item.content}
+                      placeholder="Agrega un pie de texto"
+                      onChange={(e) => handleChange(item.id, e)}
+                    />
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
                       </div>
                     </div>
                   </div>
@@ -215,22 +375,22 @@ const EditorComponent = () => {
                   overlay={renderTooltip('Texto')}
                 >
                   <div className="dropdown-select">
-                    <span id="select-span" className="text-sm">Select</span>
+                    <span id="select-span" className="text-sm">T<small>T</small></span>
                     <i className="icon">1</i>
                   </div>
                 </OverlayTrigger>
                 <input type="hidden" name="option" />
                 <ul className="select-dropdown">
-                  <li className="text-sm" onClick={() => elementsGenerator('h1')} id="h1">
+                  <li className="text-sm" onClick={() => addTextFunct('h1')} id="h1">
                     Cabecera
                   </li>
-                  <li className="text-sm" onClick={() => elementsGenerator('h3')} id="h3">
+                  <li className="text-sm" onClick={() => addTextFunct('h3')} id="h3">
                     Subcabecera
                   </li>
-                  <li className="text-sm" onClick={() => elementsGenerator('p')} id="p">
+                  <li className="text-sm" onClick={() => addTextFunct('p')} id="p">
                     Párrafo
                   </li>
-                  <li className="text-sm" onClick={() => elementsGenerator('small')} id="small">
+                  <li className="text-sm" onClick={() => addTextFunct('small')} id="small">
                     Pie de texto
                   </li>
                 </ul>
