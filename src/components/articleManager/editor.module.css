@@ -10,7 +10,7 @@
   display: grid;
   height: 100vh;
   background-color: #232739;
-  width: 70%;
+  width: 76%;
   margin-top: 8%;
   margin-bottom: 8%;
   border-radius: 25px;
@@ -31,4 +31,6 @@
   color: #FFFFFF;
   padding-top: 60px;
   margin-bottom: 30px;
+  padding-right: 62px;
+  padding-left: 62px;
 }
