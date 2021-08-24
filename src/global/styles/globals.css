@@ -25,6 +25,7 @@
   --blue: #0080b1;
   --black: #0d0c22;
   --black-10: #232739;
+  --blackRGB-10: rgb(13 13 34);
   --black-20: #393f5b;
   --gray: #757e94;
   /* --white-20: #e7e7e9;
@@ -42,29 +43,37 @@
 
   --orange: #bc4328;
   --yellow: #e6b600;
-  --green: #83b254;
   --magenta: #aa3c80;
 
   --blue-20: #0080b133;
   --orange-20: #bc432833;
   --yellow-20: #e6b60033;
   --green-20: #bc432833;
+  --green-30: #83b2546b;
   --magenta-20: #aa3c8033;
+
+  --contentTransparentRGB: rgba(0, 0, 0, 0);
 
   --colorPrimary: var(--blue); /* color corporativo */
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
   --colorSecondary: var(--gray); /* Iconos y texto secundario */
   --colorLight: var(--white); /* Iconos, textos y fondos claros */
   --colorItemBorder: var(--black-20); /* Contornos y subrayados */
+  --colorBackgroundDarkSec: var(--black-20); /*Fondo no negro secundario*/
   --colorItemBg: var(--black-10); /* Fondo no negro */
+  --colorItemBgRGB: var(--blackRGB-10); /* Fondo no negro en RGB */
   --colorLightFaint: var(--white-20); /* Contornos y subrayados */
   --colorError: var(--orange); /* Indicadores de error */
+  --colorWarning: var(--magenta); /* Indicadores de aviso */
   --colorSuccess: var(--green); /* Elementos de acción */
+  --colorSuccessTransp: var(--green-30); /*indicador de accion con transparencia*/
+  --colorWarningTransp: var(--magenta-20); /*indicador de accion con transparencia*/
 
   --text-color-dark: var(--black);
   --text-color-light: var(--white);
   --text-color-secondary: var(--gray);
   --text-color-highlight: var(--blue);
+  --text-color-error: var(--colorError);
 
     /* EDITOR COLORS */
   --text-color-sgrey: var(--sgrey);
@@ -165,6 +174,10 @@ body {
 
 .text--theme-highlight {
   color: var(--text-color-highlight);
+}
+
+.text--theme-error {
+  color: var(--text-color-error);
 }
 
 .icon {
@@ -662,6 +675,38 @@ html {
   background-color: #ffffff2f;
 }
 
+.Btn-cancel {
+  border-radius: 50px;
+  background-color: transparent;
+  border: 1px solid var(--colorSecondary);
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  padding: 3px 28px;
+  color: var(--colorSecondary);
+  height: 2.5rem;
+}
+
+.Btn-cancel:hover {
+  background-color: var(--colorSecondary);
+  color: var(--colorLight);
+  filter: brightness(70%);
+}
+
+.Btn-add {
+  border-radius: 50px;
+  background-color: var(--colorPrimary);
+  border: 1px solid var(--colorPrimary);
+  font-family: var(--colorLight);
+  font-size: var(--font-size-md);
+  padding: 3px 28px;
+  color: var(--colorLight);
+  height: 2.5rem;
+}
+
+.Btn-add:hover {
+  filter: brightness(120%);
+}
+
 .m-a {
   margin: auto;
 }
@@ -987,6 +1032,12 @@ html {
   overflow: hidden;
 }
 
+/*********************************/
+
+#modalVideo .modal-content {
+  background-color: transparent !important;
+}
+
 .canvas-component-container .multimedia{
   width: 80%;
   height: 158px;
@@ -1026,3 +1077,148 @@ html {
 .modal-footer {
   border-top: none !important;
 }
+
+/*EDITOR**************************/
+.purple-content {
+  background-color: var(--black-10);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.Edit-btn {
+  padding: 10px 20px;
+  background-color: var(--colorBackgroundDarkSec);
+  border: none;
+  height: 44px;
+  margin: auto;
+  opacity: 0;
+}
+
+.Edit-btn.move-btn{
+  cursor: n-resize;
+}
+
+.Edit-btn:hover {
+  filter: brightness(200%);
+}
+
+.Editor-content {
+  display: flex;
+  padding-bottom: 30px;
+}
+
+.Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
+  opacity: 1;
+}
+
+.Editor-content button, .Editor-container  {
+  display: inline-grid;
+}
+
+.Editor-container {
+  width: calc(100% - 115px);
+  max-width: calc(100% - 115px);
+  margin: auto;
+  position: relative;
+}
+
+.Edit-area {
+  width: 98%;
+  margin: auto;
+}
+
+.Editor-container textarea {
+  border-radius: 5px;
+  color: var(--colorLight);
+  border: 1px solid transparent;
+  background-color: var(--colorBackgroundDarkSec);
+  padding: 12px;
+}
+
+.Editor-container textarea:focus {
+  outline: none !important;
+  border: 1px solid var(--colorLight);
+
+}
+
+.Editor-container iframe[title="video"] {
+  width: 100%;
+  height: calc(62vw/1.77);
+}
+
+.Editor-container iframe {
+  margin: auto;
+}
+
+.Edit-dropdown-content {
+  margin: auto;
+  width: 56px;
+}
+
+.Edit-dropbtn {
+  padding: 10px 20px;
+  background-color: var(--colorBackgroundDarkSec);
+  border: none;
+  height: 44px;
+  margin: auto;
+  filter: brightness(110%);
+  opacity: 0;
+}
+
+.Edit-dropdown {
+  position: relative;
+  display: inline-grid;
+  filter: brightness(100%);
+}
+
+.Edit-dropdown-container {
+  display: none;
+  position: absolute;
+  background-color: var(--colorBackgroundDarkSec);
+  min-width: 127px;
+  z-index: 10;
+  top: 43px;
+  border-radius: 6px;
+}
+
+.Edit-dropdown-container a {
+  color: var(--colorLight);
+  padding: 10px 0px;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  filter: brightness(50%);
+  border-radius: 6px;
+}
+
+.Edit-dropdown-container span {
+  display: inline;
+  position: absolute;
+  color: var(--colorLight);
+}
+
+.Edit-dropdown-container a:hover {
+  background-color: var(--colorBackgroundDarkSec);
+  filter: brightness(200%);
+  color: var(--colorLight);
+}
+
+.Edit-dropdown:hover .Edit-dropdown-container {
+  display: block;
+}
+
+.Edit-dropdown:hover .Edit-dropbtn {
+  background-color: var(--colorBackgroundDarkSec);
+}
+
+.Edit-dropbtn:hover {
+  background-color: var(--colorBackgroundDarkSec) !important;
+  filter: brightness(200%) !important;
+}
+
+/*********************************/
+/*###############BLOG TEXT CLASSES#######################*/
+
+
+
+/*#######################################################*/

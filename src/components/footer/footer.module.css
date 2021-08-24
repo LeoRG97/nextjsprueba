@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--white-10);
+  background-color: var(--colorLight);
   padding-top: 80px;
   background-image: url('/images/imgpr3.jpg');
   background-repeat: no-repeat;
@@ -15,7 +15,7 @@
 
 .footer::after {
   content: "";
-  background-image: linear-gradient(to bottom,  rgb(13 13 34) 20%, rgba(0, 0, 0, 0));
+  background-image: linear-gradient(to bottom,  var(--colorItemBgRGB) 20%, var(--contentTransparentRGB));
   position: absolute;
   max-height: 100%;
   top: 0px;

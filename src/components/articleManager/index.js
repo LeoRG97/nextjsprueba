@@ -1,16 +1,31 @@
+/* eslint-disable react/no-danger */
+/* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import AudioModalComponent from './AudioModal';
+import ModalVideo from './addVideoModal/addVideoModal';
 import styles from './editor.module.css';
 
 const EditorComponent = () => {
   const [modalShow, setModalShow] = useState(false);
+  const [modalShowVideo, setModalShowVideo] = useState(false);
+  const [arrayItemsEditor, setItems] = useState({});
 
   const renderTooltip = (props) => (
     // eslint-disable-next-line react/jsx-filename-extension
     <Tooltip id="button-tooltip">{props}</Tooltip>
   );
+
+  const makeid = () => {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = 5;
+    for (let i = 0; i < 5; i += 1) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
 
   const elementsOptions = (icon, canvas) => {
     // CANVAS OPTION
@@ -76,6 +91,87 @@ const EditorComponent = () => {
     }
   };
 
+  const addVideoFunct = (tag, embedIframe) => {
+    setModalShowVideo(false);
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const idContainer = makeid();
+    if (!embedIframe) {
+      obj.html.push({ id: idContainer, type: 'linkVideo', content: tag });
+    } else {
+      obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+    }
+    localStorage.setItem('contentEditor', JSON.stringify(obj));
+    setItems(obj);
+  };
+
+  useEffect(() => {
+    const EditorContent = localStorage.getItem('contentEditor');
+    if (EditorContent === null) {
+      // {"id": "", "type":"","content":""}
+      const jsonStr = '{"html":[]}';
+      localStorage.setItem('contentEditor', jsonStr);
+      setItems({ html: [] });
+    } else {
+      setItems(JSON.parse(EditorContent));
+    }
+  }, []);
+
+  const renderSwitchContainer = (item) => {
+    switch (item.type) {
+      case 'linkVideo':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <iframe src={item.content} title="video" />
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#"><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'iframeVideo':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#"><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      default:
+        return (<> </>);
+    }
+  };
+
   return (
     <div className={styles.editor}>
       <AudioModalComponent
@@ -83,10 +179,27 @@ const EditorComponent = () => {
         evento={() => elementAudio(true, 'div')}
         onHide={() => setModalShow(false)}
       />
+      <ModalVideo
+        show={modalShowVideo}
+        addVideo={addVideoFunct}
+        showModal={() => setModalShowVideo(false)}
+      />
       <div className={styles.editorContent} align="center">
         <div>
           <div id="canvas" className={styles.canvas}>
             Estructura aquí el contenido de tu artículo
+            {
+              (arrayItemsEditor.length !== 0 && arrayItemsEditor.html)
+                ? (arrayItemsEditor.html.map((item) => {
+                  return (
+                    <div key={item.id}>
+                      {
+                        renderSwitchContainer(item)
+                      }
+                    </div>
+                  );
+                })) : (<> </>)
+            }
           </div>
           <div className="tools">
             <section>
@@ -133,7 +246,11 @@ const EditorComponent = () => {
                 delay={{ show: 250, hide: 200 }}
                 overlay={renderTooltip('Video')}
               >
-                <div className="icon tools-media">F</div>
+                <div
+                  className="icon tools-media"
+                  onClick={() => setModalShowVideo(true)}
+                >F
+                </div>
               </OverlayTrigger>
 
               <OverlayTrigger
