@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
-import AudioModalComponent from './AudioModal';
 import DetailsModal from './detailsModal/DetailsModal';
 import ModalVideo from './addVideoModal/addVideoModal';
+import ModalAudio from './addAudioModal/addAudioModal';
 import ToolsComponent from './toolsComponent/tools';
 import styles from './editor.module.css';
 
@@ -16,6 +16,7 @@ const EditorComponent = ({ option }) => {
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
   const [addedVideo, setContentVideo] = useState(false);
+  const [addedAudio, setContentAudio] = useState(false);
 
   const renderTooltip = (props) => (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -32,19 +33,6 @@ const EditorComponent = ({ option }) => {
     return result;
   };
 
-  const elementsOptions = (icon, canvas) => {
-    // CANVAS OPTION
-    const elementOptionM = document.createElement('div');
-    elementOptionM.classList = 'canvas-options';
-    canvas.appendChild(elementOptionM);
-
-    // CANVAS OPTION ICON
-    const elementIconM = document.createElement('div');
-    elementIconM.innerHTML = icon;
-    elementIconM.classList = 'canvas-option-icon icon';
-    elementOptionM.appendChild(elementIconM);
-  };
-
   const handleChange = (idContent, e) => {
     // e.persist();
     arrayItemsEditor.html.forEach((item, index) => {
@@ -56,36 +44,6 @@ const EditorComponent = ({ option }) => {
         localStorage.setItem('contentEditor', JSON.stringify(modText));
       }
     });
-  };
-
-  const elementAudio = (tag) => {
-    const canvas = document.getElementById('canvas');
-    if (canvas.children.length === 0) {
-      canvas.innerHTML = '';
-    }
-
-    const inputAudio = document.getElementById('modal-input');
-    if (inputAudio.value) {
-      // CANVAS CONTAINER
-      const elementGeContainer = document.createElement('div');
-      elementGeContainer.classList = 'canvas-component-container text-';
-      canvas.appendChild(elementGeContainer);
-
-      const iframeEC = document.createElement(tag);
-      iframeEC.classList = 'multimedia';
-      iframeEC.innerHTML = inputAudio.value;
-      if (iframeEC.getElementsByTagName('iframe').length > 0) {
-        elementsOptions('4', elementGeContainer);
-        iframeEC.getElementsByTagName('iframe')[0].width = '100%';
-        iframeEC.getElementsByTagName('iframe')[0].height = '100%';
-        elementGeContainer.appendChild(iframeEC);
-        elementsOptions('0', elementGeContainer);
-        setModalShow(false);
-      } else {
-        const spanModal = document.getElementById('modal-mensaje');
-        spanModal.innerHTML = 'No se permiten URLs';
-      }
-    }
   };
 
   const addVideoFunct = (tag, embedIframe) => {
@@ -136,6 +94,29 @@ const EditorComponent = ({ option }) => {
     setItems(obj);
   };
 
+  const addAudioFunct = (tag) => {
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const idContainer = makeid();
+    if (option === 'onlyAudio') {
+      setContentAudio(true);
+    }
+    if (obj.html.length > 0 && option === 'onlyAudio') {
+      const topAudio = { html: [] };
+      topAudio.html.push({ id: idContainer, type: 'iframeAudio', content: tag });
+      obj.html.forEach((item) => {
+        topAudio.html.push(item);
+      });
+      localStorage.setItem('contentEditor', JSON.stringify(topAudio));
+      setItems(topAudio);
+    } else {
+      obj.html.push({ id: idContainer, type: 'iframeAudio', content: tag });
+      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      setItems(obj);
+    }
+    setModalShow(false);
+  };
+
   const deleteComponentEditor = (idContent) => {
     const newArrayContent = { html: [] };
     arrayItemsEditor.html.forEach((item) => {
@@ -154,6 +135,15 @@ const EditorComponent = ({ option }) => {
       });
       setContentVideo(validateVideo);
     }
+    if (option === 'onlyAudio') {
+      let validateAudio = false;
+      newArrayContent.html.forEach((item) => {
+        if (item.type === 'iframeAudio') {
+          validateAudio = true;
+        }
+      });
+      setContentAudio(validateAudio);
+    }
   };
 
   useEffect(() => {
@@ -169,6 +159,9 @@ const EditorComponent = ({ option }) => {
       elementsEditor.html.forEach((item) => {
         if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
           setContentVideo(true);
+        }
+        if (item.type === 'iframeAudio') {
+          setContentAudio(true);
         }
       });
     }
@@ -201,6 +194,30 @@ const EditorComponent = ({ option }) => {
           </div>
         );
       case 'iframeVideo':
+        return (
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col">
+                <div className="Editor-content">
+                  <button className="Edit-btn move-btn icon">4</button>
+                  <div className="Editor-container">
+                    <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
+                  </div>
+                  <div className="Edit-dropdown-content">
+                    <div className="Edit-dropdown">
+                      <button className="Edit-dropbtn icon">0</button>
+                      <div className="Edit-dropdown-container">
+                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
+                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      case 'iframeAudio':
         return (
           <div className="container-fluid">
             <div className="row">
@@ -347,10 +364,10 @@ const EditorComponent = ({ option }) => {
 
   return (
     <div className={styles.editor}>
-      <AudioModalComponent
+      <ModalAudio
         show={modalShow}
-        evento={() => elementAudio(true, 'div')}
-        onHide={() => setModalShow(false)}
+        addAudio={addAudioFunct}
+        showModal={() => setModalShow(false)}
       />
       <ModalVideo
         show={modalShowVideo}
@@ -377,6 +394,7 @@ const EditorComponent = ({ option }) => {
           <ToolsComponent
             option={option}
             addedVideo={addedVideo}
+            addedAudio={addedAudio}
             renderTooltip={renderTooltip}
             addTextFunct={addTextFunct}
             setModalShowVideo={setModalShowVideo}
