@@ -1,19 +1,21 @@
 /* eslint-disable react/no-danger */
 /* eslint-disable react/self-closing-comp */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import TextareaAutosize from 'react-textarea-autosize';
 import AudioModalComponent from './AudioModal';
 import DetailsModal from './detailsModal/DetailsModal';
 import ModalVideo from './addVideoModal/addVideoModal';
+import ToolsComponent from './toolsComponent/tools';
 import styles from './editor.module.css';
 
-const EditorComponent = () => {
+const EditorComponent = ({ option }) => {
   const [modalShow, setModalShow] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
+  const [addedVideo, setContentVideo] = useState(false);
 
   const renderTooltip = (props) => (
     // eslint-disable-next-line react/jsx-filename-extension
@@ -42,28 +44,6 @@ const EditorComponent = () => {
     elementIconM.classList = 'canvas-option-icon icon';
     elementOptionM.appendChild(elementIconM);
   };
-
-  /*
-    const elementsGenerator = () => {
-    const canvas = document.getElementById('canvas');
-    if (canvas.children.length === 0) {
-      canvas.innerHTML = '';
-    }
-
-    // CANVAS CONTAINER
-    const elementGeContainer = document.createElement('div');
-    elementGeContainer.classList = 'canvas-component-container text-';
-    canvas.appendChild(elementGeContainer);
-
-    elementsOptions('4', elementGeContainer);
-    // CANVAS TEXTAREA
-    const elementG = document.createElement('textarea');
-    elementG.setAttribute('rows', '3');
-    elementG.setAttribute('cols', '60');
-    elementG.classList = 'textarea';
-    elementGeContainer.appendChild(elementG);
-    elementsOptions('0', elementGeContainer);
-  }; */
 
   const handleChange = (idContent, e) => {
     // e.persist();
@@ -109,17 +89,34 @@ const EditorComponent = () => {
   };
 
   const addVideoFunct = (tag, embedIframe) => {
-    setModalShowVideo(false);
     const EditorContent = localStorage.getItem('contentEditor');
     const obj = JSON.parse(EditorContent);
     const idContainer = makeid();
-    if (!embedIframe) {
-      obj.html.push({ id: idContainer, type: 'linkVideo', content: tag });
-    } else {
-      obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+    if (option === 'onlyVideo') {
+      setContentVideo(true);
     }
-    localStorage.setItem('contentEditor', JSON.stringify(obj));
-    setItems(obj);
+    if (obj.html.length > 0 && option === 'onlyVideo') {
+      const topVideo = { html: [] };
+      if (!embedIframe) {
+        topVideo.html.push({ id: idContainer, type: 'linkVideo', content: tag });
+      } else {
+        topVideo.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+      }
+      obj.html.forEach((item) => {
+        topVideo.html.push(item);
+      });
+      localStorage.setItem('contentEditor', JSON.stringify(topVideo));
+      setItems(topVideo);
+    } else {
+      if (!embedIframe) {
+        obj.html.push({ id: idContainer, type: 'linkVideo', content: tag });
+      } else {
+        obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+      }
+      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      setItems(obj);
+    }
+    setModalShowVideo(false);
   };
 
   const addTextFunct = (optionText) => {
@@ -140,8 +137,7 @@ const EditorComponent = () => {
   };
 
   const deleteComponentEditor = (idContent) => {
-    // eslint-disable-next-line prefer-const
-    let newArrayContent = { html: [] };
+    const newArrayContent = { html: [] };
     arrayItemsEditor.html.forEach((item) => {
       if (item.id !== idContent) {
         newArrayContent.html.push(item);
@@ -149,17 +145,32 @@ const EditorComponent = () => {
     });
     setItems(newArrayContent);
     localStorage.setItem('contentEditor', JSON.stringify(newArrayContent));
+    if (option === 'onlyVideo') {
+      let validateVideo = false;
+      newArrayContent.html.forEach((item) => {
+        if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
+          validateVideo = true;
+        }
+      });
+      setContentVideo(validateVideo);
+    }
   };
 
   useEffect(() => {
     const EditorContent = localStorage.getItem('contentEditor');
     if (EditorContent === null) {
-      // {"id": "", "type":"","content":""}
+      // {id: "", type: "", content: ""}
       const jsonStr = '{"html":[]}';
       localStorage.setItem('contentEditor', jsonStr);
       setItems({ html: [] });
     } else {
       setItems(JSON.parse(EditorContent));
+      const elementsEditor = JSON.parse(EditorContent);
+      elementsEditor.html.forEach((item) => {
+        if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
+          setContentVideo(true);
+        }
+      });
     }
   }, []);
 
@@ -363,72 +374,14 @@ const EditorComponent = () => {
                 })) : (<> </>)
             }
           </div>
-          <div className="tools">
-            <section>
-              <div className="files text-md">Insertar</div>
-            </section>
-            <section className="tools-select">
-              <div className="dropdown">
-                <OverlayTrigger
-                  placement="top"
-                  delay={{ show: 250, hide: 200 }}
-                  overlay={renderTooltip('Texto')}
-                >
-                  <div className="dropdown-select">
-                    <span id="select-span" className="text-sm">T<small>T</small></span>
-                    <i className="icon">1</i>
-                  </div>
-                </OverlayTrigger>
-                <input type="hidden" name="option" />
-                <ul className="select-dropdown">
-                  <li className="text-sm" onClick={() => addTextFunct('h1')} id="h1">
-                    Cabecera
-                  </li>
-                  <li className="text-sm" onClick={() => addTextFunct('h3')} id="h3">
-                    Subcabecera
-                  </li>
-                  <li className="text-sm" onClick={() => addTextFunct('p')} id="p">
-                    Párrafo
-                  </li>
-                  <li className="text-sm" onClick={() => addTextFunct('small')} id="small">
-                    Pie de texto
-                  </li>
-                </ul>
-              </div>
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 200 }}
-                overlay={renderTooltip('Imagen')}
-              >
-                <div className="icon tools-media">E</div>
-              </OverlayTrigger>
-
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 200 }}
-                overlay={renderTooltip('Video')}
-              >
-                <div
-                  className="icon tools-media"
-                  onClick={() => setModalShowVideo(true)}
-                >F
-                </div>
-              </OverlayTrigger>
-
-              <OverlayTrigger
-                placement="top"
-                delay={{ show: 250, hide: 200 }}
-                overlay={renderTooltip('Audio')}
-              >
-                <div
-                  onClick={() => setModalShow(true)}
-                  className="icon tools-media"
-                >
-                  G
-                </div>
-              </OverlayTrigger>
-            </section>
-          </div>
+          <ToolsComponent
+            option={option}
+            addedVideo={addedVideo}
+            renderTooltip={renderTooltip}
+            addTextFunct={addTextFunct}
+            setModalShowVideo={setModalShowVideo}
+            setModalShow={setModalShow}
+          />
         </div>
       </div>
       {/* EDITOR OPTIONS NAV */}
@@ -483,6 +436,14 @@ const EditorComponent = () => {
       />
     </div>
   );
+};
+
+EditorComponent.propTypes = {
+  option: PropTypes.string,
+};
+
+EditorComponent.defaultProps = {
+  option: '',
 };
 
 export default EditorComponent;

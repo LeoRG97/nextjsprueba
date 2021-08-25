@@ -28,46 +28,51 @@ export default function Home() {
                 <h1 className="title-xl text--theme-light">Su socio global <br />en innovación</h1>
               </div>
             </Row>
+            <video id="bgVideo" className={styles.content_title_video} controls preload="true" autoPlay loop muted>
+              <source src="/video/preview.mp4" type="video/mp4" />
+            </video>
           </Container>
-          <Container>
-            <Row className={styles.content_mt_sect}>
-              <Col xl="6" lg="6" sm="12">
-                <div className={`${styles.content_m_text} `}>
-                  <small className="text-sm ">Filosofía</small>
-                  <h1 className="title-xl text--theme-light">Hacemos aquello <br />en lo que creemos</h1>
+          <Container fluid>
+            <Container>
+              <Row className={styles.content_mt_sect}>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={`${styles.content_m_text} `}>
+                    <small className="text-sm ">Filosofía</small>
+                    <h1 className="title-xl text--theme-light">Hacemos aquello <br />en lo que creemos</h1>
+                  </div>
+                </Col>
+                <Col xl="6" lg="6" sm="12"> </Col>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={`${styles.content_m_text} `}>
+                    <div className={`${styles.content_icon} ${styles.pink_icon}`}><span className="icon">C</span></div>
+                    <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>
+                    {
+                      // eslint-disable-next-line max-len
+                      <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo a través de relaciones a largo plazo, desarrollamos ecosistemas en evolución con nuestros clientes a través de tecnologías de vanguardia y potenciamos nuestra creatividad respetando la diversidad.</p>
+                    }
+                  </div>
+                </Col>
+                <Col xl="6" lg="6" sm="12">
+                  <div className={`${styles.content_mr_text} `}>
+                    <div className={`${styles.content_icon} ${styles.green_icon}`}><span className="icon">9</span></div>
+                    <h6 className={`${styles.title_disp_text} title`}>Declaración de misión</h6>
+                    {
+                      // eslint-disable-next-line max-len
+                      <p className="text-md">NTT DATA utiliza la tecnología de la información para crear nuevos paradigmas y valores, que ayudan a contribuir a una sociedad más próspera y armoniosa.</p>
+                    }
+                  </div>
+                </Col>
+              </Row>
+              <Row className={styles.content_mt_sect}>
+                <div className={styles.content_video}>
+                  <div className={styles.content_title_text}>
+                    <small className="text-sm text--theme-light">Nuestro propósito</small>
+                    <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
+                    <button className="Btn-outline-light"><span className="icon">F</span>Muéstrame cómo</button>
+                  </div>
                 </div>
-              </Col>
-              <Col xl="6" lg="6" sm="12"> </Col>
-              <Col xl="6" lg="6" sm="12">
-                <div className={`${styles.content_m_text} `}>
-                  <div className={`${styles.content_icon} ${styles.pink_icon}`}><span className="icon">C</span></div>
-                  <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>
-                  {
-                    // eslint-disable-next-line max-len
-                    <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo a través de relaciones a largo plazo, desarrollamos ecosistemas en evolución con nuestros clientes a través de tecnologías de vanguardia y potenciamos nuestra creatividad respetando la diversidad.</p>
-                  }
-                </div>
-              </Col>
-              <Col xl="6" lg="6" sm="12">
-                <div className={`${styles.content_mr_text} `}>
-                  <div className={`${styles.content_icon} ${styles.green_icon}`}><span className="icon">9</span></div>
-                  <h6 className={`${styles.title_disp_text} title`}>Declaración de misión</h6>
-                  {
-                    // eslint-disable-next-line max-len
-                    <p className="text-md">NTT DATA utiliza la tecnología de la información para crear nuevos paradigmas y valores, que ayudan a contribuir a una sociedad más próspera y armoniosa.</p>
-                  }
-                </div>
-              </Col>
-            </Row>
-            <Row className={styles.content_mt_sect}>
-              <div className={styles.content_video}>
-                <div className={styles.content_title_text}>
-                  <small className="text-sm text--theme-light">Nuestro propósito</small>
-                  <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
-                  <button className="Btn-outline-light"><span className="icon">F</span>Muéstrame cómo</button>
-                </div>
-              </div>
-            </Row>
+              </Row>
+            </Container>
           </Container>
           <Container fluid className={styles.content_observatory}>
             <Container>
