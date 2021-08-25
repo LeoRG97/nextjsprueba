@@ -21,7 +21,7 @@
   src: url("/fonts/IconosFuenteNTT.otf");
 }
 
-:root {
+:root, *::before, *::after {
   --blue: #0080b1;
   --black: #0d0c22;
   --black-10: #232739;
@@ -868,6 +868,10 @@ html {
   margin-right: 30px;
 }
 
+.dropdown.no-m {
+  margin: auto;
+}
+
 .dropdown .dropdown-select {
   width: 7vw;
   color: var(--text-color-sgrey) !important;
@@ -943,6 +947,7 @@ html {
 .select-dropdown li:active {
   background-color: var(--backgroung-color-low-dark);
 }
+
 @media (max-width: 999px) {
   .dropdown {
     margin-right: 15px;
@@ -954,73 +959,9 @@ html {
     width: 120px;
   }
 }
+
 /* SELECTBOX ============================================================================ */
-/* TOOLS ======================================================================= */
-.tools {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--backgroung-color-low-dark);
-  border-style: dashed;
-  background-color: var(--backgroung-color-dark);
-  width: 80%;
-  height: 100px;
-  margin-bottom: 30px;
-}
 
-.tools section {
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
-
-.tools section:first-child {
-  width: 30%;
-  word-break: break-all;
-}
-
-.files {
-  color: var(--colorLight);
-  font-size: var(--font-size-sm);
-}
-
-.tools-media {
-  cursor: pointer;
-  width: 46px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: var(--backgroung-color-dark);
-  border: 1px solid var(--backgroung-color-low-dark);
-  color: var(--text-color-sgrey);
-  font-size: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 15px;
-  transition: 0.5s;
-}
-
-.tools-media:last-child {
-  margin-right: 0px;
-}
-
-.tools-media:hover {
-  background-color: var(--text-color-sgrey);
-  color: #fff;
-}
-
-@media (max-width: 999px) {
-  .tools-media {
-    width: 46px;
-    height: 40px;
-    margin-right: 10px;
-  }
-
-  .tools section {
-    width: 65%;
-  }
-}
 /* TOOLS EDITOR ============================================================================ */
 /* ELEMENTS EDITOR =========================================================================*/
 .canvas-component-container {
@@ -1242,3 +1183,8 @@ html {
 }
 
 /*********************************/
+div[disabled] {
+  pointer-events: none;
+  opacity: 0.7;
+  margin-top: 45px;
+}
