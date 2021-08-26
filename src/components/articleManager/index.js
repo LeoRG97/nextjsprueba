@@ -1,14 +1,13 @@
-/* eslint-disable react/no-danger */
-/* eslint-disable react/self-closing-comp */
+/* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import TextareaAutosize from 'react-textarea-autosize';
-import DetailsModal from './detailsModal/DetailsModal';
-import ModalVideo from './addVideoModal/addVideoModal';
-import ModalAudio from './addAudioModal/addAudioModal';
-import ToolsComponent from './toolsComponent/tools';
 import styles from './editor.module.css';
+import DetailsModal from './modals/detailsModal/DetailsModal';
+import ModalVideo from './modals/addVideoModal/addVideoModal';
+import ModalAudio from './modals/addAudioModal/addAudioModal';
+import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
+import ToolsComponent from './editorComponents/toolsComponent/tools';
+import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
 
 const EditorComponent = ({ option }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -17,11 +16,6 @@ const EditorComponent = ({ option }) => {
   const [arrayItemsEditor, setItems] = useState({});
   const [addedVideo, setContentVideo] = useState(false);
   const [addedAudio, setContentAudio] = useState(false);
-
-  const renderTooltip = (props) => (
-    // eslint-disable-next-line react/jsx-filename-extension
-    <Tooltip id="button-tooltip">{props}</Tooltip>
-  );
 
   const makeid = () => {
     let result = '';
@@ -167,201 +161,6 @@ const EditorComponent = ({ option }) => {
     }
   }, []);
 
-  const renderSwitchContainer = (item) => {
-    switch (item.type) {
-      case 'linkVideo':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <iframe src={item.content} title="video" />
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'iframeVideo':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'iframeAudio':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <div dangerouslySetInnerHTML={{ __html: item.content }}></div>
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'textHeader':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <TextareaAutosize
-                      className="Edit-area title-editor"
-                      defaultValue={item.content}
-                      placeholder="Agrega una cabecera"
-                      onChange={(e) => handleChange(item.id, e)}
-                    />
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'textSubHeader':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <TextareaAutosize
-                      className="Edit-area subtitle-editor"
-                      defaultValue={item.content}
-                      placeholder="Agrega una subcabecera"
-                      onChange={(e) => handleChange(item.id, e)}
-                    />
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'textParagraph':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <TextareaAutosize
-                      className="Edit-area paragraph-editor"
-                      defaultValue={item.content}
-                      placeholder="Agrega un párrafo"
-                      onChange={(e) => handleChange(item.id, e)}
-                    />
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      case 'textFooter':
-        return (
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col">
-                <div className="Editor-content">
-                  <button className="Edit-btn move-btn icon">4</button>
-                  <div className="Editor-container">
-                    <TextareaAutosize
-                      className="Edit-area footer-text-editor"
-                      defaultValue={item.content}
-                      placeholder="Agrega un pie de texto"
-                      onChange={(e) => handleChange(item.id, e)}
-                    />
-                  </div>
-                  <div className="Edit-dropdown-content">
-                    <div className="Edit-dropdown">
-                      <button className="Edit-dropbtn icon">0</button>
-                      <div className="Edit-dropdown-container">
-                        <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                        <a href="#" onClick={() => deleteComponentEditor(item.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      default:
-        return (<> </>);
-    }
-  };
-
   return (
     <div className={styles.editor}>
       <ModalAudio
@@ -383,9 +182,11 @@ const EditorComponent = ({ option }) => {
                 ? (arrayItemsEditor.html.map((item) => {
                   return (
                     <div key={item.id}>
-                      {
-                        renderSwitchContainer(item)
-                      }
+                      <EditorOptionRender
+                        data={item}
+                        deleteComponentEditor={deleteComponentEditor}
+                        handleChange={handleChange}
+                      />
                     </div>
                   );
                 })) : (<> </>)
@@ -395,7 +196,6 @@ const EditorComponent = ({ option }) => {
             option={option}
             addedVideo={addedVideo}
             addedAudio={addedAudio}
-            renderTooltip={renderTooltip}
             addTextFunct={addTextFunct}
             setModalShowVideo={setModalShowVideo}
             setModalShow={setModalShow}
@@ -403,50 +203,28 @@ const EditorComponent = ({ option }) => {
         </div>
       </div>
       {/* EDITOR OPTIONS NAV */}
-      <div className="options-container">
-        <OverlayTrigger
-          placement="left"
-          delay={{ show: 250, hide: 200 }}
-          overlay={renderTooltip('Publicar')}
-        >
-          <div className="option-content" onClick={() => setShowPublish(true)}>
-            <div className="icon-content icon icon-toolBackgournd-1 colorLight">
-              H
-            </div>
-          </div>
-        </OverlayTrigger>
+      <div className={styles.optionsContainer}>
 
-        <OverlayTrigger
-          placement="left"
-          delay={{ show: 250, hide: 200 }}
-          overlay={renderTooltip('Guardar borrador')}
-        >
-          <div className="option-content">
-            <div className="icon-content icon icon-toolBackgournd-2 colorLight">
-              I
-            </div>
+        <TooltipContainer tooltipText="Publicar" placement="left">
+          <div className={`icon-button icon-button--success ${styles.optionsItem}`} onClick={() => setShowPublish(true)}>
+            H
           </div>
-        </OverlayTrigger>
+        </TooltipContainer>
 
-        <OverlayTrigger
-          placement="left"
-          delay={{ show: 250, hide: 200 }}
-          overlay={renderTooltip('Vista previa')}
-        >
-          <div className="option-content">
-            <div className="icon-content icon">C</div>
+        <TooltipContainer tooltipText="Guardar borrador" placement="left">
+          <div className={`icon-button icon-button--primary ${styles.optionsItem}`}>
+            I
           </div>
-        </OverlayTrigger>
+        </TooltipContainer>
 
-        <OverlayTrigger
-          placement="left"
-          delay={{ show: 250, hide: 200 }}
-          overlay={renderTooltip('Detalles')}
-        >
-          <div className="option-content">
-            <div className="icon-content icon">J</div>
-          </div>
-        </OverlayTrigger>
+        <TooltipContainer tooltipText="Vista previa" placement="left">
+          <div className={`icon-button ${styles.optionsItem}`}>C</div>
+        </TooltipContainer>
+
+        <TooltipContainer tooltipText="Detalles" placement="left">
+          <div className={`icon-button ${styles.optionsItem}`}>J</div>
+        </TooltipContainer>
+
       </div>
       <DetailsModal
         show={showPublish}

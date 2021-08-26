@@ -193,14 +193,33 @@ body {
   color: var(--text-color-highlight);
 }
 
-.icon-toolBackgournd-1 {
-  background-color: var(--green);
-  color: var(--text-color-light) !important;
+.icon-button {
+  border: 1px solid #393f5b;
+  color: var(--text-color-sgrey);
+  font-family: Icons;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
-.icon-toolBackgournd-2 {
-  background-color: var(--blue2);
-  color: var(--text-color-light) !important;
+.icon-button:hover {
+  background-color: #6785c1;
+  color: #ffffff;
+}
+
+.icon-button--primary {
+  background-color: var(--colorPrimary);
+  color: var(--text-color-light);
+}
+
+.icon-button--success {
+  background-color: var(--colorSuccess);
+  color: var(--text-color-light);
 }
 
 /* BUTTON */
@@ -806,58 +825,28 @@ html {
 /* WORLD MAP ============================================================================ */
 /* TOOLS EDITOR ============================================================================ */
 .tooltip-inner {
-  font-family: Gilroy-Medium;
+  font-family: var(--font-regular);
   background-color: var(--backgroung-color-low-dark) !important;
   color: #ffffff !important;
-  font-size: 10px !important;
+  font-size: var(--font-size-sm) !important;
 }
 
-.options-container {
-  position: absolute;
-  top: 20%;
-  right: 7vw;
-  z-index: 0;
-  width: auto;
-  display: grid;
-  align-items: center;
-  justify-content: center;
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: var(--backgroung-color-low-dark);
 }
 
-.option-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  width: 55px;
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: var(--backgroung-color-low-dark);
 }
 
-.option-content:last-child {
-  margin-bottom: 0px;
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: var(--backgroung-color-low-dark);
 }
 
-.options-container .icon-content {
-  border: 1px solid #393f5b;
-  color: var(--text-color-sgrey);
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100%;
-  cursor: pointer;
-  transition: 0.5s;
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--backgroung-color-low-dark);
 }
 
-.options-container .icon-content:hover {
-  background-color: #6785c1;
-  color: #ffffff;
-}
-
-@media (max-width: 999px) {
-  .options-container {
-    right: 3vw;
-  }
-}
 /* SELECTBOX ============================================================================ */
 /**/
 .dropdown {

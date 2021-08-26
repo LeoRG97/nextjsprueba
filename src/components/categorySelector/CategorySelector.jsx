@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './categorySelector.module.css';
 
 const CategorySelector = React.memo(({
@@ -36,7 +37,7 @@ const CategorySelector = React.memo(({
           </span>
           <div className={styles.arrow} onClick={() => setOpen(!open)} />
           {selectedItems.map((item) => (
-            <a className={`${styles.notShown} ${styles.shown}`}>
+            <a key={item._id} className={`${styles.notShown} ${styles.shown}`}>
               <em>{item.nombre}</em>
               <i onClick={() => handleRemove(item)} />
             </a>
@@ -44,12 +45,38 @@ const CategorySelector = React.memo(({
         </div>
         <ul>
           {unselectedItems.map((item) => (
-            <li className="" onClick={() => handleAdd(item)}>{item.nombre}</li>
+            <li key={item._id} className="" onClick={() => handleAdd(item)}>{item.nombre}</li>
           ))}
         </ul>
       </div>
     </>
   );
 });
+
+CategorySelector.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    nombre: PropTypes.string,
+    usuario_id: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+  })),
+  initialSelectedItems: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string,
+    nombre: PropTypes.string,
+    usuario_id: PropTypes.string,
+    createdAt: PropTypes.string,
+    updatedAt: PropTypes.string,
+  })),
+  addCategory: PropTypes.func.isRequired,
+  deleteCategory: PropTypes.func.isRequired,
+  placeholder: PropTypes.string,
+};
+
+CategorySelector.defaultProps = {
+  data: [],
+  initialSelectedItems: [],
+  placeholder: '',
+};
 
 export default CategorySelector;
