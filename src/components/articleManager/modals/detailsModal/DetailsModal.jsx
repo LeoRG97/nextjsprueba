@@ -1,5 +1,6 @@
 import { Col, Modal, Row } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styles from './detailsModal.module.css';
 import { getPreferencesService } from '@/services/preferences';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
@@ -173,8 +174,12 @@ const DetailsModal = ({ show, onClose }) => {
         </Modal.Footer>
       </Modal>
     </div>
-
   );
+};
+
+DetailsModal.propTypes = {
+  show: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default DetailsModal;
