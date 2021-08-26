@@ -1020,7 +1020,6 @@ html {
 /* MODAL EDITOR ============================================================================ */
 .modal-content {
   background-color: var(--backgroung-color-dark) !important;
-  padding: 3% !important;
 }
 
 .modal-header {
@@ -1110,6 +1109,10 @@ html {
 .Editor-container iframe[title="video"] {
   width: 100%;
   height: calc(62vw/1.77);
+}
+
+.Editor-container iframe[title="audio"] {
+  width: 100%;
 }
 
 .Editor-container iframe {
