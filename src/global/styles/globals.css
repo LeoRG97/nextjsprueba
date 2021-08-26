@@ -237,7 +237,7 @@ body {
 
 .button--theme-secondary {
   color: var(--text-color-secondary);
-  background-color: var(--colorItemBg);
+  background-color: var(--contentTransparentRGB);
   border: 1px solid var(--colorItemBorder);
 }
 

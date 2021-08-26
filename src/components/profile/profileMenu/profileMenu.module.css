@@ -1,0 +1,35 @@
+.tabBar {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 3rem;
+  height: max-content;
+}
+
+.authorSection {
+  border-right: 1px solid var(--colorItemBorder);
+  margin-right: 3rem;
+  padding-right: 3rem;
+}
+
+.item {
+  color: var(--colorSecondary);
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.item:nth-child(1) {
+  margin-left: 0;
+}
+
+.item:hover {
+  color: var(--colorSecondary);
+  text-decoration: none;
+}
+
+.item.active {
+  color: var(--colorLight);
+}

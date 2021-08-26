@@ -1,10 +1,10 @@
 /* eslint-disable import/extensions */
-import axios from 'axios';
+import vanillaAxios from 'axios';
 import { getSession, signOut } from 'next-auth/client';
 import { BASE_URL } from '@/global/constants';
 
-const axiosInstance = () => {
-  const config = axios.create();
+const axios = () => {
+  const config = vanillaAxios.create();
   config.defaults.baseURL = BASE_URL;
   config.interceptors.request.use(async (request) => {
     const session = await getSession();
@@ -21,4 +21,4 @@ const axiosInstance = () => {
   return config;
 };
 
-export default axiosInstance;
+export default axios;
