@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { CreateAccountForm, LoginHeader } from '@/components';
 import { getPreferencesService } from '@/services/preferences';
 
-const CreateAccounst = ({ preferences }) => {
+const CreateAccount = ({ preferences }) => {
   return (
     <div className="main-bg">
       <Head>
@@ -26,4 +26,4 @@ export async function getStaticProps() {
   };
 }
 
-export default CreateAccounst;
+export default CreateAccount;

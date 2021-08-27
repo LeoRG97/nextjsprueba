@@ -1,0 +1,50 @@
+.container {
+  width: 30rem;
+  min-height: 20rem;
+  background-color: var(--colorItemBg);
+  padding: 2rem;
+  padding-top: 60px;
+  border-radius: 10px;
+}
+
+.button {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.inputImg {
+  visibility: hidden;
+  width: 0;
+  position: relative;
+}
+
+.labelInput {
+  content: 'Seleccionar imagen';
+  background-color: var(--colorItemBg);
+  border: 0;
+  border-radius: var(--btnBorderRadius);
+  color: var(--colorLight);
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  letter-spacing: -0.4px;
+  outline: none;
+  min-height: 38px;
+  min-width: 7rem;
+  position: absolute;
+  text-align: center;
+  visibility: visible;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.img {
+  max-width: inherit;
+}
+
+@media screen and (min-width: 576px) {
+  .container {
+    padding: 60px;
+  }
+}

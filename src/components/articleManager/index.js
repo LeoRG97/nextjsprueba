@@ -11,6 +11,7 @@ import TooltipContainer from './editorComponents/tooltipContainer/TooltipContain
 
 const EditorComponent = ({ option }) => {
   const [modalShow, setModalShow] = useState(false);
+  // const [imagen, setImagen] = useState();
   const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
@@ -70,6 +71,37 @@ const EditorComponent = ({ option }) => {
     }
     setModalShowVideo(false);
   };
+
+  /* const getBase64Image = (img) => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.width;
+    canvas.height = img.height;
+
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0);
+
+    const dataURL = canvas.toDataURL('image/png');
+
+    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+  };
+
+  const elementImg = (event) => {
+    event.preventDefault();
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const idContainer = makeid();
+    if (event.target.files.length > 0) {
+      setImagen(URL.createObjectURL(event.target.files[0]));
+      obj.html.push({ id: idContainer, type: 'image', content: event.target.files[0] });
+      const imgData = getBase64Image(event.target);
+      localStorage.setItem('imgData', imgData);
+    } else {
+      // setImagen('');
+      obj.html.push({ id: idContainer, type: 'image', content: event.target.files[0] });
+    }
+    localStorage.setItem('contentEditor', JSON.stringify(obj));
+    setItems(obj);
+  }; */
 
   const addTextFunct = (optionText) => {
     const EditorContent = localStorage.getItem('contentEditor');
