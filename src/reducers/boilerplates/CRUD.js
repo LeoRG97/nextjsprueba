@@ -134,9 +134,9 @@ const CRUD = (resource) => {
   return {
     reducer,
     fetch: () => async (dispatch) => {
-      const { user: { id } } = await getSession();
       dispatch(fetchStart());
       try {
+        const { user: { id } } = await getSession();
         const response = await axios().get(`${resource}/${id}`);
         dispatch(fetchSuccess(response.data));
       } catch (error) {
@@ -160,9 +160,9 @@ const CRUD = (resource) => {
       }
     },
     post: (data) => async (dispatch) => {
-      const { user: { id } } = await getSession();
       dispatch(postStart());
       try {
+        const { user: { id } } = await getSession();
         axios().post(`${resource}/`, { ...data, usuario_id: id })
           .then((response) => {
             if (response === false) return dispatch(postError(`Error al crear ${resource}`));
