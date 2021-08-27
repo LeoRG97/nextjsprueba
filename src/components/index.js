@@ -9,3 +9,6 @@ export { default as ResetPasswordForm } from './resetPasswordForm/ResetPasswordF
 export { default as LoadingIndicator } from './loadingIndicator/LoadingIndicator';
 export { default as LoginHeader } from './loginHeader/LoginHeader';
 export { default as CreateAccountForm } from './createAccountForm/CreateAccountForm';
+export { default as EditorComponent } from './articleManager/index';
+export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader';
+export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';

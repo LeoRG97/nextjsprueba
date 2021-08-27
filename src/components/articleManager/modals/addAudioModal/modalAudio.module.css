@@ -1,0 +1,28 @@
+.modal_audio {
+  background-color: var(--contentTransparentRGB);
+}
+
+.modal_audio_backC {
+  background-color: var(--colorItemBg);
+  filter: brightness(120%);
+  border: none;
+}
+
+.modal_audio_title {
+  border-radius: 10px 10px 0 0;
+  padding-top: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.modal_audio_body {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.modal_audio_footer {
+  border-radius: 0 0 10px 10px ;
+  padding-bottom: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
