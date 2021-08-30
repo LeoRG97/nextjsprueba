@@ -348,6 +348,16 @@ label.input {
   border-bottom-right-radius: var(--inputBorderRadius);
 }
 
+/*Multiselect*/
+
+ /* .flechita select {
+  border: 1px solid #ccc;
+  background: URL(../imagenes/arrow.png) no-repeat 298px 3px #fff !important;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  } */
+
 .select {
   height: 38px;
   background-color: var(--colorItemBg);
@@ -355,7 +365,7 @@ label.input {
   color: var(--text-color-secondary);
   font-family: var(--font-regular);
   font-size: var(--font-size-sm);
-  border: 1px solid transparent;
+  border: 1px solid var(--colorItemBorder);
   border-radius: var(--inputBorderRadius);
   padding: 0.5rem;
   margin-top: 5px;
@@ -988,7 +998,11 @@ html {
   overflow: hidden;
 }
 
+.canvas-component-container .selectImage {
+  max-width: 80%;
+  margin: 5px 0px 5px 0px;
 /*********************************/
+}
 
 #modalVideo .modal-content {
   background-color: transparent !important;
@@ -1174,9 +1188,49 @@ html {
   filter: brightness(200%) !important;
 }
 
+/*************drodown nav**********************/
+#nav-dropdown-profile::after{
+  position: absolute;
+  right: -10%;
+  top: 1.5rem;
+  font-family: Icons;
+  font-size: var(--icon-size-sm);
+  content: "1";
+  border-top: 0 solid;
+  color: var(--gray) !important;
+}
+
+#nav-dropdown-profile + .dropdown-menu{
+  background-color: var(--sblue);
+  padding: 0;
+  border-radius: 7px;
+  margin-left: 33.33%;
+}
+
+#nav-dropdown-profile + .dropdown-menu > a{
+  padding: .5rem 1rem;
+  color: var(--gray) !important;
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+}
+
+#nav-dropdown-profile + .dropdown-menu > a:focus{
+  color: var(--gray) !important;
+  background-color: var(--sblue) !important;
+  border-radius: 7px !important;
+}
+
+#nav-dropdown-profile + .dropdown-menu > a:hover{
+  color: var(--white) !important;
+  background-color: var(--gblue) !important;
+  border-radius: 7px !important;
+}
+
+
 /*********************************/
 div[disabled] {
   pointer-events: none;
   opacity: 0.7;
   margin-top: 45px;
 }
+

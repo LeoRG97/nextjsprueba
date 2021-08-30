@@ -6,33 +6,344 @@ import Script from 'next/script';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import { useRouter } from 'next/router';
+import { signIn } from 'next-auth/client';
 import styles from './createAccountForm.module.css';
 import { registerService } from '@/services/register';
-import { LoadingIndicator } from '..';
+import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 
 const CreateAccountForm = ({ preferences }) => {
   const [nextStep, setNextStep] = useState(false);
   const [firstName, setFirstName] = useState('');
+  const [errorFirstName, setErrorFirstName] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [lastName, setLastName] = useState('');
+  const [errorLastName, setErrorLastName] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [email, setEmail] = useState('');
+  const [errorEmail, setErrorEmail] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [password, setPassword] = useState('');
+  const [errorPassword, setErrorPassword] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [company, setCompany] = useState('');
+  const [errorCompany, setErrorCompany] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [position, setPosition] = useState('');
+  const [errorPosition, setErrorPosition] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [tel, setTel] = useState('');
+  const [errorTel, setErrorTel] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [yearValue, setYearValue] = useState('');
   const [mounthValue, setMounthValue] = useState('');
   const [dayValue, setDayValue] = useState('');
   const [birthDay, setBirthDay] = useState('');
+  const [errorBirthDay, setErrorBirthDay] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [country, setCountry] = useState('');
+  const [errorCountry, setErrorCountry] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [state, setState] = useState('');
+  const [errorState, setErrorState] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [city, setCity] = useState('');
+  const [errorCity, setErrorCity] = useState(
+    {
+      text: '',
+      status: false,
+    },
+  );
+
   const [preferencesState, setPreferencesState] = useState(preferences);
   const [newsLetter, setNewsletterState] = useState(false);
   const [error, setError] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
+  const [errorGeneral, setErrorGeneral] = useState(false);
   const [status, setStatus] = useState('idle');
+  /* const [submited, setSubmited] = useState('idle'); */
 
   const router = useRouter();
+
+  const validate = (value, type) => {
+    // setSubmited(false);
+    if (type === 'name') {
+      if (!value || value === '') {
+        setErrorFirstName({
+          status: true,
+          text: 'Introduce el nombre.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorFirstName({
+          status: false,
+          text: '',
+        });
+        setFirstName(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'lastName') {
+      if (!value || value === '') {
+        setErrorLastName({
+          status: true,
+          text: 'Introduce el apellido.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorLastName({
+          status: false,
+          text: '',
+        });
+        setLastName(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'email') {
+      if (!value || value === '') {
+        setErrorEmail({
+          status: true,
+          text: 'Introduce un correo válido.',
+        });
+        setErrorGeneral(true);
+      } else if (!/\S+@\S+\.\S+/.test(value)) {
+        setErrorEmail({
+          status: true,
+          text: 'Introduce un correo válido.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorEmail({
+          status: false,
+          text: '',
+        });
+        setEmail(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'password') {
+      if (!value || value === '') {
+        setErrorPassword({
+          status: true,
+          text: 'Introduce una contraseña.',
+        });
+        setErrorGeneral(true);
+      } else if (value.length < 6) {
+        setErrorPassword({
+          status: true,
+          text: 'Introduce por lo menos 6 dígitos.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorPassword({
+          status: false,
+          text: '',
+        });
+        setPassword(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'company') {
+      if (!value || value === '') {
+        setErrorCompany({
+          status: true,
+          text: 'Introduce una empresa.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorCompany({
+          status: false,
+          text: '',
+        });
+        setCompany(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'position') {
+      if (!value || value === '') {
+        setErrorPosition({
+          status: true,
+          text: 'Introduce tu puesto.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorPosition({
+          status: false,
+          text: '',
+        });
+        setPosition(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'tel') {
+      if (!value || value === '') {
+        setErrorTel({
+          status: true,
+          text: 'Introduce un número de telefono.',
+        });
+        setErrorGeneral(true);
+      } else if (value.length !== 10) {
+        setErrorTel({
+          status: true,
+          text: 'Introduce solo 10 dígitos.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorTel({
+          status: false,
+          text: '',
+        });
+        setTel(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'city') {
+      if (!value || value === '') {
+        setErrorCity({
+          status: true,
+          text: 'Introduce una ciudad.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorCity({
+          status: false,
+          text: '',
+        });
+        setCity(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'country') {
+      if (!value || value === '') {
+        setErrorCountry({
+          status: true,
+          text: 'Selecciona un país.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorCountry({
+          status: false,
+          text: '',
+        });
+        setCountry(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'state') {
+      if (!value || value === '') {
+        setErrorState({
+          status: true,
+          text: 'Selecciona la región administrativa.',
+        });
+        setErrorGeneral(true);
+      } else {
+        setErrorState({
+          status: false,
+          text: '',
+        });
+        setState(value);
+        setErrorGeneral(false);
+      }
+    }
+
+    if (type === 'yearValue') {
+      if (!value || value === '' || value === 'Año') {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setErrorGeneral(true);
+      } else if (mounthValue !== '' && dayValue !== '' && mounthValue !== 'Mes' && dayValue !== 'Día') {
+        setErrorBirthDay({
+          status: false,
+          text: '',
+        });
+        setYearValue(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'mounthValue') {
+      if (!value || value === '' || value === 'Mes') {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setErrorGeneral(true);
+      } else if (yearValue !== '' && dayValue !== '' && yearValue !== 'Año' && dayValue !== 'Día') {
+        setErrorBirthDay({
+          status: false,
+          text: '',
+        });
+        setMounthValue(value);
+        setErrorGeneral(false);
+      }
+    }
+    if (type === 'dayValue') {
+      if (!value || value === '' || value === 'Día') {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setErrorGeneral(true);
+      } else if (mounthValue !== '' && yearValue !== '' && mounthValue !== 'Mes' && yearValue !== 'Año') {
+        setErrorBirthDay({
+          status: false,
+          text: '',
+        });
+        setDayValue(value);
+        setErrorGeneral(false);
+      }
+    }
+  };
 
   const handleChangeName = (value, type) => {
     if (type === 'firstName') {
@@ -48,31 +359,61 @@ const CreateAccountForm = ({ preferences }) => {
 
   const handleFirstForm = async (e) => {
     e.preventDefault();
-    const yyyy = yearValue;
-    let mm = 0;
-    let dd = 0;
-    if (yearValue !== '' && mounthValue !== '' && dayValue !== '') {
-      if (mounthValue < 9) {
-        mm = (`0${(Number(mounthValue) + 1)}`);
-      } else {
-        mm = (Number(mounthValue) + 1);
+
+    if (firstName === ''
+    || lastName === ''
+    || email === ''
+    || password === ''
+    || company === ''
+    || position === ''
+    || tel === ''
+    || city === ''
+    || country === ''
+    || state === ''
+    || yearValue === '' || yearValue === 'Año'
+    || mounthValue === '' || mounthValue === 'Mes'
+    || dayValue === '' || dayValue === 'Día') {
+      validate(firstName, 'name');
+      validate(lastName, 'lastName');
+      validate(email, 'email');
+      validate(password, 'password');
+      validate(company, 'company');
+      validate(position, 'position');
+      validate(tel, 'tel');
+      validate(city, 'city');
+      validate(country, 'country');
+      validate(state, 'state');
+      validate(yearValue, 'yearValue');
+      validate(mounthValue, 'mounthValue');
+      validate(dayValue, 'dayValue');
+    } else {
+      const yyyy = yearValue;
+      let mm = 0;
+      let dd = 0;
+      if (yearValue !== '' && mounthValue !== '' && dayValue !== '') {
+        if (mounthValue < 9) {
+          mm = (`0${(Number(mounthValue) + 1)}`);
+        } else {
+          mm = (Number(mounthValue) + 1);
+        }
+        if (dayValue < 10) {
+          dd = (`0${(Number(dayValue))}`);
+        } else {
+          dd = dayValue;
+        }
+        setBirthDay(`${yyyy}-${mm}-${dd}`);
       }
-      if (dayValue < 10) {
-        dd = (`0${(Number(dayValue))}`);
-      } else {
-        dd = dayValue;
+      if (!errorGeneral) {
+        setError('');
+        setErrorStatus(false);
+        setNextStep(true);
       }
-      setBirthDay(`${yyyy}-${mm}-${dd}`);
     }
 
-    if (tel.length !== 10) {
+    /* if (tel.length !== 10) {
       setError('El número de telefóno debe contener solo 10 digitos');
       setErrorStatus(true);
-    } else {
-      setError('');
-      setErrorStatus(false);
-      setNextStep(true);
-    }
+    } */
   };
 
   const handleSubmit = async (e) => {
@@ -105,7 +446,19 @@ const CreateAccountForm = ({ preferences }) => {
       const res = await registerService(model);
       if (res.token) {
         setStatus('success');
-        router.push('/login');
+        const resSignIn = await signIn('credentials', {
+          email: model.email,
+          password: model.password,
+          callbackUrl: `${window.location.origin}/articulos`,
+          redirect: false,
+        });
+
+        if (resSignIn?.error) {
+          setError('Dirección de correo electrónico y/o contraseña incorrectos.');
+        }
+        if (resSignIn.url) {
+          router.push('/articulos');
+        }
       } else {
         setStatus('error');
         setError('Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde');
@@ -146,6 +499,7 @@ const CreateAccountForm = ({ preferences }) => {
                         onChange={(event) => handleChangeName(event.target.value, 'firstName')}
                         required
                       />
+                      {errorFirstName.status && <span className={`text-sm ${styles.error}`}>{errorFirstName.text}</span>}
                     </label>
                   </div>
                   <div className="col-6">
@@ -160,6 +514,7 @@ const CreateAccountForm = ({ preferences }) => {
                         onChange={(event) => handleChangeName(event.target.value, 'lastName')}
                         required
                       />
+                      {errorLastName.status && <span className={`text-sm ${styles.error}`}>{errorLastName.text}</span>}
                     </label>
                   </div>
                 </div>
@@ -174,6 +529,7 @@ const CreateAccountForm = ({ preferences }) => {
                     onChange={(event) => setEmail(event.target.value)}
                     required
                   />
+                  {errorEmail.status && <span className={`text-sm ${styles.error}`}>{errorEmail.text}</span>}
                 </label>
                 <label className="d-block subtitle mb-2" htmlFor="password">Contraseña*
                   <input
@@ -187,6 +543,7 @@ const CreateAccountForm = ({ preferences }) => {
                     onChange={(event) => setPassword(event.target.value)}
                     required
                   />
+                  {errorPassword.status && <span className={`text-sm ${styles.error}`}>{errorPassword.text}</span>}
                 </label>
                 <div className="row">
                   <div className="col-6">
@@ -201,6 +558,7 @@ const CreateAccountForm = ({ preferences }) => {
                         onChange={(event) => setCompany(event.target.value)}
                         required
                       />
+                      {errorCompany.status && <span className={`text-sm ${styles.error}`}>{errorCompany.text}</span>}
                     </label>
                   </div>
                   <div className="col-6">
@@ -215,6 +573,7 @@ const CreateAccountForm = ({ preferences }) => {
                         onChange={(event) => setPosition(event.target.value)}
                         required
                       />
+                      {errorPosition.status && <span className={`text-sm ${styles.error}`}>{errorPosition.text}</span>}
                     </label>
                   </div>
                 </div>
@@ -229,10 +588,11 @@ const CreateAccountForm = ({ preferences }) => {
                     onChange={(event) => setTel(event.target.value)}
                     required
                   />
+                  {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
                 </label>
                 <div className="row mb-2">
                   <div className="d-block subtitle">Fecha de nacimiento* </div>
-                  <div className="col-4">
+                  <div className="col-4 flechita">
                     <DayPicker
                       defaultValue="Día"
                       year={yearValue}
@@ -283,6 +643,7 @@ const CreateAccountForm = ({ preferences }) => {
                       optionClasses="option classes"
                     />
                   </div>
+                  {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
                 </div>
                 <div className="row">
                   <div className="col-6">
@@ -296,6 +657,7 @@ const CreateAccountForm = ({ preferences }) => {
                         value={country}
                         onChange={(val) => setCountry(val)}
                       />
+                      {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
                     </label>
                   </div>
                   <div className="col-6">
@@ -310,6 +672,7 @@ const CreateAccountForm = ({ preferences }) => {
                         onChange={(val) => setState(val)}
                         required
                       />
+                      {errorState.status && <span className={`text-sm ${styles.error}`}>{errorState.text}</span>}
                     </label>
                   </div>
                 </div>
@@ -324,6 +687,7 @@ const CreateAccountForm = ({ preferences }) => {
                     onChange={(event) => setCity(event.target.value)}
                     required
                   />
+                  {errorCity.status && <span className={`text-sm ${styles.error}`}>{errorCity.text}</span>}
                 </label>
                 <div className={styles.check}>
                   <button className={styles.buttonChek} onClick={handleCheck} type="button">
@@ -348,7 +712,7 @@ const CreateAccountForm = ({ preferences }) => {
                   )
                 }
                 <div className={styles.buttonContinue}>
-                  <button className="button button--theme-primary" type="submit">
+                  <button className="button button--theme-primary" onClick={handleFirstForm} type="submit">
                     Crear cuenta
                   </button>
                 </div>

@@ -68,6 +68,19 @@
   font-size: 14px;
 }
 
+.navDropDown {
+  border: none;
+}
+
+.navDropDownItems{
+  display: inline-block;
+}
+
+.navDropDownImage > div > img {
+  border-radius: 100%;
+}
+
+
 @media (max-width: 990px) {
   .divNavItemStyle {
     width: 70%;

@@ -40,8 +40,8 @@ const Profile = (resource) => {
     reducer,
     fetch: () => async (dispatch) => {
       dispatch(fetchStart());
-      const { user: { id } } = await getSession();
       try {
+        const { user: { id } } = await getSession();
         const data = await getProfile(id);
         return dispatch(fetchSuccess(data));
       } catch (err) {
