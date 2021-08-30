@@ -64,6 +64,7 @@
 
 .content_pt_sect {
   padding-top: 90px;
+  padding-bottom: 90px;
 }
 
 .content_pb_sect {
@@ -87,8 +88,11 @@
 
 .content_map_text {
   margin: auto;
+  display: flex;
+  align-items: center;
   margin-left: 105px;
-  margin-top: 140px;
+  height: 100%;
+  /* margin-top: 140px; */
   text-align: left;
 }
 
@@ -97,10 +101,13 @@
 }
 
 .content_map_canvas {
-  max-width: 475px;
-  min-height: 475px;
-  margin-top: 85px;
-  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  height: 400px;
+  /* max-width: 475px; */
+  /* min-height: 475px; */
+  /* margin-top: 85px; */
+  /* margin-bottom: 50px; */
 }
 
 .content_icon {
@@ -249,13 +256,13 @@
   }
   .content_map_text {
     margin-left: 0;
-    margin-top: 50px;
+    /* margin-top: 50px; */
   }
-  .content_map_canvas {
-    max-width: 360px;
-    max-height: 600px;
-    margin: auto;
-  }
+  /* .content_map_canvas { */
+    /* max-width: 360px; */
+    /* max-height: 600px; */
+    /* margin: auto; */
+  /* } */
   .content_observatory {
     background-size: 100% 100%;
   }
@@ -281,10 +288,10 @@
     margin-bottom: -130px;
     z-index: 1;
   }
-  .content_map_canvas {
-    margin-top: -255px;
-    margin-bottom: 70px;
-  }
+  /* .content_map_canvas { */
+    /* margin-top: -255px; */
+    /* margin-bottom: 70px; */
+  /* } */
   .content_title_text {
     margin-top: 200px;
   }
