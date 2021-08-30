@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-danger */
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';

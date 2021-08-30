@@ -1,0 +1,115 @@
+.articlesContainer {
+  height: auto;
+  width: 100%;
+  padding-left: 15%;
+  padding-right: 15%;
+}
+/*SELECTS ========================================================= */
+.selectsContainer{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.selectRecent,
+.selectFilter{
+  height: 60px;
+  width: 50%;
+  display: grid;
+  align-items: center;
+}
+
+.selectRecent{
+  justify-content: left;
+}
+
+.selectFilter{
+  justify-content: right;
+}
+/* ========================================================= */
+.cardContainer {
+  display: inline-block;
+  height: 450px;
+  width: 33%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 30px;
+}
+
+.cardMargin{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: 100%;
+}
+
+.cardImageContainer{
+  position: relative;
+}
+
+.trendingLabel{
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 76px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.trendingLabel span{
+  margin-left: 10px;
+}
+
+.cardImageContainer img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.cardLikesContainer {
+  display: flex;
+}
+
+
+.cardLikesContainer div {
+  width: 30%;
+}
+
+.cardLikesContainer div:first-child {
+  width: 70%;
+}
+
+.likesContainer,
+.viewsContainer{
+  display: flex;
+  align-items: center;
+}
+
+.likesContainer span,
+.viewsContainer span{
+  margin-right: 5px;
+}
+
+@media (max-width: 999px){
+  .selectsContainer{
+    display: grid;
+    justify-content: center;
+  }
+
+  .selectRecent,
+  .selectFilter{
+    width: 100%;
+  }
+
+  .selectFilter{
+    justify-content: center;
+  }
+
+  .cardContainer {
+    display: grid;
+    width: 100%;
+    height: 100%;
+  }
+}

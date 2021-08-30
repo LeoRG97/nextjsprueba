@@ -105,12 +105,14 @@ export default function Home() {
               <Row>
                 <Col xl="6" lg="6" sm="12">
                   <div className={` ${styles.content_map_text}`}>
-                    <small className="text-sm ">Impacto geográfico</small>
-                    <h1 className="title-xl text--theme-dark ">Una empresa <br />de clase mundial</h1>
-                    {
+                    <div>
+                      <small className="text-sm ">Impacto geográfico</small>
+                      <h1 className="title-xl text--theme-dark ">Una empresa <br />de clase mundial</h1>
+                      {
                       // eslint-disable-next-line max-len
-                      <p className="text-md text--theme-dark ">Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero, así como facilitando colaboraciones comerciales entre naciones y empresas que fortalecen el poder de marca mundial de NTT DATA Group como &quot;One NTT DATA&quot;.</p>
-                    }
+                        <p className="text-md text--theme-dark ">Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero, así como facilitando colaboraciones comerciales entre naciones y empresas que fortalecen el poder de marca mundial de NTT DATA Group como &quot;One NTT DATA&quot;.</p>
+                      }
+                    </div>
                   </div>
                 </Col>
                 <Col xl="6" lg="6" sm="12">

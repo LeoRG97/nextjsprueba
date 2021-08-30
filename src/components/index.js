@@ -13,4 +13,8 @@ export { default as ConfirmationUser } from './userInvitation/confirmationUser';
 export { default as EditorComponent } from './articleManager/index';
 export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader';
 export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
+export { default as TrendingBannerComponent } from './trendingBanner/TrendingBanner';
+export { default as TrendingArticleComponent } from './trendingArticlesList/TrendingArticle';
+export { default as TrendingFilterComponent } from './trendingFilter/TrendingFilter';
+export { default as TrendingSelectComponent } from './trendingSelect/TrendingSelect';
 export { default as SelectImg } from './userInvitation/selectImg';

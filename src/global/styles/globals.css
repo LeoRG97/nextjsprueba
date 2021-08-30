@@ -832,135 +832,14 @@ html {
   display: none !important;
   color: #1b1e23;
 }
-/* WORLD MAP ============================================================================ */
+/* WORLD MAP =============}=============================================================== */
 /* TOOLS EDITOR ============================================================================ */
 .tooltip-inner {
-  font-family: var(--font-regular);
+  font-family: Gilroy-Medium;
   background-color: var(--backgroung-color-low-dark) !important;
-  color: #ffffff !important;
-  font-size: var(--font-size-sm) !important;
+  color: #FFFFFF !important;
+  font-size: 10px !important;
 }
-
-.tooltip.bs-tooltip-top .tooltip-arrow::before {
-  border-top-color: var(--backgroung-color-low-dark);
-}
-
-.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
-  border-bottom-color: var(--backgroung-color-low-dark);
-}
-
-.tooltip.bs-tooltip-start .tooltip-arrow::before {
-  border-left-color: var(--backgroung-color-low-dark);
-}
-
-.tooltip.bs-tooltip-end .tooltip-arrow::before {
-  border-right-color: var(--backgroung-color-low-dark);
-}
-
-/* SELECTBOX ============================================================================ */
-/**/
-.dropdown {
-  position: relative;
-  color: var(--text-color-sgrey) !important;
-  border: 1px solid var(--backgroung-color-low-dark);
-  border-radius: 10px;
-  margin-right: 30px;
-}
-
-.dropdown.no-m {
-  margin: auto;
-}
-
-.dropdown .dropdown-select {
-  width: 7vw;
-  color: var(--text-color-sgrey) !important;
-  cursor: pointer;
-  text-align: left;
-  line-height: 20px;
-  padding: 10px;
-  display: block;
-  overflow: hidden;
-  max-width: 59px;
-}
-
-.select-dropdown {
-  position: absolute;
-  width: 10vw;
-  background-color: var(--backgroung-color-dark);
-  list-style: none;
-  text-align: left;
-  padding: 0;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid var(--backgroung-color-low-dark);
-  overflow: hidden;
-  min-height: 0;
-  opacity: 0;
-  cursor: pointer;
-  transition: 0.5s;
-}
-
-.dropdown:hover .select-dropdown {
-  opacity: 1;
-  max-height: 124px;
-}
-
-.dropdown .dropdown-select > i {
-  font-size: 13px;
-  color: var(--text-color-sgrey) !important;
-  cursor: pointer;
-  float: right;
-  line-height: 20px;
-  font-style: normal;
-}
-
-.dropdown .dropdown-select small {
-  font-size: 54%;
-  margin-left: -1px;
-}
-
-.select-dropdown > li {
-  font-size: 13px;
-  color: var(--text-color-sgrey) !important;
-  cursor: pointer;
-  line-height: 20px;
-  padding-top: 3%;
-  padding-bottom: 3%;
-  padding-left: 15px;
-  padding-right: 0%;
-}
-
-.select-dropdown > li:hover:first-child {
-  border-radius: 8px 8px 0px 0px;
-}
-
-.select-dropdown > li:hover:last-child {
-  border-bottom: 1px solid var(--backgroung-color-low-dark);
-  border-radius: 0px 0px 8px 8px;
-}
-
-.select-dropdown li:hover {
-  background-color: var(--backgroung-color-low-dark);
-}
-
-.select-dropdown li:active {
-  background-color: var(--backgroung-color-low-dark);
-}
-
-@media (max-width: 999px) {
-  .dropdown {
-    margin-right: 15px;
-  }
-  .dropdown .dropdown-select {
-    width: 12vw;
-  }
-  .select-dropdown {
-    width: 120px;
-  }
-}
-
-/* SELECTBOX ============================================================================ */
-
 /* TOOLS EDITOR ============================================================================ */
 /* ELEMENTS EDITOR =========================================================================*/
 .canvas-component-container {
@@ -1023,6 +902,7 @@ html {
 /* MODAL EDITOR ============================================================================ */
 .modal-content {
   background-color: var(--backgroung-color-dark) !important;
+  padding: 3% !important;
 }
 
 .modal-header {
@@ -1034,158 +914,47 @@ html {
   font-size: var(--font-size-md);
 }
 
-.modal-body-text {
-  color: var(--text-color-light);
-  font-size: var(--font-size-sm);
-}
-
-.modal-body-text span {
-  color: var(--text-color-sgrey);
-}
-
 .modal-footer {
   border-top: none !important;
 }
+/* MODAL EDITOR ============================================================================ */
+/* SELECT TRENDING */
 
-/*EDITOR**************************/
-.purple-content {
-  background-color: var(--black-10);
-  padding-top: 10px;
-  padding-bottom: 10px;
+.select-trending .btn-primary {
+  color: var(--colorSecondary);
+  background-color: var(--colorPrimaryDark);
+  border: 2px solid var(--colorItemBorder);
+  border-radius: 7px;
+  text-align: lefts;
 }
 
-.Edit-btn {
-  padding: 10px 20px;
-  background-color: var(--colorBackgroundDarkSec);
-  border: none;
-  height: 44px;
-  margin: auto;
-  opacity: 0;
+.select-trending .btn-primary.dropdown-toggle{
+  color: var(--colorSecondary) !important;
+  background-color: var(--colorPrimaryDark) !important;
+  border: 2px solid var(--colorItemBorder) !important;
 }
 
-.Edit-btn.move-btn{
-  cursor: n-resize;
+.select-trending .btn-primary:checked,
+.select-trending .btn-primary:active,
+.select-trending .btn-primary:focus,
+.select-trending .btn-primary:hover{
+  color: var(--colorSecondary) !important;
+  background-color: var(--colorPrimaryDark) !important;
+  border: 2px solid var(--colorItemBorder) !important;
 }
 
-.Edit-btn:hover {
-  filter: brightness(200%);
+.select-trending .dropdown-toggle::after {
+  margin-left: 5em;
 }
 
-.Editor-content {
-  display: flex;
-  padding-bottom: 30px;
+.select-trending .dropdown-menu{
+  width: 190px;
+  background-color: var(--colorItemBorder);
 }
 
-.Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
-  opacity: 1;
-}
-
-.Editor-content button, .Editor-container  {
-  display: inline-grid;
-}
-
-.Editor-container {
-  width: calc(100% - 115px);
-  max-width: calc(100% - 115px);
-  margin: auto;
-  position: relative;
-}
-
-.Edit-area {
-  width: 98%;
-  margin: auto;
-}
-
-.Editor-container textarea {
-  border-radius: 5px;
-  border: 1px solid transparent;
-  background-color: var(--backgroung-color-dark);
-  padding: 12px;
-}
-
-.Editor-container textarea:focus {
-  outline: none !important;
-  border: 1px solid var(--colorLight);
-  background-color: var(--colorBackgroundDarkSec);
-}
-
-.Editor-container iframe[title="video"] {
-  width: 100%;
-  height: calc(62vw/1.77);
-}
-
-.Editor-container iframe[title="audio"] {
-  width: 100%;
-}
-
-.Editor-container iframe {
-  margin: auto;
-}
-
-.Edit-dropdown-content {
-  margin: auto;
-  width: 56px;
-}
-
-.Edit-dropbtn {
-  padding: 10px 20px;
-  background-color: var(--colorBackgroundDarkSec);
-  border: none;
-  height: 44px;
-  margin: auto;
-  filter: brightness(110%);
-  opacity: 0;
-}
-
-.Edit-dropdown {
-  position: relative;
-  display: inline-grid;
-  filter: brightness(100%);
-}
-
-.Edit-dropdown-container {
-  display: none;
-  position: absolute;
-  background-color: var(--colorBackgroundDarkSec);
-  min-width: 127px;
-  z-index: 10;
-  top: 43px;
-  border-radius: 6px;
-}
-
-.Edit-dropdown-container a {
-  color: var(--colorLight);
-  padding: 10px 0px;
-  text-decoration: none;
-  display: block;
-  position: relative;
-  filter: brightness(50%);
-  border-radius: 6px;
-}
-
-.Edit-dropdown-container span {
-  display: inline;
-  position: absolute;
-  color: var(--colorLight);
-}
-
-.Edit-dropdown-container a:hover {
-  background-color: var(--colorBackgroundDarkSec);
-  filter: brightness(200%);
-  color: var(--colorLight);
-}
-
-.Edit-dropdown:hover .Edit-dropdown-container {
-  display: block;
-}
-
-.Edit-dropdown:hover .Edit-dropbtn {
-  background-color: var(--colorBackgroundDarkSec);
-}
-
-.Edit-dropbtn:hover {
-  background-color: var(--colorBackgroundDarkSec) !important;
-  filter: brightness(200%) !important;
+.select-trending .dropdown-menu .dropdown-item{
+  color: var(--colorSecondary) !important;
+  transition: 0.5s;
 }
 
 /*************drodown nav**********************/

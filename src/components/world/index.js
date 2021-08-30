@@ -73,12 +73,12 @@ export default function define(runtime, observer) {
   const main = runtime.module();
 
   main.variable(observer('canvas')).define('canvas', ['DOM', 'width', 'd3', 'land', 'borders', 'countries', 'mutable name', 'Versor'], async function* (DOM, width, d3, land, borders, countries, $0, Versor) {
-    const context = DOM.context2d(width, 1400);
-    const projection = d3.geoOrthographic().fitExtent([[10, 10], [width - 10, 1400 - 10]], { type: 'Sphere' });
+    const context = DOM.context2d(400, 400);
+    const projection = d3.geoOrthographic().fitExtent([[10, 10], [400 - 10, 400 - 10]], { type: 'Sphere' });
     const path = d3.geoPath(projection, context);
 
     function render(country) {
-      context.clearRect(0, 0, width, 1400);
+      context.clearRect(0, 0, 400, 400);
       context.beginPath();
       path(land);
       context.fillStyle = '#737373';
@@ -97,7 +97,6 @@ export default function define(runtime, observer) {
       context.strokeStyle = '#000';
       context.lineWidth = 1.5;
       context.stroke();
-      // context.beginPath(), path(arc), context.stroke();
       return context.canvas;
     }
     let p1;

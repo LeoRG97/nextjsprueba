@@ -1,0 +1,92 @@
+.filterContainer {
+  position: relative;
+  max-width: 70%;
+  height: 80px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.filterOpacity1,
+.filterOpacity2 {
+  position: absolute;
+  height: 100%;
+  width: 4.5vw;
+  top: 0;
+  z-index: 1;
+}
+
+.filterOpacity1 {
+  background: rgb(13,12,34);
+  background: linear-gradient(90deg, rgba(13,12,34,1) 0%, rgba(13,12,34,0.2049194677871149) 100%);
+  left: 0%;
+}
+
+.filterOpacity2 {
+  background: rgb(13,12,34);
+  background: linear-gradient(270deg, rgba(13,12,34,1) 0%, rgba(13,12,34,0.2049194677871149) 100%);
+  right: 0%;
+}
+
+.filters {
+  position: relative;
+  height: auto;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -ms-overflow-style: none; /* IE 11 */
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox 64 */
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter {
+  display: inline-block;
+  text-align: center;
+  border: 1px solid var(--colorItemBorder);
+  border-radius: 15px;
+  width: 140px;
+  height: 30px;
+  margin-left: 1%;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.filter:hover {
+  background-color: var(--colorSecondary);
+  border: 1px solid var(--colorSecondary);
+  color: #fff;
+}
+
+.filter div {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* DRAG SCROLL CLASS ================0 */
+
+.active .filter{
+  cursor: grabbing;
+  cursor: -webkit-grabbing;
+  transform: scale(1);
+}
+
+/* DRAG SCROLL CLASS ================0 */
+
+@media (max-width: 999px) {
+  .filterOpacity1 {
+    left: 0%;
+  }
+
+  .filterOpacity2 {
+    right: 0%;
+  }
+}
