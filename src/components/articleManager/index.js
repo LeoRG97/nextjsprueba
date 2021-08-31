@@ -17,6 +17,10 @@ const EditorComponent = ({ option }) => {
   const [arrayItemsEditor, setItems] = useState({});
   const [addedVideo, setContentVideo] = useState(false);
   const [addedAudio, setContentAudio] = useState(false);
+  const [editVideo, setEditVideo] = useState({ idContent: '', tagEdit: '', type: '' });
+  const [editTag, setEditInfo] = useState({ idContent: '', tagEdit: '', type: '' });
+  const [updateEvent, setUpdateEvent] = useState(false);
+  const [activeOption, setActiveCont] = useState('');
 
   const makeid = () => {
     let result = '';
@@ -40,6 +44,8 @@ const EditorComponent = ({ option }) => {
       }
     });
   };
+
+  /* Add components functions */
 
   const addVideoFunct = (tag, embedIframe) => {
     const EditorContent = localStorage.getItem('contentEditor');
@@ -143,6 +149,53 @@ const EditorComponent = ({ option }) => {
     setModalShow(false);
   };
 
+  /* ######################### */
+
+  /* Edit components functions */
+  const editComponentFunct = (tag, idElement, typeOption) => {
+    if (typeOption === 'linkVideo' || typeOption === 'iframeVideo') {
+      setModalShowVideo(true);
+      setEditVideo({ idContent: idElement, tagEdit: tag, type: typeOption });
+      setUpdateEvent(true);
+    } else if (typeOption === 'iframeAudio') {
+      setModalShow(true);
+      setEditInfo({ idContent: idElement, tagEdit: tag, type: typeOption });
+      setUpdateEvent(true);
+    }
+  };
+
+  const updateFunctionEventVideo = (tag, idElement, typeContent) => {
+    setUpdateEvent(false);
+    setModalShowVideo(false);
+    const oldArray = arrayItemsEditor.html;
+    let newTag = {};
+    if (!typeContent) {
+      newTag = { id: idElement, type: 'linkVideo', content: tag };
+    } else {
+      newTag = { id: idElement, type: 'iframeVideo', content: tag };
+    }
+    oldArray.forEach((item, index) => {
+      if (item.id === idElement) {
+        oldArray[index] = newTag;
+      }
+    });
+    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+  };
+
+  const updateFunctionEvent = (tag, idElement, typeContent) => {
+    setUpdateEvent(false);
+    setModalShow(false);
+    const oldArray = arrayItemsEditor.html;
+    const newTag = { id: idElement, type: typeContent, content: tag };
+    oldArray.forEach((item, index) => {
+      if (item.id === idElement) {
+        oldArray[index] = newTag;
+      }
+    });
+    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+  };
+  /* ######################### */
+
   const deleteComponentEditor = (idContent) => {
     const newArrayContent = { html: [] };
     arrayItemsEditor.html.forEach((item) => {
@@ -172,6 +225,10 @@ const EditorComponent = ({ option }) => {
     }
   };
 
+  const setActiveClass = (id) => {
+    setActiveCont(id);
+  };
+
   useEffect(() => {
     const EditorContent = localStorage.getItem('contentEditor');
     if (EditorContent === null) {
@@ -197,12 +254,18 @@ const EditorComponent = ({ option }) => {
     <div className={styles.editor}>
       <ModalAudio
         show={modalShow}
+        updateEvent={updateEvent}
+        editInfo={editTag}
         addAudio={addAudioFunct}
+        updateFunctionEvent={updateFunctionEvent}
         showModal={() => setModalShow(false)}
       />
       <ModalVideo
         show={modalShowVideo}
+        editInfo={editVideo}
+        updateEvent={updateEvent}
         addVideo={addVideoFunct}
+        updateFunctionEvent={updateFunctionEventVideo}
         showModal={() => setModalShowVideo(false)}
       />
       <div className={styles.editorContent} align="center">
@@ -217,7 +280,10 @@ const EditorComponent = ({ option }) => {
                       <EditorOptionRender
                         data={item}
                         deleteComponentEditor={deleteComponentEditor}
+                        editComponentFunct={editComponentFunct}
                         handleChange={handleChange}
+                        setActiveClass={setActiveClass}
+                        activeOption={activeOption}
                       />
                     </div>
                   );
