@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Modal,
@@ -7,7 +7,9 @@ import {
 import styles from './modaVideo.module.css';
 
 const ModalVideo = (props) => {
-  const { addVideo, showModal, show } = props;
+  const {
+    addVideo, showModal, show, updateEvent, editInfo, updateFunctionEvent,
+  } = props;
 
   const [inputLink, setData] = useState('');
   const [embedIframe, setEmbed] = useState(false);
@@ -44,6 +46,7 @@ const ModalVideo = (props) => {
         setDisable(false);
         setInvalid(false);
       }
+
       if (iframeContentStart) {
         setEmbed(true);
       } else {
@@ -66,6 +69,25 @@ const ModalVideo = (props) => {
     setEmbed(false);
     setInvalid(false);
   };
+
+  const callsUpdateFunctVideo = () => {
+    updateFunctionEvent(inputLink, editInfo.idContent, embedIframe);
+    setData('');
+    setEmbed(false);
+    setInvalid(false);
+  };
+
+  useEffect(() => {
+    if (updateEvent) {
+      setDisable(false);
+      if (editInfo.type) {
+        setEmbed(true);
+      } else {
+        setEmbed(false);
+      }
+      setData(editInfo.tagEdit);
+    }
+  }, [editInfo, updateEvent]);
 
   return (
     <div>
@@ -104,7 +126,11 @@ const ModalVideo = (props) => {
           <button className="Btn-cancel" onClick={() => showModal()}>
             cancelar
           </button>
-          <button className="Btn-add" onClick={callsFunctVideo} disabled={disable}>Incrustar</button>
+          {
+            (updateEvent) ? (
+              <button className="Btn-add" onClick={callsUpdateFunctVideo} disabled={disable}>Actualizar</button>
+            ) : (<button className="Btn-add" onClick={callsFunctVideo} disabled={disable}>Incrustar</button>)
+          }
         </Modal.Footer>
       </Modal>
     </div>
@@ -113,8 +139,20 @@ const ModalVideo = (props) => {
 
 ModalVideo.propTypes = {
   show: PropTypes.bool.isRequired,
+  updateEvent: PropTypes.bool,
   showModal: PropTypes.func.isRequired,
   addVideo: PropTypes.func.isRequired,
+  updateFunctionEvent: PropTypes.func.isRequired,
+  editInfo: PropTypes.shape({
+    idContent: PropTypes.string,
+    tagEdit: PropTypes.string,
+    type: PropTypes.string,
+  }),
+};
+
+ModalVideo.defaultProps = {
+  editInfo: { idContent: '', tagEdit: '' },
+  updateEvent: false,
 };
 
 export default ModalVideo;
