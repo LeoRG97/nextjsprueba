@@ -18,3 +18,4 @@ export { default as TrendingArticleComponent } from './trendingArticlesList/Tren
 export { default as TrendingFilterComponent } from './trendingFilter/TrendingFilter';
 export { default as TrendingSelectComponent } from './trendingSelect/TrendingSelect';
 export { default as SelectImg } from './userInvitation/selectImg';
+export { default as HomePage } from './home/home';
