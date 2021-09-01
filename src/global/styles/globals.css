@@ -31,6 +31,7 @@
   /* --white-20: #e7e7e9;
   --white-10: #f3f3f4; */
   --white: #ffffff;
+  --white-30: #FFFFFF33;
   --red: #ff5555;
 
   /* EDITOR COLORS */
@@ -58,6 +59,7 @@
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
   --colorSecondary: var(--gray); /* Iconos y texto secundario */
   --colorLight: var(--white); /* Iconos, textos y fondos claros */
+  --colorLightGray : var(--white-30); /* botones y bordes redondeados*/
   --colorItemBorder: var(--black-20); /* Contornos y subrayados */
   --colorBackgroundDarkSec: var(--black-20); /*Fondo no negro secundario*/
   --colorItemBg: var(--black-10); /* Fondo no negro */
@@ -175,6 +177,10 @@ body {
   color: var(--text-color-highlight);
 }
 
+.text--theme-secondary {
+  color: var(--text-color-secondary);
+}
+
 .text--theme-error {
   color: var(--text-color-error);
 }
@@ -267,6 +273,22 @@ body {
 
 .button:active {
   filter: brightness(85%);
+}
+
+.Btn-round-light {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  border: 1px solid var(--colorLightGray);
+  background-color: var(--contentTransparentRGB);
+  padding: 10px;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.Btn-round-light:hover {
+  border: 1px solid var(--colorLight);
+  filter: brightness(150%);
 }
 
 .input {
@@ -722,6 +744,16 @@ html {
 
 .Btn-outline-light:hover {
   background-color: #ffffff2f;
+}
+
+.Btn-outline-light.faint {
+  border: 1px solid var(--colorSecondary);
+  color: var(--colorSecondary);
+}
+
+.Btn-outline-light.faint:hover {
+  border: 1px solid var(--colorLight);
+  color: var(--colorLight);
 }
 
 .Btn-cancel {
