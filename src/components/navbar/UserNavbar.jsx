@@ -19,7 +19,7 @@ const UserNavbarComponent = ({
   const navDropdownTitle = (
     <div className="row align-items-center">
       <div className={`${styles.navDropDownImage} col`}>
-        <Image height="45" width="45" objectFit="contain" src={picture || '/images/profile/no-profile-img.png'} />
+        <Image height="45" width="45" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
       </div>
       <div className="col text-md">{name}</div>
     </div>
