@@ -25,6 +25,12 @@ const EditorOptionRender = ({
         return (
           <div className={`Editor-content-child ${active}`} dangerouslySetInnerHTML={{ __html: item.content }} />
         );
+      case 'image':
+        return (
+          <div className={`Editor-content-child ${active} image-editor-self`}>
+            <img className="image-editor" src={item.content} alt="" />
+          </div>
+        );
       case 'textHeader':
         return (
           <TextareaAutosize
