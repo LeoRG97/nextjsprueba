@@ -5,25 +5,25 @@
   padding-right: 15%;
 }
 /*SELECTS ========================================================= */
-.selectsContainer{
+.selectsContainer {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .selectRecent,
-.selectFilter{
+.selectFilter {
   height: 60px;
   width: 50%;
   display: grid;
   align-items: center;
 }
 
-.selectRecent{
+.selectRecent {
   justify-content: left;
 }
 
-.selectFilter{
+.selectFilter {
   justify-content: right;
 }
 /* ========================================================= */
@@ -34,19 +34,20 @@
   padding-left: 10px;
   padding-right: 10px;
   margin-bottom: 30px;
+  cursor: pointer;
 }
 
-.cardMargin{
+.cardMargin {
   margin-top: 20px;
   margin-bottom: 20px;
   line-height: 100%;
 }
 
-.cardImageContainer{
+.cardImageContainer {
   position: relative;
 }
 
-.trendingLabel{
+.trendingLabel {
   position: absolute;
   top: 10px;
   left: 10px;
@@ -58,7 +59,7 @@
   border-radius: 5px;
 }
 
-.trendingLabel span{
+.trendingLabel span {
   margin-left: 10px;
 }
 
@@ -72,7 +73,6 @@
   display: flex;
 }
 
-
 .cardLikesContainer div {
   width: 30%;
 }
@@ -82,28 +82,28 @@
 }
 
 .likesContainer,
-.viewsContainer{
+.viewsContainer {
   display: flex;
   align-items: center;
 }
 
 .likesContainer span,
-.viewsContainer span{
+.viewsContainer span {
   margin-right: 5px;
 }
 
-@media (max-width: 999px){
-  .selectsContainer{
+@media (max-width: 999px) {
+  .selectsContainer {
     display: grid;
     justify-content: center;
   }
 
   .selectRecent,
-  .selectFilter{
+  .selectFilter {
     width: 100%;
   }
 
-  .selectFilter{
+  .selectFilter {
     justify-content: center;
   }
 
