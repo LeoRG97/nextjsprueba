@@ -4,7 +4,7 @@ import TooltipContainer from '../tooltipContainer/TooltipContainer';
 import styles from './tools.module.css';
 
 const ToolsComponent = ({
-  option, addTextFunct, setModalShowVideo, setModalShow, addedVideo, addedAudio,
+  option, addTextFunct, setModalShowVideo, setModalShow, addedVideo, addedAudio, addImage,
 }) => {
   const optionBottons = (optionRender) => {
     const enableVideo = addedVideo;
@@ -41,7 +41,13 @@ const ToolsComponent = ({
                 </ul>
               </div>
               <TooltipContainer placement="top" tooltipText="Imagen">
-                <div className={`icon ${styles.tools_media}`}>E</div>
+                <span className={styles.tools_img_content}>
+                  <label htmlFor="imagenAdd" id="labelInput">
+                    <div className={`icon ${styles.tools_media}`}>E</div>
+                  </label>
+                  <input className={styles.tools_img} accept="image/png,image/jpeg,image/jpeg" id="imagenAdd" size="60" type="file" placeholder="Imagen" autoComplete="off" name="imagenAdd" required="required" onChange={(event) => addImage(event)} />
+                </span>
+
               </TooltipContainer>
 
               <TooltipContainer placement="top" tooltipText="Video">
@@ -189,6 +195,7 @@ ToolsComponent.propTypes = {
   addTextFunct: PropTypes.func.isRequired,
   setModalShowVideo: PropTypes.func.isRequired,
   setModalShow: PropTypes.func.isRequired,
+  addImage: PropTypes.func.isRequired,
 };
 
 ToolsComponent.defaultProps = {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   Modal,
@@ -7,7 +7,9 @@ import {
 import styles from './modalAudio.module.css';
 
 const ModalAudio = (props) => {
-  const { addAudio, showModal, show } = props;
+  const {
+    addAudio, showModal, show, updateFunctionEvent, editInfo, updateEvent,
+  } = props;
 
   const [inputLink, setData] = useState('');
   const [inputLinkOut, setDataOut] = useState('');
@@ -66,6 +68,20 @@ const ModalAudio = (props) => {
     setInvalid(false);
   };
 
+  const callsUpdateFunctAudio = () => {
+    updateFunctionEvent(inputLinkOut, editInfo.idContent, editInfo.type);
+    setData('');
+    setEmbed(false);
+    setInvalid(false);
+  };
+
+  useEffect(() => {
+    if (updateEvent) {
+      setDisable(false);
+      setData(editInfo.tagEdit);
+    }
+  }, [editInfo, updateEvent]);
+
   return (
     <div>
       <Modal
@@ -103,7 +119,11 @@ const ModalAudio = (props) => {
           <button className="Btn-cancel" onClick={() => showModal()}>
             cancelar
           </button>
-          <button className="Btn-add" onClick={callsFunctAudio} disabled={disable}>Incrustar</button>
+          {
+            (updateEvent) ? (
+              <button className="Btn-add" onClick={callsUpdateFunctAudio} disabled={disable}>Actualizar</button>
+            ) : (<button className="Btn-add" onClick={callsFunctAudio} disabled={disable}>Incrustar</button>)
+          }
         </Modal.Footer>
       </Modal>
     </div>
@@ -112,8 +132,20 @@ const ModalAudio = (props) => {
 
 ModalAudio.propTypes = {
   show: PropTypes.bool.isRequired,
+  updateEvent: PropTypes.bool,
   showModal: PropTypes.func.isRequired,
   addAudio: PropTypes.func.isRequired,
+  updateFunctionEvent: PropTypes.func.isRequired,
+  editInfo: PropTypes.shape({
+    idContent: PropTypes.string,
+    tagEdit: PropTypes.string,
+    type: PropTypes.string,
+  }),
+};
+
+ModalAudio.defaultProps = {
+  editInfo: { idContent: '', tagEdit: '' },
+  updateEvent: false,
 };
 
 export default ModalAudio;

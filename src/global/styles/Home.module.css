@@ -1,6 +1,7 @@
 /*
   Estilos exclusivos de una sola página o componente se añaden en un módulo de CSS
 */
+
 .centered {
   padding: 5rem 0;
   flex: 1;
@@ -8,4 +9,133 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.content_no_padd {
+  padding: 0;
+}
+
+.content_title {
+  background-image: url('/images/imgpr2.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  min-height: 765px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.content_title::after {
+  content: "";
+  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 95%);
+  position: absolute;
+  max-height: 765px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  filter: brightness(100%);
+}
+
+.content_title_section {
+  position: relative;
+  margin-top: 18%;
+  z-index: 1;
+}
+
+.content_more {
+  margin-top: 60px;
+}
+
+.content_goto {
+  vertical-align: middle;
+  display: flex;
+}
+
+.content_goto div {
+  margin: auto;
+  margin-right: 0;
+}
+
+.help_img {
+  width: 100%;
+  max-width: 380px;
+}
+
+.expert_img {
+  text-align: center;
+}
+
+.expert_img img {
+  max-width: 480px;
+  margin: auto;
+}
+
+.content_centered {
+  text-align: center;
+}
+
+.content_margin {
+  margin-top: 120px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.content_left {
+  text-align: left;
+}
+
+.buton_m {
+  margin-right: 20px;
+}
+
+.number_option {
+  font-style: normal;
+  margin-right: 20px;
+}
+
+.number_option.non {
+  filter: brightness(50%);
+}
+
+.number_option.active {
+  filter: brightness(120%);
+}
+
+@media(max-width: 1200px) {
+  .content_title_section {
+    margin-top: 200px;
+  }
+  .content_title {
+    background-size: auto 100%;
+  }
+  .help_img {
+    max-width: 100%;
+  }
+  .expert_img img {
+    max-width: 100%;
+    margin: auto;
+  }
+}
+
+@media(max-width: 990px) {
+  .content_margin {
+    margin-top: 80px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .content_goto div {
+    margin: auto;
+  }
+}
+
+@media(max-width: 576px) {
+  .content_title::after {
+  max-height: max-content;
+  }
+  .content_goto div {
+    margin: auto;
+    margin-bottom: 30px;
+  }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './editor.module.css';
 import DetailsModal from './modals/detailsModal/DetailsModal';
@@ -8,15 +9,22 @@ import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
+import { upload, remove } from '@/services/aws';
 
 const EditorComponent = ({ option }) => {
   const [modalShow, setModalShow] = useState(false);
-  // const [imagen, setImagen] = useState();
   const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
   const [addedVideo, setContentVideo] = useState(false);
   const [addedAudio, setContentAudio] = useState(false);
+  const [editVideo, setEditVideo] = useState({ idContent: '', tagEdit: '', type: '' });
+  const [editTag, setEditInfo] = useState({ idContent: '', tagEdit: '', type: '' });
+  const [editImg, setEditImg] = useState(false);
+  const [updateEvent, setUpdateEvent] = useState(false);
+  const [activeOption, setActiveCont] = useState('');
+
+  const { data } = useSelector((state) => state.profile);
 
   const makeid = () => {
     let result = '';
@@ -40,6 +48,8 @@ const EditorComponent = ({ option }) => {
       }
     });
   };
+
+  /* Add components functions */
 
   const addVideoFunct = (tag, embedIframe) => {
     const EditorContent = localStorage.getItem('contentEditor');
@@ -72,36 +82,23 @@ const EditorComponent = ({ option }) => {
     setModalShowVideo(false);
   };
 
-  /* const getBase64Image = (img) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0);
-
-    const dataURL = canvas.toDataURL('image/png');
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
-  };
-
-  const elementImg = (event) => {
+  const addImage = async (event) => {
     event.preventDefault();
     const EditorContent = localStorage.getItem('contentEditor');
     const obj = JSON.parse(EditorContent);
     const idContainer = makeid();
     if (event.target.files.length > 0) {
-      setImagen(URL.createObjectURL(event.target.files[0]));
-      obj.html.push({ id: idContainer, type: 'image', content: event.target.files[0] });
-      const imgData = getBase64Image(event.target);
-      localStorage.setItem('imgData', imgData);
-    } else {
-      // setImagen('');
-      obj.html.push({ id: idContainer, type: 'image', content: event.target.files[0] });
+      const path = `${data._id}/resources`;
+      const image = event.target.files[0];
+
+      const res = await upload(path, image);
+      if (res.ok) {
+        obj.html.push({ id: idContainer, type: 'image', content: res.file });
+      }
+      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      setItems(obj);
     }
-    localStorage.setItem('contentEditor', JSON.stringify(obj));
-    setItems(obj);
-  }; */
+  };
 
   const addTextFunct = (optionText) => {
     const EditorContent = localStorage.getItem('contentEditor');
@@ -143,11 +140,95 @@ const EditorComponent = ({ option }) => {
     setModalShow(false);
   };
 
-  const deleteComponentEditor = (idContent) => {
+  /* ######################### */
+
+  /* Edit components functions */
+  const editComponentFunct = (tag, idElement, typeOption) => {
+    if (typeOption === 'linkVideo' || typeOption === 'iframeVideo') {
+      setModalShowVideo(true);
+      setEditVideo({ idContent: idElement, tagEdit: tag, type: typeOption });
+      setUpdateEvent(true);
+    } else if (typeOption === 'iframeAudio') {
+      setModalShow(true);
+      setEditInfo({ idContent: idElement, tagEdit: tag, type: typeOption });
+      setUpdateEvent(true);
+    }
+  };
+
+  const updateFunctionEventVideo = (tag, idElement, typeContent) => {
+    setUpdateEvent(false);
+    setModalShowVideo(false);
+    const oldArray = arrayItemsEditor.html;
+    let newTag = {};
+    if (!typeContent) {
+      newTag = { id: idElement, type: 'linkVideo', content: tag };
+    } else {
+      newTag = { id: idElement, type: 'iframeVideo', content: tag };
+    }
+    oldArray.forEach((item, index) => {
+      if (item.id === idElement) {
+        oldArray[index] = newTag;
+      }
+    });
+    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+  };
+
+  const handleChangeImage = async (idElement, content, event) => {
+    event.preventDefault();
+    const currentContent = content;
+    if (event.target.files.length > 0 && currentContent !== '' && currentContent !== 'undefined') {
+      const path = `${data._id}/resources`;
+      const image = event.target.files[0];
+
+      const resDelete = await remove(currentContent);
+      if (resDelete.ok) {
+        const res = await upload(path, image);
+        if (res.ok) {
+          arrayItemsEditor.html.forEach((item, index) => {
+            if (item.id === idElement) {
+              const contents = arrayItemsEditor;
+              contents.html[index].content = res.file;
+              setItems(contents);
+              setEditImg(!editImg);
+              localStorage.setItem('contentEditor', JSON.stringify(contents));
+            }
+          });
+        } else {
+          setEditImg(false);
+        }
+      } else {
+        setEditImg(false);
+      }
+    }
+  };
+
+  const updateFunctionEvent = (tag, idElement, typeContent) => {
+    setUpdateEvent(false);
+    setModalShow(false);
+    const oldArray = arrayItemsEditor.html;
+    const newTag = { id: idElement, type: typeContent, content: tag };
+    oldArray.forEach((item, index) => {
+      if (item.id === idElement) {
+        oldArray[index] = newTag;
+      }
+    });
+    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+  };
+  /* ######################### */
+
+  const removeFileToAWS = async (file) => {
+    await remove(file);
+  };
+
+  const deleteComponentEditor = (idContent, type) => {
     const newArrayContent = { html: [] };
+    let content = '';
+    // let deleteImage = true;
     arrayItemsEditor.html.forEach((item) => {
       if (item.id !== idContent) {
         newArrayContent.html.push(item);
+      } else {
+        content = item.content;
       }
     });
     setItems(newArrayContent);
@@ -170,6 +251,13 @@ const EditorComponent = ({ option }) => {
       });
       setContentAudio(validateAudio);
     }
+    if (type === 'image') {
+      removeFileToAWS(content);
+    }
+  };
+
+  const setActiveClass = (id) => {
+    setActiveCont(id);
   };
 
   useEffect(() => {
@@ -197,12 +285,18 @@ const EditorComponent = ({ option }) => {
     <div className={styles.editor}>
       <ModalAudio
         show={modalShow}
+        updateEvent={updateEvent}
+        editInfo={editTag}
         addAudio={addAudioFunct}
+        updateFunctionEvent={updateFunctionEvent}
         showModal={() => setModalShow(false)}
       />
       <ModalVideo
         show={modalShowVideo}
+        editInfo={editVideo}
+        updateEvent={updateEvent}
         addVideo={addVideoFunct}
+        updateFunctionEvent={updateFunctionEventVideo}
         showModal={() => setModalShowVideo(false)}
       />
       <div className={styles.editorContent} align="center">
@@ -217,7 +311,11 @@ const EditorComponent = ({ option }) => {
                       <EditorOptionRender
                         data={item}
                         deleteComponentEditor={deleteComponentEditor}
+                        editComponentFunct={editComponentFunct}
                         handleChange={handleChange}
+                        handleChangeImage={handleChangeImage}
+                        setActiveClass={setActiveClass}
+                        activeOption={activeOption}
                       />
                     </div>
                   );
@@ -231,6 +329,7 @@ const EditorComponent = ({ option }) => {
             addTextFunct={addTextFunct}
             setModalShowVideo={setModalShowVideo}
             setModalShow={setModalShow}
+            addImage={addImage}
           />
         </div>
       </div>

@@ -68,7 +68,7 @@ const NavbarComponent = () => {
                 <Link href="/nosotros" passHref>
                   <Nav.Link className="text-md text--theme-light">Acerca de</Nav.Link>
                 </Link>
-                <Link href="#" passHref>
+                <Link href="/trending-topics" passHref>
                   <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
                 </Link>
                 <Link href="#" passHref>

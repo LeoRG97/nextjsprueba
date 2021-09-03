@@ -1,24 +1,36 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-danger */
+import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const EditorOptionRender = ({
-  deleteComponentEditor, handleChange, data,
+  deleteComponentEditor, handleChange, handleChangeImage, data, editComponentFunct, activeOption,
+  setActiveClass,
 }) => {
+  const [active, setActive] = useState('');
+
   const renderElement = (item) => {
     switch (item.type) {
       case 'linkVideo':
         return (
-          <iframe src={item.content} title="video" />
+          <div className={`Editor-content-child ${active}`}>
+            <iframe src={item.content} title="video" />
+          </div>
         );
       case 'iframeVideo':
         return (
-          <div dangerouslySetInnerHTML={{ __html: item.content }} />
+          <div className={`Editor-content-child ${active}`} dangerouslySetInnerHTML={{ __html: item.content }} />
         );
       case 'iframeAudio':
         return (
-          <div dangerouslySetInnerHTML={{ __html: item.content }} />
+          <div className={`Editor-content-child ${active}`} dangerouslySetInnerHTML={{ __html: item.content }} />
+        );
+      case 'image':
+        return (
+          <div className={`Editor-content-child ${active} image-editor-self`}>
+            <img className="image-editor" src={item.content} alt="" />
+          </div>
         );
       case 'textHeader':
         return (
@@ -61,12 +73,20 @@ const EditorOptionRender = ({
     }
   };
 
+  useEffect(() => {
+    if (activeOption === data.id) {
+      setActive('active');
+    } else {
+      setActive('');
+    }
+  }, [activeOption]);
+
   return (
     <>
       <div className="container-fluid">
         <div className="row">
           <div className="col">
-            <div className="Editor-content">
+            <div className="Editor-content" onClick={() => setActiveClass(data.id)}>
               <button className="Edit-btn move-btn icon">4</button>
               <div className="Editor-container">
                 {renderElement(data)}
@@ -75,8 +95,37 @@ const EditorOptionRender = ({
                 <div className="Edit-dropdown">
                   <button className="Edit-dropbtn icon">0</button>
                   <div className="Edit-dropdown-container">
-                    <a href="#"><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                    <a href="#" onClick={() => deleteComponentEditor(data.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                    {
+                      // eslint-disable-next-line no-nested-ternary
+                      (data.type !== 'textHeader' && data.type !== 'textSubHeader' && data.type !== 'textParagraph' && data.type !== 'textFooter')
+                        ? (
+                          (data.type === 'image')
+                            ? (
+                              (
+                                <a>
+                                  <label htmlFor="imagenUpdate">
+                                    <span className="icon">E</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar
+                                    <input
+                                      className="input-image-none"
+                                      accept="image/png,image/jpeg,image/jpeg"
+                                      id="imagenUpdate"
+                                      size="60"
+                                      type="file"
+                                      placeholder="Imagen"
+                                      autoComplete="off"
+                                      name="imagenUpdate"
+                                      required="required"
+                                      onChange={(event) => handleChangeImage(
+                                        data.id, data.content, event,
+                                      )}
+                                    />
+                                  </label>
+                                </a>
+                              )
+                            ) : (<a onClick={() => editComponentFunct(data.content, data.id, data.type)}><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>)
+                        ) : (<></>)
+                    }
+                    <a onClick={() => deleteComponentEditor(data.id, data.type)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
                   </div>
                 </div>
               </div>
@@ -94,12 +143,17 @@ EditorOptionRender.propTypes = {
     content: PropTypes.string,
     type: PropTypes.string,
   }),
+  activeOption: PropTypes.string,
   deleteComponentEditor: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleChangeImage: PropTypes.func.isRequired,
+  editComponentFunct: PropTypes.func.isRequired,
+  setActiveClass: PropTypes.func.isRequired,
 };
 
 EditorOptionRender.defaultProps = {
   data: {},
+  activeOption: '',
 };
 
 export default EditorOptionRender;
