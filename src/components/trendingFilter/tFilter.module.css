@@ -1,5 +1,6 @@
 .filterContainer {
   position: relative;
+  width: max-content;
   max-width: 70%;
   height: 80px;
   overflow-x: hidden;
@@ -19,14 +20,22 @@
 }
 
 .filterOpacity1 {
-  background: rgb(13,12,34);
-  background: linear-gradient(90deg, rgba(13,12,34,1) 0%, rgba(13,12,34,0.2049194677871149) 100%);
+  background: rgb(13, 12, 34);
+  background: linear-gradient(
+    90deg,
+    rgba(13, 12, 34, 1) 0%,
+    rgba(13, 12, 34, 0.2049194677871149) 100%
+  );
   left: 0%;
 }
 
 .filterOpacity2 {
-  background: rgb(13,12,34);
-  background: linear-gradient(270deg, rgba(13,12,34,1) 0%, rgba(13,12,34,0.2049194677871149) 100%);
+  background: rgb(13, 12, 34);
+  background: linear-gradient(
+    270deg,
+    rgba(13, 12, 34, 1) 0%,
+    rgba(13, 12, 34, 0.2049194677871149) 100%
+  );
   right: 0%;
 }
 
@@ -40,6 +49,8 @@
   -ms-overflow-style: none; /* IE 11 */
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox 64 */
+  /* margin-left: 2rem;
+  margin-right: 2rem; */
 }
 
 .filters::-webkit-scrollbar {
@@ -51,14 +62,25 @@
   text-align: center;
   border: 1px solid var(--colorItemBorder);
   border-radius: 15px;
-  width: 140px;
+  min-width: 80px;
+  padding-left: 1rem;
+  padding-right: 1rem;
   height: 30px;
   margin-left: 1%;
   cursor: pointer;
   transition: 0.5s;
 }
 
-.filter:hover {
+.filter:first-child {
+  margin-left: 4rem;
+}
+
+.filter:last-child {
+  margin-right: 4rem;
+}
+
+.filter:hover,
+.current {
   background-color: var(--colorSecondary);
   border: 1px solid var(--colorSecondary);
   color: #fff;
@@ -73,7 +95,7 @@
 
 /* DRAG SCROLL CLASS ================0 */
 
-.active .filter{
+.active .filter {
   cursor: grabbing;
   cursor: -webkit-grabbing;
   transform: scale(1);
