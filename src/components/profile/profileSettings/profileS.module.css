@@ -1,0 +1,108 @@
+.profileSettingsContainer {
+  height: 120vh;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.profileSettingsTitle {
+  margin-bottom: 25px;
+}
+
+.general {
+  margin-bottom: 20px;
+}
+
+.profileSettingsImg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.profilImg {
+  width: 60%;
+}
+
+.profilSettingsFile {
+  text-align: right;
+  width: 40%;
+}
+
+.imgContent {
+  width: 120px;
+  height: 120px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.profileSettingsImg img {
+  width: 100%;
+  border-radius: 100px;
+}
+
+@supports(object-fit: cover) {
+  .imgContent img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+}
+
+.fileLabel {
+  cursor: pointer;
+}
+
+.fileInputName {
+  display: none;
+}
+
+.settingsTextare {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: var(--colorItemBg);
+  color: var(--text-color-secondary);
+  border: 1px solid var(--colorItemBorder);
+  border-radius: var(--inputBorderRadius);
+}
+
+.settingsTextare:active {
+  color: var(--colorLight);
+  outline: none;
+  border: 1px solid var(--colorLight);
+  background-color: var(--colorItemBg);
+}
+
+.settingsTextare:focus {
+  color: var(--colorLight);
+  outline: none;
+  border: 1px solid var(--colorLight);
+  background-color: var(--colorItemBg);
+}
+
+@media (max-width: 999px) {
+  .profileSettingsContainer {
+    height: auto;
+  }
+
+  .general {
+    margin-top: 30px;
+  }
+
+  .profileSettingsImg {
+    display: grid;
+    align-items: center;
+  }
+
+  .profilImg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .profilSettingsFile {
+    text-align: center;
+    width: 100%;
+  }
+}

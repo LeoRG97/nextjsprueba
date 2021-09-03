@@ -4,29 +4,7 @@
   padding-left: 15%;
   padding-right: 15%;
 }
-/*SELECTS ========================================================= */
-.selectsContainer{
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
 
-.selectRecent,
-.selectFilter{
-  height: 60px;
-  width: 50%;
-  display: grid;
-  align-items: center;
-}
-
-.selectRecent{
-  justify-content: left;
-}
-
-.selectFilter{
-  justify-content: right;
-}
-/* ========================================================= */
 .cardContainer {
   display: inline-block;
   height: 450px;

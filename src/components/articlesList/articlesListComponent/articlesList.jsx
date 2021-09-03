@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
-import { TrendingSelectComponent } from '@/components';
-import styles from './tArticle.module.css';
+import styles from './articlesList.module.css';
 
-const TrendingArticleComponent = () => {
+const ArticlesListComponent = () => {
   const articulos = [
     {
       id: '1',
@@ -37,14 +36,6 @@ const TrendingArticleComponent = () => {
 
   return (
     <div className={styles.articlesContainer}>
-      <div className={styles.selectsContainer}>
-        <div className={styles.selectRecent}>
-          <TrendingSelectComponent selectN="1" />
-        </div>
-        <div className={styles.selectFilter}>
-          <TrendingSelectComponent selectN="2" />
-        </div>
-      </div>
       {articulos.map((index, i) => {
         return (
           <div key={articulos[i].id} className={styles.cardContainer}>
@@ -71,4 +62,4 @@ const TrendingArticleComponent = () => {
   );
 };
 
-export default TrendingArticleComponent;
+export default ArticlesListComponent;
