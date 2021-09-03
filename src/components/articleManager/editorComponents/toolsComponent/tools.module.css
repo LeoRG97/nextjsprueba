@@ -54,6 +54,16 @@
   color: #fff;
 }
 
+.tools_img {
+  visibility: hidden;
+  width: 0;
+  position: relative;
+}
+
+.tools_img_content {
+  margin-right: 15px;
+}
+
 @media (max-width: 999px) {
   .tools_media {
     width: 46px;

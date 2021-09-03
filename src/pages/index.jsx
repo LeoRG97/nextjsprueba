@@ -1,7 +1,7 @@
 import Head from 'next/head';
 /* eslint-disable import/extensions */
-import { Footer, Layout } from '@/components';
-import styles from '@/global/styles/Home.module.css';
+import { Footer, Layout, HomePage } from '@/components';
+// import styles from '@/global/styles/Home.module.css';
 
 export default function Home() {
   return (
@@ -12,8 +12,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.centered}`}>
-        <h1 className="title-xl">Index page</h1>
+      <main>
+        <HomePage />
       </main>
       <Footer />
     </Layout>
