@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import styles from './editor.module.css';
 import DetailsModal from './modals/detailsModal/DetailsModal';
@@ -9,8 +9,7 @@ import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
-import { upload } from '@/services/aws';
-import { fetch as fetchProfile } from '@/reducers/profile';
+import { upload, remove } from '@/services/aws';
 
 const EditorComponent = ({ option }) => {
   const [modalShow, setModalShow] = useState(false);
@@ -21,11 +20,11 @@ const EditorComponent = ({ option }) => {
   const [addedAudio, setContentAudio] = useState(false);
   const [editVideo, setEditVideo] = useState({ idContent: '', tagEdit: '', type: '' });
   const [editTag, setEditInfo] = useState({ idContent: '', tagEdit: '', type: '' });
+  const [editImg, setEditImg] = useState(false);
   const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
 
-  const dispatch = useDispatch();
-  const { data, fetched } = useSelector((state) => state.profile);
+  const { data } = useSelector((state) => state.profile);
 
   const makeid = () => {
     let result = '';
@@ -83,30 +82,23 @@ const EditorComponent = ({ option }) => {
     setModalShowVideo(false);
   };
 
-  const uploadFileToAWS = async (file) => {
-    const path = `${data._id}/resources`;
-    const { name } = file;
-    const image = file;
+  const addImage = async (event) => {
+    event.preventDefault();
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const idContainer = makeid();
+    if (event.target.files.length > 0) {
+      const path = `${data._id}/resources`;
+      const image = event.target.files[0];
 
-    const res = await upload(path, name, image);
-    if (res.ok) {
-      const EditorContent = localStorage.getItem('contentEditor');
-
-      const obj = JSON.parse(EditorContent);
-      const idContainer = makeid();
-      obj.html.push({ id: idContainer, type: 'image', content: res.file });
+      const res = await upload(path, image);
+      if (res.ok) {
+        obj.html.push({ id: idContainer, type: 'image', content: res.file });
+      }
       localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
     }
-    return true;
   };
-
-  async function selectImage(event) {
-    event.preventDefault();
-    if (event.target.files.length > 0) {
-      await uploadFileToAWS(event.target.files[0]);
-    }
-  }
 
   const addTextFunct = (optionText) => {
     const EditorContent = localStorage.getItem('contentEditor');
@@ -181,6 +173,35 @@ const EditorComponent = ({ option }) => {
     localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
   };
 
+  const handleChangeImage = async (idElement, content, event) => {
+    event.preventDefault();
+    const currentContent = content;
+    if (event.target.files.length > 0 && currentContent !== '' && currentContent !== 'undefined') {
+      const path = `${data._id}/resources`;
+      const image = event.target.files[0];
+
+      const resDelete = await remove(currentContent);
+      if (resDelete.ok) {
+        const res = await upload(path, image);
+        if (res.ok) {
+          arrayItemsEditor.html.forEach((item, index) => {
+            if (item.id === idElement) {
+              const contents = arrayItemsEditor;
+              contents.html[index].content = res.file;
+              setItems(contents);
+              setEditImg(!editImg);
+              localStorage.setItem('contentEditor', JSON.stringify(contents));
+            }
+          });
+        } else {
+          setEditImg(false);
+        }
+      } else {
+        setEditImg(false);
+      }
+    }
+  };
+
   const updateFunctionEvent = (tag, idElement, typeContent) => {
     setUpdateEvent(false);
     setModalShow(false);
@@ -195,11 +216,19 @@ const EditorComponent = ({ option }) => {
   };
   /* ######################### */
 
-  const deleteComponentEditor = (idContent) => {
+  const removeFileToAWS = async (file) => {
+    await remove(file);
+  };
+
+  const deleteComponentEditor = (idContent, type) => {
     const newArrayContent = { html: [] };
+    let content = '';
+    // let deleteImage = true;
     arrayItemsEditor.html.forEach((item) => {
       if (item.id !== idContent) {
         newArrayContent.html.push(item);
+      } else {
+        content = item.content;
       }
     });
     setItems(newArrayContent);
@@ -222,6 +251,9 @@ const EditorComponent = ({ option }) => {
       });
       setContentAudio(validateAudio);
     }
+    if (type === 'image') {
+      removeFileToAWS(content);
+    }
   };
 
   const setActiveClass = (id) => {
@@ -230,9 +262,6 @@ const EditorComponent = ({ option }) => {
 
   useEffect(() => {
     const EditorContent = localStorage.getItem('contentEditor');
-    if (!fetched) {
-      dispatch(fetchProfile());
-    }
     if (EditorContent === null) {
       // {id: "", type: "", content: ""}
       const jsonStr = '{"html":[]}';
@@ -284,6 +313,7 @@ const EditorComponent = ({ option }) => {
                         deleteComponentEditor={deleteComponentEditor}
                         editComponentFunct={editComponentFunct}
                         handleChange={handleChange}
+                        handleChangeImage={handleChangeImage}
                         setActiveClass={setActiveClass}
                         activeOption={activeOption}
                       />
@@ -299,7 +329,7 @@ const EditorComponent = ({ option }) => {
             addTextFunct={addTextFunct}
             setModalShowVideo={setModalShowVideo}
             setModalShow={setModalShow}
-            selectImage={(event) => selectImage(event)}
+            addImage={addImage}
           />
         </div>
       </div>
