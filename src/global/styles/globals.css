@@ -1117,6 +1117,12 @@ html {
   align-self: center;
 }
 
+.input-image-none {
+  visibility: hidden;
+  width: 0;
+  position: relative;
+}
+
 /* SELECTBOX ============================================================================ */
 
 .dropdown {

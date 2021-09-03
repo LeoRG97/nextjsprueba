@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 
 const EditorOptionRender = ({
-  deleteComponentEditor, handleChange, data, editComponentFunct, activeOption, setActiveClass,
+  deleteComponentEditor, handleChange, handleChangeImage, data, editComponentFunct, activeOption,
+  setActiveClass,
 }) => {
   const [active, setActive] = useState('');
 
@@ -95,11 +96,36 @@ const EditorOptionRender = ({
                   <button className="Edit-dropbtn icon">0</button>
                   <div className="Edit-dropdown-container">
                     {
-                      (data.type !== 'textHeader' && data.type !== 'textSubHeader' && data.type !== 'textParagraph' && data.type !== 'textFooter') ? (
-                        <a onClick={() => editComponentFunct(data.content, data.id, data.type)}><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>
-                      ) : (<></>)
+                      // eslint-disable-next-line no-nested-ternary
+                      (data.type !== 'textHeader' && data.type !== 'textSubHeader' && data.type !== 'textParagraph' && data.type !== 'textFooter')
+                        ? (
+                          (data.type === 'image')
+                            ? (
+                              (
+                                <a>
+                                  <label htmlFor="imagenUpdate">
+                                    <span className="icon">E</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar
+                                    <input
+                                      className="input-image-none"
+                                      accept="image/png,image/jpeg,image/jpeg"
+                                      id="imagenUpdate"
+                                      size="60"
+                                      type="file"
+                                      placeholder="Imagen"
+                                      autoComplete="off"
+                                      name="imagenUpdate"
+                                      required="required"
+                                      onChange={(event) => handleChangeImage(
+                                        data.id, data.content, event,
+                                      )}
+                                    />
+                                  </label>
+                                </a>
+                              )
+                            ) : (<a onClick={() => editComponentFunct(data.content, data.id, data.type)}><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>)
+                        ) : (<></>)
                     }
-                    <a onClick={() => deleteComponentEditor(data.id)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                    <a onClick={() => deleteComponentEditor(data.id, data.type)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
                   </div>
                 </div>
               </div>
@@ -120,6 +146,7 @@ EditorOptionRender.propTypes = {
   activeOption: PropTypes.string,
   deleteComponentEditor: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleChangeImage: PropTypes.func.isRequired,
   editComponentFunct: PropTypes.func.isRequired,
   setActiveClass: PropTypes.func.isRequired,
 };
