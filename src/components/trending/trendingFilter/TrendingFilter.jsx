@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './tFilter.module.css';
 
-const TrendingFilterComponent = () => {
+const TrendingFilterComponent = ({ preferences }) => {
+  const router = useRouter();
   useEffect(() => {
     const dragScroll = () => {
       const slider = document.querySelector('.items');
@@ -34,38 +36,36 @@ const TrendingFilterComponent = () => {
     };
     dragScroll();
   });
+
+  const navigateToFilter = (filter) => {
+    const { query, pathname } = router;
+    delete query.category;
+    router.push({
+      pathname,
+      query: {
+        ...query,
+        ...(filter && { category: filter }),
+      },
+    }, undefined, { scroll: false, shallow: true });
+  };
+
+  const { category } = router.query;
+
   return (
     <div align="center">
       <div className={styles.filterContainer}>
         <div className={styles.filterOpacity1} />
         <div className={`items ${styles.filters}`}>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Tecnología</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Negocios</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Sustentabilidad</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
+          <div className={`text-sm ${styles.filter} ${!category && styles.current}`} onClick={() => navigateToFilter('')}>
             <div>Todos</div>
           </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Innovación</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Innovación</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Innovación</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Innovación</div>
-          </div>
-          <div className={`text-sm ${styles.filter}`}>
-            <div>Innovación</div>
-          </div>
+          {
+            preferences.map((pref) => (
+              <div key={pref._id} className={`text-sm ${styles.filter} ${category === pref.slug && styles.current}`} onClick={() => navigateToFilter(pref.slug)}>
+                <div>{pref.nombre}</div>
+              </div>
+            ))
+          }
         </div>
         <div className={styles.filterOpacity2} />
       </div>

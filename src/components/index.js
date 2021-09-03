@@ -15,7 +15,7 @@ export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader'
 export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
 export { default as TrendingBannerComponent } from './trending/trendingBanner/TrendingBanner';
 export { default as TrendingFilterComponent } from './trending/trendingFilter/TrendingFilter';
-export { default as TrendingSelectComponent } from './articlesList/articleListSelectComponent/TrendingSelect';
+export { default as ArticleListSelectComponent } from './articlesList/articleListSelectComponent/ArticleListSelect';
 export { default as SelectImg } from './userInvitation/selectImg';
 export { default as ProfileSettingsComponent } from './profile/profileSettings/ProfileSettings';
 export { default as ProfileNavComponent } from './profile/profileNav/ProfileNav';

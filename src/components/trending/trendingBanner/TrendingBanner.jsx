@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import Link from 'next/link';
 import React from 'react';
 import styles from './tBanner.module.css';
 
@@ -17,7 +18,9 @@ const TrendingBannerComponent = () => {
           </div>
           <div>especialmente diseñados para mentes visionarias, como tú.</div>
         </div>
-        <button className={`button button--theme-primary ${styles.marginT}`}>Crear cuenta</button>
+        <Link href="/create-account" passHref>
+          <button className={`button button--theme-primary ${styles.marginT}`}>Crear cuenta</button>
+        </Link>
       </div>
     </div>
   );
