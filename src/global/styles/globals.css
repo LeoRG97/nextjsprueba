@@ -949,8 +949,6 @@ html {
   border-top: none !important;
 }
 /* MODAL EDITOR ============================================================================ */
-/* SELECT TRENDING */
-
 /*EDITOR**************************/
 .purple-content {
   background-color: var(--black-10);
@@ -1225,10 +1223,33 @@ html {
   }
 }
 
-/* SELECTBOX ============================================================================ */
+/* SELECT POSTS ============================================================================ */
+/* SELECT POSTS */
+.selects-container{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-left: 15%;
+  padding-right: 15%;
+}
 
+.select-recent,
+.select-filter{
+  height: 60px;
+  width: 50%;
+  display: grid;
+  align-items: center;
+}
 
-.select-trending .btn-primary {
+.select-recent{
+  justify-content: left;
+}
+
+.select-filter{
+  justify-content: right;
+}
+
+.select-posts .btn-primary {
   color: var(--colorSecondary);
   border: 2px solid var(--colorItemBorder);
   border-radius: 7px;

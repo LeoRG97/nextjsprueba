@@ -9,20 +9,21 @@ const EditProfile = () => {
   // const [session] = useSession();
   const dispatch = useDispatch();
   const { data, fetched } = useSelector((state) => state.profile);
-  // console.log(data);
-
   useEffect(() => {
     if (!fetched) {
       dispatch(fetchProfile());
     }
   }, []);
 
-  const updateDataUser = (userData, userImg) => {
+  const updateDataUser = async (userData, userImg) => {
     const path = `${data._id}/resources`;
-    //   console.log(userData);
-    //   console.log(userImg.imgP);
+
     updateUserData(data._id, userData);
-    uploadImgProfile(path, userImg.imgP);
+
+    const res = await uploadImgProfile(path, userImg.fileU, userImg.fileU.name);
+    if (res.ok) {
+      document.getElementById('mensaje-final').style.display = 'block';
+    }
   };
 
   return (
@@ -30,9 +31,11 @@ const EditProfile = () => {
       {
         data.name !== undefined ? (
           <ProfileSettingsComponent
+            id={data._id}
             nameU={data.name}
             lastName={data.apellidos}
             userBio={data.biography}
+            pictureU={data.picture}
             updateDU={updateDataUser}
           />
         ) : (

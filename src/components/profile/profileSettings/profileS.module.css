@@ -51,6 +51,7 @@
 
 .fileLabel {
   cursor: pointer;
+  width: 200px;
 }
 
 .fileInputName {
@@ -78,6 +79,10 @@
   outline: none;
   border: 1px solid var(--colorLight);
   background-color: var(--colorItemBg);
+}
+
+.mensajeFinal{
+  display: none;
 }
 
 @media (max-width: 999px) {

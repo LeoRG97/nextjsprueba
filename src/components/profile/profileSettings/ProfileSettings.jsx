@@ -10,9 +10,11 @@ import { ProfileNavComponent } from '@/components';
 import styles from './profileS.module.css';
 
 const ProfileSettingsComponent = ({
+  id,
   nameU,
   lastName,
   userBio,
+  pictureU,
   updateDU,
 }) => {
   const [validated, setValidated] = useState(false);
@@ -20,9 +22,10 @@ const ProfileSettingsComponent = ({
     name: nameU,
     apellidos: lastName,
     biography: userBio,
-    picture: '',
+    picture: pictureU,
   });
   const [preImg, previewImg] = useState({
+    fileU: '',
     imgP: '',
   });
 
@@ -33,6 +36,7 @@ const ProfileSettingsComponent = ({
     });
   };
 
+  // EVENTO IMAGEN
   const _handleImageChange = (e) => {
     e.preventDefault();
 
@@ -41,15 +45,17 @@ const ProfileSettingsComponent = ({
     reader.onloadend = () => {
       saveProfile({
         ...profile,
-        [e.target.name]: file.name,
+        [e.target.name]: `https://ilovet-app.s3.us-east-2.amazonaws.com/${id}/resources/${file.name}`,
       });
       previewImg({
+        fileU: file,
         imgP: reader.result,
       });
     };
     reader.readAsDataURL(file);
   };
 
+  // EVENTO SUBMIT FORM
   const submitForm = (e) => {
     e.preventDefault();
 
@@ -70,6 +76,7 @@ const ProfileSettingsComponent = ({
     name,
     apellidos,
     biography,
+    picture,
   } = profile;
 
   const {
@@ -95,9 +102,9 @@ const ProfileSettingsComponent = ({
                 <div className="text-md">Imagen de perfil</div>
                 <div className={styles.profileSettingsImg}>
                   <div className={styles.profilImg}>
-                    {imgP ? (
+                    {picture ? (
                       <div className={styles.imgContent}>
-                        <img id="img-preview" src={imgP} alt="" />
+                        <img id="img-preview" src={imgP !== '' ? imgP : picture} alt="" />
                       </div>
                     ) : (
                       <div className={styles.imgContent}>
@@ -117,6 +124,7 @@ const ProfileSettingsComponent = ({
                         Cambiar foto de perfil
                       </Form.Label>
                       <Form.Control
+                        accept="image/png,image/jpeg,image/jpeg"
                         type="file"
                         size="sm"
                         name="picture"
@@ -178,6 +186,7 @@ const ProfileSettingsComponent = ({
                 </button>
               </div>
             </Form>
+            <span id="mensaje-final" className={`text-md ${styles.mensajeFinal}`}>Datos Actualizados</span>
           </Col>
           <Col md={12} lg={2} align="left" />
         </Row>
