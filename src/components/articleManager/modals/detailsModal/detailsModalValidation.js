@@ -1,17 +1,19 @@
-export const detailsValidation = (formData, categorias, reporte, infografia) => {
+export const detailsValidation = ({
+  titulo, descripcion, portada, categorias, videoUrl, reporte, infografia,
+}) => {
   const errors = {
     isValid: true,
   };
 
-  if (!formData.titulo) {
+  if (!titulo) {
     errors.titulo = 'El título es requerido';
     errors.isValid = false;
   }
-  if (!formData.descripcion) {
+  if (!descripcion) {
     errors.descripcion = 'La descripción es requerida';
     errors.isValid = false;
   }
-  if (!formData.portada) {
+  if (!portada) {
     errors.portada = 'La imagen de portada es requerida';
     errors.isValid = false;
   }
@@ -19,7 +21,7 @@ export const detailsValidation = (formData, categorias, reporte, infografia) => 
     errors.categorias = 'Selecciona al menos una categoría';
     errors.isValid = false;
   }
-  if (formData.videoUrl && !formData.videoUrl.match('https://.*')) {
+  if (videoUrl && !videoUrl.match('https://.*')) {
     errors.videoUrl = 'No es una URL válida';
     errors.isValid = false;
   }

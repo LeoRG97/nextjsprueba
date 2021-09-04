@@ -1,6 +1,11 @@
 .modalContainer {
   background-color: var(--colorItemBg);
   padding: 2.5rem;
+  border-radius: 10px;
+}
+
+.modalWidth {
+  max-width: 850px;
 }
 
 .descriptionInput {
@@ -11,4 +16,23 @@
   border: 0;
   display: flex;
   justify-content: space-between;
+}
+
+.visibilitySection {
+  margin-bottom: 1rem;
+}
+
+.switchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+@media screen and (min-width: 768px) {
+  .visibilitySection {
+    margin-bottom: 5.5rem;
+  }
 }
