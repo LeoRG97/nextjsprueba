@@ -1,11 +1,14 @@
 import React from 'react';
+import EditorContextProvider from '@/helpers/contexts/editorContext';
 import { EditorComponent, Layout } from '@/components';
 
 const EditorPage = () => {
   return (
-    <Layout>
-      <EditorComponent />
-    </Layout>
+    <EditorContextProvider>
+      <Layout>
+        <EditorComponent />
+      </Layout>
+    </EditorContextProvider>
   );
 };
 

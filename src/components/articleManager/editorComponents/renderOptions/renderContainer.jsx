@@ -1,12 +1,13 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable react/no-danger */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
+import { Draggable } from 'react-beautiful-dnd';
 
-const EditorOptionRender = ({
+const EditorOptionRender = memo(({
   deleteComponentEditor, handleChange, handleChangeImage, data, editComponentFunct, activeOption,
-  setActiveClass,
+  setActiveClass, index,
 }) => {
   const [active, setActive] = useState('');
 
@@ -82,60 +83,62 @@ const EditorOptionRender = ({
   }, [activeOption]);
 
   return (
-    <>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col">
-            <div className="Editor-content" onClick={() => setActiveClass(data.id)}>
-              <button className="Edit-btn move-btn icon">4</button>
-              <div className="Editor-container">
-                {renderElement(data)}
-              </div>
-              <div className="Edit-dropdown-content">
-                <div className="Edit-dropdown">
-                  <button className="Edit-dropbtn icon">0</button>
-                  <div className="Edit-dropdown-container">
-                    {
-                      // eslint-disable-next-line no-nested-ternary
-                      (data.type !== 'textHeader' && data.type !== 'textSubHeader' && data.type !== 'textParagraph' && data.type !== 'textFooter')
-                        ? (
-                          (data.type === 'image')
-                            ? (
-                              (
-                                <a>
-                                  <label htmlFor="imagenUpdate">
-                                    <span className="icon">E</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar
-                                    <input
-                                      className="input-image-none"
-                                      accept="image/png,image/jpeg,image/jpeg"
-                                      id="imagenUpdate"
-                                      size="60"
-                                      type="file"
-                                      placeholder="Imagen"
-                                      autoComplete="off"
-                                      name="imagenUpdate"
-                                      required="required"
-                                      onChange={(event) => handleChangeImage(
-                                        data.id, data.content, event,
-                                      )}
-                                    />
-                                  </label>
-                                </a>
-                              )
-                            ) : (<a onClick={() => editComponentFunct(data.content, data.id, data.type)}><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>)
-                        ) : (<></>)
-                    }
-                    <a onClick={() => deleteComponentEditor(data.id, data.type)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+    <Draggable draggableId={data.id} index={index}>
+      {(provided) => (
+        <div className="container-fluid" {...provided.draggableProps} ref={provided.innerRef}>
+          <div className="row">
+            <div className="col">
+              <div className="Editor-content" onClick={() => setActiveClass(data.id)}>
+                <div className="Edit-btn move-btn icon" {...provided.dragHandleProps}>4</div>
+                <div className="Editor-container">
+                  {renderElement(data)}
+                </div>
+                <div className="Edit-dropdown-content">
+                  <div className="Edit-dropdown">
+                    <button className="Edit-dropbtn icon">0</button>
+                    <div className="Edit-dropdown-container">
+                      {
+                        // eslint-disable-next-line no-nested-ternary
+                        (data.type !== 'textHeader' && data.type !== 'textSubHeader' && data.type !== 'textParagraph' && data.type !== 'textFooter')
+                          ? (
+                            (data.type === 'image')
+                              ? (
+                                (
+                                  <a>
+                                    <label htmlFor="imagenUpdate">
+                                      <span className="icon">E</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar
+                                      <input
+                                        className="input-image-none"
+                                        accept="image/png,image/jpeg,image/jpeg"
+                                        id="imagenUpdate"
+                                        size="60"
+                                        type="file"
+                                        placeholder="Imagen"
+                                        autoComplete="off"
+                                        name="imagenUpdate"
+                                        required="required"
+                                        onChange={(event) => handleChangeImage(
+                                          data.id, data.content, event,
+                                        )}
+                                      />
+                                    </label>
+                                  </a>
+                                )
+                              ) : (<a onClick={() => editComponentFunct(data.content, data.id, data.type)}><span className="icon">K</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar</a>)
+                          ) : (<></>)
+                      }
+                      <a onClick={() => deleteComponentEditor(data.id, data.type)}><span className="icon">L</span>&nbsp;&nbsp;&nbsp;&nbsp; Eliminar</a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
+      )}
+    </Draggable>
   );
-};
+});
 
 EditorOptionRender.propTypes = {
   data: PropTypes.shape({

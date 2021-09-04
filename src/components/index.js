@@ -10,7 +10,7 @@ export { default as LoadingIndicator } from './loadingIndicator/LoadingIndicator
 export { default as LoginHeader } from './loginHeader/LoginHeader';
 export { default as CreateAccountForm } from './createAccountForm/CreateAccountForm';
 export { default as ConfirmationUser } from './userInvitation/confirmationUser';
-export { default as EditorComponent } from './articleManager/index';
+export { default as EditorComponent } from './articleManager';
 export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader';
 export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
 export { default as TrendingBannerComponent } from './trendingBanner/TrendingBanner';
@@ -19,3 +19,4 @@ export { default as TrendingFilterComponent } from './trendingFilter/TrendingFil
 export { default as TrendingSelectComponent } from './trendingSelect/TrendingSelect';
 export { default as SelectImg } from './userInvitation/selectImg';
 export { default as HomePage } from './home/home';
+export { default as Switch } from './switch/Switch';

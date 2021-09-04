@@ -1,11 +1,14 @@
 import React from 'react';
 import { EditorComponent, Layout } from '@/components';
+import EditorContextProvider from '@/helpers/contexts/editorContext';
 
 const AudioEditorPage = () => {
   return (
-    <Layout>
-      <EditorComponent option="onlyAudio" />
-    </Layout>
+    <EditorContextProvider>
+      <Layout>
+        <EditorComponent option="onlyAudio" />
+      </Layout>
+    </EditorContextProvider>
   );
 };
 

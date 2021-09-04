@@ -1,7 +1,10 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
+import { useSession } from 'next-auth/client';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from './editor.module.css';
 import DetailsModal from './modals/detailsModal/DetailsModal';
 import ModalVideo from './modals/addVideoModal/addVideoModal';
@@ -9,9 +12,15 @@ import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
+import { saveArticle, updateArticle } from '@/services/articles';
+import { EditorContext } from '@/helpers/contexts/editorContext';
+import LoadingModal from './editorComponents/loadingModal/LoadingModal';
 import { upload, remove } from '@/services/aws';
+// import RenderList from './editorComponents/renderList/RenderList';
 
 const EditorComponent = ({ option }) => {
+  const [session] = useSession();
+  const { formData } = useContext(EditorContext);
   const [modalShow, setModalShow] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
@@ -23,6 +32,7 @@ const EditorComponent = ({ option }) => {
   const [editImg, setEditImg] = useState(false);
   const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const { data } = useSelector((state) => state.profile);
 
@@ -43,6 +53,27 @@ const EditorComponent = ({ option }) => {
         // eslint-disable-next-line prefer-const
         let modText = arrayItemsEditor;
         modText.html[index].content = e.target.value;
+        switch (modText.html[index].type) {
+          case 'textHeader': {
+            modText.html[index].tag = `<h1>${e.target.value}</h1>`;
+            break;
+          }
+          case 'textSubHeader': {
+            modText.html[index].tag = `<h3>${e.target.value}</h3>`;
+            break;
+          }
+          case 'textParagraph': {
+            modText.html[index].tag = `<p>${e.target.value}</p>`;
+            break;
+          }
+          case 'textFooter': {
+            modText.html[index].tag = `<small>${e.target.value}</small>`;
+            break;
+          }
+          default: {
+            break;
+          }
+        }
         setItems(modText);
         localStorage.setItem('contentEditor', JSON.stringify(modText));
       }
@@ -61,9 +92,9 @@ const EditorComponent = ({ option }) => {
     if (obj.html.length > 0 && option === 'onlyVideo') {
       const topVideo = { html: [] };
       if (!embedIframe) {
-        topVideo.html.push({ id: idContainer, type: 'linkVideo', content: tag });
+        topVideo.html.push({ id: idContainer, type: 'linkVideo', content: tag, tag });
       } else {
-        topVideo.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+        topVideo.html.push({ id: idContainer, type: 'iframeVideo', content: tag, tag });
       }
       obj.html.forEach((item) => {
         topVideo.html.push(item);
@@ -72,9 +103,9 @@ const EditorComponent = ({ option }) => {
       setItems(topVideo);
     } else {
       if (!embedIframe) {
-        obj.html.push({ id: idContainer, type: 'linkVideo', content: tag });
+        obj.html.push({ id: idContainer, type: 'linkVideo', content: tag, tag });
       } else {
-        obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag });
+        obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag, tag });
       }
       localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
@@ -93,7 +124,12 @@ const EditorComponent = ({ option }) => {
 
       const res = await upload(path, image);
       if (res.ok) {
-        obj.html.push({ id: idContainer, type: 'image', content: res.file });
+        obj.html.push({
+          id: idContainer,
+          type: 'image',
+          content: res.file,
+          tag: `<img src="${res.file}" alt="">`,
+        });
       }
       localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
@@ -105,13 +141,21 @@ const EditorComponent = ({ option }) => {
     const obj = JSON.parse(EditorContent);
     const idContainer = makeid();
     if (optionText === 'h1') {
-      obj.html.push({ id: idContainer, type: 'textHeader', content: '' });
+      obj.html.push({
+        id: idContainer, type: 'textHeader', content: '', tag: '<h1></h1>',
+      });
     } else if (optionText === 'h3') {
-      obj.html.push({ id: idContainer, type: 'textSubHeader', content: '' });
+      obj.html.push({
+        id: idContainer, type: 'textSubHeader', content: '', tag: '<h3></h3>',
+      });
     } else if (optionText === 'p') {
-      obj.html.push({ id: idContainer, type: 'textParagraph', content: '' });
+      obj.html.push({
+        id: idContainer, type: 'textParagraph', content: '', tag: '<p></p>',
+      });
     } else if (optionText === 'small') {
-      obj.html.push({ id: idContainer, type: 'textFooter', content: '' });
+      obj.html.push({
+        id: idContainer, type: 'textFooter', content: '', tag: '<small></small>',
+      });
     }
     localStorage.setItem('contentEditor', JSON.stringify(obj));
     setItems(obj);
@@ -126,14 +170,14 @@ const EditorComponent = ({ option }) => {
     }
     if (obj.html.length > 0 && option === 'onlyAudio') {
       const topAudio = { html: [] };
-      topAudio.html.push({ id: idContainer, type: 'iframeAudio', content: tag });
+      topAudio.html.push({ id: idContainer, type: 'iframeAudio', content: tag, tag });
       obj.html.forEach((item) => {
         topAudio.html.push(item);
       });
       localStorage.setItem('contentEditor', JSON.stringify(topAudio));
       setItems(topAudio);
     } else {
-      obj.html.push({ id: idContainer, type: 'iframeAudio', content: tag });
+      obj.html.push({ id: idContainer, type: 'iframeAudio', content: tag, tag });
       localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
     }
@@ -161,9 +205,9 @@ const EditorComponent = ({ option }) => {
     const oldArray = arrayItemsEditor.html;
     let newTag = {};
     if (!typeContent) {
-      newTag = { id: idElement, type: 'linkVideo', content: tag };
+      newTag = { id: idElement, type: 'linkVideo', content: tag, tag };
     } else {
-      newTag = { id: idElement, type: 'iframeVideo', content: tag };
+      newTag = { id: idElement, type: 'iframeVideo', content: tag, tag };
     }
     oldArray.forEach((item, index) => {
       if (item.id === idElement) {
@@ -188,6 +232,7 @@ const EditorComponent = ({ option }) => {
             if (item.id === idElement) {
               const contents = arrayItemsEditor;
               contents.html[index].content = res.file;
+              contents.html[index].tag = `<img src="${res.file}" alt=""/>`;
               setItems(contents);
               setEditImg(!editImg);
               localStorage.setItem('contentEditor', JSON.stringify(contents));
@@ -206,7 +251,7 @@ const EditorComponent = ({ option }) => {
     setUpdateEvent(false);
     setModalShow(false);
     const oldArray = arrayItemsEditor.html;
-    const newTag = { id: idElement, type: typeContent, content: tag };
+    const newTag = { id: idElement, type: typeContent, content: tag, tag };
     oldArray.forEach((item, index) => {
       if (item.id === idElement) {
         oldArray[index] = newTag;
@@ -281,6 +326,46 @@ const EditorComponent = ({ option }) => {
     }
   }, []);
 
+  const reorderList = (event) => {
+    if (event.destination) {
+      const html = [...arrayItemsEditor.html];
+      const [movedItem] = html.splice(event.source.index, 1);
+      html.splice(event.destination.index, 0, movedItem);
+      const newObj = { html: [...html] };
+      setItems(newObj);
+      localStorage.setItem('contentEditor', JSON.stringify(newObj));
+    }
+  };
+
+  const handlePublish = async (estatus) => {
+    const details = {
+      ...formData,
+      estatus,
+    };
+    setSubmitting(true);
+
+    const EditorContent = localStorage.getItem('contentEditor');
+    const obj = JSON.parse(EditorContent);
+    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+    const file = new File([blob], 'article.json', { type: 'application/json' });
+    const storedData = JSON.parse(localStorage.getItem('currentArticle'));
+    if (!storedData || !storedData.articulo_id) {
+      const saveResponse = await saveArticle(file, details, option, session.user.id);
+      if (saveResponse.articulo_id) {
+        localStorage.setItem('currentArticle', JSON.stringify(saveResponse));
+      }
+      setSubmitting(false);
+    } else {
+      const updateResponse = await updateArticle(
+        file, details, session.user.id, storedData,
+      );
+      if (updateResponse.articulo_id) {
+        localStorage.setItem('currentArticle', JSON.stringify(updateResponse));
+      }
+      setSubmitting(false);
+    }
+  };
+
   return (
     <div className={styles.editor}>
       <ModalAudio
@@ -301,27 +386,42 @@ const EditorComponent = ({ option }) => {
       />
       <div className={styles.editorContent} align="center">
         <div>
-          <div id="canvas" className={styles.canvas}>
-            Estructura aquí el contenido de tu artículo
-            {
-              (arrayItemsEditor.length !== 0 && arrayItemsEditor.html)
-                ? (arrayItemsEditor.html.map((item) => {
-                  return (
-                    <div key={item.id}>
-                      <EditorOptionRender
-                        data={item}
-                        deleteComponentEditor={deleteComponentEditor}
-                        editComponentFunct={editComponentFunct}
-                        handleChange={handleChange}
-                        handleChangeImage={handleChangeImage}
-                        setActiveClass={setActiveClass}
-                        activeOption={activeOption}
-                      />
-                    </div>
-                  );
-                })) : (<> </>)
-            }
-          </div>
+          <DragDropContext
+            onDragEnd={reorderList}
+          >
+            <Droppable droppableId="canvasDrop">
+              {(provided) => (
+                <div
+                  id="canvas"
+                  className={styles.canvas}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {
+                    (arrayItemsEditor.html && arrayItemsEditor.html.length !== 0)
+                      ? (arrayItemsEditor.html.map((item, index) => {
+                        return (
+                          <div key={item.id}>
+                            <EditorOptionRender
+                              index={index}
+                              data={item}
+                              deleteComponentEditor={deleteComponentEditor}
+                              editComponentFunct={editComponentFunct}
+                              handleChangeImage={handleChangeImage}
+                              handleChange={handleChange}
+                              setActiveClass={setActiveClass}
+                              activeOption={activeOption}
+                            />
+                          </div>
+                        );
+                      })) : (' Estructura aquí el contenido de tu artículo')
+                  }
+                  {provided.placeholder}
+                </div>
+              )}
+
+            </Droppable>
+          </DragDropContext>
           <ToolsComponent
             option={option}
             addedVideo={addedVideo}
@@ -337,13 +437,19 @@ const EditorComponent = ({ option }) => {
       <div className={styles.optionsContainer}>
 
         <TooltipContainer tooltipText="Publicar" placement="left">
-          <div className={`icon-button icon-button--success ${styles.optionsItem}`} onClick={() => setShowPublish(true)}>
+          <div
+            className={`icon-button icon-button--primary ${styles.optionsItem}`}
+            onClick={() => setShowPublish(true)}
+          >
             H
           </div>
         </TooltipContainer>
 
         <TooltipContainer tooltipText="Guardar borrador" placement="left">
-          <div className={`icon-button icon-button--primary ${styles.optionsItem}`}>
+          <div
+            className={`icon-button icon-button--success ${styles.optionsItem}`}
+            onClick={() => handlePublish('borrador')}
+          >
             I
           </div>
         </TooltipContainer>
@@ -360,7 +466,9 @@ const EditorComponent = ({ option }) => {
       <DetailsModal
         show={showPublish}
         onClose={() => setShowPublish(false)}
+        onPublish={handlePublish}
       />
+      <LoadingModal show={submitting} />
     </div>
   );
 };

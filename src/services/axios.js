@@ -7,7 +7,7 @@ const axios = () => {
   const config = vanillaAxios.create();
   config.defaults.baseURL = BASE_URL;
   config.interceptors.request.use(async (request) => {
-    const session = await getSession();
+    const session = await getSession({ request });
     request.headers.Authorization = session?.accessToken;
     return request;
   });
