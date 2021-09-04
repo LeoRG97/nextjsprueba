@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Col,
@@ -29,11 +29,19 @@ const ProfileSettingsComponent = ({
     imgP: '',
   });
 
+  useEffect(() => {
+  }, []);
+
   const updateState = (e) => {
-    saveProfile({
-      ...profile,
-      [e.target.name]: e.target.value,
-    });
+    if (e.target.value.length <= 120) {
+      saveProfile({
+        ...profile,
+        [e.target.name]: e.target.value,
+      });
+    }
+    if (e.target.name === 'biography') {
+      document.getElementById('contador').innerHTML = e.target.value.length;
+    }
   };
 
   // EVENTO IMAGEN
@@ -168,6 +176,7 @@ const ProfileSettingsComponent = ({
               <Form.Group className="mb-3" controlId="TextareaBiografy">
                 <Form.Label className="text-md">Biografía</Form.Label>
                 <textarea
+                  id="text-area"
                   className={styles.settingsTextare}
                   rows={3}
                   placeholder="Biografía"
@@ -175,10 +184,12 @@ const ProfileSettingsComponent = ({
                   name="biography"
                   value={biography}
                   onChange={updateState}
+                  maxLength="200"
                 />
                 <Form.Control.Feedback type="invalid">
                   Introduce la biografía.
                 </Form.Control.Feedback>
+                <div className="text-sm"> <span id="contador">{userBio.length}</span>/120</div>
               </Form.Group>
               <div align="right">
                 <button className="button button--theme-primary">
