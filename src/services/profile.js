@@ -1,5 +1,5 @@
-import axios from './axios';
 import { BASE_URL } from '@/global/constants';
+import axios from './axios';
 
 export const getProfile = async (id) => {
   const res = await axios().get(`users/${id}`);

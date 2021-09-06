@@ -5,6 +5,9 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useSession } from 'next-auth/client';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { saveArticle, updateArticle } from '@/services/articles';
+import { EditorContext } from '@/helpers/contexts/editorContext';
+import { upload, remove } from '@/services/aws';
 import styles from './editor.module.css';
 import DetailsModal from './modals/detailsModal/DetailsModal';
 import ModalVideo from './modals/addVideoModal/addVideoModal';
@@ -12,10 +15,7 @@ import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
-import { saveArticle, updateArticle } from '@/services/articles';
-import { EditorContext } from '@/helpers/contexts/editorContext';
 import LoadingModal from './editorComponents/loadingModal/LoadingModal';
-import { upload, remove } from '@/services/aws';
 // import RenderList from './editorComponents/renderList/RenderList';
 
 const EditorComponent = ({ option }) => {

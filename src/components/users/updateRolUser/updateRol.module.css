@@ -1,0 +1,36 @@
+.modal_rol {
+  background-color: var(--contentTransparentRGB);
+}
+
+.modal_rol_backC {
+  background-color: var(--colorItemBg);
+  filter: brightness(120%);
+  border: none;
+}
+
+.modal_rol_title {
+  border-radius: 10px 10px 0 0;
+  padding-top: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.modal_rol_body {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.modal_rol_footer {
+  border-radius: 0 0 10px 10px;
+  padding-bottom: 50px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+.modal_loading {
+  margin: auto;
+  padding: 0;
+  margin-top: 155px;
+  margin-bottom: 155px;
+  max-height: 500px;
+}

@@ -22,4 +22,5 @@ export { default as ProfileNavComponent } from './profile/profileNav/ProfileNav'
 export { default as ProfileArticles } from './profile/profileArticles/ProfileArticles';
 export { default as ArticlesListComponent } from './articlesList/articlesListComponent/articlesList';
 export { default as HomePage } from './home/home';
+export { default as UpdateRolUserModal } from './users/updateRolUser/updateRolUser';
 export { default as Switch } from './switch/Switch';
