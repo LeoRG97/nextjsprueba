@@ -182,7 +182,7 @@ const ProfileSettingsComponent = ({
                   placeholder="Biografía"
                   required
                   name="biography"
-                  value={biography}
+                  value={biography || ''}
                   onChange={updateState}
                   maxLength="200"
                 />
