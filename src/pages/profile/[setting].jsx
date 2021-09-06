@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  Footer, Layout, ProfileHeader, ProfileMenu,
+  Footer, Layout, ProfileArticles, ProfileHeader, ProfileMenu,
 } from '@/components';
 import withAuth from '@/helpers/withAuth';
 import { fetch as fetchProfile } from '@/reducers/profile';
@@ -29,6 +29,7 @@ const ProfileScreen = () => {
       <div className="container">
         <ProfileMenu />
 
+        {query.setting === 'articles' && <ProfileArticles />}
         {query.setting === 'library' && <h1 className="title">Biblioteca</h1>}
         {query.setting === 'ratings' && <h1 className="title">Valoraciones</h1>}
         {query.setting === 'about-me' && <h1 className="title">Sobre mí</h1>}

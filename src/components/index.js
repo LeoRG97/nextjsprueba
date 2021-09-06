@@ -19,8 +19,7 @@ export { default as ArticleListSelectComponent } from './articlesList/articleLis
 export { default as SelectImg } from './userInvitation/selectImg';
 export { default as ProfileSettingsComponent } from './profile/profileSettings/ProfileSettings';
 export { default as ProfileNavComponent } from './profile/profileNav/ProfileNav';
-export { default as ProfilePostsComponent } from './profile/profilePosts/ProfilePosts';
-export { default as ProfilePostsOptionsComponent } from './profile/profilePostsOptions/ProfilePostsOptions';
+export { default as ProfileArticles } from './profile/profileArticles/ProfileArticles';
 export { default as ArticlesListComponent } from './articlesList/articlesListComponent/articlesList';
 export { default as HomePage } from './home/home';
 export { default as Switch } from './switch/Switch';

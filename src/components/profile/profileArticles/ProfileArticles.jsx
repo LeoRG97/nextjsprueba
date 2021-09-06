@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
-  Footer,
-  Layout,
-  ProfilePostsComponent,
-  ProfilePostsOptionsComponent,
   ArticleListSelectComponent,
   ArticlesListComponent,
 } from '@/components';
 
-const PostsProfile = () => {
+const ProfileArticles = () => {
   const router = useRouter();
   useEffect(() => {
 
@@ -38,9 +34,7 @@ const PostsProfile = () => {
   const { query } = router;
 
   return (
-    <Layout>
-      <ProfilePostsComponent />
-      <ProfilePostsOptionsComponent />
+    <>
       <div className="selects-container">
         <div className="select-recent">
           <ArticleListSelectComponent
@@ -70,9 +64,8 @@ const PostsProfile = () => {
         </div>
       </div>
       <ArticlesListComponent />
-      <Footer />
-    </Layout>
+    </>
   );
 };
 
-export default PostsProfile;
+export default ProfileArticles;

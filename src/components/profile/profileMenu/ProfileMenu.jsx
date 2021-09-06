@@ -20,14 +20,14 @@ const TabMenu = () => {
             <a
               className={`subtitle ${styles.item} ${query.setting === 'articles' && styles.active}`}
             >
-              Publicaciones
+              Publicaciones<span className="ms-2">0</span>
             </a>
           </Link>
           <Link href="/profile/drafts" passHref scroll={false}>
             <a
               className={`subtitle ${styles.item} ${query.setting === 'drafts' && styles.active}`}
             >
-              Borradores
+              Borradores<span className="ms-2">0</span>
             </a>
           </Link>
           {adminAccess(user.role) && (
@@ -35,7 +35,7 @@ const TabMenu = () => {
               <a
                 className={`subtitle ${styles.item} ${query.setting === 'members-and-invitations' && styles.active}`}
               >
-                Miembros e invitaciones
+                Miembros e invitaciones<span className="ms-2">0</span>
               </a>
             </Link>
           )}
@@ -45,14 +45,14 @@ const TabMenu = () => {
         <a
           className={`subtitle ${styles.item} ${query.setting === 'library' && styles.active}`}
         >
-          Biblioteca
+          Biblioteca<span className="ms-2">0</span>
         </a>
       </Link>
       <Link href="/profile/ratings" passHref scroll={false}>
         <a
           className={`subtitle ${styles.item} ${query.setting === 'ratings' && styles.active}`}
         >
-          Valoraciones
+          Valoraciones<span className="ms-2">0</span>
         </a>
       </Link>
       <Link href="/profile/about-me" passHref scroll={false}>
