@@ -4,8 +4,8 @@ import {
   Layout,
   TrendingBannerComponent,
   ArticleListSelectComponent,
-  TrendingArticleComponent,
   Footer,
+  ArticlesListComponent,
 } from '@/components';
 
 // página para los intereses del usuario
@@ -29,7 +29,7 @@ const TrendingPageUser = () => {
             <ArticleListSelectComponent selectN="2" />
           </div>
         </div>
-        <TrendingArticleComponent />
+        <ArticlesListComponent />
       </main>
       <Footer />
     </Layout>
