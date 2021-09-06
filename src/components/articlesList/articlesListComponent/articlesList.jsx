@@ -64,12 +64,12 @@ const ArticlesListComponent = () => {
   ];
 
   return (
-    <div className={styles.articlesContainer}>
+    <div>
       {articulos.map((index, i) => {
         return (
           <Link
             key={articulos[i].id}
-            href={`/trending-topics/post/${articulos[i].slug}`}
+            href={`/trending-topics/${articulos[i].usuario_id.slug}/${articulos[i].slug}`}
             prefetch={false}
             passHref
           >

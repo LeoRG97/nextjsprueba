@@ -1235,8 +1235,6 @@ html {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  padding-left: 15%;
-  padding-right: 15%;
 }
 
 .select-recent,

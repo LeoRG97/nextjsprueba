@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import styles from './profileHeader.module.css';
 
 const ProfileHeader = ({
@@ -14,7 +15,9 @@ const ProfileHeader = ({
         </div>
         <h1 className="title">{name}</h1>
         <p className="subtitle">{state && country && `${state}, ${country}`}</p>
-        <button className="button button--theme-secondary">Editar perfil</button>
+        <Link href="/profile/edit" passHref>
+          <button className="button button--theme-secondary">Editar perfil</button>
+        </Link>
       </div>
     </div>
   );
