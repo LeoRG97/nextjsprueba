@@ -1,0 +1,27 @@
+.profileSettingsOptions {
+  display: grid;
+  text-align: left;
+}
+
+.optionsContent {
+  display: flex;
+  align-items: center;
+  color: var(--colorSecondary);
+  transition: 0.5s;
+  cursor: pointer;
+  margin-top: 5px;
+  margin-bottom: px;
+}
+
+.optionsContent span {
+  margin-right: 10px;
+  transition: 0.5s;
+}
+
+.optionsContent:hover {
+  color: var(--colorLight);
+}
+
+.optionsContent:hover span {
+  color: var(--colorLight);
+}

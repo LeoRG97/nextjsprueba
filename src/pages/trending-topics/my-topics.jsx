@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import {
   Layout,
   TrendingBannerComponent,
+  ArticleListSelectComponent,
   TrendingArticleComponent,
   Footer,
 } from '@/components';
@@ -20,6 +21,14 @@ const TrendingPageUser = () => {
     <Layout>
       <main>
         <TrendingBannerComponent />
+        <div className="selects-container">
+          <div className="select-recent">
+            <ArticleListSelectComponent selectN="1" />
+          </div>
+          <div className="select-filter">
+            <ArticleListSelectComponent selectN="2" />
+          </div>
+        </div>
         <TrendingArticleComponent />
       </main>
       <Footer />

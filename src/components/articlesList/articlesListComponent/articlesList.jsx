@@ -1,12 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { TrendingSelectComponent } from '@/components';
-import styles from './tArticle.module.css';
+import styles from './articlesList.module.css';
 
-const TrendingArticleComponent = () => {
-  const router = useRouter();
+const ArticlesListComponent = () => {
   const articulos = [
     {
       id: '1',
@@ -66,58 +63,8 @@ const TrendingArticleComponent = () => {
     },
   ];
 
-  const handleOrderChange = (item) => {
-    const { query, pathname } = router;
-    router.push({
-      pathname,
-      query: { ...query, sort: item.value },
-    }, undefined, { scroll: false });
-  };
-
-  const handleTypeChange = (item) => {
-    const { query, pathname } = router;
-    delete query.type;
-    router.push({
-      pathname,
-      query: {
-        ...query,
-        ...(item.value && { type: item.value }),
-      },
-    }, undefined, { scroll: false, shallow: true });
-  };
-
-  const { query } = router;
-
   return (
     <div className={styles.articlesContainer}>
-      <div className={styles.selectsContainer}>
-        <div className={styles.selectRecent}>
-          <TrendingSelectComponent
-            defaultTitle="Más recientes"
-            currentValue={query.sort}
-            onChange={handleOrderChange}
-            selectN="1"
-            items={[
-              { label: 'Más recientes', value: 'newest-first' },
-              { label: 'Más antiguos', value: 'oldest-first' },
-            ]}
-          />
-        </div>
-        <div className={styles.selectFilter}>
-          <TrendingSelectComponent
-            defaultTitle="Todos"
-            currentValue={query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-              { label: 'Blogs', value: 'Blog' },
-              { label: 'Videos', value: 'Video' },
-              { label: 'Podcasts', value: 'Podcast' },
-            ]}
-          />
-        </div>
-      </div>
       {articulos.map((index, i) => {
         return (
           <Link
@@ -151,4 +98,4 @@ const TrendingArticleComponent = () => {
   );
 };
 
-export default TrendingArticleComponent;
+export default ArticlesListComponent;

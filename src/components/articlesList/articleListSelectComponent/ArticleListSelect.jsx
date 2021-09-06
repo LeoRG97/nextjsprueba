@@ -2,10 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
+import styles from './tSelect.module.css';
 
-const TrendingSelectComponent = (props) => {
+const ArticleListSelectComponent = (props) => {
   const {
-    selectN, items, onChange, currentValue, defaultTitle,
+    selectN,
+    items,
+    onChange,
+    currentValue,
+    defaultTitle,
   } = props;
 
   const [btnLabel, setBtnLabel] = useState(defaultTitle);
@@ -25,7 +30,7 @@ const TrendingSelectComponent = (props) => {
   }, [currentValue, items]);
 
   return (
-    <div className="select-trending">
+    <div className={`select-posts ${styles.selectContainer}`}>
       <DropdownButton className="text-md" id={`dropdown-basic-button-${selectN}`} title={btnLabel}>
         {items.map((item) => (
           <Dropdown.Item key={item.value} className="text-sm" onClick={() => filtroS(item)}>{item.label}</Dropdown.Item>
@@ -35,8 +40,8 @@ const TrendingSelectComponent = (props) => {
   );
 };
 
-TrendingSelectComponent.propTypes = {
+ArticleListSelectComponent.propTypes = {
   selectN: PropTypes.string.isRequired,
 };
 
-export default TrendingSelectComponent;
+export default ArticleListSelectComponent;
