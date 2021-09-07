@@ -46,7 +46,7 @@ const TrendingFilterComponent = ({ preferences }) => {
         ...query,
         ...(filter && { category: filter }),
       },
-    }, undefined, { scroll: false, shallow: true });
+    }, undefined, { scroll: false });
   };
 
   const { category } = router.query;

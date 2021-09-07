@@ -1,0 +1,7 @@
+.listFooter {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  width: 22rem;
+}

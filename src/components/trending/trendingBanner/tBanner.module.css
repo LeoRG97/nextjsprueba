@@ -15,8 +15,12 @@
   margin-bottom: 15px;
 }
 
+.titleTopSpacing {
+  padding-top: 4rem;
+}
+
 @media (max-width: 999px) {
-  .bannerImage{
+  .bannerImage {
     font-size: 40px;
   }
 }

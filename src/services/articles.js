@@ -1,10 +1,12 @@
+import vanillaAxios from 'axios';
+import { BASE_URL } from '@/global/constants';
 import axios from './axios';
 
-export const fetchAllArticles = async (query) => {
-  const { category, type } = query;
+export const fetchAllArticles = async (category, type) => {
   try {
-    const res = await axios().get('articulos', {
+    const res = await vanillaAxios.get(`${BASE_URL}articulos`, {
       params: {
+        pageNum: 1,
         pageSize: 9,
         ...(category && { categoria: category }),
         ...(type && { tipo: type }),

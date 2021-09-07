@@ -3,92 +3,41 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './articlesList.module.css';
 
-const ArticlesListComponent = () => {
-  const articulos = [
-    {
-      id: '1',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '2',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '3',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '4',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '5',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '6',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-    {
-      id: '7',
-      nombre: 'Emprender: La clave es el enfoque',
-      slug: 'emprender-la-clave-es-el-enfoque',
-      usuario_id: {
-        slug: 'user-123',
-      },
-    },
-  ];
+const ArticlesListComponent = ({ articles }) => {
+  const getTypeIcon = (type) => {
+    switch (type) {
+      case 'Video': return 'F';
+      case 'Podcast': return 'Q';
+      default: return 'P';
+    }
+  };
 
   return (
     <div>
-      {articulos.map((index, i) => {
+      {articles.map((article) => {
         return (
           <Link
-            key={articulos[i].id}
-            href={`/trending-topics/${articulos[i].usuario_id.slug}/${articulos[i].slug}`}
+            key={article._id}
+            href={`/trending-topics/${article.usuario_id.slug}/${article.slug}`}
             prefetch={false}
             passHref
           >
             <div className={styles.cardContainer}>
               <div className={styles.cardImageContainer}>
-                <div className={`main-bg text-sm ${styles.trendingLabel}`}>Post <span className="icon">C</span></div>
+                <div className={`main-bg text-sm text--theme-light ${styles.trendingLabel}`}>
+                  {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
+                </div>
                 <img src="/images/imgpr2.jpg" alt="" />
               </div>
               <div className={styles.cardLikesContainer}>
-                <div className="text-sm">Autor</div>
-                <div className={`text-sm ${styles.likesContainer}`}><span className="icon">C</span> likes</div>
-                <div className={`text-sm ${styles.viewsContainer}`}><span className="icon">C</span> vistas</div>
+                <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>
+                <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{article.likes}</div>
               </div>
               <div className={`title ${styles.cardMargin}`}>
-                {articulos[i].nombre}
+                {article.portada.titulo || 'Sin título'}
               </div>
               <div className="text-sm">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                {article.portada.descripcion || 'Sin descripción'}
               </div>
             </div>
           </Link>
