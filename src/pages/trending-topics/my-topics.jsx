@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import {
   Layout,
@@ -12,9 +12,27 @@ import {
 const TrendingPageUser = () => {
   const router = useRouter();
 
-  useEffect(() => {
+  const handleOrderChange = (item) => {
+    const { query, pathname } = router;
+    router.push({
+      pathname,
+      query: { ...query, sort: item.value },
+    }, undefined, { scroll: false });
+  };
 
-  }, [router]);
+  const handleTypeChange = (item) => {
+    const { query, pathname } = router;
+    delete query.type;
+    router.push({
+      pathname,
+      query: {
+        ...query,
+        ...(item.value && { type: item.value }),
+      },
+    }, undefined, { scroll: false });
+  };
+
+  const { query } = router;
 
   // Todo
   return (
@@ -23,13 +41,35 @@ const TrendingPageUser = () => {
         <TrendingBannerComponent />
         <div className="selects-container">
           <div className="select-recent">
-            <ArticleListSelectComponent selectN="1" />
+            <ArticleListSelectComponent
+              defaultTitle="Más recientes"
+              currentValue={query.sort}
+              onChange={handleOrderChange}
+              selectN="1"
+              items={[
+                { label: 'Más recientes', value: 'newest-first' },
+                { label: 'Más antiguos', value: 'oldest-first' },
+              ]}
+            />
           </div>
           <div className="select-filter">
-            <ArticleListSelectComponent selectN="2" />
+            <ArticleListSelectComponent
+              defaultTitle="Todos"
+              currentValue={query.type}
+              onChange={handleTypeChange}
+              selectN="2"
+              items={[
+                { label: 'Todos', value: '' },
+                { label: 'Blogs', value: 'Blog' },
+                { label: 'Videos', value: 'Video' },
+                { label: 'Podcasts', value: 'Podcast' },
+              ]}
+            />
           </div>
         </div>
-        <ArticlesListComponent />
+        <ArticlesListComponent
+          articles={[]}
+        />
       </main>
       <Footer />
     </Layout>
