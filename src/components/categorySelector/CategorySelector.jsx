@@ -24,7 +24,11 @@ const CategorySelector = React.memo(({
   };
 
   useEffect(() => {
-    const diff = data.filter((p) => !selectedItems.includes(p));
+    const diff = data.filter((p) => {
+      return selectedItems.every((s) => {
+        return s._id !== p._id;
+      });
+    });
     setUnselectedItems(diff);
   }, []);
 
