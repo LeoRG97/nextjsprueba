@@ -85,6 +85,12 @@
   display: none;
 }
 
+.error {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--text-color-error);
+}
+
 @media (max-width: 999px) {
   .profileSettingsContainer {
     height: auto;

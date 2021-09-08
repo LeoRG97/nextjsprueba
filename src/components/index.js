@@ -17,10 +17,11 @@ export { default as TrendingBannerComponent } from './trending/trendingBanner/Tr
 export { default as TrendingFilterComponent } from './trending/trendingFilter/TrendingFilter';
 export { default as ArticleListSelectComponent } from './articlesList/articleListSelectComponent/ArticleListSelect';
 export { default as SelectImg } from './userInvitation/selectImg';
-export { default as ProfileSettingsComponent } from './profile/profileSettings/ProfileSettings';
+export { default as FormGeneral } from './profile/profileSettings/FormGeneral';
 export { default as ProfileNavComponent } from './profile/profileNav/ProfileNav';
 export { default as ProfileArticles } from './profile/profileArticles/ProfileArticles';
 export { default as ArticlesListComponent } from './articlesList/articlesListComponent/articlesList';
 export { default as HomePage } from './home/home';
 export { default as UpdateRolUserModal } from './users/updateRolUser/updateRolUser';
 export { default as Switch } from './switch/Switch';
+export { default as SuccessIndicatorModal } from './modalsIndicators/SuccesModal';

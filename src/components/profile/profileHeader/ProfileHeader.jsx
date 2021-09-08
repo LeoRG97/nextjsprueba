@@ -11,11 +11,11 @@ const ProfileHeader = ({
     <div className={styles.headerContainer}>
       <div className={styles.profileCard}>
         <div className={styles.imgFrame}>
-          <Image layout="fill" objectFit="contain" src={picture || '/images/profile/no-profile-img.png'} />
+          <Image layout="fill" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
         </div>
         <h1 className="title">{name}</h1>
         <p className="subtitle">{state && country && `${state}, ${country}`}</p>
-        <Link href="/profile/edit" passHref>
+        <Link href="/profile/edit/general" passHref>
           <button className="button button--theme-secondary">Editar perfil</button>
         </Link>
       </div>

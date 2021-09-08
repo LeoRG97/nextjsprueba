@@ -25,3 +25,11 @@
 .optionsContent:hover span {
   color: var(--colorLight);
 }
+
+.active {
+  color: var(--colorLight);
+}
+
+.active span{
+  color: var(--colorLight);
+}

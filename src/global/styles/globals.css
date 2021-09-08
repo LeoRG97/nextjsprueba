@@ -107,6 +107,7 @@
   --font-size-sm: 0.875rem; /* 14px */
 
   --icon-size-sm: 1rem;
+  --icon-size-md: 1.5rem;
   /* 16px */
 }
 
@@ -213,6 +214,11 @@ body {
 
 .icon--theme-highlight {
   color: var(--text-color-highlight);
+}
+
+.icon-modal--succes {
+  font-size: var(--icon-size-md);
+  color: var(--colorSuccess);
 }
 
 .icon-button {
