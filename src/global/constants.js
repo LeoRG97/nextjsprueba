@@ -7,4 +7,9 @@ module.exports = {
     Reviewer: 'user-reviewer',
     Admin: 'admin',
   },
+  ApiRoutes: {
+    // rutas para SWR
+    Articles: 'articulos',
+    ArticlesUserPreference: 'articulos/preferencias/usuario',
+  },
 };
