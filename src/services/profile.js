@@ -32,3 +32,8 @@ export const uploadImgProfile = async (path, file, name) => {
     return err;
   }
 };
+
+export const getProfileBySlug = async (slug) => {
+  const res = await axios().get(`users/slug/${slug}`);
+  return res;
+};

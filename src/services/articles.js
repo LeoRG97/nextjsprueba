@@ -222,3 +222,30 @@ export const updateArticle = async (article, details, userId, currentData) => {
     return err;
   }
 };
+
+export const getArticleBySlug = async (slug) => {
+  try {
+    const res = await axios().get(`articulos/slug/${slug}`);
+    if (res[0]) {
+      return res[0];
+    }
+    return undefined;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getArtByPref = async (options) => {
+  const params = {
+    pageNum: options.pageNum,
+    pageSize: options.pageSize,
+    sort: options.sort,
+    tipo: options.type,
+  };
+  try {
+    const res = await axios().get(`articulos/preferencias/usuario?pageNum=${params.pageNum}&pageSize=${params.pageSize}&tipo=${params.tipo}&sort=${params.sort}`);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
