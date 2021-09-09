@@ -1,5 +1,11 @@
 /*###############BLOG TEXT CLASSES#######################*/
 
+.title-editor-xl {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-xl);
+  color: var(--text-color-light);
+}
+
 .BLOG .title, .title-editor {
   font-family: var(--font-medium);
   font-size: var(--font-size-lg);
@@ -24,4 +30,223 @@
   color: var(--text-color-secondary);
 }
 
+.blog-content {
+  padding-top: 150px;
+}
+
+.blog-content iframe {
+  max-width: 100% !important;
+}
+
+.content-btns {
+  margin: auto;
+  margin-top: 28vh;
+  text-align: center;
+}
+
+.content-btns-last {
+  text-align: center;
+}
+
+.content-btns-last label {
+  margin-top: 50px;
+  display: block;
+}
+
+.blog-not-find {
+  text-align: center;
+  margin-top: 12% !important;
+  min-height: 240px;
+}
+
+.blog-loading {
+  text-align: center;
+  margin-top: 12% !important;
+  min-height: 240px;
+}
+
+.blog-loading div {
+  margin: auto;
+}
+
+.Btn-square {
+  font-family: Icons;
+  font-size: 1.2rem;
+  border: 1px solid var(--colorItemBorder);
+  color: var(--text-color-secondary);
+  border-radius: 5px;
+  padding: 5px 10px;
+  background-color: var(--contentTransparentRGB);
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.Btn-square:hover {
+  background-color: var(--colorPrimary);
+  color: var(--text-color-light);
+}
+
+.Btn-rounded {
+  font-family: Icons;
+  font-size: 1.1rem;
+  border: 1px solid var(--colorItemBorder);
+  color: var(--text-color-secondary);
+  border-radius: 30px;
+  padding: 6px 11px;
+  background-color: var(--contentTransparentRGB);
+  display: block;
+  margin: auto;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.Btn-rounded:hover {
+  background-color: var(--colorPrimary);
+  color: var(--text-color-light);
+}
+
+.Btn-rounded.d-i {
+  margin: auto;
+  display: inline;
+  margin-right: 20px;
+}
+
+.Btn-square.d-i {
+  margin: 10px;
+  display: inline;
+}
+
+.loader-big {
+  height: 100px !important;
+  width: 100px !important;
+}
+
+.loader-big span {
+  height: 100px !important;
+  width: 100px !important;
+  clip: rect(0, 100px, 100px, 55px) !important;
+}
+
+.loader-big span::after {
+  height: 100px !important;
+  width: 100px !important;
+  clip: rect(0, 100px, 100px, 55px) !important;
+}
+
+.article-content h1 {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-lg);
+  color: var(--text-color-light);
+}
+
+.article-content h1 {
+  font-family: var(--font-medium);
+  font-size: var(--font-size-lg);
+  color: var(--text-color-light);
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+
+.article-content h3 {
+  font-family: var(--font-bold);
+  font-size: var(--font-size-md);
+  color: var(--text-color-light);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content p {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-md);
+  color: var(--text-color-light);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.article-content small {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-secondary);
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.article-content-center {
+  text-align: center;
+}
+
+.article-content img {
+  text-align: center;
+  margin: auto;
+  max-width: 100%;
+}
+
+.article-content iframe {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.article-content iframe[title="video"] {
+  width: 100%;
+  height: calc(76vw/1.77);
+}
+
+.article-content iframe[title="audio"] {
+  width: 100%;
+}
+
+.content-fixed {
+  position: fixed;
+  z-index: 10;
+}
+
+.content-fixed.left {
+  width: inherit;
+}
+
+.content-fixed.right {
+  width: inherit;
+}
+
+.content-n-p {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.content-blog-autor {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.content-blog-autor .content-right {
+  text-align: right;
+}
+
+.icon-btn {
+  position: absolute;
+  font-family: Icons;
+  font-style: normal;
+  font-size: 122%;
+  padding: 4px;
+  left: 13px;
+  top: 0px;
+}
+
+.full-content {
+  width: 100% !important;
+}
+
+@media (max-width: 576px) {
+  .content-btns {
+    display: none;
+  }
+}
+
+@media (max-width: 460px) {
+  .content-right {
+    display: inline-flex;
+  }
+}
 /*#######################################################*/
