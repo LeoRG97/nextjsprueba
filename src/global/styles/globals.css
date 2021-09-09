@@ -83,6 +83,9 @@
   --text-color-highlight: var(--blue);
   --text-color-error: var(--colorError);
 
+  /* ARTICLE CARD COLORS */
+  --colorArticleLabel: var(--black);
+  --colorArticlePremium: var(--yellow);
   /* EDITOR COLORS */
   --text-color-sgrey: var(--sgrey);
 

@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './articlesList.module.css';
+import { BUCKET_URL } from '@/global/constants';
 
 const ArticlesDetailComponent = ({ article, classContent }) => {
   const getTypeIcon = (type) => {
@@ -12,7 +13,7 @@ const ArticlesDetailComponent = ({ article, classContent }) => {
     }
   };
   return (
-    <div>
+    <>
       <Link
         key={article._id}
         href={`/trending-topics/${article.usuario_id.slug}/${article.slug}`}
@@ -21,10 +22,18 @@ const ArticlesDetailComponent = ({ article, classContent }) => {
       >
         <div className={`${styles.cardContainer} ${classContent}`}>
           <div className={styles.cardImageContainer}>
-            <div className={`main-bg text-sm text--theme-light ${styles.trendingLabel}`}>
+            <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
               {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
             </div>
-            <img src="/images/imgpr2.jpg" alt="" />
+            {article.premium && (
+              <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
+                Premium{' '}<span className="icon text--theme-light">R</span>
+              </div>
+            )}
+            <img
+              src={article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
+              alt=""
+            />
           </div>
           <div className={styles.cardLikesContainer}>
             <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>
@@ -38,7 +47,7 @@ const ArticlesDetailComponent = ({ article, classContent }) => {
           </div>
         </div>
       </Link>
-    </div>
+    </>
   );
 };
 
