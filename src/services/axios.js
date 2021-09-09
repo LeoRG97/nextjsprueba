@@ -21,4 +21,17 @@ const axios = () => {
   return config;
 };
 
+export const axiosServer = () => {
+  const config = vanillaAxios.create();
+  config.defaults.baseURL = BASE_URL;
+  config.interceptors.request.use(async (request) => {
+    return request;
+  });
+  config.interceptors.response.use((res) => res.data,
+    async (error) => {
+      return Promise.reject(error.response.data);
+    });
+  return config;
+};
+
 export default axios;

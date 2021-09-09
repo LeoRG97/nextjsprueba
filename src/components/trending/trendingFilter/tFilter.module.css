@@ -60,12 +60,13 @@
 .filter {
   display: inline-block;
   text-align: center;
+  color: var(--text-color-secondary);
   border: 1px solid var(--colorItemBorder);
-  border-radius: 15px;
+  border-radius: 1.25rem;
   min-width: 80px;
   padding-left: 1rem;
   padding-right: 1rem;
-  height: 30px;
+  height: 2.5rem;
   margin-left: 1%;
   cursor: pointer;
   transition: 0.5s;
@@ -83,7 +84,7 @@
 .current {
   background-color: var(--colorSecondary);
   border: 1px solid var(--colorSecondary);
-  color: #fff;
+  color: var(--text-color-light);
 }
 
 .filter div {
@@ -103,7 +104,11 @@
 
 /* DRAG SCROLL CLASS ================0 */
 
-@media (max-width: 999px) {
+@media (max-width: 991.98px) {
+  .filterContainer {
+    max-width: 100%;
+  }
+
   .filterOpacity1 {
     left: 0%;
   }

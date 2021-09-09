@@ -1,18 +1,42 @@
-import vanillaAxios from 'axios';
-import { BASE_URL } from '@/global/constants';
-import axios from './axios';
+// import vanillaAxios from 'axios';
+// import { BASE_URL } from '@/global/constants';
+import { ApiRoutes } from '@/global/constants';
+import axios, { axiosServer } from './axios';
 
-export const fetchAllArticles = async (category, type) => {
+export const fetchArticlesSSR = async (query) => {
+  const { category, type, sort } = query;
   try {
-    const res = await vanillaAxios.get(`${BASE_URL}articulos`, {
+    const res = await axiosServer().get(ApiRoutes.Articles, {
       params: {
         pageNum: 1,
         pageSize: 9,
         ...(category && { categoria: category }),
         ...(type && { tipo: type }),
+        ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
       },
     });
-    return res.data;
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const fetchArticlesByUserPreferenceSSR = async (token, query) => {
+  const { category, type, sort } = query;
+  try {
+    const res = await axiosServer().get(ApiRoutes.ArticlesUserPreference, {
+      params: {
+        pageNum: 1,
+        pageSize: 9,
+        ...(category && { categoria: category }),
+        ...(type && { tipo: type }),
+        ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
+      },
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
   } catch (err) {
     return err;
   }

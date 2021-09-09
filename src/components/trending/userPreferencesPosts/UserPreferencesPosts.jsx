@@ -1,22 +1,40 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import {
-  ArticleListSelectComponent,
-  ArticlesListComponent,
-} from '@/components';
+import useSWR from 'swr';
+import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
+import ArticlesListComponent from '@/components/articlesList/articlesListComponent/articlesList';
+import { fetchPaginatedDataWithAuthToken } from '@/services/swr';
+import { ApiRoutes } from '@/global/constants';
+import { LoadingIndicator } from '@/components';
 
-const ProfileArticles = () => {
+const UserPreferencesPosts = ({ initialData }) => {
   const router = useRouter();
-  useEffect(() => {
+  const [articles, setArticles] = useState(initialData);
+  const [pageNum, setPageNum] = useState(1);
 
-  }, [router]);
+  const { data } = useSWR(
+    [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
+    fetchPaginatedDataWithAuthToken,
+  );
+
+  useEffect(() => {
+    if (data && pageNum === 1) {
+      setArticles(data);
+    } else if (data && pageNum > 1) {
+      setArticles([...articles, ...data]);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setPageNum(1);
+  }, [router.query]);
 
   const handleOrderChange = (item) => {
     const { query, pathname } = router;
     router.push({
       pathname,
       query: { ...query, sort: item.value },
-    }, undefined, { scroll: false });
+    }, undefined, { scroll: false, shallow: true });
   };
 
   const handleTypeChange = (item) => {
@@ -63,9 +81,24 @@ const ProfileArticles = () => {
           />
         </div>
       </div>
-      <ArticlesListComponent />
+      {(articles) ? (
+        <ArticlesListComponent
+          articles={articles}
+        />
+      ) : <></>}
+      <div className="d-flex justify-content-center">
+        {!data && <LoadingIndicator />}
+        {data && data.length > 0 && (
+          <button
+            className="button button--theme-secondary"
+            onClick={() => setPageNum(pageNum + 1)}
+          >
+            Ver más publicaciones
+          </button>
+        )}
+      </div>
     </>
   );
 };
 
-export default ProfileArticles;
+export default UserPreferencesPosts;

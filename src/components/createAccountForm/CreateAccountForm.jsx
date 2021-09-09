@@ -361,18 +361,18 @@ const CreateAccountForm = ({ preferences }) => {
     e.preventDefault();
 
     if (firstName === ''
-    || lastName === ''
-    || email === ''
-    || password === ''
-    || company === ''
-    || position === ''
-    || tel === ''
-    || city === ''
-    || country === ''
-    || state === ''
-    || yearValue === '' || yearValue === 'Año'
-    || mounthValue === '' || mounthValue === 'Mes'
-    || dayValue === '' || dayValue === 'Día') {
+      || lastName === ''
+      || email === ''
+      || password === ''
+      || company === ''
+      || position === ''
+      || tel === ''
+      || city === ''
+      || country === ''
+      || state === ''
+      || yearValue === '' || yearValue === 'Año'
+      || mounthValue === '' || mounthValue === 'Mes'
+      || dayValue === '' || dayValue === 'Día') {
       validate(firstName, 'name');
       validate(lastName, 'lastName');
       validate(email, 'email');
@@ -449,7 +449,6 @@ const CreateAccountForm = ({ preferences }) => {
         const resSignIn = await signIn('credentials', {
           email: model.email,
           password: model.password,
-          callbackUrl: `${window.location.origin}/articulos`,
           redirect: false,
         });
 
@@ -457,7 +456,7 @@ const CreateAccountForm = ({ preferences }) => {
           setError('Dirección de correo electrónico y/o contraseña incorrectos.');
         }
         if (resSignIn.url) {
-          router.push('/articulos');
+          router.push('/trending-topics?user=true');
         }
       } else {
         setStatus('error');

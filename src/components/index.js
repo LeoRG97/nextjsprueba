@@ -25,3 +25,5 @@ export { default as HomePage } from './home/home';
 export { default as UpdateRolUserModal } from './users/updateRolUser/updateRolUser';
 export { default as Switch } from './switch/Switch';
 export { default as SuccessIndicatorModal } from './modalsIndicators/SuccesModal';
+export { default as MainPosts } from './trending/mainPosts/mainPosts';
+export { default as UserPreferencesPosts } from './trending/userPreferencesPosts/UserPreferencesPosts';

@@ -29,7 +29,6 @@ const LoginForm = () => {
     const res = await signIn('credentials', {
       email: formData.email,
       password: formData.password,
-      callbackUrl: `${window.location.origin}/articulos`,
       redirect: false,
     });
 
@@ -37,7 +36,7 @@ const LoginForm = () => {
       setError('Dirección de correo electrónico y/o contraseña incorrectos.');
     }
     if (res.url) {
-      router.push('/articulos');
+      router.push('/trending-topics?user=true');
     }
   };
 

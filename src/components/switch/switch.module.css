@@ -61,3 +61,24 @@ input:checked + .slider:before {
   transform: translateX(8px);
   background-color: var(--switchSlideActive);
 }
+
+.inverted .switch {
+  color: var(--text-color-light);
+}
+
+/* The slider */
+.inverted .slider {
+  background-color: var(--switchBgActive);
+}
+
+.inverted .slider:before {
+  background-color: var(--switchSlideActive);
+}
+
+.inverted input:checked + .slider {
+  background-color: var(--switchBg);
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--white);
+}
