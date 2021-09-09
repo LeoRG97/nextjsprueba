@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styles from './switch.module.css';
 
 const Switch = ({
-  label, checked, name, onChange,
+  label, checked, name, onChange, inverted,
 }) => {
   return (
-    <label className={styles.switch}>
+    <label className={`${inverted && styles.inverted} ${styles.switch} `}>
       <input
         name={name}
         type="checkbox"

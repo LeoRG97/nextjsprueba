@@ -10,17 +10,55 @@
   padding-left: 15%;
 }
 
+.centeredTitle {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+.pageSwitch {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10rem;
+  margin-bottom: 1rem;
+}
+
+.topPadding {
+  padding-top: 7rem;
+}
+
+.switchTag {
+  color: var(--text-color-secondary);
+  transition: color 0.3s;
+}
+
+.switchTag.active {
+  color: var(--text-color-light);
+}
+
 .marginT {
   margin-top: 15px;
   margin-bottom: 15px;
 }
 
-.titleTopSpacing {
-  padding-top: 4rem;
+@media (max-width: 1199px) {
+  .centeredTitle {
+    width: 80%;
+  }
 }
 
-@media (max-width: 999px) {
+@media (max-width: 991.98px) {
   .bannerImage {
     font-size: 40px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .centeredTitle {
+    width: 100%;
   }
 }

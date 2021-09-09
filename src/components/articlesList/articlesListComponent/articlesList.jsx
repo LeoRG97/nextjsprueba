@@ -2,6 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styles from './articlesList.module.css';
+import { BUCKET_URL } from '@/global/constants';
 
 const ArticlesListComponent = ({ articles }) => {
   const getTypeIcon = (type) => {
@@ -27,7 +28,10 @@ const ArticlesListComponent = ({ articles }) => {
                 <div className={`main-bg text-sm text--theme-light ${styles.trendingLabel}`}>
                   {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
                 </div>
-                <img src="/images/imgpr2.jpg" alt="" />
+                <img
+                  src={article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
+                  alt=""
+                />
               </div>
               <div className={styles.cardLikesContainer}>
                 <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>

@@ -39,14 +39,16 @@ const TrendingFilterComponent = ({ preferences }) => {
 
   const navigateToFilter = (filter) => {
     const { query, pathname } = router;
-    delete query.category;
-    router.push({
-      pathname,
-      query: {
-        ...query,
-        ...(filter && { category: filter }),
-      },
-    }, undefined, { scroll: false });
+    if (query.category !== filter) {
+      delete query.category;
+      router.push({
+        pathname,
+        query: {
+          ...query,
+          ...(filter && { category: filter }),
+        },
+      }, undefined, { scroll: false, shallow: true });
+    }
   };
 
   const { category } = router.query;
@@ -56,12 +58,12 @@ const TrendingFilterComponent = ({ preferences }) => {
       <div className={styles.filterContainer}>
         <div className={styles.filterOpacity1} />
         <div className={`items ${styles.filters}`}>
-          <div className={`text-sm ${styles.filter} ${!category && styles.current}`} onClick={() => navigateToFilter('')}>
+          <div className={`text-regular ${styles.filter} ${!category && styles.current}`} onClick={() => navigateToFilter('')}>
             <div>Todos</div>
           </div>
           {
             preferences.map((pref) => (
-              <div key={pref._id} className={`text-sm ${styles.filter} ${category === pref.slug && styles.current}`} onClick={() => navigateToFilter(pref.slug)}>
+              <div key={pref._id} className={`text-regular ${styles.filter} ${category === pref.slug && styles.current}`} onClick={() => navigateToFilter(pref.slug)}>
                 <div>{pref.nombre}</div>
               </div>
             ))

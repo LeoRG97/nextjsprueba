@@ -31,7 +31,6 @@
   max-width: 80%;
 }
 
-
 .canvas {
   width: 100%;
   display: grid;
@@ -48,8 +47,9 @@
 
 .optionsContainer {
   position: absolute;
-  top: 20%;
-  right: 6vw;
+  top: 0;
+  margin-top: 8%;
+  right: 7vw;
   z-index: 0;
   width: auto;
   display: grid;

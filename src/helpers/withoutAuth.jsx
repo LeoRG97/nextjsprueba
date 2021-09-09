@@ -10,7 +10,7 @@ const withoutAuth = (WrappedComponent) => (props) => {
   }
 
   if (session) {
-    router.replace('/articulos');
+    router.replace('/');
     return null;
   }
 
