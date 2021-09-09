@@ -50,6 +50,7 @@
 
 .trendingLabel {
   position: absolute;
+  background-color: var(--colorArticleLabel);
   z-index: 1;
   top: 10px;
   left: 10px;
@@ -61,6 +62,12 @@
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+}
+
+.premium {
+  left: unset;
+  right: 10px;
+  background-color: var(--colorArticlePremium);
 }
 
 .trendingLabel span {
