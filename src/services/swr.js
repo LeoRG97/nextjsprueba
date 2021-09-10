@@ -1,13 +1,13 @@
-import customAxios, { axiosServer } from './axios';
+import axios from './axios';
 
 export const fetchData = async (...args) => {
-  const res = await customAxios().get(args[0]);
+  const res = await axios().get(args[0]);
   return res.data;
 };
 
 export const fetchPaginatedDataWithAuthToken = async (route, query, pageNum) => {
   const { category, type, sort } = query;
-  const res = await customAxios().get(`${route}`, {
+  const res = await axios().get(`${route}`, {
     params: {
       pageSize: 9,
       pageNum,
@@ -21,7 +21,7 @@ export const fetchPaginatedDataWithAuthToken = async (route, query, pageNum) => 
 
 export const fetchPaginatedData = async (route, query, pageNum) => {
   const { category, type, sort } = query;
-  const res = await axiosServer().get(`${route}`, {
+  const res = await axios().get(`${route}`, {
     params: {
       pageSize: 9,
       pageNum,

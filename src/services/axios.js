@@ -7,8 +7,12 @@ const axios = () => {
   const config = vanillaAxios.create();
   config.defaults.baseURL = BASE_URL;
   config.interceptors.request.use(async (request) => {
-    const session = await getSession({ request });
-    request.headers.Authorization = session?.accessToken;
+    const session = await getSession();
+    if (session) {
+      // agregar token de autorización Client-Side
+      // (Server-side requiere ser añadido en los headers de forma externa)
+      request.headers.Authorization = session?.accessToken;
+    }
     return request;
   });
   config.interceptors.response.use((res) => res.data,
@@ -16,19 +20,6 @@ const axios = () => {
       if (error.response.status === 401) {
         signOut({ callbackUrl: `${window.location.origin}/login` });
       }
-      return Promise.reject(error.response.data);
-    });
-  return config;
-};
-
-export const axiosServer = () => {
-  const config = vanillaAxios.create();
-  config.defaults.baseURL = BASE_URL;
-  config.interceptors.request.use(async (request) => {
-    return request;
-  });
-  config.interceptors.response.use((res) => res.data,
-    async (error) => {
       return Promise.reject(error.response.data);
     });
   return config;

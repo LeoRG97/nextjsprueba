@@ -71,6 +71,8 @@
   --colorSuccessTransp: var(--green-30); /*indicador de accion con transparencia*/
   --colorWarningTransp: var(--magenta-20); /*indicador de accion con transparencia*/
 
+  --colorPrimaryFaint: var(--blue-20); /* Fondos traslúcidos con color corporativo */
+
   --switchBg: var(--black-20);
   --switchSlide: var(--gray);
 
@@ -820,6 +822,8 @@ html {
 }
 
 .Btn-like {
+  display: inline-flex;
+  align-items: center;
   border-radius: 50px;
   background-color: var(--colorPrimary);
   border: 1px solid var(--colorPrimary);
@@ -827,12 +831,22 @@ html {
   font-size: var(--font-size-md);
   padding: 1px 27px 1px 48px;
   color: var(--colorLight);
+  width: 7.5rem;
   height: 40px;
   position: relative;
+  transition: 0.2s;
+  transition-property: width, border, color, background-color;
 }
 
 .Btn-like:hover {
   filter: brightness(120%);
+}
+
+.Btn-like__active {
+  width: 2rem;
+  height: 2.5rem;
+  background-color: var(--colorPrimaryFaint);
+  border: none;
 }
 
 .m-a {

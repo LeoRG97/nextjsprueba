@@ -1,12 +1,12 @@
 // import vanillaAxios from 'axios';
 // import { BASE_URL } from '@/global/constants';
 import { ApiRoutes } from '@/global/constants';
-import axios, { axiosServer } from './axios';
+import axios from './axios';
 
 export const fetchArticlesSSR = async (query) => {
   const { category, type, sort } = query;
   try {
-    const res = await axiosServer().get(ApiRoutes.Articles, {
+    const res = await axios().get(ApiRoutes.Articles, {
       params: {
         pageNum: 1,
         pageSize: 9,
@@ -24,7 +24,7 @@ export const fetchArticlesSSR = async (query) => {
 export const fetchArticlesByUserPreferenceSSR = async (token, query) => {
   const { category, type, sort } = query;
   try {
-    const res = await axiosServer().get(ApiRoutes.ArticlesUserPreference, {
+    const res = await axios().get(ApiRoutes.ArticlesUserPreference, {
       params: {
         pageNum: 1,
         pageSize: 9,
@@ -42,19 +42,19 @@ export const fetchArticlesByUserPreferenceSSR = async (token, query) => {
   }
 };
 
-export const fetchArticle = async (id) => {
+export const fetchArticleContent = async (id) => {
   try {
-    const res = await axios().get(`articulos/${id}`);
+    const res = await axios().get(`articulos/archivo/${id}`);
     return res.data;
   } catch (err) {
     return err;
   }
 };
 
-export const fetchArticleContent = async (id) => {
+export const rateArticle = async (articleId, userId) => {
   try {
-    const res = await axios().get(`articulos/archivo/${id}`);
-    return res.data;
+    const res = await axios().post(`articulos/likes/${articleId}`, { usuarioId: userId });
+    return res;
   } catch (err) {
     return err;
   }
@@ -230,21 +230,20 @@ export const getArticleBySlug = async (slug) => {
       return res[0];
     }
     return undefined;
-  } catch (err) {
-    return err;
+  } catch (error) {
+    return error;
   }
 };
 
-export const getArtByPref = async (options) => {
+export const getRelatedArticles = async (options) => {
   const params = {
     pageNum: options.pageNum,
     pageSize: options.pageSize,
-    sort: options.sort,
-    tipo: options.type,
+    category: options.category,
   };
   try {
-    const res = await axios().get(`articulos/preferencias/usuario?pageNum=${params.pageNum}&pageSize=${params.pageSize}&tipo=${params.tipo}&sort=${params.sort}`);
-    return res;
+    const res = await axios().get(`articulos?categoria=${params.category}&pageNum=${params.pageNum}&pageSize=${params.pageSize}`);
+    return res.data;
   } catch (err) {
     return err;
   }
@@ -252,7 +251,7 @@ export const getArtByPref = async (options) => {
 
 export const getArtForHomeSSR = async () => {
   try {
-    const res = await axiosServer().get('articulos/destacados/home');
+    const res = await axios().get('articulos/destacados/home');
     return res;
   } catch (err) {
     return err;

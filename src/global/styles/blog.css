@@ -102,6 +102,11 @@
   cursor: pointer;
 }
 
+.Btn-rounded__active{
+  background-color: var(--colorPrimaryFaint);
+  color: var(--text-color-highlight);
+}
+
 .Btn-rounded:hover {
   background-color: var(--colorPrimary);
   color: var(--text-color-light);
@@ -231,7 +236,7 @@
   font-size: 122%;
   padding: 4px;
   left: 13px;
-  top: 0px;
+  top: 1px;
 }
 
 .full-content {
