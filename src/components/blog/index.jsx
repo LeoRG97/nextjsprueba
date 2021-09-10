@@ -5,7 +5,9 @@ import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { AutorComponent } from '@/components';
 
-const BlogComponent = ({ blogInfo, htmlCode, autorInfo }) => {
+const BlogComponent = ({
+  blogInfo, htmlCode, autorInfo, onLike,
+}) => {
   const renderCode = (item) => {
     if (item.type === 'linkVideo') {
       return (
@@ -26,7 +28,13 @@ const BlogComponent = ({ blogInfo, htmlCode, autorInfo }) => {
         <div className="">
           <h3 className="title-editor-xl">{blogInfo.portada.titulo}</h3>
           <p className="subtitle-editor">{blogInfo.portada.descripcion}</p>
-          <AutorComponent autor={autorInfo} dateBlog={blogInfo.createdAt} />
+          <AutorComponent
+            autor={autorInfo}
+            dateBlog={blogInfo.createdAt}
+            onLike={onLike}
+            liked={blogInfo.liked}
+            likes={blogInfo.likes}
+          />
           <div className="article-content">
             {
               (htmlCode.length !== 0) ? (
@@ -45,7 +53,13 @@ const BlogComponent = ({ blogInfo, htmlCode, autorInfo }) => {
             <button className="Btn-square d-i">S</button>
             <button className="Btn-square d-i">N</button>
           </div>
-          <AutorComponent autor={autorInfo} dateBlog={blogInfo.createdAt} />
+          <AutorComponent
+            autor={autorInfo}
+            dateBlog={blogInfo.createdAt}
+            onLike={onLike}
+            liked={blogInfo.liked}
+            likes={blogInfo.likes}
+          />
         </div>
       </Container>
     </>

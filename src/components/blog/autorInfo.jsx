@@ -6,7 +6,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import styles from './blog.module.css';
 
-const AutorComponent = ({ autor, dateBlog }) => {
+const AutorComponent = ({
+  autor, dateBlog, onLike, liked, likes,
+}) => {
   const converDate = (date) => {
     const dateFormat = new Date(date);
     let formattedDate = Intl.DateTimeFormat('en-US', {
@@ -48,7 +50,12 @@ const AutorComponent = ({ autor, dateBlog }) => {
           <div className="content-right">
             <button className="Btn-rounded d-i">T</button>
             <button className="Btn-rounded d-i">U</button>
-            <button className={`Btn-like ${styles.btn_top}`}> <i className="icon-btn">c</i>Valorar </button>
+            <button
+              onClick={() => (!liked && onLike())}
+              className={`Btn-like ${styles.btn_top} ${liked && 'Btn-like__active'}`}
+            >
+              <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
+            </button>
           </div>
         </Col>
       </Row>

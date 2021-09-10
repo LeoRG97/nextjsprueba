@@ -3,10 +3,10 @@ import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import { ArticlesDetailComponent } from '@/components';
-import { getArtByPref } from '@/services/articles';
+import { getRelatedArticles } from '@/services/articles';
 import styles from './blog.module.css';
 
-const CarouselPrefArt = () => {
+const CarouselPrefArt = ({ blogId, categories }) => {
   const [artPref, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [viewportRef, embla] = useEmblaCarousel({
@@ -14,7 +14,7 @@ const CarouselPrefArt = () => {
     containScroll: 'trimSnaps',
   });
 
-  const onSelect = useCallback(() => { }, [embla]);
+  const onSelect = useCallback(() => {}, [embla]);
 
   useEffect(() => {
     const params = {
@@ -22,20 +22,16 @@ const CarouselPrefArt = () => {
       pageSize: 6,
       sort: '',
       type: '',
+      category: categories[0].slug,
     };
-    if (!artPref[0]) {
-      getArtByPref(params).then((resp) => {
-        setData(resp);
-        setLoading(false);
-      });
-    } else {
-      const dataCarousel = artPref;
-      setData(dataCarousel);
-    }
+    getRelatedArticles(params).then((resp) => {
+      setData(resp.filter((art) => art._id !== blogId));
+      setLoading(false);
+    });
     if (!embla) return;
     embla.on('select', onSelect);
     onSelect();
-  }, [embla, onSelect]);
+  }, [embla, onSelect, categories]);
 
   return (
     <div>

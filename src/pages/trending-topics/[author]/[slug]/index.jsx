@@ -3,22 +3,33 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 // import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useSession } from 'next-auth/client';
 import {
   Footer, Layout, BlogComponent, CarouselPrefArt,
 } from '@/components';
-import { getArticleBySlug, fetchArticleContent } from '@/services/articles';
+import { getArticleBySlug, fetchArticleContent, rateArticle } from '@/services/articles';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 
 // página para ver un artículo en específico
 const ArticlePage = () => {
   const { query } = useRouter();
+  const [session] = useSession();
   const [blog, setData] = useState({});
   const [autor, setAutor] = useState();
   const [htmlCode, setCode] = useState({});
   const [notFind, setFind] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isOnView, setWatch] = useState(false);
+
+  const handleRateArticle = async () => {
+    if (session) {
+      const res = await rateArticle(blog._id, session.user.id);
+      if (res.ok) {
+        setData((prev) => ({ ...prev, likes: blog.likes + 1, liked: true }));
+      }
+    }
+  };
 
   const getPerfilAutor = (slug) => {
     const dataAutor = {
@@ -40,6 +51,7 @@ const ArticlePage = () => {
       if (resp.slug) {
         dataAutor.autorLink = `#/${resp.slug}`;
       }
+      dataAutor._id = resp._id;
       setAutor(dataAutor);
     });
   };
@@ -130,14 +142,24 @@ const ArticlePage = () => {
                         </div>
                       </Col>
                       <Col xl="6" lg="6" sm="8" className="col-12">
-                        <BlogComponent blogInfo={blog} htmlCode={htmlCode} autorInfo={autor} />
+                        <BlogComponent
+                          blogInfo={blog}
+                          htmlCode={htmlCode}
+                          autorInfo={autor}
+                          onLike={handleRateArticle}
+                        />
                       </Col>
                       <Col xl="3" lg="3" sm="2" className="col-1">
                         <div className="content-fixed right">
                           {
                             (!isOnView) ? (
                               <div className="content-btns">
-                                <button className="Btn-rounded">c</button>
+                                <button
+                                  onClick={() => !blog.liked && handleRateArticle()}
+                                  className={`Btn-rounded ${blog.liked && 'Btn-rounded__active'}`}
+                                >
+                                  c
+                                </button>
                                 <button className="Btn-rounded">U</button>
                                 <button className="Btn-rounded">T</button>
                               </div>
@@ -149,7 +171,10 @@ const ArticlePage = () => {
                         <Col xl="1" lg="1" sm="1" className=""> </Col>
                         <Col xl="10" lg="10" sm="12" className="">
                           <div id="contentCarousel">
-                            <CarouselPrefArt />
+                            <CarouselPrefArt
+                              blogId={blog._id}
+                              categories={blog.categorias}
+                            />
                           </div>
                         </Col>
                         <Col xl="1" lg="1" sm="1" className=""> </Col>
