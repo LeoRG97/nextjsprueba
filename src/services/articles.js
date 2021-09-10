@@ -249,3 +249,12 @@ export const getArtByPref = async (options) => {
     return err;
   }
 };
+
+export const getArtForHomeSSR = async () => {
+  try {
+    const res = await axiosServer().get('articulos/destacados/home');
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
