@@ -63,7 +63,9 @@ const ProfileArticles = () => {
           />
         </div>
       </div>
-      <ArticlesListComponent />
+      <ArticlesListComponent
+        articles={[]}
+      />
     </>
   );
 };

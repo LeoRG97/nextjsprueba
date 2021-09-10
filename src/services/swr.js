@@ -2,6 +2,11 @@ import axios from './axios';
 
 export const fetchData = async (...args) => {
   const res = await axios().get(args[0]);
+  return res.data ? res.data : res;
+};
+
+export const fetchDataWithId = async (...args) => {
+  const res = await axios().get(`${args[0]}/${args[1]}`);
   return res.data;
 };
 

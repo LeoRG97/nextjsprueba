@@ -1,5 +1,6 @@
 import { signOut } from 'next-auth/client';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { NavDropdown } from 'react-bootstrap';
@@ -8,6 +9,7 @@ import styles from './navbar.module.css';
 const UserNavbarComponent = ({
   picture, name,
 }) => {
+  const router = useRouter();
   const [show, setShow] = useState(false);
   const showDropdown = () => {
     setShow(!show);
@@ -28,6 +30,10 @@ const UserNavbarComponent = ({
     await signOut({ callbackUrl: `${window.location.origin}/login` });
   };
 
+  const navigateToProfile = () => {
+    router.push('/profile/about-me');
+  };
+
   return (
     <>
       <NavDropdown
@@ -38,7 +44,7 @@ const UserNavbarComponent = ({
         onMouseEnter={showDropdown}
         onMouseLeave={hideDropdown}
       >
-        <NavDropdown.Item>Perfil</NavDropdown.Item>
+        <NavDropdown.Item onClick={navigateToProfile}>Perfil</NavDropdown.Item>
         <NavDropdown.Item>Ajustes</NavDropdown.Item>
         <NavDropdown.Item onClick={() => logOut()}>Cerrar sesión</NavDropdown.Item>
       </NavDropdown>
