@@ -18,6 +18,7 @@ const ArticlePage = () => {
   const [htmlCode, setCode] = useState({});
   const [notFind, setFind] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isOnView, setWatch] = useState(false);
 
   const getPerfilAutor = (slug) => {
     const dataAutor = {
@@ -68,7 +69,22 @@ const ArticlePage = () => {
     });
   };
 
+  const checkscroll = () => {
+    const elm = document.getElementById('contentCarousel');
+    if (elm) {
+      const domRect = elm.getBoundingClientRect();
+      if (domRect) {
+        if (domRect.top < 550) {
+          setWatch(true);
+        } else if (domRect.top > 550) {
+          setWatch(false);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
+    window.addEventListener('scroll', checkscroll);
     if (query.slug) {
       getBlog();
     }
@@ -85,7 +101,7 @@ const ArticlePage = () => {
         <Container fluid className="blog-content">
           {
             (loading) ? (
-              <div className="blog-loadbtn_toping">
+              <div className="blog-loading btn_top">
                 <LoadingIndicator classAdd="loader-big" />
               </div>
             ) : (
@@ -101,31 +117,43 @@ const ArticlePage = () => {
                     <Row>
                       <Col xl="3" lg="3" sm="2" className="col-1">
                         <div className="content-fixed left">
-                          <div className="content-btns">
-                            <label className="text-md">Ver en</label>
-                            <button className="Btn-square">P</button>
-                            <button className="Btn-square">S</button>
-                            <button className="Btn-square">N</button>
-                          </div>
+                          {
+                            (!isOnView) ? (
+                              <div className="content-btns">
+                                <label className="text-md">Ver en</label>
+                                <button className="Btn-square">P</button>
+                                <button className="Btn-square">S</button>
+                                <button className="Btn-square">N</button>
+                              </div>
+                            ) : (<></>)
+                          }
                         </div>
                       </Col>
-                      <Col xl="6" lg="6" sm="8" className="col-10">
+                      <Col xl="6" lg="6" sm="8" className="col-12">
                         <BlogComponent blogInfo={blog} htmlCode={htmlCode} autorInfo={autor} />
                       </Col>
                       <Col xl="3" lg="3" sm="2" className="col-1">
                         <div className="content-fixed right">
-                          <div className="content-btns">
-                            <button className="Btn-rounded">c</button>
-                            <button className="Btn-rounded">U</button>
-                            <button className="Btn-rounded">T</button>
-                          </div>
+                          {
+                            (!isOnView) ? (
+                              <div className="content-btns">
+                                <button className="Btn-rounded">c</button>
+                                <button className="Btn-rounded">U</button>
+                                <button className="Btn-rounded">T</button>
+                              </div>
+                            ) : (<></>)
+                          }
                         </div>
                       </Col>
-                      <Col xl="1" lg="1" sm="1" className=""> </Col>
-                      <Col xl="10" lg="10" sm="12" className="">
-                        <CarouselPrefArt />
-                      </Col>
-                      <Col xl="1" lg="1" sm="1" className=""> </Col>
+                      <Row>
+                        <Col xl="1" lg="1" sm="1" className=""> </Col>
+                        <Col xl="10" lg="10" sm="12" className="">
+                          <div id="contentCarousel">
+                            <CarouselPrefArt />
+                          </div>
+                        </Col>
+                        <Col xl="1" lg="1" sm="1" className=""> </Col>
+                      </Row>
                     </Row>
                   )
                 }

@@ -16,7 +16,6 @@
 }
 
 .content_title {
-  background-image: url('/images/imgpr2.jpg');
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
@@ -132,7 +131,9 @@
 
 @media(max-width: 576px) {
   .content_title::after {
-  max-height: max-content;
+    content: "";
+    height: 100%;
+    max-height: max-content;
   }
   .content_goto div {
     margin: auto;

@@ -1,99 +1,56 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Fade from 'react-reveal/Fade';
 import { Container, Row, Col } from 'react-bootstrap';
+import { BUCKET_URL } from '@/global/constants';
 import styles from '@/global/styles/Home.module.css';
 
-const HomePage = () => {
+const HomePage = ({ articulos }) => {
   const [optionSelect, setData] = useState(1);
+  const [imgBackg, setImg] = useState(1);
   const [showFade, setFade] = useState(true);
+
+  const setBackgroundImage = () => {
+    let urlImg = '';
+    let indx = 1;
+    articulos.forEach((element) => {
+      if (indx === optionSelect) {
+        urlImg = element.portada.ruta_imagen;
+      }
+      indx += 1;
+    });
+    if (urlImg !== '') {
+      urlImg = `${BUCKET_URL}${urlImg}`;
+    } else {
+      urlImg = '/images/imgpr2.jpg';
+    }
+    setImg(urlImg);
+  };
 
   const handleBefore = () => {
     setFade(false);
     let counter = optionSelect - 1;
     if (counter <= 0) {
-      counter = 3;
+      counter = articulos.length;
     }
     window.setTimeout(() => {
       setData(counter);
       setFade(true);
+      setBackgroundImage();
     }, 500);
   };
 
   const handleAfter = () => {
     setFade(false);
     let counter = optionSelect + 1;
-    if (counter >= 4) {
+    if (counter > articulos.length) {
       counter = 1;
     }
     window.setTimeout(() => {
       setData(counter);
       setFade(true);
+      setBackgroundImage();
     }, 500);
-  };
-
-  const renderOption = () => {
-    switch (optionSelect) {
-      case 1:
-        return (
-          <Row>
-            <Fade opposite cascade when={showFade}>
-              <div>
-                <Row>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
-                    <p className="title-xl">Emprender, la clave es el enfoque</p>
-                  </Col>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
-                    <div>
-                      <button className="Btn-outline-light">Ir a la publicación</button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Fade>
-          </Row>
-        );
-      case 2:
-        return (
-          <Row>
-            <Fade opposite cascade when={showFade}>
-              <div>
-                <Row>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
-                    <p className="title-xl">Emprender, la clave es el enfoque2</p>
-                  </Col>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
-                    <div>
-                      <button className="Btn-outline-light">Ir a la publicación</button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Fade>
-          </Row>
-        );
-      case 3:
-        return (
-          <Row>
-            <Fade opposite cascade when={showFade}>
-              <div>
-                <Row>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
-                    <p className="title-xl">Emprender, la clave es el enfoque3</p>
-                  </Col>
-                  <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
-                    <div>
-                      <button className="Btn-outline-light">Ir a la publicación</button>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
-            </Fade>
-          </Row>
-        );
-      default:
-        return (<> </>);
-    }
   };
 
   const checkActiveOption = (option) => {
@@ -103,28 +60,73 @@ const HomePage = () => {
     return styles.active;
   };
 
+  useEffect(() => {
+    setBackgroundImage();
+  }, []);
+
   return (
     <Container fluid className={styles.content_no_padd}>
-      <Container fluid className={styles.content_title}>
+      <Container
+        fluid
+        className={styles.content_title}
+        style={{ backgroundImage: `url(${imgBackg})` }}
+      >
         <Container className={styles.content_title_section}>
           <Row>
             <div className={`${styles.content_left}`}>
-              <i className={`text-md ${styles.number_option} ${checkActiveOption(1)} `}>01</i>
-              <i className={`text-md ${styles.number_option} ${checkActiveOption(2)} `}>02</i>
-              <i className={`text-md ${styles.number_option} ${checkActiveOption(3)} `}>03</i>
+              {
+                articulos.map((item, index) => {
+                  const indx = index + 1;
+                  return (
+                    <i key={`${item._id}numb`} className={`text-md ${styles.number_option} ${checkActiveOption(indx)} `}>0{indx}</i>
+                  );
+                })
+              }
             </div>
           </Row>
-          {renderOption()}
+          {
+            articulos.map((item, index) => {
+              const indx = index + 1;
+              return (
+                (indx === optionSelect) ? (
+                  <Row key={item._id}>
+                    <Fade opposite cascade when={showFade}>
+                      <div>
+                        <Row>
+                          <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
+                            <p className="title-xl">{item.portada.titulo}</p>
+                          </Col>
+                          <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
+                            <div>
+                              <Link href={`trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
+                                <a>
+                                  <button className="Btn-outline-light">Ir a la publicación</button>
+                                </a>
+                              </Link>
+                            </div>
+                          </Col>
+                        </Row>
+                      </div>
+                    </Fade>
+                  </Row>
+                ) : (null)
+              );
+            })
+          }
           <Row>
             <div className={`${styles.content_left}`}>
-              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleBefore}>1</span>
-              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleAfter}>2</span>
+              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleBefore}>a</span>
+              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleAfter}>b</span>
             </div>
           </Row>
           <Row>
             <div className={`${styles.content_centered} ${styles.content_more} `}>
               <p className="title">Descubre más publicaciones</p>
-              <button className="Btn-outline-light faint">Ver más</button>
+              <Link href="trending-topics/" passHref>
+                <a>
+                  <button className="Btn-outline-light faint">Ver más</button>
+                </a>
+              </Link>
             </div>
           </Row>
         </Container>
@@ -188,12 +190,6 @@ const HomePage = () => {
       </Container>
     </Container>
   );
-};
-
-HomePage.propTypes = {
-};
-
-HomePage.defaultProps = {
 };
 
 export default HomePage;
