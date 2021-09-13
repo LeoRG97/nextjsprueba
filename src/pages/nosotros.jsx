@@ -102,25 +102,26 @@ export default function Home() {
           </Container>
           <Container fluid className={styles.content_map}>
             <Container className={`${styles.content_pt_sect} `}>
-              <Row>
-                <Col xl="6" lg="6" sm="12">
-                  <div className={` ${styles.content_map_text}`}>
-                    <div>
-                      <small className="text-sm ">Impacto geográfico</small>
-                      <h1 className="title-xl text--theme-dark ">Una empresa <br />de clase mundial</h1>
-                      {
-                      // eslint-disable-next-line max-len
-                        <p className="text-md text--theme-dark ">Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero, así como facilitando colaboraciones comerciales entre naciones y empresas que fortalecen el poder de marca mundial de NTT DATA Group como &quot;One NTT DATA&quot;.</p>
-                      }
+              <div className={` ${styles.content_map_text}`}>
+                <div className="text-center">
+                  <small className="text-sm">Impacto geográfico</small>
+                  <h1 className="title-xl text--theme-dark mb-3">Una empresa <br /> de clase mundial</h1>
+                  <WorldComponent />
+                  <div className="d-flex justify-content-center">
+                    { /* eslint-disable max-len */}
+                    <div className={styles.margin_text_mapa}>
+                      <p className="text-md text--theme-dark w-100 mt-3">
+                        Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando
+                        la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero,
+                        así como facilitando colaboraciones comerciales entre naciones y empresas que
+                        fortalecen el poder de marca mundial de
+                        NTT DATA Group como &quot;One NTT DATA&quot;.
+                      </p>
                     </div>
+                    { /* eslint-enable max-len */}
                   </div>
-                </Col>
-                <Col xl="6" lg="6" sm="12">
-                  <div className={`${styles.content_map_canvas} `}>
-                    <WorldComponent />
-                  </div>
-                </Col>
-              </Row>
+                </div>
+              </div>
             </Container>
           </Container>
           <Container fluid>
