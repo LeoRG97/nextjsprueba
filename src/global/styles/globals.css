@@ -116,6 +116,16 @@
   /* 16px */
 }
 
+@media (max-width: 767.98px) {
+  :root, *::before, *::after {
+    --font-size-xl: 2.25rem; /* 56px */
+    --font-size-lg: 1.625rem; /* 28px */
+    --font-size-md: 1rem; /* 16px */
+    --font-size-sm: 0.875rem; /* 14px */
+  }
+}
+
+
 html,
 body {
   padding: 0;
@@ -260,6 +270,12 @@ a {
   border: none;
 }
 
+.icon-button--secondary {
+  background-color: var(--contentTransparentRGB);
+  color: var(--text-color-secondary);
+  border: 1px solid var(--colorItemBorder);
+}
+
 .icon-button--success {
   background-color: var(--colorSuccess);
   color: var(--text-color-light);
@@ -278,11 +294,11 @@ a {
   color: var(--btnTextPrimary);
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
   letter-spacing: -0.4px;
   min-height: 2.5rem;
-  min-width: 7rem;
+  min-width: 4.5rem;
   text-align: center;
 }
 
@@ -307,6 +323,12 @@ a {
 .button--theme-success {
   color: var(--text-color-light);
   background-color: var(--colorSuccess);
+}
+
+.button--theme-light {
+  color: var(--text-color-light);
+  background-color: var(--contentTransparentRGB);
+  border: 1px solid var(--colorLight);
 }
 
 .button:active {
@@ -419,7 +441,7 @@ label.input {
   } */
 
 .select {
-  height: 38px;
+  height: 40px;
   background-color: var(--colorItemBg);
   border: 0;
   color: var(--text-color-secondary);
@@ -522,6 +544,7 @@ label.input {
   font-style: normal;
   display: block;
   white-space: nowrap;
+  color: var(--text-color-light);
 }
 .selectMultiple > div a:before {
   content: "";
@@ -554,7 +577,7 @@ label.input {
   position: absolute;
   left: 50%;
   top: 50%;
-  background: var(--colorSecondary);
+  background: var(--colorLight);
   border-radius: 1px;
 }
 
@@ -674,6 +697,7 @@ label.input {
 .selectMultiple > ul li:hover {
   background: var(--colorItemBorder);
   color: var(--colorSecondary);
+  color: var(--text-color-light);
 }
 .selectMultiple > ul li:after {
   content: "";
@@ -947,11 +971,30 @@ html {
 /* WORLD MAP =============}=============================================================== */
 /* TOOLS EDITOR ============================================================================ */
 .tooltip-inner {
-  font-family: Gilroy-Medium;
+  font-family: var(--font-regular);
   background-color: var(--backgroung-color-low-dark) !important;
   color: #FFFFFF !important;
-  font-size: 10px !important;
+  color: #ffffff !important;
+  font-size: var(--font-size-sm) !important;
+
 }
+
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: var(--backgroung-color-low-dark);
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: var(--backgroung-color-low-dark);
+}
+
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: var(--backgroung-color-low-dark);
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: var(--backgroung-color-low-dark);
+}
+
 /* TOOLS EDITOR ============================================================================ */
 /* ELEMENTS EDITOR =========================================================================*/
 .canvas-component-container {

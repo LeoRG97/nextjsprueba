@@ -12,9 +12,9 @@ const Footer = () => {
           <Col sm="12" lg="auto">
             <img src="/images/logos/NTTBlanco.png" alt="NTT" className={styles.img_NTT} />
           </Col>
-          <Col sm="auto" lg="auto">
+          <Col xs="12" sm="auto" lg="auto">
             <Row className={styles.footer_container_row_links}>
-              <Col sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
+              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
                 <p className="subtitle">Acerca de</p>
                 <Link href="/#">
                   <a>Perfil de la empresa</a>
@@ -35,7 +35,7 @@ const Footer = () => {
                   <a>Aliados</a>
                 </Link>
               </Col>
-              <Col sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
+              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
                 <p className="subtitle">Trending topics</p>
                 <Link href="/#">
                   <a>Sección número 1</a>
@@ -51,7 +51,7 @@ const Footer = () => {
                 </Link>
                 <p> </p>
               </Col>
-              <Col sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
+              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
                 <p className="subtitle">Think tools</p>
                 <Link href="/#">
                   <a>Sección número 1</a>
@@ -67,7 +67,7 @@ const Footer = () => {
                 </Link>
                 <p> </p>
               </Col>
-              <Col sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
+              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
                 <p className="subtitle">Ayuda</p>
                 <Link href="/#">
                   <a>Soporte técnico</a>
@@ -85,12 +85,12 @@ const Footer = () => {
           </Col>
         </Row>
         <Row className={styles.footer_container_row_copyright}>
-          <Col lg="6" sm="auto">
+          <Col sm="12" md="6">
             <Link href="/#">
               <a>© Copyright NTT DATA Corporation</a>
             </Link>
           </Col>
-          <Col lg="6" sm="auto" className={styles.foote_mob_top}>
+          <Col sm="12" md="6" className={styles.foote_mob_top}>
             <Link href="/#">
               <a className={`${styles.link_fr} icon`}> N </a>
             </Link>
