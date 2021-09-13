@@ -3,7 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Col, Container, Row } from 'react-bootstrap';
 import { fetch as fetchProfile } from '@/reducers/profile';
-import { Footer, Layout, ProfileNavComponent } from '@/components';
+import {
+  Footer, Layout, ProfileNavComponent, MailPasswdComponent,
+} from '@/components';
 import { updateUserData, uploadImgProfile } from '@/services/profile';
 import FormGeneral from '@/components/profile/profileSettings/FormGeneral';
 import DataAndPreferencesForm from '@/components/profile/profileSettings/DataAndPreferencesForm';
@@ -70,7 +72,7 @@ const EditProfile = ({ preferences }) => {
                     />
                   )
                 }
-                {query.option === 'email-and-pasword' && <h1 className="title">Correo y contraseña</h1>}
+                {query.option === 'email-and-pasword' && <MailPasswdComponent />}
                 {
                   query.option === 'social-network'
                   && (
