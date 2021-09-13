@@ -145,6 +145,11 @@ a {
   padding-right: 1rem;
 }
 
+.content-n-p {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .main-bg {
   background-color: var(--colorPrimaryDark);
 }
