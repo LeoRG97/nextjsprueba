@@ -82,6 +82,7 @@
   font-style: normal;
   display: block;
   white-space: nowrap;
+  color: var(--text-color-light);
 }
 .selectMultiple > div a:before {
   content: "";
@@ -114,7 +115,7 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  background: var(--colorSecondary);
+  background: var(--colorLight);
   border-radius: 1px;
 }
 
@@ -233,7 +234,7 @@
 }
 .selectMultiple > ul li:hover {
   background: var(--colorItemBorder);
-  color: var(--colorSecondary);
+  color: var(--text-color-light);
 }
 .selectMultiple > ul li:after {
   content: "";
