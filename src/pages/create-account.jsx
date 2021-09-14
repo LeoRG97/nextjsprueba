@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import { CreateAccountForm, LoginHeader } from '@/components';
 import { getPreferencesService } from '@/services/preferences';
+import withoutAuth from '@/helpers/withoutAuth';
 
 const CreateAccount = ({ preferences }) => {
   return (
@@ -26,4 +27,4 @@ export async function getStaticProps() {
   };
 }
 
-export default CreateAccount;
+export default withoutAuth(CreateAccount);
