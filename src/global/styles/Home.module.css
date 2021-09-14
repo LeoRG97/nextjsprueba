@@ -91,7 +91,6 @@
 
 .number_option {
   font-style: normal;
-  margin-right: 20px;
 }
 
 .number_option.non {
@@ -116,6 +115,10 @@
     max-width: 100%;
     margin: auto;
   }
+  .margin_movil_y {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 @media(max-width: 990px) {
@@ -126,6 +129,13 @@
   }
   .content_goto div {
     margin: auto;
+  }
+  .margin_movil_y {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+  .content_left {
+    text-align: center;
   }
 }
 
@@ -138,5 +148,10 @@
   .content_goto div {
     margin: auto;
     margin-bottom: 30px;
+  }
+  .content_left {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
