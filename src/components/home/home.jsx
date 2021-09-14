@@ -72,18 +72,16 @@ const HomePage = ({ articulos }) => {
         style={{ backgroundImage: `url(${imgBackg})` }}
       >
         <Container className={styles.content_title_section}>
-          <Row>
-            <div className={`${styles.content_left}`}>
-              {
-                articulos.map((item, index) => {
-                  const indx = index + 1;
-                  return (
-                    <i key={`${item._id}numb`} className={`text-md ${styles.number_option} ${checkActiveOption(indx)} `}>0{indx}</i>
-                  );
-                })
-              }
-            </div>
-          </Row>
+          <div className={`${styles.content_left}`}>
+            {
+              articulos.map((item, index) => {
+                const indx = index + 1;
+                return (
+                  <i key={`${item._id}numb`} className={`text-md ${styles.number_option} ${checkActiveOption(indx)} mx-2`}>0{indx}</i>
+                );
+              })
+            }
+          </div>
           {
             articulos.map((item, index) => {
               const indx = index + 1;
@@ -113,8 +111,8 @@ const HomePage = ({ articulos }) => {
               );
             })
           }
-          <Row>
-            <div className={`${styles.content_left}`}>
+          <Row className="my-4">
+            <div className={`${styles.content_left} ${styles.margin_movil_y}`}>
               <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleBefore}>a</span>
               <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleAfter}>b</span>
             </div>
@@ -144,22 +142,22 @@ const HomePage = ({ articulos }) => {
           </div>
         </Row>
         <Row className={styles.content_margin}>
-          <Col xl="4" lg="4" sm="6">
-            <div className={styles.content_centered}>
+          <Col xl="4" lg="4" sm="12">
+            <div className={`${styles.content_centered} mb-4`}>
               <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
               <p className="title">Aumenta<br />tu conocimiento</p>
               <button className="button button--theme-primary">Trending topics</button>
             </div>
           </Col>
-          <Col xl="4" lg="4" sm="6">
-            <div className={styles.content_centered}>
+          <Col xl="4" lg="4" sm="12">
+            <div className={`${styles.content_centered} mb-4`}>
               <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
               <p className="title">Desarrolla<br />nuevas habilidades</p>
               <button className="button button--theme-primary">Think tools</button>
             </div>
           </Col>
-          <Col xl="4" lg="4" sm="6">
-            <div className={styles.content_centered}>
+          <Col xl="4" lg="4" sm="12">
+            <div className={`${styles.content_centered} mb-4`}>
               <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
               <p className="title">Comparte<br />tu opinión</p>
               <button className="button button--theme-primary">Think team</button>
@@ -168,8 +166,8 @@ const HomePage = ({ articulos }) => {
         </Row>
       </Container>
       <Container>
-        <Row className={styles.content_margin}>
-          <Col xl="6" lg="6" sm="12">
+        <Row className={`${styles.content_margin} d-flex align-items-center`}>
+          <Col xl="6" lg="6" sm="12" className={styles.margin_movil_y}>
             <small className="text-md text--theme-secondary">Expertos</small>
             <h2 className="title-xl">Conoce a <br />nuestros expertos</h2>
             <p className="text-md">Más de 300 colaboradores creando y compartiendo publicaciones de

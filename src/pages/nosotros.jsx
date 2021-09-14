@@ -36,16 +36,22 @@ export default function Home() {
             <Container>
               <Row className={styles.content_mt_sect}>
                 <Col xl="6" lg="6" sm="12">
-                  <div className={`${styles.content_m_text} `}>
+                  <div className={`${styles.content_m_text}`}>
                     <small className="text-sm ">Filosofía</small>
-                    <h1 className="title-xl text--theme-light">Hacemos aquello <br />en lo que creemos</h1>
+                    <h1 className="title-xl text--theme-light my-5">Hacemos aquello en lo que creemos</h1>
                   </div>
                 </Col>
                 <Col xl="6" lg="6" sm="12"> </Col>
                 <Col xl="6" lg="6" sm="12">
                   <div className={`${styles.content_m_text} `}>
-                    <div className={`${styles.content_icon} ${styles.pink_icon}`}><span className="icon">C</span></div>
-                    <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>
+                    <div className={`row d-flex align-items-center my-5 ${styles.movil_text_align}`}>
+                      <Col xl="3" lg="3" sm="12" xs="12">
+                        <div className={`${styles.content_icon} ${styles.pink_icon} mr-4`}><span className="icon">C</span></div>
+                      </Col>
+                      <Col xl="9" lg="9" sm="12" xs="12">
+                        <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>
+                      </Col>
+                    </div>
                     {
                       // eslint-disable-next-line max-len
                       <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo a través de relaciones a largo plazo, desarrollamos ecosistemas en evolución con nuestros clientes a través de tecnologías de vanguardia y potenciamos nuestra creatividad respetando la diversidad.</p>
@@ -53,9 +59,15 @@ export default function Home() {
                   </div>
                 </Col>
                 <Col xl="6" lg="6" sm="12">
-                  <div className={`${styles.content_mr_text} `}>
-                    <div className={`${styles.content_icon} ${styles.green_icon}`}><span className="icon">9</span></div>
-                    <h6 className={`${styles.title_disp_text} title`}>Declaración de misión</h6>
+                  <div className={`${styles.content_m_text} `}>
+                    <div className={`row d-flex align-items-center my-5 ${styles.movil_text_align}`}>
+                      <Col xl="3" lg="3" sm="12" xs="12">
+                        <div className={`${styles.content_icon} ${styles.green_icon}`}><span className="icon">9</span></div>
+                      </Col>
+                      <Col xl="9" lg="9" sm="12" xs="12">
+                        <h6 className={`${styles.title_disp_text} title`}>Declaración de misión</h6>
+                      </Col>
+                    </div>
                     {
                       // eslint-disable-next-line max-len
                       <p className="text-md">NTT DATA utiliza la tecnología de la información para crear nuevos paradigmas y valores, que ayudan a contribuir a una sociedad más próspera y armoniosa.</p>
@@ -87,8 +99,8 @@ export default function Home() {
                     <div className={`${styles.content_mr_text} `}>
                       <small className="text-sm ">El observatorio</small>
                     </div>
-                    <div className={`${styles.content_mr_text} `}>
-                      <h6 className="title-xl text--theme-light">Un espacio para <br />mirar al futuro</h6>
+                    <div className={`${styles.content_mr_text}`}>
+                      <h6 className="title-xl text--theme-light my-5">Un espacio para mirar al futuro</h6>
                       {
                         // eslint-disable-next-line max-len
                         <p className="text-md">NTT DATA es su socio de innovación en cualquier parte del mundo. Con sede en Tokio, con operaciones comerciales en más de 50 países y regiones, enfatizamos el compromiso a largo plazo y combinamos el alcance global y la intimidad local para proporcionar servicios profesionales de primer nivel, desde consultoría, desarrollo de sistemas hasta externalización de TI empresarial.</p>
