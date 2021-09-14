@@ -1,6 +1,6 @@
 .container {
   width: 30rem;
-  min-height: 30rem;
+  min-height: 15rem;
   background-color: var(--colorItemBg);
   padding: 2rem;
   padding-top: 60px;
@@ -26,10 +26,7 @@
 .submit {
   display: flex;
   justify-content: flex-end;
-}
-
-.submit button {
-  flex: 0.5;
+  margin-top: 2rem;
 }
 
 .error {
@@ -41,6 +38,7 @@
 @media screen and (min-width: 576px) {
   .container {
     padding: 60px;
+    min-height: 30rem;
   }
   .floatRight {
     float: right;

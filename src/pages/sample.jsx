@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
+import { useState } from 'react';
 import { Footer, LoadingIndicator, Switch } from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchData } from '@/services/swr';
@@ -8,6 +9,8 @@ import CategorySelector from '@/components/categorySelector/CategorySelector';
 
 export default function Home() {
   const { data } = useSWR('preferencias', fetchData);
+  const [checked, setChecked] = useState(false);
+  const [checkedInverted, setCheckedInverted] = useState(false);
   return (
     <div className="main-container main-bg">
       <Head>
@@ -87,11 +90,18 @@ export default function Home() {
 
         <div className="d-flex align-items-center">
           <label className="subtitle me-2">Normal</label>
-          <Switch />
+          <Switch
+            checked={checked}
+            onChange={() => setChecked(!checked)}
+          />
         </div>
         <div className="d-flex align-items-center">
           <label className="subtitle me-2">Invertido</label>
-          <Switch inverted />
+          <Switch
+            inverted
+            checked={checkedInverted}
+            onChange={() => setCheckedInverted(!checkedInverted)}
+          />
         </div>
 
         <hr className="bg-light" />

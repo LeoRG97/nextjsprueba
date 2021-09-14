@@ -466,7 +466,7 @@ const CreateAccountForm = ({ preferences }) => {
   };
 
   return (
-    <div>
+    <>
       {
         !nextStep ? (
           <div className={styles.containerCreate}>
@@ -486,7 +486,7 @@ const CreateAccountForm = ({ preferences }) => {
                   )
                 }
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="name">Nombre*
                       <input
                         id="name"
@@ -501,7 +501,7 @@ const CreateAccountForm = ({ preferences }) => {
                       {errorFirstName.status && <span className={`text-sm ${styles.error}`}>{errorFirstName.text}</span>}
                     </label>
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="lastName">Apellidos*
                       <input
                         id="lastName"
@@ -545,7 +545,7 @@ const CreateAccountForm = ({ preferences }) => {
                   {errorPassword.status && <span className={`text-sm ${styles.error}`}>{errorPassword.text}</span>}
                 </label>
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="company">Empresa*
                       <input
                         id="company"
@@ -560,7 +560,7 @@ const CreateAccountForm = ({ preferences }) => {
                       {errorCompany.status && <span className={`text-sm ${styles.error}`}>{errorCompany.text}</span>}
                     </label>
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="position">Cargo*
                       <input
                         id="position"
@@ -591,7 +591,7 @@ const CreateAccountForm = ({ preferences }) => {
                 </label>
                 <div className="row mb-2">
                   <div className="d-block subtitle">Fecha de nacimiento* </div>
-                  <div className="col-4 flechita">
+                  <div className="col-6 col-sm-4 flechita">
                     <DayPicker
                       defaultValue="Día"
                       year={yearValue}
@@ -608,7 +608,7 @@ const CreateAccountForm = ({ preferences }) => {
                       optionClasses="option classes"
                     />
                   </div>
-                  <div className="col-4">
+                  <div className="col-6 col-sm-4">
                     <MonthPicker
                       defaultValue="Mes"
                       numeric // to get months as numbers
@@ -625,11 +625,10 @@ const CreateAccountForm = ({ preferences }) => {
                       optionClasses="option classes"
                     />
                   </div>
-                  <div className="col-4">
+                  <div className="col-12 col-sm-4">
                     <YearPicker
                       defaultValue="Año"
-                      start={1921} // default is 1900
-                      end={2021} // default is current year
+                      start={1921} // default is 1900 (end default is current year)
                       reverse // default is ASCENDING
                       required // default is false
                       value={yearValue} // mandatory
@@ -645,7 +644,7 @@ const CreateAccountForm = ({ preferences }) => {
                   {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
                 </div>
                 <div className="row">
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="country">País o región*
                       <CountryDropdown
                         required
@@ -659,7 +658,7 @@ const CreateAccountForm = ({ preferences }) => {
                       {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
                     </label>
                   </div>
-                  <div className="col-6">
+                  <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="state">Provincia o estado*
                       <RegionDropdown
                         id="state"
@@ -690,7 +689,9 @@ const CreateAccountForm = ({ preferences }) => {
                 </label>
                 <div className={styles.check}>
                   <button className={styles.buttonChek} onClick={handleCheck} type="button">
-                    <span className="icon icon--theme-secondary">{newsLetter ? 'A' : '5'}</span>
+                    <span className={`icon ${newsLetter ? 'icon--theme-highlight' : 'icon--theme-secondary'}`}>
+                      {newsLetter ? 'A' : '5'}
+                    </span>
                   </button>
                   <span className="text-sm d-block mb-2 ms-1">
                     Doy mi consentimiento para la comunicación a las filiales y empresas
@@ -700,8 +701,8 @@ const CreateAccountForm = ({ preferences }) => {
                 </div>
                 <span className="text-sm d-block mb-3">
                   Al hacer clic en Crear cuenta, reconozco que he leído y aceptado
-                  las <Link href="#" passHref><a className={styles.link}> Condiciones de uso</a></Link>
-                  y la <Link href="#" passHref><a className={styles.link}> Política de Privacidada</a></Link>
+                  las <Link href="#" passHref><a className={styles.link}> Condiciones de uso </a></Link>
+                  y la <Link href="#" passHref><a className={styles.link}> Política de Privacidad</a></Link>.
                 </span>
                 {
                   errorStatus ? (
@@ -895,7 +896,7 @@ const CreateAccountForm = ({ preferences }) => {
           </div>
         )
       }
-    </div>
+    </>
   );
 };
 
