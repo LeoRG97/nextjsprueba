@@ -12,7 +12,7 @@ import { registerService } from '@/services/register';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 
 const CreateAccountForm = ({ preferences }) => {
-  const [nextStep, setNextStep] = useState(true);
+  const [nextStep, setNextStep] = useState(false);
   const [firstName, setFirstName] = useState('');
   const [errorFirstName, setErrorFirstName] = useState(
     {
