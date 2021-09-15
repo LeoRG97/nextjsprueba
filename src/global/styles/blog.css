@@ -247,6 +247,9 @@
   .content-btns {
     display: none;
   }
+  .full-content-mob {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 460px) {

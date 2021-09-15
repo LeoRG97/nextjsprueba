@@ -1501,3 +1501,18 @@ div[disabled] {
   margin-top: 45px;
 }
 
+.content-m-centered div{
+  margin: auto;
+}
+
+@media (max-width: 1400px) {
+  .mt-lg-title {
+    margin-top: 80px !important;
+  }
+}
+
+@media (max-width: 991px) {
+  .justify-content-md-center {
+    text-align: center;
+  }
+}

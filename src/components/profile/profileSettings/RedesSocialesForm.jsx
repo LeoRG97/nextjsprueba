@@ -2,10 +2,10 @@
 /* eslint-disable import/extensions */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import styles from './profileS.module.css';
 import { updateUserProfile } from '@/services/user';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { SuccessIndicatorModal } from '@/components';
+import styles from './profileS.module.css';
 
 const RedesSocialesForm = ({ data }) => {
   let linkT = '';
@@ -121,7 +121,7 @@ const RedesSocialesForm = ({ data }) => {
     e.preventDefault();
 
     if ((!validURL(twitter) && twitter !== '')
-    || (!validURL(linkedIn) && linkedIn !== '')) {
+      || (!validURL(linkedIn) && linkedIn !== '')) {
       validate(twitter, 'twitter');
       validate(linkedIn, 'linkedIn');
     } else if (twitter === '' || linkedIn === '') {
@@ -165,7 +165,7 @@ const RedesSocialesForm = ({ data }) => {
           )
         }
         <div className="row">
-          <div className="col-12">
+          <div>
             <label className="d-block subtitle mb-2" htmlFor="twitter">Twitter
               <input
                 id="twitter"
@@ -181,19 +181,21 @@ const RedesSocialesForm = ({ data }) => {
             </label>
           </div>
         </div>
-        <label className="d-block subtitle mb-2" htmlFor="linkedIn">LinkedIn
-          <input
-            id="linkedIn"
-            name="linkedIn"
-            type="text"
-            placeholder="Enlace"
-            className="input"
-            value={linkedIn}
-            onChange={(event) => setLinkedIn(event.target.value)}
-            required
-          />
-          {errorLinkedIn.status && <span className={`text-sm ${styles.error}`}>{errorLinkedIn.text}</span>}
-        </label>
+        <div>
+          <label className="d-block subtitle mb-2" htmlFor="linkedIn">LinkedIn
+            <input
+              id="linkedIn"
+              name="linkedIn"
+              type="text"
+              placeholder="Enlace"
+              className="input"
+              value={linkedIn}
+              onChange={(event) => setLinkedIn(event.target.value)}
+              required
+            />
+            {errorLinkedIn.status && <span className={`text-sm ${styles.error}`}>{errorLinkedIn.text}</span>}
+          </label>
+        </div>
         <div className="row justify-content-end">
           <div className="col-auto mt-3">
             <button className="button button--theme-primary" onClick={handleFirstForm} type="submit">

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
-import styles from './profileS.module.css';
 import { updateUserProfile } from '@/services/user';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
+import styles from './profileS.module.css';
 
 const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
   const dateBirthday = new Date(data.birthDay.replace(/-/g, '/').replace(/T.+/, ''));
@@ -384,7 +384,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           )
         }
         <div className="row">
-          <div className="col-6">
+          <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="company">Empresa*
               <input
                 id="company"
@@ -399,7 +399,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
               {errorCompany.status && <span className={`text-sm ${styles.error}`}>{errorCompany.text}</span>}
             </label>
           </div>
-          <div className="col-6">
+          <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="position">Cargo*
               <input
                 id="position"
@@ -416,7 +416,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           </div>
         </div>
         <div className="row">
-          <div className="col-6">
+          <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="country">País o región*
               <CountryDropdown
                 required
@@ -430,7 +430,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
               {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
             </label>
           </div>
-          <div className="col-6">
+          <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="state">Provincia o estado*
               <RegionDropdown
                 id="state"
