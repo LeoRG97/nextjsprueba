@@ -39,14 +39,17 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
+  .info {
+    margin-left: 1.2rem;
+  }
 }
 
 @media (max-width: 575.98px) {
   .image {
-    min-width: 4.5rem;
-    min-height: 4.5rem;
-    width: 4.5rem;
-    height: 4.5rem;
+    min-width: 3.9rem;
+    min-height: 3.9rem;
+    width: 3.9rem;
+    height: 3.9rem;
   }
 
   .infoTop {
