@@ -1,0 +1,22 @@
+.container {
+  padding-top: 8.75rem;
+  margin-left: 9%;
+  margin-right: 9%;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 991.98px) {
+  .container {
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+}

@@ -232,6 +232,12 @@ a {
   color: var(--text-color-secondary);
 }
 
+.icon-md {
+  font-family: Icons;
+  font-size: var(--icon-size-md);
+  color: var(--text-color-secondary);
+}
+
 .icon--theme-secondary {
   color: var(--text-color-secondary);
 }

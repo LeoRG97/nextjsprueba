@@ -174,7 +174,9 @@ const HomePage = ({ articulos }) => {
               relevancia, especialmente diseñados para mentes visionarias,
               como tú.
             </p>
-            <button className="button button--theme-primary">Buscar expertos</button>
+            <Link href="/experts" passHref>
+              <button className="button button--theme-primary">Buscar expertos</button>
+            </Link>
           </Col>
           <Col xl="6" lg="6" sm="12">
             <div className={styles.expert_img}>

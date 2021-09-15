@@ -9,6 +9,7 @@ module.exports = {
   },
   ApiRoutes: {
     // rutas para SWR
+    Experts: 'users/expertos',
     UserRatedArticles: 'users/likes',
     Articles: 'articulos',
     ArticlesUserPreference: 'articulos/preferencias/usuario',

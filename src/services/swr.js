@@ -1,13 +1,15 @@
 import axios from './axios';
 
+// para consultar una lista completa o paginada de datos
 export const fetchData = async (...args) => {
   const res = await axios().get(args[0]);
-  return res.data ? res.data : res;
+  return res;
 };
 
-export const fetchDataWithId = async (...args) => {
+// para recuperar un objeto específico mediante su ID
+export const fetchItemById = async (...args) => {
   const res = await axios().get(`${args[0]}/${args[1]}`);
-  return res.data;
+  return res;
 };
 
 export const fetchPaginatedDataWithAuthToken = async (route, query, pageNum) => {
