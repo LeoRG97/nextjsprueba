@@ -2,9 +2,9 @@ import React from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
+import { LoadingIndicator } from '@/components';
 import styles from './expertsList.module.css';
 import UserCard from '../userCard/UserCard';
-import { LoadingIndicator } from '@/components';
 
 const ExpertsList = ({ initialData }) => {
   const getKey = (pageIndex, previousPageData) => {
@@ -42,7 +42,7 @@ const ExpertsList = ({ initialData }) => {
                 className="button button--theme-secondary"
                 onClick={() => setSize(size + 1)}
               >
-                Ver más publicaciones
+                Ver más resultados
               </button>
             )}
         </>
