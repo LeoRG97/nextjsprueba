@@ -17,7 +17,7 @@ const WorldComponent = () => {
           src="https://d3js.org/d3.v7.min.js"
           strategy="lazyOnload"
         /> */}
-        <img className="img img-fluid" src="/images/home/Mapa.png" alt="impactgo geográfico" />
+        <img className="img img-fluid" src="/images/home/Mapa.gif" alt="impactgo geográfico" />
       </>
     </div>
   );
