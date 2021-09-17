@@ -218,10 +218,10 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
           </button>
           <div>
             <button className="button button--theme-success me-3" onClick={handleDraft}>
-              <span className="button__icon text--theme-light">I</span>{' '}Guardar borrador
+              <span className="button__icon-left text--theme-light">I</span>{' '}Guardar borrador
             </button>
             <button className="button button--theme-primary" onClick={handleSubmit}>
-              <span className="button__icon text--theme-light">H</span>{' '}Publicar
+              <span className="button__icon-left text--theme-light">H</span>{' '}Publicar
             </button>
           </div>
         </Modal.Footer>
