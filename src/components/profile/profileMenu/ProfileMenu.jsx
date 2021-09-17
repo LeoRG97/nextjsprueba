@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { adminAccess, authorAccess } from '@/helpers/accessVerifiers';
 import styles from './profileMenu.module.css';
 
-const TabMenu = () => {
+const TabMenu = ({ artsNumb }) => {
   const { query } = useRouter();
   const [session] = useSession();
 
@@ -76,7 +76,7 @@ const TabMenu = () => {
         <a
           className={`subtitle ${styles.item} ${query.setting === 'library' && styles.active}`}
         >
-          Biblioteca<span className="ms-2">0</span>
+          Biblioteca<span className="ms-2">{(artsNumb) || (<></>)}</span>
         </a>
       </Link>
       <Link href="/profile/ratings" passHref scroll={false}>

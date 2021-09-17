@@ -229,6 +229,15 @@
   text-align: right;
 }
 
+.content-centered {
+  text-align: center;
+  justify-content: center;
+}
+
+.content-centered.childs div {
+  margin: auto;
+}
+
 .icon-btn {
   position: absolute;
   font-family: Icons;

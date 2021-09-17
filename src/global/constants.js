@@ -11,6 +11,7 @@ module.exports = {
     // rutas para SWR
     Experts: 'users/expertos',
     UserRatedArticles: 'users/likes',
+    UserSavedArticles: '/guardados',
     Articles: 'articulos',
     ArticlesUserPreference: 'articulos/preferencias/usuario',
   },

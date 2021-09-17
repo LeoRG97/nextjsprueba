@@ -22,6 +22,7 @@ export { default as SelectImg } from './userInvitation/selectImg';
 export { default as FormGeneral } from './profile/profileSettings/FormGeneral';
 export { default as ProfileNavComponent } from './profile/profileNav/ProfileNav';
 export { default as ProfileArticles } from './profile/profileArticles/ProfileArticles';
+export { default as ProfileSavedArts } from './profile/profileMySavedArts/profileSavedArts';
 export { default as RatedArticles } from './profile/ratedArticles/RatedArticles';
 export { default as ArticlesListComponent } from './articlesList/articlesListComponent/articlesList';
 export { default as ArticlesDetailComponent } from './articlesList/articlesListComponent/articleDetall';
