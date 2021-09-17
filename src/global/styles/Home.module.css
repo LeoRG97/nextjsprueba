@@ -29,7 +29,7 @@
   content: "";
   background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 95%);
   position: absolute;
-  max-height: 765px;
+  height: 100%;
   top: 0px;
   right: 0px;
   bottom: 0px;

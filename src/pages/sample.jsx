@@ -72,7 +72,11 @@ export default function Home() {
         </button>
 
         <button className="button button--theme-primary me-2">
-          <span className="button__icon text--theme-light">I</span>{' '}With icon
+          <span className="button__icon-left text--theme-light">I</span>{' '}Left icon
+        </button>
+
+        <button className="button button--theme-primary me-2">
+          Right icon{' '}<span className="button__icon-right text--theme-light">I</span>
         </button>
 
         <hr className="bg-light" />
@@ -159,7 +163,7 @@ export default function Home() {
         <div className="col-12 col-md-6">
           {data && (
             <CategorySelector
-              data={data}
+              data={data.data}
               placeholder="Selecciona las categorías"
               addCategory={() => {}}
               deleteCategory={() => {}}
