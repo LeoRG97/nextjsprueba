@@ -26,3 +26,10 @@
   overflow: hidden;
   position: relative;
 }
+
+@media (max-width: 575.98px) {
+  .imgFrame {
+    width: 6rem;
+    height: 6rem;
+  }
+}

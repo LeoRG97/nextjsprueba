@@ -1,15 +1,12 @@
-import { useState, useEffect, Fragment } from 'react';
-import { useSession } from 'next-auth/client';
+import { Fragment } from 'react';
 import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
-import { getProfile } from '@/services/profile';
+import { useSelector } from 'react-redux';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import styles from './aboutme.module.css';
 
 const AboutMeComponent = () => {
-  const [session] = useSession();
-  const [userData, setUserData] = useState();
-  const [loading, setLoading] = useState(true);
+  const { data: userData, fetched } = useSelector((state) => state.profile);
 
   const renderElement = (socialType) => {
     switch (socialType.nombre) {
@@ -18,17 +15,7 @@ const AboutMeComponent = () => {
           <Link href={socialType.link} passHref>
             <a>
               <li className="text-sm icon">
-                M
-              </li>
-            </a>
-          </Link>
-        );
-      case 'facebook':
-        return (
-          <Link href={socialType.link} passHref>
-            <a>
-              <li className="text-sm icon">
-                M
+                X
               </li>
             </a>
           </Link>
@@ -57,40 +44,11 @@ const AboutMeComponent = () => {
     return result;
   };
 
-  useEffect(() => {
-    let userInfo = {
-      position: '',
-      enterprise: '',
-      socialMedia: [],
-      biography: '',
-      preferences: [],
-    };
-    if (session !== undefined) {
-      if (session.user) {
-        if (session.user.id) {
-          getProfile(session.user.id).then((resp) => {
-            userInfo = {
-              position: resp.position,
-              enterprise: resp.company,
-              socialMedia: resp.socialMedia,
-              biography: resp.biography,
-              preferences: resp.preferences,
-            };
-            setUserData(userInfo);
-            setLoading(false);
-          });
-        }
-      }
-    } else {
-      setUserData(userInfo);
-    }
-  }, [session]);
-
   return (
     <Container className="content-n-p">
       <Row>
         {
-          (loading) ? (
+          (!fetched) ? (
             <Col>
               <div className={styles.content_loading}>
                 <LoadingIndicator />
@@ -98,11 +56,11 @@ const AboutMeComponent = () => {
             </Col>
           ) : (
             <>
-              <Col xl="4" lg="4" sm="4" className="col-12">
+              <Col xl="4" lg="4" sm="4">
                 <p className="title">Profesional</p>
-                <p className="text-md">{userData.position}</p>
-                <p className="text-sm">{userData.enterprise}</p>
-                <p className="title">Social</p>
+                <span className="text-md d-block">{userData.position}</span>
+                <small className="text-sm">{userData.company}</small>
+                <p className="title mt-4 mb-0">Social</p>
                 <ul className={`${styles.content_ul} ${styles.social}`}>
                   {
                     userData.socialMedia.map((item) => (
@@ -113,15 +71,15 @@ const AboutMeComponent = () => {
                   }
                 </ul>
               </Col>
-              <Col xl="8" lg="8" sm="8" className="col-12">
+              <Col xl="8" lg="8" sm="8">
                 <p className="title">Biografía</p>
                 <p className="text-md">{userData.biography}</p>
-                <p className="title">Intereses</p>
+                <p className="title mt-4">Intereses</p>
                 <ul className={styles.content_ul}>
                   {
                     userData.preferences.map((item) => (
                       <Fragment key={generateKey()}>
-                        <li className="text-sm">{item.nombre}</li>
+                        <li className="text-sm text--theme-light">{item.nombre}</li>
                       </Fragment>
                     ))
                   }

@@ -16,9 +16,11 @@
   padding: 5px 8px;
   background-color: var(--colorItemBg);
   margin-right: 10px;
+  border-radius: 3px;
 }
 
-.content_ul.social li, .content_ul.social a {
+.content_ul.social li,
+.content_ul.social a {
   background-color: var(--contentTransparentRGB);
   font-size: 110%;
 }
@@ -27,7 +29,7 @@
   max-width: 20px;
 }
 
-@media(max-width: 991px) {
+@media (max-width: 991px) {
   .content_ul {
     display: inline-block;
   }
