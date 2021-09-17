@@ -2,7 +2,7 @@
 import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { adminAccess, authorAccess } from '@/helpers/accessVerifiers';
 import styles from './profileMenu.module.css';
 
@@ -12,8 +12,39 @@ const TabMenu = () => {
 
   const { user } = session;
 
+  useEffect(() => {
+    const slider = document.querySelector('#profileNavbar');
+    const dragScroll = () => {
+      let isDown = false;
+      let startX;
+      let scrollLeft;
+      slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+      });
+      slider.addEventListener('mouseleave', () => {
+        isDown = false;
+      });
+      slider.addEventListener('mouseup', () => {
+        isDown = false;
+      });
+      slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 2;
+        slider.scrollLeft = scrollLeft - walk;
+      });
+    };
+    if (query.setting === 'about-me') {
+      slider.scrollLeft = slider.scrollWidth;
+    }
+    dragScroll();
+  });
+
   return (
-    <div className={styles.tabBar}>
+    <div className={styles.tabBar} id="profileNavbar">
       {authorAccess(user.role) && (
         <div className={styles.authorSection}>
           <Link href="/profile/articles" passHref scroll={false}>

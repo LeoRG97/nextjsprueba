@@ -5,6 +5,7 @@
   padding-left: 0;
   margin-bottom: 3rem;
   height: max-content;
+  position: relative;
 }
 
 .authorSection {
@@ -19,6 +20,7 @@
   text-decoration: none;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
+  -webkit-user-drag: none;
 }
 
 .item:nth-child(1) {
@@ -32,4 +34,36 @@
 
 .item.active {
   color: var(--colorLight);
+}
+
+.gradientLeft {
+  position: absolute;
+  left: 0;
+  background-color: red;
+  width: 20px;
+  height: 100%;
+}
+
+@media screen and (max-width: 1199.98px) {
+  .tabBar {
+    white-space: nowrap;
+    overflow-x: scroll;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: 3rem;
+    align-items: center;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    cursor: grab;
+  }
+
+  .tabBar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .authorSection {
+    border-right: none;
+    margin-right: 0;
+    padding-right: 0;
+  }
 }
