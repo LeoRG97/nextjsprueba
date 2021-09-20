@@ -7,7 +7,14 @@ import { useSession } from 'next-auth/client';
 import {
   Footer, Layout, BlogComponent, CarouselPrefArt,
 } from '@/components';
-import { getArticleBySlug, fetchArticleContent, rateArticle } from '@/services/articles';
+import {
+  getArticleBySlug,
+  fetchArticleContent,
+  rateArticle,
+  postSaveThisArt,
+  searchMySaveArt,
+  deleteSaveThisArt,
+} from '@/services/articles';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 
@@ -21,6 +28,8 @@ const ArticlePage = () => {
   const [notFind, setFind] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isOnView, setWatch] = useState(false);
+  const [cssSaved, setSaved] = useState('');
+  const [idSaved, setIdSaved] = useState('');
 
   const handleRateArticle = async () => {
     if (session) {
@@ -56,6 +65,22 @@ const ArticlePage = () => {
     });
   };
 
+  const checkIfSavedThisArt = async (idArt) => {
+    if (session) {
+      const params = {
+        articulo_id: idArt,
+        usuario_id: session.user.id,
+      };
+      const res = await searchMySaveArt(params, session.accessToken);
+      if (res.ok) {
+        setSaved('Btn-rounded__active');
+        setIdSaved(res.data[0]._id);
+      } else {
+        setSaved('');
+      }
+    }
+  };
+
   const getBlog = () => {
     getArticleBySlug(query.slug).then((resp) => {
       if (resp) {
@@ -65,6 +90,7 @@ const ArticlePage = () => {
             if (response.html) {
               setData(resp);
               setCode(response.html);
+              checkIfSavedThisArt(resp._id);
             } else {
               setCode({ id: 'no-info', tag: '<h3>Información no encontrada</h3>' });
             }
@@ -95,12 +121,38 @@ const ArticlePage = () => {
     }
   };
 
+  const saveThisArt = async () => {
+    if (session) {
+      const params = {
+        articulo_id: blog._id,
+        usuario_id: session.user.id,
+      };
+      const res = await postSaveThisArt(params, session.accessToken);
+      if (res.ok) {
+        setSaved('Btn-rounded__active');
+        setIdSaved(res.data._id);
+      }
+    }
+  };
+
+  const quitSaveThisArt = async () => {
+    if (session) {
+      const res = await deleteSaveThisArt(idSaved, session.accessToken);
+      if (res.ok) {
+        setSaved('');
+      }
+    }
+  };
+
   useEffect(() => {
     window.addEventListener('scroll', checkscroll);
     if (query.slug) {
       getBlog();
     }
-  }, [query]);
+    if (blog._id) {
+      checkIfSavedThisArt(blog._id);
+    }
+  }, [query, session]);
 
   return (
     <Layout>
@@ -147,6 +199,9 @@ const ArticlePage = () => {
                           htmlCode={htmlCode}
                           autorInfo={autor}
                           onLike={handleRateArticle}
+                          cssSaved={cssSaved}
+                          quitSaved={quitSaveThisArt}
+                          saveArt={saveThisArt}
                         />
                       </Col>
                       <Col xl="3" lg="3" sm="2" className="col-1">
@@ -160,7 +215,13 @@ const ArticlePage = () => {
                                 >
                                   c
                                 </button>
-                                <button className="Btn-rounded">U</button>
+                                {
+                                  (cssSaved !== '') ? (
+                                    <button className={`Btn-rounded ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
+                                  ) : (
+                                    <button className="Btn-rounded" title="Guardar" onClick={saveThisArt}>U</button>
+                                  )
+                                }
                                 <button className="Btn-rounded">T</button>
                               </div>
                             ) : (<></>)

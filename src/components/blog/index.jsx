@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { AutorComponent } from '@/components';
 
 const BlogComponent = ({
-  blogInfo, htmlCode, autorInfo, onLike,
+  blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt,
 }) => {
   const renderCode = (item) => {
     if (item.type === 'linkVideo') {
@@ -34,6 +34,9 @@ const BlogComponent = ({
             onLike={onLike}
             liked={blogInfo.liked}
             likes={blogInfo.likes}
+            cssSaved={cssSaved}
+            quitSaved={quitSaved}
+            saveArt={saveArt}
           />
           <div className="article-content">
             {
@@ -59,6 +62,9 @@ const BlogComponent = ({
             onLike={onLike}
             liked={blogInfo.liked}
             likes={blogInfo.likes}
+            cssSaved={cssSaved}
+            quitSaved={quitSaved}
+            saveArt={saveArt}
           />
         </div>
       </Container>
@@ -71,12 +77,16 @@ BlogComponent.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   htmlCode: PropTypes.array,
   autorInfo: PropTypes.shape(),
+  cssSaved: PropTypes.string,
+  quitSaved: PropTypes.func.isRequired,
+  saveArt: PropTypes.func.isRequired,
 };
 
 BlogComponent.defaultProps = {
   blogInfo: {},
   htmlCode: {},
   autorInfo: {},
+  cssSaved: '',
 };
 
 export default BlogComponent;
