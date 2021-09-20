@@ -257,3 +257,56 @@ export const getArtForHomeSSR = async () => {
     return err;
   }
 };
+
+export const postSaveThisArt = async (params, token) => {
+  try {
+    const res = await axios().post('guardados', params, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deleteSaveThisArt = async (idArt, token) => {
+  try {
+    const res = await axios().delete(`guardados/${idArt}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getMySaveArts = async (params, token) => {
+  try {
+    const res = await axios().post('guardados', params, {
+      headers: {
+        Authorization: token,
+        'Content-Type': 'application/json',
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const searchMySaveArt = async (params, token) => {
+  try {
+    const res = await axios().put('guardados', params, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
