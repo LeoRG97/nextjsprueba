@@ -127,3 +127,72 @@
     height: 100%;
   }
 }
+
+.trendingContentAdminOptions {
+  display: none;
+}
+
+.trendingLabelAdmin {
+  background-color: var(--colorArticleLabel);
+  z-index: 25;
+  padding: 12px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  border: 1px solid var(--colorBackgroundDarkSec);
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.adminOptionsOverArticle {
+  left: unset;
+  right: 10px;
+  width: 30px;
+  background-color: var(--colorBackgroundDarkSec);
+  opacity: 1;
+}
+
+.adminOptionsMenu {
+  background-color: var(--colorBackgroundDarkSec);
+  left: unset;
+  right: 10px;
+}
+
+.updateOption:hover {
+  background-color: var(--colorItemBgRGB);
+  border-radius: 5px;
+  color: var(--colorLight) !important;
+  transition: 0.5s;
+  cursor: pointer;
+  width: auto;
+}
+
+.updateOption:hover span {
+  color: var(--colorLight) !important;
+}
+
+.deleteOption:hover {
+  background-color: var(--colorItemBgRGB);
+  border-radius: 5px;
+  color: var(--colorLight) !important;
+  transition: 0.5s;
+  cursor: pointer;
+  width: auto;
+}
+
+.deleteOption:hover span {
+  color: var(--colorLight) !important;
+}
+
+.cardContainer:hover .trendingContentAdminOptions {
+  display: table-row;
+  width: 110px;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 10px;
+  right: -15%;
+  z-index: 25 !important;
+}

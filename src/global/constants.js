@@ -14,5 +14,6 @@ module.exports = {
     UserSavedArticles: '/guardados',
     Articles: 'articulos',
     ArticlesUserPreference: 'articulos/preferencias/usuario',
+    ArticlesUserAuthor: 'articulos/autor',
   },
 };
