@@ -251,6 +251,12 @@ a {
   color: var(--colorSuccess);
 }
 
+.icon-modal--error {
+  font-size: var(--icon-size-md);
+  color: var(--colorError);
+}
+
+
 .icon-button {
   border: 1px solid var(--colorItemBorder);
   color: var(--text-color-sgrey);
@@ -1508,9 +1514,24 @@ div[disabled] {
   margin-top: 45px;
 }
 
+/**** table ******/
+.react-bs-table-no-data {
+  color: var(--colorLightGray)
+}
+
 .content-m-centered div{
   margin: auto;
 }
+
+
+.wRol {
+  width: 30% !important;
+}
+
+.wEmail {
+  width: 50% !important;
+}
+
 
 @media (max-width: 1400px) {
   .mt-lg-title {
@@ -1521,6 +1542,16 @@ div[disabled] {
 @media (max-width: 991px) {
   .justify-content-md-center {
     text-align: center;
+  }
+}
+
+@media (max-width: 450px) {
+  .wRol {
+    width: auto !important;
+  }
+
+  .wEmail {
+    width: auto !important;
   }
 }
 

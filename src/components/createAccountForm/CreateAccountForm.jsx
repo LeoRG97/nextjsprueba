@@ -1,5 +1,5 @@
 /* eslint-disable import/extensions */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import Script from 'next/script';
@@ -112,7 +112,23 @@ const CreateAccountForm = ({ preferences }) => {
   const [status, setStatus] = useState('idle');
   /* const [submited, setSubmited] = useState('idle'); */
 
+  const [dataInvite, setDataInvite] = useState({
+    email: '',
+    idInvitation: '',
+    role: '',
+    invitation: false,
+  });
+
   const router = useRouter();
+
+  useEffect(() => {
+    const dataInvitation = localStorage.getItem('dataInvitation');
+    if (dataInvitation !== null) {
+      const elementsInvitation = JSON.parse(dataInvitation);
+      setDataInvite({ ...elementsInvitation });
+      setEmail(elementsInvitation.email);
+    }
+  }, []);
 
   const validate = (value, type) => {
     // setSubmited(false);
@@ -345,14 +361,6 @@ const CreateAccountForm = ({ preferences }) => {
     }
   };
 
-  const handleChangeName = (value, type) => {
-    if (type === 'firstName') {
-      setFirstName(value);
-    } else if (type === 'lastName') {
-      setLastName(value);
-    }
-  };
-
   const handleCheck = () => {
     setNewsletterState(!newsLetter);
   };
@@ -424,7 +432,8 @@ const CreateAccountForm = ({ preferences }) => {
     const model = {
       email,
       password,
-      name: `${firstName} ${lastName}`,
+      name: firstName,
+      apellidos: lastName,
       position,
       company,
       tel,
@@ -434,6 +443,7 @@ const CreateAccountForm = ({ preferences }) => {
       newsLetter,
       birthDay,
       preferences: values,
+      role: dataInvite ? dataInvite.role : '',
     };
 
     if (values.length < 3) {
@@ -456,7 +466,12 @@ const CreateAccountForm = ({ preferences }) => {
           setError('Dirección de correo electrónico y/o contraseña incorrectos.');
         }
         if (resSignIn.url) {
-          router.push('/trending-topics?user=true');
+          if (dataInvite.invitation && (dataInvite.email === model.email)) {
+            router.push('/validate-invitation');
+          } else {
+            //
+            router.push('/trending-topics?user=true');
+          }
         }
       } else {
         setStatus('error');
@@ -495,7 +510,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Nombre"
                         className="input"
                         value={firstName}
-                        onChange={(event) => handleChangeName(event.target.value, 'firstName')}
+                        onChange={(event) => setFirstName(event.target.value)}
                         required
                       />
                       {errorFirstName.status && <span className={`text-sm ${styles.error}`}>{errorFirstName.text}</span>}
@@ -510,7 +525,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Apellidos"
                         className="input"
                         value={lastName}
-                        onChange={(event) => handleChangeName(event.target.value, 'lastName')}
+                        onChange={(event) => setLastName(event.target.value)}
                         required
                       />
                       {errorLastName.status && <span className={`text-sm ${styles.error}`}>{errorLastName.text}</span>}
