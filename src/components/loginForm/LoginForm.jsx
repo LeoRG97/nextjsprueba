@@ -7,6 +7,12 @@ import { loginValidation } from './loginFormValidation';
 
 const LoginForm = () => {
   const router = useRouter();
+  const [dataInvite, setDataInvite] = useState({
+    email: '',
+    idInvitation: '',
+    role: '',
+    invitation: false,
+  });
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -48,15 +54,27 @@ const LoginForm = () => {
         password: formData.password,
         redirect: false,
       });
-
       if (res?.error) {
         setSubmitError('Dirección de correo electrónico y/o contraseña incorrectos.');
       }
       if (res.url) {
-        router.push('/trending-topics?user=true');
+        if (dataInvite.invitation && (dataInvite.email === formData.email)) {
+          router.push('/validate-invitation');
+        } else {
+          router.push('/trending-topics?user=true');
+        }
       }
     }
   };
+
+  useEffect(() => {
+    const dataInvitation = localStorage.getItem('dataInvitation');
+    if (dataInvitation !== null) {
+      const elementsInvitation = JSON.parse(dataInvitation);
+      setFormData({ ...formData, email: elementsInvitation.email });
+      setDataInvite({ ...elementsInvitation });
+    }
+  }, []);
 
   return (
     <div className={styles.container}>

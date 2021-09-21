@@ -11,6 +11,7 @@ import FormGeneral from '@/components/profile/profileSettings/FormGeneral';
 import DataAndPreferencesForm from '@/components/profile/profileSettings/DataAndPreferencesForm';
 import RedesSocialesForm from '@/components/profile/profileSettings/RedesSocialesForm';
 import { getPreferencesService } from '@/services/preferences';
+import withAuth from '@/helpers/withAuth';
 
 const EditProfile = ({ preferences }) => {
   const dispatch = useDispatch();
@@ -102,4 +103,4 @@ export async function getServerSideProps() {
   };
 }
 
-export default EditProfile;
+export default withAuth(EditProfile);

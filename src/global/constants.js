@@ -6,6 +6,7 @@ module.exports = {
     Author: 'user-author',
     Reviewer: 'user-reviewer',
     Admin: 'admin',
+    Premium: 'user-premium',
   },
   ApiRoutes: {
     // rutas para SWR
@@ -14,6 +15,7 @@ module.exports = {
     UserSavedArticles: '/guardados',
     Articles: 'articulos',
     ArticlesUserPreference: 'articulos/preferencias/usuario',
+    Invitation: 'invitaciones',
     ArticlesUserAuthor: 'articulos/autor',
   },
 };

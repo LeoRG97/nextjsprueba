@@ -39,3 +39,8 @@ export const fetchPaginatedData = async (route, query, pageNum) => {
   });
   return res.data;
 };
+
+export const fetchInvitationsData = async (...args) => {
+  const res = await axios().get(args[0]);
+  return res;
+};

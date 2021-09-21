@@ -33,5 +33,6 @@ export { default as BlogComponent } from './blog';
 export { default as AutorComponent } from './blog/autorInfo';
 export { default as CarouselPrefArt } from './blog/carouselPrefArt';
 export { default as SuccessIndicatorModal } from './modalsIndicators/SuccesModal';
+export { default as DeleteModal } from './modalsIndicators/DeleteModal';
 export { default as MainPosts } from './trending/mainPosts/mainPosts';
 export { default as UserPreferencesPosts } from './trending/userPreferencesPosts/UserPreferencesPosts';

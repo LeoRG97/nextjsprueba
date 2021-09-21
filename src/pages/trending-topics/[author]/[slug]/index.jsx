@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -17,6 +18,7 @@ import {
 } from '@/services/articles';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
+import { BUCKET_URL, BASE_URL } from '@/global/constants';
 
 // página para ver un artículo en específico
 const ArticlePage = () => {
@@ -31,6 +33,7 @@ const ArticlePage = () => {
   const [cssSaved, setSaved] = useState('');
   const [idSaved, setIdSaved] = useState('');
 
+  const currentUrl = `${BASE_URL}trending-topics/${query.author}/${query.slug}`;
   const handleRateArticle = async () => {
     if (session) {
       const res = await rateArticle(blog._id, session.user.id);
@@ -160,6 +163,16 @@ const ArticlePage = () => {
         <title>Blog</title>
         <meta name="description" content="NTTDATA" />
         <link rel="icon" href="/favicon.ico" />
+        <title>{blog && blog.portada ? blog.portada.titulo : ''}</title>
+        <meta name="twitter:card" content="summary" />
+        <meta property="og:url" content={currentUrl} />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={blog && blog.portada ? blog.portada.titulo : ''} />
+        <meta property="og:image" content={blog && blog.portada ? (`${BUCKET_URL}${blog.portada.ruta_imagen}`) : ''} />
+        <meta
+          property="og:description"
+          content={blog && blog.portada ? blog.portada.descripcion : ''}
+        />
       </Head>
       <main>
         <Container fluid className="blog-content">

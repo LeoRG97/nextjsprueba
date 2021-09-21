@@ -18,3 +18,16 @@
   top: 13%;
   left: 1px;
 }
+
+.container_icon_error {
+  width: 3rem;
+  height: 3rem;
+  background-color: var(--orange-20);
+  border-radius: 50%;
+}
+
+.container_icon_error > span {
+  position: relative;
+  top: 13%;
+  left: 1px;
+}
