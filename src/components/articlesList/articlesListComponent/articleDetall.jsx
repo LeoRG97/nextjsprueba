@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
-// import Link from 'next/link';
 import { useRouter } from 'next/router';
-import styles from './articlesList.module.css';
 import { BUCKET_URL } from '@/global/constants';
+import styles from './articlesList.module.css';
+// import Link from 'next/link';
 import { ArticleOptionsAdmin } from './articleOptionsAdmin';
 
 const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => {

@@ -231,7 +231,22 @@ export const updateArticle = async (article, details, userId, initialData) => {
   }
 };
 
-export const getArticleBySlug = async (slug) => {
+export const getArticleBySlug = async (slug, token) => {
+  if (token) {
+    try {
+      const res = await axios().get(`articulos/slug/${slug}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
+      if (res[0]) {
+        return res[0];
+      }
+      return undefined;
+    } catch (error) {
+      return error;
+    }
+  }
   try {
     const res = await axios().get(`articulos/slug/${slug}`);
     if (res[0]) {
@@ -309,6 +324,19 @@ export const getMySaveArts = async (params, token) => {
 export const searchMySaveArt = async (params, token) => {
   try {
     const res = await axios().put('guardados', params, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const checkIfLikedThisArt = async (idArt, token) => {
+  try {
+    const res = await axios().get(`articulos/likes/${idArt}`, {
       headers: {
         Authorization: token,
       },

@@ -15,13 +15,14 @@ import {
   postSaveThisArt,
   searchMySaveArt,
   deleteSaveThisArt,
+  checkIfLikedThisArt,
 } from '@/services/articles';
+import { BUCKET_URL, BASE_URL } from '@/global/constants';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
-import { BUCKET_URL, BASE_URL } from '@/global/constants';
 
 // página para ver un artículo en específico
-const ArticlePage = () => {
+const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const { query } = useRouter();
   const [session] = useSession();
   const [blog, setData] = useState({});
@@ -32,6 +33,7 @@ const ArticlePage = () => {
   const [isOnView, setWatch] = useState(false);
   const [cssSaved, setSaved] = useState('');
   const [idSaved, setIdSaved] = useState('');
+  const [isLiked, setLiked] = useState(false);
 
   const currentUrl = `${BASE_URL}trending-topics/${query.author}/${query.slug}`;
   const handleRateArticle = async () => {
@@ -43,29 +45,30 @@ const ArticlePage = () => {
     }
   };
 
-  const getPerfilAutor = (slug) => {
+  const getPerfilAutor = () => {
     const dataAutor = {
       picture: '/images/profile/no-profile-img.png',
       autorLink: '#',
       autor: '...',
+      _id: '...',
     };
-    getProfileBySlug(slug).then((resp) => {
-      if (resp.name) {
-        if (resp.apellidos) {
-          dataAutor.autor = `${resp.name} ${resp.apellidos}`;
+    if (authorInfo) {
+      if (authorInfo.name) {
+        if (authorInfo.apellidos) {
+          dataAutor.autor = `${authorInfo.name} ${authorInfo.apellidos}`;
         } else {
-          dataAutor.autor = `${resp.name}`;
+          dataAutor.autor = `${authorInfo.name}`;
         }
       }
-      if (resp.picture) {
-        dataAutor.picture = resp.picture;
+      if (authorInfo.picture) {
+        dataAutor.picture = authorInfo.picture;
       }
-      if (resp.slug) {
-        dataAutor.autorLink = `#/${resp.slug}`;
+      if (authorInfo.slug) {
+        dataAutor.autorLink = `#/${authorInfo.slug}`;
       }
-      dataAutor._id = resp._id;
-      setAutor(dataAutor);
-    });
+      dataAutor._id = authorInfo._id;
+    }
+    setAutor(dataAutor);
   };
 
   const checkIfSavedThisArt = async (idArt) => {
@@ -74,6 +77,10 @@ const ArticlePage = () => {
         articulo_id: idArt,
         usuario_id: session.user.id,
       };
+      window.setTimeout(() => {
+        setSaved('');
+      }, 100);
+
       const res = await searchMySaveArt(params, session.accessToken);
       if (res.ok) {
         setSaved('Btn-rounded__active');
@@ -84,30 +91,38 @@ const ArticlePage = () => {
     }
   };
 
-  const getBlog = () => {
-    getArticleBySlug(query.slug).then((resp) => {
-      if (resp) {
-        if (!resp.code) {
-          getPerfilAutor(query.author);
-          fetchArticleContent(resp._id).then((response) => {
-            if (response.html) {
-              setData(resp);
-              setCode(response.html);
-              checkIfSavedThisArt(resp._id);
-            } else {
-              setCode({ id: 'no-info', tag: '<h3>Información no encontrada</h3>' });
-            }
-            setLoading(false);
-          });
+  const checkIfLikedThisArtFunc = async () => {
+    if (session) {
+      const liked = await checkIfLikedThisArt(blog._id, session.accessToken);
+      if (liked.ok) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
+    }
+  };
+
+  const getBlog = async () => {
+    if (artInfo) {
+      if (!artInfo.code) {
+        getPerfilAutor();
+        if (artCode.html) {
+          const blogLike = artInfo;
+          setData(blogLike);
+          setCode(artCode.html);
+          checkIfSavedThisArt(artInfo._id);
         } else {
-          setFind(true);
-          setLoading(false);
+          setCode({ id: 'no-info', tag: '<h3>Información no encontrada</h3>' });
         }
+        setLoading(false);
       } else {
         setFind(true);
         setLoading(false);
       }
-    });
+    } else {
+      setFind(true);
+      setLoading(false);
+    }
   };
 
   const checkscroll = () => {
@@ -152,10 +167,16 @@ const ArticlePage = () => {
     if (query.slug) {
       getBlog();
     }
-    if (blog._id) {
-      checkIfSavedThisArt(blog._id);
+    return () => {
+      window.removeEventListener('scroll', checkscroll);
+    };
+  }, [query]);
+
+  useEffect(() => {
+    if (session && blog) {
+      checkIfLikedThisArtFunc();
     }
-  }, [query, session]);
+  }, [session, blog]);
 
   return (
     <Layout>
@@ -212,6 +233,7 @@ const ArticlePage = () => {
                           htmlCode={htmlCode}
                           autorInfo={autor}
                           onLike={handleRateArticle}
+                          isLiked={isLiked}
                           cssSaved={cssSaved}
                           quitSaved={quitSaveThisArt}
                           saveArt={saveThisArt}
@@ -223,8 +245,8 @@ const ArticlePage = () => {
                             (!isOnView) ? (
                               <div className="content-btns">
                                 <button
-                                  onClick={() => !blog.liked && handleRateArticle()}
-                                  className={`Btn-rounded ${blog.liked && 'Btn-rounded__active'}`}
+                                  onClick={() => !isLiked && handleRateArticle()}
+                                  className={`Btn-rounded ${isLiked && 'Btn-rounded__active'}`}
                                 >
                                   c
                                 </button>
@@ -267,7 +289,34 @@ const ArticlePage = () => {
 };
 
 // getStaticPaths
+export async function getStaticPaths() {
+  return {
+    paths: [],
+    fallback: 'blocking',
+  };
+}
 
 // getStaticProps & revalidate
+export async function getStaticProps({ params }) {
+  const authorInfo = await getProfileBySlug(params.author);
+  const artInfo = await getArticleBySlug(params.slug);
+
+  if (artInfo) {
+    const artCode = await fetchArticleContent(artInfo._id);
+    if (artCode) {
+      return {
+        props: {
+          artInfo,
+          authorInfo: authorInfo || null,
+          artCode: artCode || null,
+        },
+      };
+    }
+  }
+
+  return {
+    props: {},
+  };
+}
 
 export default ArticlePage;
