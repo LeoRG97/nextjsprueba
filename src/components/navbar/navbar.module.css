@@ -11,7 +11,19 @@
   top: 0 !important;
 }
 
+.navC:hover .navbarMobile {
+  top: 0 !important;
+}
+
 .navbar {
+  display: flex !important;
+  padding-left: 60px;
+  padding-right: 60px;
+  background-color: #0d0c22 !important;
+}
+
+.navbarMobile {
+  display: none !important;
   padding-left: 60px;
   padding-right: 60px;
   background-color: #0d0c22 !important;
@@ -37,7 +49,7 @@
 }
 
 .divNavItemStyle:first-child {
-  justify-content: left;
+  justify-content: center;
 }
 
 .divNavItemStyle:last-child {
@@ -78,18 +90,74 @@
 
 .navDropDownImage > div > img {
   border-radius: 100%;
+  padding-right: 0 !important;
+}
+
+.navDropDownImage {
+  padding-right: 0 !important;
+  padding-left: 1rem !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.navMobileContentStyle {
+  display: inline !important;
+}
+
+.buttonRegisterContent {
+  width: 8rem;
+}
+
+.iconToggleExpanded:active {
+  transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
 }
 
 
-@media (max-width: 990px) {
-  .divNavItemStyle {
-    width: 70%;
-    display: grid;
-  }
+.iconToggle:active {
+  transform: rotate(360deg);
+	-webkit-transform: rotate(360deg);
+	-o-transform: rotate(360deg);
+	-moz-transform: rotate(360deg);
+}
 
-  .divNavItemStyle:last-child {
-    justify-content: left;
-    text-align: center;
+.iconToggle > span{
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg>") !important;
+  margin-right: 0.5rem !important;
+}
+
+.iconToggleExpanded > span {
+  display: none;
+}
+
+.iconToggleExpanded::after{
+  font-family: Icons !important;
+  font-size: var(--icon-size-sm) !important;
+  content: "O";
+  color: var(--colorSecondary);
+  background-image: none !important;
+  margin-right: 0.5rem;
+}
+
+.expandenMenuMobile {
+  height: 93.5vh;
+}
+
+.containerFluid {
+  flex-wrap: initial !important;
+}
+
+@media (max-width: 1350px) {
+  .navDropDownImage {
+    padding-left: 0.2rem !important;
+  }
+}
+
+@media (max-width: 1300px) {
+  .navDropDownImage {
+    width: 8rem !important;
   }
 }
 
@@ -98,4 +166,82 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+
+  .navbarMobile {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .navDropDownImage {
+    width: 10rem !important;
+  }
+}
+
+@media (max-width: 1100px) {
+  .navDropDownImage {
+    width: 12.5rem !important;
+  }
+}
+
+
+@media (max-width: 991px){
+
+  .navDropDownImage {
+    width: auto !important;
+  }
+
+  .divNavItemStyle {
+    width: 100%;
+    display: grid;
+  }
+
+  .navDropDownImage > div > img {
+    max-width: 80% !important;
+    min-width: 80% !important;
+    min-height: 80% !important;
+    max-height: 80% !important;
+    padding: 0% !important;
+  }
+
+  .divNavItemStyle:last-child {
+    justify-content: left;
+    text-align: left;
+  }
+
+
+  .navbar {
+    display: none !important;
+  }
+
+  .navbarMobile {
+    display: flex !important;
+  }
+
+  .containerFluid {
+    display: none;
+    flex-wrap: inherit !important;
+  }
+
+  .containerFluidExpanded::after {
+    display: none;
+    flex-wrap: inherit !important;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .containerFluidMenu {
+    display: inline !important;
+  }
+
+  .a {
+    display: inline;
+    align-self: center !important;
+    justify-content: center !important;
+    margin-right: 0px !important;
+  }
+
 }

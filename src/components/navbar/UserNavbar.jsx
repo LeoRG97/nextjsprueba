@@ -7,7 +7,7 @@ import { NavDropdown } from 'react-bootstrap';
 import styles from './navbar.module.css';
 
 const UserNavbarComponent = ({
-  picture, name,
+  picture, name, apellidos,
 }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
@@ -23,7 +23,7 @@ const UserNavbarComponent = ({
       <div className={`${styles.navDropDownImage} col`}>
         <Image height="45" width="45" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
       </div>
-      <div className="col text-md">{name}</div>
+      <div className="col text-md">{`${name} ${apellidos}`}</div>
     </div>
   );
   const logOut = async () => {
@@ -55,11 +55,13 @@ const UserNavbarComponent = ({
 UserNavbarComponent.propTypes = {
   picture: PropTypes.string,
   name: PropTypes.string,
+  apellidos: PropTypes.string,
 };
 
 UserNavbarComponent.defaultProps = {
   name: '',
   picture: '',
+  apellidos: '',
 };
 
 export default UserNavbarComponent;

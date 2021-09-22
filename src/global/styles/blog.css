@@ -265,5 +265,9 @@
   .content-right {
     display: inline-flex;
   }
+
+  .Btn-like {
+    top: 0px !important;
+  }
 }
 /*#######################################################*/

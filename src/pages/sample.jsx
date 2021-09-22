@@ -79,6 +79,10 @@ export default function Home() {
           Right icon{' '}<span className="button__icon-right text--theme-light">I</span>
         </button>
 
+        <button className="button button--theme-yellow me-2">
+          <span className="button__icon-left text--theme-yellow">9</span>{' '}Left icon Yellow
+        </button>
+
         <hr className="bg-light" />
 
         <h6 className="subtitle">Botones redondos</h6>

@@ -12,7 +12,6 @@ import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const ProfileMembersAndInvitations = () => {
   const router = useRouter();
-
   useEffect(() => {
 
   }, [router]);
