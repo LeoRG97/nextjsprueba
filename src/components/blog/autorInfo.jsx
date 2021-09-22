@@ -38,7 +38,7 @@ const AutorComponent = ({
         <Col xl="6" lg="6" sm="12" className="col-12">
           <Row>
             <Col className="col-2 ">
-              <Image height="45" width="45" objectFit="contain" src={autor.picture} />
+              <Image height="45" width="45" objectFit="contain" src={autor.picture} className={styles.author_pict} />
             </Col>
             <Col className="col content-n-p ">
               <h3 className="text-md">{autor.autor}</h3>

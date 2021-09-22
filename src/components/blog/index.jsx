@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { AutorComponent } from '@/components';
 
 const BlogComponent = ({
-  blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt,
+  blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked,
 }) => {
   const renderCode = (item) => {
     if (item.type === 'linkVideo') {
@@ -32,7 +32,7 @@ const BlogComponent = ({
             autor={autorInfo}
             dateBlog={blogInfo.createdAt}
             onLike={onLike}
-            liked={blogInfo.liked}
+            liked={isLiked}
             likes={blogInfo.likes}
             cssSaved={cssSaved}
             quitSaved={quitSaved}
@@ -60,7 +60,7 @@ const BlogComponent = ({
             autor={autorInfo}
             dateBlog={blogInfo.createdAt}
             onLike={onLike}
-            liked={blogInfo.liked}
+            liked={isLiked}
             likes={blogInfo.likes}
             cssSaved={cssSaved}
             quitSaved={quitSaved}
