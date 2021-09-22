@@ -21,7 +21,9 @@
   src: url("/fonts/IconosFuenteNTT.otf");
 }
 
-:root, *::before, *::after {
+:root,
+*::before,
+*::after {
   --blue: #0080b1;
   --black: #0d0c22;
   --black-10: #232739;
@@ -31,7 +33,7 @@
   /* --white-20: #e7e7e9;
   --white-10: #f3f3f4; */
   --white: #ffffff;
-  --white-30: #FFFFFF33;
+  --white-30: #ffffff33;
   --red: #ff5555;
 
   /* EDITOR COLORS */
@@ -59,7 +61,7 @@
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
   --colorSecondary: var(--gray); /* Iconos y texto secundario */
   --colorLight: var(--white); /* Iconos, textos y fondos claros */
-  --colorLightGray : var(--white-30); /* botones y bordes redondeados*/
+  --colorLightGray: var(--white-30); /* botones y bordes redondeados*/
   --colorItemBorder: var(--black-20); /* Contornos y subrayados */
   --colorBackgroundDarkSec: var(--black-20); /*Fondo no negro secundario*/
   --colorItemBg: var(--black-10); /* Fondo no negro */
@@ -68,10 +70,16 @@
   --colorError: var(--orange); /* Indicadores de error */
   --colorWarning: var(--magenta); /* Indicadores de aviso */
   --colorSuccess: var(--green); /* Elementos de acción */
-  --colorSuccessTransp: var(--green-30); /*indicador de accion con transparencia*/
-  --colorWarningTransp: var(--magenta-20); /*indicador de accion con transparencia*/
+  --colorSuccessTransp: var(
+    --green-30
+  ); /*indicador de accion con transparencia*/
+  --colorWarningTransp: var(
+    --magenta-20
+  ); /*indicador de accion con transparencia*/
 
-  --colorPrimaryFaint: var(--blue-20); /* Fondos traslúcidos con color corporativo */
+  --colorPrimaryFaint: var(
+    --blue-20
+  ); /* Fondos traslúcidos con color corporativo */
 
   --switchBg: var(--black-20);
   --switchSlide: var(--gray);
@@ -117,14 +125,15 @@
 }
 
 @media (max-width: 767.98px) {
-  :root, *::before, *::after {
+  :root,
+  *::before,
+  *::after {
     --font-size-xl: 2.25rem; /* 56px */
     --font-size-lg: 1.625rem; /* 28px */
     --font-size-md: 1rem; /* 16px */
     --font-size-sm: 0.875rem; /* 14px */
   }
 }
-
 
 html,
 body {
@@ -255,7 +264,6 @@ a {
   font-size: var(--icon-size-md);
   color: var(--colorError);
 }
-
 
 .icon-button {
   border: 1px solid var(--colorItemBorder);
@@ -451,7 +459,7 @@ label.input {
 
 /*Multiselect*/
 
- /* .flechita select {
+/* .flechita select {
   border: 1px solid #ccc;
   background: URL(../imagenes/arrow.png) no-repeat 298px 3px #fff !important;
   -moz-appearance: none;
@@ -916,7 +924,6 @@ html {
   margin-right: auto;
 }
 
-
 .embla.fluid {
   position: relative;
   overflow: hidden;
@@ -992,10 +999,9 @@ html {
 .tooltip-inner {
   font-family: var(--font-regular);
   background-color: var(--backgroung-color-low-dark) !important;
-  color: #FFFFFF !important;
+  color: #ffffff !important;
   color: #ffffff !important;
   font-size: var(--font-size-sm) !important;
-
 }
 
 .tooltip.bs-tooltip-top .tooltip-arrow::before {
@@ -1054,14 +1060,14 @@ html {
 .canvas-component-container .selectImage {
   max-width: 80%;
   margin: 5px 0px 5px 0px;
-/*********************************/
+  /*********************************/
 }
 
 #modalVideo .modal-content {
   background-color: transparent !important;
 }
 
-.canvas-component-container .multimedia{
+.canvas-component-container .multimedia {
   width: 80%;
   height: 158px;
   background-color: #232739;
@@ -1107,7 +1113,7 @@ html {
   opacity: 0;
 }
 
-.Edit-btn.move-btn{
+.Edit-btn.move-btn {
   cursor: grab;
 }
 
@@ -1126,7 +1132,8 @@ html {
   margin-right: 10px;
 }
 
-.Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
+.Editor-content:hover .Edit-btn,
+.Editor-content:hover .Edit-dropbtn {
   opacity: 1;
 }
 
@@ -1136,7 +1143,8 @@ html {
   border: 1px solid var(--colorLight);
 }
 
-.Editor-content button, .Editor-container  {
+.Editor-content button,
+.Editor-container {
   display: inline-grid;
 }
 
@@ -1167,7 +1175,7 @@ html {
 
 .Editor-container iframe[title="video"] {
   width: 100%;
-  height: calc(76vw/1.77);
+  height: calc(76vw / 1.77);
 }
 
 .Editor-container iframe[title="audio"] {
@@ -1219,7 +1227,6 @@ html {
   border-radius: 6px;
   cursor: pointer;
 }
-
 
 .Edit-dropdown-container span {
   display: inline;
@@ -1367,25 +1374,25 @@ html {
 
 /* SELECT POSTS ============================================================================ */
 /* SELECT POSTS */
-.selects-container{
+.selects-container {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
 
 .select-recent,
-.select-filter{
+.select-filter {
   height: 60px;
   width: 50%;
   display: grid;
   align-items: center;
 }
 
-.select-recent{
+.select-recent {
   justify-content: left;
 }
 
-.select-filter{
+.select-filter {
   justify-content: right;
 }
 
@@ -1397,11 +1404,11 @@ html {
 }
 
 #dropdown-basic-button-1,
-#dropdown-basic-button-2{
+#dropdown-basic-button-2 {
   background-color: var(--colorPrimaryDark);
 }
 
-.select-posts .btn-primary.dropdown-toggle{
+.select-posts .btn-primary.dropdown-toggle {
   color: var(--colorSecondary) !important;
   /* background-color: var(--colorPrimaryDark) !important; */
 }
@@ -1409,7 +1416,7 @@ html {
 .select-posts .btn-primary:checked,
 .select-posts .btn-primary:active,
 .select-posts .btn-primary:focus,
-.select-posts .btn-primary:hover{
+.select-posts .btn-primary:hover {
   color: var(--colorSecondary) !important;
   background-color: var(--colorPrimaryDark) !important;
   border-color: var(--colorItemBorder) !important;
@@ -1419,23 +1426,23 @@ html {
   margin-left: 5em;
 }
 
-.select-posts .dropdown-menu{
+.select-posts .dropdown-menu {
   width: 100%;
   background-color: var(--colorItemBorder);
 }
 
-.select-posts .dropdown-menu .dropdown-item{
+.select-posts .dropdown-menu .dropdown-item {
   color: var(--colorSecondary) !important;
   transition: 0.5s;
 }
 
-.select-posts .dropdown-menu .dropdown-item:hover{
+.select-posts .dropdown-menu .dropdown-item:hover {
   background-color: var(--colorItemBorder) !important;
 }
 
 /* -------------------------------------------------------------------------------- */
 
-#dropdown-basic-button-2-profile{
+#dropdown-basic-button-2-profile {
   background-color: var(--colorPrimary);
   color: var(--colorLights) !important;
   border-radius: 50px;
@@ -1445,7 +1452,7 @@ html {
 #dropdown-basic-button-2-profile:checked,
 #dropdown-basic-button-2-profile:active,
 #dropdown-basic-button-2-profile:focus,
-#dropdown-basic-button-2-profile:hover{
+#dropdown-basic-button-2-profile:hover {
   color: var(--colorLights) !important;
   background-color: var(--colorPrimary) !important;
   border-color: var(--colorItemBorder) !important;
@@ -1455,21 +1462,21 @@ html {
   margin-left: 2em;
 }
 
-@media (max-width: 999px){
-  .selects-container{
+@media (max-width: 999px) {
+  .selects-container {
     display: grid;
     justify-content: center;
     text-align: center;
   }
 
   .select-recent,
-  .select-filter{
+  .select-filter {
     width: 100%;
     justify-content: center;
   }
 }
 /*************drodown nav**********************/
-#nav-dropdown-profile::after{
+#nav-dropdown-profile::after {
   position: absolute;
   right: -10%;
   top: 1.5rem;
@@ -1480,32 +1487,31 @@ html {
   color: var(--gray) !important;
 }
 
-#nav-dropdown-profile + .dropdown-menu{
+#nav-dropdown-profile + .dropdown-menu {
   background-color: var(--sblue);
   padding: 0;
   border-radius: 7px;
   margin-left: 33.33%;
 }
 
-#nav-dropdown-profile + .dropdown-menu > a{
-  padding: .5rem 1rem;
+#nav-dropdown-profile + .dropdown-menu > a {
+  padding: 0.5rem 1rem;
   color: var(--gray) !important;
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
 }
 
-#nav-dropdown-profile + .dropdown-menu > a:focus{
+#nav-dropdown-profile + .dropdown-menu > a:focus {
   color: var(--gray) !important;
   background-color: var(--sblue) !important;
   border-radius: 7px !important;
 }
 
-#nav-dropdown-profile + .dropdown-menu > a:hover{
+#nav-dropdown-profile + .dropdown-menu > a:hover {
   color: var(--white) !important;
   background-color: var(--gblue) !important;
   border-radius: 7px !important;
 }
-
 
 /*********************************/
 div[disabled] {
@@ -1516,13 +1522,12 @@ div[disabled] {
 
 /**** table ******/
 .react-bs-table-no-data {
-  color: var(--colorLightGray)
+  color: var(--colorLightGray);
 }
 
-.content-m-centered div{
+.content-m-centered div {
   margin: auto;
 }
-
 
 .wRol {
   width: 30% !important;
@@ -1531,7 +1536,6 @@ div[disabled] {
 .wEmail {
   width: 50% !important;
 }
-
 
 @media (max-width: 1400px) {
   .mt-lg-title {
@@ -1554,7 +1558,6 @@ div[disabled] {
     width: auto !important;
   }
 }
-
 
 @media (max-width: 575.98px) {
   .Btn-round-light {

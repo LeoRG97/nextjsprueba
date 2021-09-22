@@ -40,7 +40,6 @@ const ProfileScreen = () => {
         {query.setting === 'articles' && <ProfileArticles />}
         {query.setting === 'members-and-invitations' && <ProfileMembersAndInvitations />}
         {query.setting === 'library' && <ProfileSavedArts savedArts={savedArts} />}
-        {query.setting === 'ratings' && <h1 className="title">Valoraciones</h1>}
         {query.setting === 'about-me' && <AboutMeComponent />}
         {query.setting === 'ratings' && <RatedArticles />}
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Collapse } from 'react-bootstrap';
 import styles from './articlesList.module.css';
 
-export const ArticleOptionsAdmin = () => {
+export const ArticleOptionsAdmin = ({ onEdit }) => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     return () => {
@@ -23,7 +23,7 @@ export const ArticleOptionsAdmin = () => {
 
       <Collapse in={open}>
         <div id="adminOptions" className={`w-80 text-sm mt-3 ${styles.trendingLabelAdmin} ${styles.adminOptionsMenu}`}>
-          <div className={`row py-1 ${styles.updateOption}`}>
+          <div className={`row py-1 ${styles.updateOption}`} onClick={onEdit}>
             <div className="d-flex align-items-center">
               <span className="icon">K</span>
               <span>&nbsp;Modificar</span>

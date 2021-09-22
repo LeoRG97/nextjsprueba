@@ -13,6 +13,8 @@ const EditorContextProvider = ({ children }) => {
     premium: false,
     reporte: null,
     infografia: null,
+    rutaPortada: '',
+    rutaArticulo: '',
   });
   const [errors, setErrors] = useState({
     isValid: true,

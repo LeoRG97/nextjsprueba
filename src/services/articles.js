@@ -3,6 +3,15 @@
 import { ApiRoutes } from '@/global/constants';
 import axios from './axios';
 
+export const fetchArticleById = async (id) => {
+  try {
+    const res = await axios().get(`articulos/${id}`);
+    return res.data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
 export const fetchArticlesSSR = async (query) => {
   const { category, type, sort } = query;
   try {
@@ -139,33 +148,34 @@ export const saveArticle = async (article, details, option, userId) => {
     //   console.log('INFOGRAFIA', infographicRes);
     // }
 
-    return {
-      articulo_id: dataRes._id,
-      ruta_articulo: dataRes.ruta,
-      ruta_portada: dataRes.portada.ruta_imagen || undefined,
-    };
+    return dataRes;
   } catch (err) {
-    return err;
+    throw Promise.reject(err);
   }
 };
 
-export const updateArticle = async (article, details, userId, currentData) => {
+export const updateArticle = async (article, details, userId, initialData) => {
   let fileRes = null;
   let coverUrl = null;
   // let reportUrl = null;
   // let infographicUrl = null;
 
   try {
-    const currentJsonKey = currentData.ruta_articulo.split('articles/')[1];
-    fileRes = await saveFile(article, `${userId}/articles`, currentJsonKey);
+    const { ruta, portada } = initialData;
+    const routeId = ruta.split('/articles')[0]; // obtener directorio base de SE
+    const currentJsonKey = ruta.split('articles/')[1]; // obtener nombre del artículo
+    fileRes = await saveFile(article, `${routeId}/articles`, currentJsonKey);
     if (details.portada) {
-      // enviar imagen de portada a S3
-      if (currentData.ruta_portada) {
-        const currentCoverKey = currentData.ruta_portada.split('resources/')[1];
-        coverUrl = await saveFile(details.portada, `${userId}/resources`, currentCoverKey);
+      // reemplazar imagen de portada
+      if (portada && portada.ruta_imagen) {
+        const currentCoverKey = portada.ruta_imagen.split('resources/')[1]; // obtener nombre de la imagen
+        coverUrl = await saveFile(details.portada, `${routeId}/resources`, currentCoverKey);
       } else {
-        coverUrl = await saveFile(details.portada, `${userId}/resources`);
+        coverUrl = await saveFile(details.portada, `${routeId}/resources`);
       }
+    } else if (portada && portada.ruta_imagen) {
+      // o conservar imagen de portada actual
+      coverUrl = portada.ruta_imagen;
     }
 
     const articleData = {
@@ -174,15 +184,16 @@ export const updateArticle = async (article, details, userId, currentData) => {
       estatus: details.estatus,
       premium: details.premium,
       destacado: details.destacado,
+      usuario_id_modificacion: userId,
       portada: {
         descripcion: details.descripcion || '',
         titulo: details.titulo || '',
-        ...(coverUrl && { ruta_imagen: coverUrl }),
+        ruta_imagen: coverUrl || '',
       },
     };
 
     // guardar la información del artículo en la API
-    await axios().put(`/articulos/${currentData.articulo_id}`, { ...articleData });
+    const response = await axios().put(`/articulos/${initialData._id}`, { ...articleData });
 
     // if (details.reporte) {
     //   // subir reporte a S3
@@ -214,12 +225,9 @@ export const updateArticle = async (article, details, userId, currentData) => {
     //   const infographicRes = await axios().post('/recursos', { ...infographicData });
     //   console.log('INFOGRAFIA', infographicRes);
     // }
-    return {
-      ...currentData,
-      ...(!currentData.ruta_portada && { ruta_portada: coverUrl }),
-    };
+    return response;
   } catch (err) {
-    return err;
+    throw Promise.reject(err);
   }
 };
 

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useSession } from 'next-auth/client';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { useRouter } from 'next/router';
 import { saveArticle, updateArticle } from '@/services/articles';
 import { EditorContext } from '@/helpers/contexts/editorContext';
 import { upload, remove } from '@/services/aws';
@@ -15,12 +16,15 @@ import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
-import LoadingModal from './editorComponents/loadingModal/LoadingModal';
-// import RenderList from './editorComponents/renderList/RenderList';
+import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
+import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 
-const EditorComponent = ({ option }) => {
+const EditorComponent = ({
+  option, initialData, setInitialData, initialContent,
+}) => {
   const [session] = useSession();
-  const { formData } = useContext(EditorContext);
+  const router = useRouter();
+  const { formData, setFormData } = useContext(EditorContext);
   const [modalShow, setModalShow] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
@@ -33,8 +37,30 @@ const EditorComponent = ({ option }) => {
   const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [successData, setSuccessData] = useState({
+    show: false,
+    title: '',
+    message: '',
+  });
 
   const { data } = useSelector((state) => state.profile);
+
+  useEffect(() => {
+    if (initialData) {
+      const { portada } = initialData;
+      setFormData({
+        articulo_id: initialData._id,
+        titulo: portada && portada.titulo ? portada.titulo : '',
+        descripcion: portada && portada.descripcion ? portada.descripcion : '',
+        videoUrl: initialData.videoUrl || '',
+        categorias: initialData.categorias,
+        destacado: initialData.destacado,
+        premium: initialData.premium,
+        rutaPortada: portada && portada.ruta_imagen ? portada.ruta_imagen : '',
+        rutaArticulo: initialData.ruta || '',
+      });
+    }
+  }, [initialData]);
 
   const makeid = () => {
     let result = '';
@@ -75,7 +101,7 @@ const EditorComponent = ({ option }) => {
           }
         }
         setItems(modText);
-        localStorage.setItem('contentEditor', JSON.stringify(modText));
+        // localStorage.setItem('contentEditor', JSON.stringify(modText));
       }
     });
   };
@@ -83,8 +109,8 @@ const EditorComponent = ({ option }) => {
   /* Add components functions */
 
   const addVideoFunct = (tag, embedIframe) => {
-    const EditorContent = localStorage.getItem('contentEditor');
-    const obj = JSON.parse(EditorContent);
+    // const EditorContent = localStorage.getItem('contentEditor');
+    const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
     if (option === 'onlyVideo') {
       setContentVideo(true);
@@ -99,7 +125,7 @@ const EditorComponent = ({ option }) => {
       obj.html.forEach((item) => {
         topVideo.html.push(item);
       });
-      localStorage.setItem('contentEditor', JSON.stringify(topVideo));
+      // localStorage.setItem('contentEditor', JSON.stringify(topVideo));
       setItems(topVideo);
     } else {
       if (!embedIframe) {
@@ -107,7 +133,7 @@ const EditorComponent = ({ option }) => {
       } else {
         obj.html.push({ id: idContainer, type: 'iframeVideo', content: tag, tag });
       }
-      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      // localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
     }
     setModalShowVideo(false);
@@ -115,8 +141,8 @@ const EditorComponent = ({ option }) => {
 
   const addImage = async (event) => {
     event.preventDefault();
-    const EditorContent = localStorage.getItem('contentEditor');
-    const obj = JSON.parse(EditorContent);
+    // const EditorContent = localStorage.getItem('contentEditor');
+    const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
     if (event.target.files.length > 0) {
       const path = `${data._id}/resources`;
@@ -131,14 +157,14 @@ const EditorComponent = ({ option }) => {
           tag: `<img src="${res.file}" alt="">`,
         });
       }
-      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      // localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
     }
   };
 
   const addTextFunct = (optionText) => {
-    const EditorContent = localStorage.getItem('contentEditor');
-    const obj = JSON.parse(EditorContent);
+    // const EditorContent = localStorage.getItem('contentEditor');
+    const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
     if (optionText === 'h1') {
       obj.html.push({
@@ -157,13 +183,13 @@ const EditorComponent = ({ option }) => {
         id: idContainer, type: 'textFooter', content: '', tag: '<small></small>',
       });
     }
-    localStorage.setItem('contentEditor', JSON.stringify(obj));
+    // localStorage.setItem('contentEditor', JSON.stringify(obj));
     setItems(obj);
   };
 
   const addAudioFunct = (tag) => {
-    const EditorContent = localStorage.getItem('contentEditor');
-    const obj = JSON.parse(EditorContent);
+    // const EditorContent = localStorage.getItem('contentEditor');
+    const obj = arrayItemsEditor;
     const idContainer = makeid();
     if (option === 'onlyAudio') {
       setContentAudio(true);
@@ -174,11 +200,11 @@ const EditorComponent = ({ option }) => {
       obj.html.forEach((item) => {
         topAudio.html.push(item);
       });
-      localStorage.setItem('contentEditor', JSON.stringify(topAudio));
+      // localStorage.setItem('contentEditor', JSON.stringify(topAudio));
       setItems(topAudio);
     } else {
       obj.html.push({ id: idContainer, type: 'iframeAudio', content: tag, tag });
-      localStorage.setItem('contentEditor', JSON.stringify(obj));
+      // localStorage.setItem('contentEditor', JSON.stringify(obj));
       setItems(obj);
     }
     setModalShow(false);
@@ -214,7 +240,7 @@ const EditorComponent = ({ option }) => {
         oldArray[index] = newTag;
       }
     });
-    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+    // localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
   };
 
   const handleChangeImage = async (idElement, content, event) => {
@@ -235,7 +261,7 @@ const EditorComponent = ({ option }) => {
               contents.html[index].tag = `<img src="${res.file}" alt=""/>`;
               setItems(contents);
               setEditImg(!editImg);
-              localStorage.setItem('contentEditor', JSON.stringify(contents));
+              // localStorage.setItem('contentEditor', JSON.stringify(contents));
             }
           });
         } else {
@@ -257,7 +283,7 @@ const EditorComponent = ({ option }) => {
         oldArray[index] = newTag;
       }
     });
-    localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
+    // localStorage.setItem('contentEditor', JSON.stringify(arrayItemsEditor));
   };
   /* ######################### */
 
@@ -277,7 +303,7 @@ const EditorComponent = ({ option }) => {
       }
     });
     setItems(newArrayContent);
-    localStorage.setItem('contentEditor', JSON.stringify(newArrayContent));
+    // localStorage.setItem('contentEditor', JSON.stringify(newArrayContent));
     if (option === 'onlyVideo') {
       let validateVideo = false;
       newArrayContent.html.forEach((item) => {
@@ -306,16 +332,17 @@ const EditorComponent = ({ option }) => {
   };
 
   useEffect(() => {
-    const EditorContent = localStorage.getItem('contentEditor');
-    if (EditorContent === null) {
+    // const EditorContent = localStorage.getItem('contentEditor');
+    if (!initialContent) {
       // {id: "", type: "", content: ""}
-      const jsonStr = '{"html":[]}';
-      localStorage.setItem('contentEditor', jsonStr);
+      // const jsonStr = '{"html":[]}';
+      // localStorage.setItem('contentEditor', jsonStr);
       setItems({ html: [] });
     } else {
-      setItems(JSON.parse(EditorContent));
-      const elementsEditor = JSON.parse(EditorContent);
-      elementsEditor.html.forEach((item) => {
+      // setItems(JSON.parse(EditorContent));
+      setItems(initialContent);
+      // const elementsEditor = JSON.parse(EditorContent);
+      initialContent.html.forEach((item) => {
         if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
           setContentVideo(true);
         }
@@ -324,7 +351,7 @@ const EditorComponent = ({ option }) => {
         }
       });
     }
-  }, []);
+  }, [initialContent]);
 
   const reorderList = (event) => {
     if (event.destination) {
@@ -333,7 +360,7 @@ const EditorComponent = ({ option }) => {
       html.splice(event.destination.index, 0, movedItem);
       const newObj = { html: [...html] };
       setItems(newObj);
-      localStorage.setItem('contentEditor', JSON.stringify(newObj));
+      // localStorage.setItem('contentEditor', JSON.stringify(newObj));
     }
   };
 
@@ -342,27 +369,40 @@ const EditorComponent = ({ option }) => {
       ...formData,
       estatus,
     };
+    setShowPublish(false);
     setSubmitting(true);
 
-    const EditorContent = localStorage.getItem('contentEditor');
-    const obj = JSON.parse(EditorContent);
-    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(arrayItemsEditor)], { type: 'application/json' });
     const file = new File([blob], 'article.json', { type: 'application/json' });
-    const storedData = JSON.parse(localStorage.getItem('currentArticle'));
-    if (!storedData || !storedData.articulo_id) {
-      const saveResponse = await saveArticle(file, details, option, session.user.id);
-      if (saveResponse.articulo_id) {
-        localStorage.setItem('currentArticle', JSON.stringify(saveResponse));
+    try {
+      if (!initialData) {
+        // save article
+        const res = await saveArticle(file, details, option, session.user.id);
+        if (res._id) {
+          setSubmitting(false);
+          setSuccessData({
+            show: true,
+            title: estatus === 'publicado' ? 'Publicación finalizada' : 'Cambios guardados',
+            message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
+          });
+          // shallow routing a la pantalla de edición
+          router.push(`${router.asPath}/${res._id}`, undefined, { shallow: false });
+          setInitialData(res); // mantén la información original en el state del componente padre
+        }
+      } else {
+        // update existing article
+        const res = await updateArticle(file, details, session.user.id, initialData);
+        if (res.ok) {
+          setSubmitting(false);
+          setSuccessData({
+            show: true,
+            title: estatus === 'publicado' ? 'Publicación finalizada' : 'Cambios guardados',
+            message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
+          });
+        }
       }
-      setSubmitting(false);
-    } else {
-      const updateResponse = await updateArticle(
-        file, details, session.user.id, storedData,
-      );
-      if (updateResponse.articulo_id) {
-        localStorage.setItem('currentArticle', JSON.stringify(updateResponse));
-      }
-      setSubmitting(false);
+    } catch (err) {
+      // catch error
     }
   };
 
@@ -468,7 +508,18 @@ const EditorComponent = ({ option }) => {
         onClose={() => setShowPublish(false)}
         onPublish={handlePublish}
       />
-      <LoadingModal show={submitting} />
+      <LoadingIndicatorModal
+        show={submitting}
+        onClose={() => setSubmitting(false)}
+        textHeader="Guardando cambios"
+        textBody="Esta operación podría tardar unos minutos, por favor espere."
+      />
+      <SuccessIndicatorModal
+        show={successData.show}
+        onClose={() => setSuccessData({ ...successData, show: false })}
+        textHeader={successData.title}
+        textBody={successData.message}
+      />
     </div>
   );
 };

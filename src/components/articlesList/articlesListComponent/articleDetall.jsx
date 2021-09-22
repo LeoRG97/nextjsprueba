@@ -21,13 +21,19 @@ const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => 
     router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
   };
 
+  const handleEditArticle = () => {
+    router.push(`/editor/${article.tipo.toLowerCase()}/${article._id}`);
+  };
+
   return (
     <>
       <div key={article._id} className={`${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}>
         <div className={styles.cardImageContainer}>
           {
             isAdmin && (
-              <ArticleOptionsAdmin />
+              <ArticleOptionsAdmin
+                onEdit={handleEditArticle}
+              />
             )
           }
           <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
@@ -40,7 +46,7 @@ const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => 
           )}
           <img
             onClick={showArticle}
-            src={article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
+            src={article.portada && article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
             alt=""
           />
         </div>
@@ -50,10 +56,10 @@ const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => 
           <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{article.likes}</div>
         </div>
         <div onClick={showArticle} className={`title ${styles.cardMargin}`}>
-          {article.portada.titulo || 'Sin título'}
+          {article.portada && article.portada.titulo ? article.portada.titulo : 'Sin título'}
         </div>
         <div onClick={showArticle} className="text-sm">
-          {article.portada.descripcion || 'Sin descripción'}
+          {article.portada && article.portada.descripcion ? article.portada.descripcion : 'Sin descripción'}
         </div>
       </div>
     </>

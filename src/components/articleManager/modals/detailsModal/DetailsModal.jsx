@@ -96,7 +96,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
   };
 
   const {
-    titulo, descripcion, portada, destacado, premium, categorias,
+    titulo, descripcion, portada, destacado, premium, categorias, rutaPortada,
   } = formData;
 
   return (
@@ -118,6 +118,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
               <ImagePicker
                 image={portada}
                 setImage={handleCoverChange}
+                prevUrl={rutaPortada}
               />
               <span className="text-sm text--theme-error">{errors.portada}</span>
               <label className="d-block subtitle" htmlFor="title">Título de la publicación

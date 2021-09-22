@@ -1,5 +1,6 @@
 export const detailsValidation = ({
   titulo, descripcion, portada, categorias, videoUrl, reporte, infografia,
+  rutaPortada,
 }) => {
   const errors = {
     isValid: true,
@@ -13,7 +14,7 @@ export const detailsValidation = ({
     errors.descripcion = 'La descripción es requerida';
     errors.isValid = false;
   }
-  if (!portada) {
+  if (!portada && !rutaPortada) {
     errors.portada = 'La imagen de portada es requerida';
     errors.isValid = false;
   }
