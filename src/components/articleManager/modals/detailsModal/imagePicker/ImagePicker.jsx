@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import styles from './imagePicker.module.css';
+import { BUCKET_URL } from '@/global/constants';
 
-const ImagePicker = React.memo(({ image, setImage }) => {
+const ImagePicker = React.memo(({ image, setImage, prevUrl }) => {
   const imgRef = useRef();
   const [previewUrl, setPreviewUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,12 @@ const ImagePicker = React.memo(({ image, setImage }) => {
       handleCoverPreview(image);
     }
   }, [image]);
+
+  useEffect(() => {
+    if (prevUrl) {
+      setPreviewUrl(`${BUCKET_URL}${prevUrl}`);
+    }
+  }, [prevUrl]);
 
   return (
     <>
