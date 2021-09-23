@@ -36,3 +36,5 @@ export { default as SuccessIndicatorModal } from './modalsIndicators/SuccesModal
 export { default as DeleteModal } from './modalsIndicators/DeleteModal';
 export { default as MainPosts } from './trending/mainPosts/mainPosts';
 export { default as UserPreferencesPosts } from './trending/userPreferencesPosts/UserPreferencesPosts';
+export { default as ProfileTools } from './profile/profileTools/ProfileTools';
+export { default as AccordionComponent } from './thinkTools/accordionComponent/AccordionComponent';

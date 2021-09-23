@@ -1,0 +1,65 @@
+.accordion_container {
+  background-color: transparent;
+}
+
+.card_container {
+  background-color: transparent;
+}
+
+.card_title {
+  letter-spacing: -1.4px;
+  line-height: 1.8rem;
+}
+
+.card_body {
+  letter-spacing: -1.4px;
+  line-height: 1.8rem;
+}
+
+.icon_container{
+  border: 1px solid var(--colorItemBorder);
+  border-radius: 50%;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+
+.icon_card{
+  position: relative;
+  top: 0.5rem;
+  left: 1rem;
+}
+
+.flag {
+  border: 1px solid var(--colorItemBorder);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: transparent;
+}
+
+.flag_selected {
+  border: 1px solid var(--colorItemBorder);
+  border-radius: 50%;
+  width: 2.5rem;
+  height: 2.5rem;
+  background-color: var(--colorBackgroundDarkSec);
+}
+
+.icon_flag {
+  position: relative;
+  top: -0.15rem;
+  left: 0rem;
+}
+
+.icon_hover {
+  border: 1px solid var(--colorItemBorder);
+  border-radius: 7px;
+  width: 2.5rem;
+  height: 2rem;
+}
+
+.icon_options {
+  position: relative;
+  top: -0.25rem;
+  left: 0.7rem;
+}
