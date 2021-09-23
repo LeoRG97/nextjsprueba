@@ -81,7 +81,7 @@ const NavbarComponent = () => {
                 <Link href="/trending-topics" passHref>
                   <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
                 </Link>
-                <Link href="#" passHref>
+                <Link href="/think-tools" passHref>
                   <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
                 </Link>
               </div>
@@ -209,7 +209,7 @@ const NavbarComponent = () => {
                 <Link href="/trending-topics" passHref>
                   <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
                 </Link>
-                <Link href="#" passHref>
+                <Link href="/think-tools" passHref>
                   <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
                 </Link>
                 {
