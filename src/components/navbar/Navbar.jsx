@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { fetch as fetchProfile } from '@/reducers/profile';
 import styles from './navbar.module.css';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
-import { fetch as fetchProfile } from '@/reducers/profile';
 import UserNavbarComponent from './UserNavbar';
 
 const NavbarComponent = () => {
@@ -17,7 +17,6 @@ const NavbarComponent = () => {
   const dispatch = useDispatch();
   const { data, fetched } = useSelector((state) => state.profile);
   const [expanded, setExpanded] = useState(false);
-  console.log(expanded)
   const navigateToProfile = () => {
     router.push('/profile/about-me');
   };

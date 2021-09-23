@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
@@ -13,6 +14,7 @@ import { deleteArticle } from '@/services/articles';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import styles from './profile.module.css';
 
 const ProfileArticles = () => {
   const router = useRouter();
@@ -77,6 +79,10 @@ const ProfileArticles = () => {
 
   const { query } = router;
 
+  const navigateToEditor = (option) => {
+    router.push(`/editor/${option}`);
+  };
+
   return (
     <>
       <div className="selects-container">
@@ -95,9 +101,24 @@ const ProfileArticles = () => {
           />
         </div>
         <div className="select-filter">
-          <button className="button button--theme-primary me-2">
-            Crear <span className="icon text--theme-light">1</span>
-          </button>
+          <div className="dropdown BTN-drop align-right">
+            <div className="dropdown-select BTN">
+              <label className="button button--theme-primary">
+                Crear <span className="icon text--theme-light">1</span>
+              </label>
+            </div>
+            <ul className={`select-dropdown ${styles.list_content}`}>
+              <li className="text-sm" id="h1" onClick={() => navigateToEditor('blog')}>
+                Blog
+              </li>
+              <li className="text-sm" id="h3" onClick={() => navigateToEditor('video')}>
+                Video
+              </li>
+              <li className="text-sm" id="p" onClick={() => navigateToEditor('podcast')}>
+                Podcast
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <>

@@ -1287,6 +1287,15 @@ html {
   margin-right: 30px;
 }
 
+.dropdown.align-right {
+  float: right;
+  margin-right: 0;
+}
+
+.dropdown.BTN-drop {
+  border: none;
+}
+
 .dropdown.no-m {
   margin: auto;
 }
@@ -1301,6 +1310,14 @@ html {
   display: block;
   overflow: hidden;
   max-width: 59px;
+}
+
+.dropdown .dropdown-select.BTN {
+  width: max-content;
+  color: transparent;
+  line-height: 20px;
+  padding: 5px;
+  max-width: max-content;
 }
 
 .select-dropdown {
