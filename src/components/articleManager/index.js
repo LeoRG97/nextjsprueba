@@ -386,7 +386,7 @@ const EditorComponent = ({
             message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
           });
           // shallow routing a la pantalla de edición
-          router.push(`${router.asPath}/${res._id}`, undefined, { shallow: false });
+          router.replace(`${router.asPath}/${res._id}`, undefined, { shallow: false });
           setInitialData(res); // mantén la información original en el state del componente padre
         }
       } else {
