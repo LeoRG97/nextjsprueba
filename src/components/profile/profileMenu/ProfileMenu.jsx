@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import { adminAccess, authorAccess } from '@/helpers/accessVerifiers';
+import { adminAccess, authorAccess, reviewerAccess } from '@/helpers/accessVerifiers';
 import styles from './profileMenu.module.css';
 
 const TabMenu = ({ artsNumb }) => {
@@ -61,13 +61,15 @@ const TabMenu = ({ artsNumb }) => {
               Borradores<span className="ms-2">0</span>
             </a>
           </Link>
-          <Link href="/profile/tools" passHref scroll={false}>
-            <a
-              className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
-            >
-              Herramientas<span className="ms-2">0</span>
-            </a>
-          </Link>
+          {reviewerAccess(user.role) && (
+            <Link href="/profile/tools" passHref scroll={false}>
+              <a
+                className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
+              >
+                Herramientas<span className="ms-2">0</span>
+              </a>
+            </Link>
+          )}
           {adminAccess(user.role) && (
             <Link href="/profile/members-and-invitations" passHref scroll={false}>
               <a
