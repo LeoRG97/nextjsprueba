@@ -61,6 +61,13 @@ const TabMenu = ({ artsNumb }) => {
               Borradores<span className="ms-2">0</span>
             </a>
           </Link>
+          <Link href="/profile/tools" passHref scroll={false}>
+            <a
+              className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
+            >
+              Herramientas<span className="ms-2">0</span>
+            </a>
+          </Link>
           {adminAccess(user.role) && (
             <Link href="/profile/members-and-invitations" passHref scroll={false}>
               <a

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Footer, Layout, ProfileHeader, ProfileMenu, AboutMeComponent, ProfileArticles,
-  RatedArticles, ProfileSavedArts,
+  RatedArticles, ProfileSavedArts, ProfileTools,
 } from '@/components';
 
 import withAuth from '@/helpers/withAuth';
@@ -42,6 +42,7 @@ const ProfileScreen = () => {
         {query.setting === 'library' && <ProfileSavedArts savedArts={savedArts} />}
         {query.setting === 'about-me' && <AboutMeComponent />}
         {query.setting === 'ratings' && <RatedArticles />}
+        {query.setting === 'tools' && <ProfileTools />}
 
       </div>
       <Footer />
