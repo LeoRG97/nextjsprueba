@@ -63,3 +63,71 @@
   top: -0.25rem;
   left: 0.7rem;
 }
+
+
+.button_dropdown_content {
+  background-color: transparent !important;
+}
+
+.button_dropdown {
+  background-color: transparent !important;
+}
+
+.button_dropdown >button {
+  border: 0px solid var(--colorItemBorder);
+  border-radius: 7px;
+  width: 2.5rem;
+  height: 2rem;
+  padding: 0;
+  position: relative;
+  font-family: Icons;
+  font-size: var(--icon-size-sm);
+  color: var(--colorSecondary) !important;
+  justify-content: end !important;
+  background-color: transparent !important;
+}
+
+.button_dropdown >button::after {
+  display: none !important;
+}
+
+.button_dropdown >div {
+  opacity: 1 !important;
+  padding: 0;
+  background-color: var(--colorItemBg);
+  border-radius: 7px;
+  min-width: 8rem;
+}
+
+.button_dropdown >div .item_dropdown {
+  font-size: var(--font-size-sm) !important;
+  color: var(--colorSecondary) !important;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button_dropdown >div .item_dropdown:active{
+  background-color: var(--colorSecondary);
+  border-radius: 7px;
+  color: white !important;
+}
+
+.button_dropdown >div .item_dropdown:hover{
+  border-radius: 7px;
+  background-color: var(--colorSecondary);
+  color: white !important;
+}
+
+.button_dropdown >div .item_dropdown:active >*{
+  color: white !important;
+}
+
+.button_dropdown >div .item_dropdown:hover >*{
+  color: white !important;
+}
+
+.item_dropdown_text{
+  top: 0.2rem;
+  margin-left: 0.5rem;
+  position: relative;
+}

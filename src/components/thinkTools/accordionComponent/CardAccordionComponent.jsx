@@ -9,15 +9,15 @@ const CardAccordionComponent = ({ data, number }) => {
     <Card className={styles.card_container}>
       <Card.Header className={styles.card_title}>
         <div className="row align-items-center">
-          <div className="col-2 col-sm-2 col-md-2 ">
+          <div className="col-3 col-md-2 ">
             <div className={styles.icon_container}>
               <span className={`icon-md ${styles.icon_card}`}>{data.categoriaIcono}</span>
             </div>
           </div>
-          <div className="col-8 col-sm-8 col-md-7 title">
+          <div className="col-7 col-md-7 title">
             <span>{data.categoria}</span>
           </div>
-          <div className="col-2 col-sm-2 offset-md-1 col-md-2 justify-content-end">
+          <div className="col-2 offset-md-1 col-md-2 justify-content-end">
             <ContextAwareToggle eventKey={number.toString()} />
           </div>
         </div>
