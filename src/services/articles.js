@@ -266,6 +266,15 @@ export const getArtForHomeSSR = async () => {
   }
 };
 
+export const deleteArticle = async (id) => {
+  try {
+    const res = await axios().delete(`articulos/${id}`);
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const postSaveThisArt = async (params, token) => {
   try {
     const res = await axios().post('guardados', params, {

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
@@ -9,9 +9,17 @@ import {
   LoadingIndicator,
 } from '@/components';
 import ArticlesDetailComponent from '@/components/articlesList/articlesListComponent/articleDetall';
+import { deleteArticle } from '@/services/articles';
+import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
+import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
+import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const ProfileArticles = () => {
   const router = useRouter();
+  const [loadModal, setLoadModal] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const [modalError, setModalError] = useState(false);
+
   useEffect(() => {
 
   }, [router]);
@@ -31,8 +39,27 @@ const ProfileArticles = () => {
   };
 
   const {
-    data, size, setSize, isValidating,
-  } = useSWRInfinite(getKey, fetchData);
+    data, size, setSize, isValidating, mutate,
+  } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+
+  const onDelete = async (id) => {
+    setLoadModal(true);
+    let updated = null;
+    try {
+      const rs = await deleteArticle(id);
+      updated = mutate(async (existingData) => {
+        const filtered = await existingData.filter((item) => item[0]?._id !== rs.id);
+        return filtered;
+      });
+      setLoadModal(false);
+      setSuccessModal(true);
+    } catch (error) {
+      setLoadModal(false);
+      setModalError(true);
+      return error;
+    }
+    return updated;
+  };
 
   const handleTypeChange = (item) => {
     const { query, pathname } = router;
@@ -77,6 +104,8 @@ const ProfileArticles = () => {
         {data && data.map((page) => {
           return page.map((article) => (
             <ArticlesDetailComponent
+              onDelete={onDelete}
+              onUpdate={null}
               key={article._id}
               article={article}
               isAdmin
@@ -98,6 +127,24 @@ const ProfileArticles = () => {
           </>
         </div>
       </>
+      <LoadingIndicatorModal
+        show={loadModal}
+        onClose={() => setLoadModal(false)}
+        textHeader="Eliminando articulo"
+        textBody=""
+      />
+      <SuccessIndicatorModal
+        show={successModal}
+        onClose={() => setSuccessModal(false)}
+        textHeader="Articulo Eliminado"
+        textBody="Se ha eliminado el articulo correctamente"
+      />
+      <ErrorIndicatorModal
+        show={modalError}
+        onClose={() => setModalError(false)}
+        textHeader="Ha ocurrido un error"
+        textBody="Algo ha salido mal, vulve a intentarlo más tarde"
+      />
     </>
   );
 };

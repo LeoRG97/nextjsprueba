@@ -6,7 +6,9 @@ import styles from './articlesList.module.css';
 import { BUCKET_URL } from '@/global/constants';
 import { ArticleOptionsAdmin } from './articleOptionsAdmin';
 
-const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => {
+const ArticlesDetailComponent = ({
+  article, classContent, isAdmin = false, onDelete,
+}) => {
   const getTypeIcon = (type) => {
     switch (type) {
       case 'Video': return 'F';
@@ -21,48 +23,60 @@ const ArticlesDetailComponent = ({ article, classContent, isAdmin = false }) => 
     router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
   };
 
-  const handleEditArticle = () => {
-    router.push(`/editor/${article.tipo.toLowerCase()}/${article._id}`);
-  };
-
   return (
-    <>
-      <div key={article._id} className={`${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}>
-        <div className={styles.cardImageContainer}>
+    article ? (
+      <>
+        <div key={article._id} className={`${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}>
+          <div className={styles.cardImageContainer}>
+            {
+              isAdmin && (
+                <ArticleOptionsAdmin articleId={article._id} onDelete={onDelete} />
+              )
+            }
+            <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
+              {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
+            </div>
+            {article.premium && !isAdmin && (
+              <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
+                Premium{' '}<span className="icon text--theme-light">R</span>
+              </div>
+            )}
+            <img
+              onClick={showArticle}
+              src={article.portada && article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
+              alt=""
+            />
+          </div>
+
           {
-            isAdmin && (
-              <ArticleOptionsAdmin
-                onEdit={handleEditArticle}
-              />
+            article.usuario_id ? (
+              <div onClick={showArticle} className={styles.cardLikesContainer}>
+                <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>
+                <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{article.likes}</div>
+              </div>
+            ) : (<></>)
+          }
+          {
+            article.portada && article.portada.titulo && (
+              <>
+                <div onClick={showArticle} className={`title ${styles.cardMargin}`}>
+                  {article.portada.titulo || 'Sin título'}
+                </div>
+              </>
             )
           }
-          <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
-            {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
-          </div>
-          {article.premium && !isAdmin && (
-            <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
-              Premium{' '}<span className="icon text--theme-light">R</span>
-            </div>
-          )}
-          <img
-            onClick={showArticle}
-            src={article.portada && article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
-            alt=""
-          />
+          {
+            article.portada && article.portada.descripcion && (
+              <>
+                <div onClick={showArticle} className="text-sm">
+                  {article.portada.descripcion || 'Sin descripción'}
+                </div>
+              </>
+            )
+          }
         </div>
-
-        <div onClick={showArticle} className={styles.cardLikesContainer}>
-          <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>
-          <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{article.likes}</div>
-        </div>
-        <div onClick={showArticle} className={`title ${styles.cardMargin}`}>
-          {article.portada && article.portada.titulo ? article.portada.titulo : 'Sin título'}
-        </div>
-        <div onClick={showArticle} className="text-sm">
-          {article.portada && article.portada.descripcion ? article.portada.descripcion : 'Sin descripción'}
-        </div>
-      </div>
-    </>
+      </>
+    ) : (<></>)
   );
 };
 
