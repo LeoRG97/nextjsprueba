@@ -23,6 +23,10 @@ const ArticlesDetailComponent = ({
     router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
   };
 
+  const handleUpdate = () => {
+    router.push(`/editor/${article.tipo.toLowerCase()}/${article._id}`);
+  };
+
   return (
     article ? (
       <>
@@ -30,7 +34,11 @@ const ArticlesDetailComponent = ({
           <div className={styles.cardImageContainer}>
             {
               isAdmin && (
-                <ArticleOptionsAdmin articleId={article._id} onDelete={onDelete} />
+                <ArticleOptionsAdmin
+                  articleId={article._id}
+                  onDelete={onDelete}
+                  onUpdate={handleUpdate}
+                />
               )
             }
             <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
