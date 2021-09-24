@@ -37,7 +37,8 @@ const ProfileScreen = () => {
       <div className="container">
         <ProfileMenu artsNumb={artsNumb} />
 
-        {query.setting === 'articles' && <ProfileArticles />}
+        {query.setting === 'articles' && <ProfileArticles estado="publicado" />}
+        {query.setting === 'drafts' && <ProfileArticles estado="borrador" />}
         {query.setting === 'members-and-invitations' && <ProfileMembersAndInvitations />}
         {query.setting === 'library' && <ProfileSavedArts savedArts={savedArts} />}
         {query.setting === 'about-me' && <AboutMeComponent />}
