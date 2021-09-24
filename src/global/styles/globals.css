@@ -26,6 +26,7 @@
   --black: #0d0c22;
   --black-10: #232739;
   --blackRGB-10: rgb(13 13 34);
+  --blackRGB-20: rgb(35 39 57);
   --black-20: #393f5b;
   --gray: #757e94;
   /* --white-20: #e7e7e9;
@@ -54,6 +55,7 @@
   --magenta-20: #aa3c8033;
 
   --contentTransparentRGB: rgba(0, 0, 0, 0);
+  --contentTransparentRGB-d-l: var(--blackRGB-20);
 
   --colorPrimary: var(--blue); /* color corporativo */
   --colorPrimaryDark: var(--black); /* Iconos y texto primario */
@@ -84,6 +86,7 @@
   --text-color-secondary: var(--gray);
   --text-color-highlight: var(--blue);
   --text-color-error: var(--colorError);
+  --text-color-link: var(--blue2);
 
   /* ARTICLE CARD COLORS */
   --colorArticleLabel: var(--black);
@@ -228,6 +231,20 @@ a {
 .text-link:hover {
   color: var(--text-color-highlight);
   text-decoration: underline;
+}
+
+
+.text-link-dark {
+  font-family: var(--font-regular);
+  font-size: var(--font-size-sm);
+  color: var(--text-color-link);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.text-link-dark:hover {
+  color: var(--text-color-link);
+  text-decoration: none;
 }
 
 .icon {
