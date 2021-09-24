@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import { useSession } from 'next-auth/client';
+// import { useSession } from 'next-auth/client';
 import { Modal } from 'react-bootstrap';
 import { Layout, AccordionComponent } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 
 export default function ThinkTools() {
   const [onShowTools, setOnShowTools] = useState(false);
-  const [session] = useSession();
+  // const [session] = useSession();
 
   return (
     <Layout>
@@ -24,7 +24,7 @@ export default function ThinkTools() {
         >
 
           <img
-            className={`img-fluid position-absolute top-0 start-0 
+            className={`img-fluid position-absolute top-0 start-0
             ${styles.imgZindex}`}
             src="/images/think-tools/Fondo-textura.png"
             alt="Fondo-textura"
@@ -49,24 +49,20 @@ export default function ThinkTools() {
               <img className="img-fluid my-2" src="/images/think-tools/Laboratorio.png" alt="Laboratorio" />
             </div>
           </div>
-
-          {
-            session ? (
-              <Modal
-                show={onShowTools}
-                size="md"
-                centered
-                onHide={() => setOnShowTools(!onShowTools)}
-              >
-                <div className={`container-fluid ${styles.modalInner} p-4`}>
-                  <h1 className="title-xl text-center py-3">Me gustaría...</h1>
-                  <div className={styles.accordion}>
-                    <AccordionComponent />
-                  </div>
-                </div>
-              </Modal>
-            ) : (<></>)
-          }
+          <Modal
+            show={onShowTools}
+            size="md"
+            centered
+            onHide={() => setOnShowTools(!onShowTools)}
+          >
+            <div className={`container-fluid ${styles.modalInner} p-4`}>
+              <h1 className="title-xl text-center py-3">Me gustaría...</h1>
+              <div className={styles.accordion}>
+                <AccordionComponent />
+              </div>
+            </div>
+          </Modal>
+          ) : (<></>)
         </div>
       </main>
     </Layout>

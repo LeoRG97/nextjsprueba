@@ -2,7 +2,9 @@ import Head from 'next/head';
 import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
 import { useState } from 'react';
-import { Footer, LoadingIndicator, Switch } from '@/components';
+import {
+  Footer, LoadingIndicator, Switch, SubscriptionModal,
+} from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchData } from '@/services/swr';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
@@ -205,6 +207,7 @@ export default function Home() {
             </Row>
           </Container>
         </div>
+        <SubscriptionModal />
       </main>
 
       <Footer />
