@@ -1,6 +1,5 @@
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 // import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -17,9 +16,11 @@ import {
   deleteSaveThisArt,
   checkIfLikedThisArt,
 } from '@/services/articles';
-import { BUCKET_URL, BASE_URL } from '@/global/constants';
+import { BASE_URL_PROYECT } from '@/global/constants';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
+import HeadArticle from '@/components/blog/HeadArticle';
+import SocialShareModal from '@/components/modalsIndicators/SocialShareModal';
 
 // página para ver un artículo en específico
 const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
@@ -34,8 +35,9 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const [cssSaved, setSaved] = useState('');
   const [idSaved, setIdSaved] = useState('');
   const [isLiked, setLiked] = useState(false);
+  const [modalShare, setModalShare] = useState(false);
 
-  const currentUrl = `${BASE_URL}trending-topics/${query.author}/${query.slug}`;
+  const currentUrl = `${BASE_URL_PROYECT}trending-topics/${query.author}/${query.slug}`;
   const handleRateArticle = async () => {
     if (session) {
       const res = await rateArticle(blog._id, session.user.id);
@@ -180,21 +182,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
 
   return (
     <Layout>
-      <Head>
-        <title>Blog</title>
-        <meta name="description" content="NTTDATA" />
-        <link rel="icon" href="/favicon.ico" />
-        <title>{blog && blog.portada ? blog.portada.titulo : ''}</title>
-        <meta name="twitter:card" content="summary" />
-        <meta property="og:url" content={currentUrl} />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content={blog && blog.portada ? blog.portada.titulo : ''} />
-        <meta property="og:image" content={blog && blog.portada ? (`${BUCKET_URL}${blog.portada.ruta_imagen}`) : ''} />
-        <meta
-          property="og:description"
-          content={blog && blog.portada ? blog.portada.descripcion : ''}
-        />
-      </Head>
+      <HeadArticle
+        dataArticle={artInfo}
+        currentUrl={currentUrl}
+      />
       <main>
         <Container fluid className="blog-content">
           {
@@ -237,6 +228,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                           cssSaved={cssSaved}
                           quitSaved={quitSaveThisArt}
                           saveArt={saveThisArt}
+                          shareArt={() => setModalShare(true)}
                         />
                       </Col>
                       <Col xl="3" lg="3" sm="2" className="col-1">
@@ -257,7 +249,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                                     <button className="Btn-rounded" title="Guardar" onClick={saveThisArt}>U</button>
                                   )
                                 }
-                                <button className="Btn-rounded">T</button>
+                                <button className="Btn-rounded" onClick={() => setModalShare(true)}>T</button>
                               </div>
                             ) : (<></>)
                           }
@@ -282,6 +274,12 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
             )
           }
         </Container>
+        <SocialShareModal
+          show={modalShare}
+          onClose={() => setModalShare(false)}
+          currentUrl={currentUrl}
+          title={blog.portada ? blog.portada.titulo : ''}
+        />
       </main>
       <Footer />
     </Layout>

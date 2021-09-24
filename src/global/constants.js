@@ -1,5 +1,6 @@
 module.exports = {
   BASE_URL: 'https://api-everis.girasolo.mx/v1/',
+  BASE_URL_PROYECT: 'https://master.d3fkb5bt3ddr18.amplifyapp.com/',
   BUCKET_URL: 'https://ilovet-app.s3.us-east-2.amazonaws.com/',
   Roles: {
     User: 'user',

@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import styles from './blog.module.css';
 
 const AutorComponent = ({
-  autor, dateBlog, onLike, liked, likes, cssSaved, quitSaved, saveArt,
+  autor, dateBlog, onLike, liked, likes, cssSaved, quitSaved, saveArt, shareArt,
 }) => {
   const converDate = (date) => {
     const dateFormat = new Date(date);
@@ -48,7 +48,7 @@ const AutorComponent = ({
         </Col>
         <Col xl="6" lg="6" sm="12" className="col-12">
           <div className="content-right">
-            <button className="Btn-rounded d-i">T</button>
+            <button className="Btn-rounded d-i" onClick={shareArt}>T</button>
             {
               (cssSaved !== '') ? (
                 <button className={`Btn-rounded d-i ${cssSaved}`} title="Guardar" onClick={quitSaved}>U</button>
@@ -75,6 +75,7 @@ AutorComponent.propTypes = {
   cssSaved: PropTypes.string,
   quitSaved: PropTypes.func.isRequired,
   saveArt: PropTypes.func.isRequired,
+  shareArt: PropTypes.func.isRequired,
 };
 
 AutorComponent.defaultProps = {
