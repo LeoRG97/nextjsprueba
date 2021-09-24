@@ -1,8 +1,14 @@
+import { useState } from 'react';
 import Head from 'next/head';
-import { Layout } from '@/components';
+import { useSession } from 'next-auth/client';
+import { Modal } from 'react-bootstrap';
+import { Layout, AccordionComponent } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 
 export default function ThinkTools() {
+  const [onShowTools, setOnShowTools] = useState(false);
+  const [session] = useSession();
+
   return (
     <Layout>
       <Head>
@@ -24,7 +30,7 @@ export default function ThinkTools() {
             alt="Fondo-textura"
           />
 
-          <div className="row p-5 d-flex align-items-center ">
+          <div className={`row p-5 d-flex align-items-center  ${onShowTools && styles.modalOpen}`}>
             <div className="col-lg-6 col-md-6 col-sm-12 px-4">
               <h1 className="title-xl">Soluciones a medida de sus objetivos</h1>
               <p className="py-4 text-sm text--theme-light">
@@ -33,7 +39,7 @@ export default function ThinkTools() {
                 e impulsar su desarrollo personal.
               </p>
               <div className={styles.btnTool}>
-                <button className="button button--theme-primary me-2">
+                <button onClick={() => setOnShowTools(!onShowTools)} className="button button--theme-primary me-2">
                   Encuentra tu herramienta
                 </button>
               </div>
@@ -44,6 +50,23 @@ export default function ThinkTools() {
             </div>
           </div>
 
+          {
+            session ? (
+              <Modal
+                show={onShowTools}
+                size="md"
+                centered
+                onHide={() => setOnShowTools(!onShowTools)}
+              >
+                <div className={`container-fluid ${styles.modalInner} p-4`}>
+                  <h1 className="title-xl text-center py-3">Me gustaría...</h1>
+                  <div className={styles.accordion}>
+                    <AccordionComponent />
+                  </div>
+                </div>
+              </Modal>
+            ) : (<></>)
+          }
         </div>
       </main>
     </Layout>
