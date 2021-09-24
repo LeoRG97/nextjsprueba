@@ -16,7 +16,6 @@ const SocialShareModal = ({
     setCopySuccess(true);
   };
   // eslint-disable-next-line no-console
-  console.log('title', title);
 
   const urlTwitter = currentUrl.slice(8);
 

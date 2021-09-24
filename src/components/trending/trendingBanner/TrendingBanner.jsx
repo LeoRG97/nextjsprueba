@@ -17,9 +17,18 @@ const TrendingBannerComponent = ({ loggedIn }) => {
     }
   };
 
+  const getTitle = () => {
+    if (query.search) {
+      return `"${query.search}"`;
+    } if (query.user) {
+      return 'Selección de publicaciones de acuerdo a tus intereses';
+    }
+    return 'Todas las publicaciones';
+  };
+
   return (
     <>
-      {!loggedIn && (
+      {!loggedIn && !query.search && (
         <div className={styles.bannerImage}>
           <div>
             <div className="text-md">Trending topics</div>
@@ -40,7 +49,7 @@ const TrendingBannerComponent = ({ loggedIn }) => {
         </div>
       )}
       <div className={styles.centeredTitle}>
-        {loggedIn ? (
+        {loggedIn && !query.q && (
           <div className={`${styles.pageSwitch} ${styles.topPadding}`}>
             <small className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
             <Switch
@@ -50,10 +59,11 @@ const TrendingBannerComponent = ({ loggedIn }) => {
             />
             <small className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
           </div>
-        ) : <span className="subtitle d-block mt-4">Quiero ver</span>}
-
+        )}
+        {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
+        {query.search && <p className={`subtitle d-block ${styles.topPadding}`}>Resultados para</p>}
         <h1 className="title-xl text-center">
-          {query.user ? 'Selección de publicaciones de acuerdo a tus intereses' : 'Todas las publicaciones'}
+          {getTitle()}
         </h1>
       </div>
     </>

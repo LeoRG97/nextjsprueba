@@ -27,7 +27,9 @@ export const fetchPaginatedDataWithAuthToken = async (route, query, pageNum) => 
 };
 
 export const fetchPaginatedData = async (route, query, pageNum) => {
-  const { category, type, sort } = query;
+  const {
+    category, type, sort, search,
+  } = query;
   const res = await axios().get(`${route}`, {
     params: {
       pageSize: 9,
@@ -35,6 +37,7 @@ export const fetchPaginatedData = async (route, query, pageNum) => {
       ...(category && { categoria: category }),
       ...(type && { tipo: type }),
       ...(sort && { sort }),
+      ...(search && { cadena: search }),
     },
   });
   return res.data;
