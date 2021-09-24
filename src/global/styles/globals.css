@@ -246,6 +246,10 @@ a {
   color: var(--text-color-secondary);
 }
 
+.icon--theme-blue {
+  color: var(--blue2);
+}
+
 .icon--theme-highlight {
   color: var(--text-color-highlight);
 }
@@ -1275,6 +1279,14 @@ html {
   visibility: hidden;
   width: 0;
   position: relative;
+}
+
+.icon-modal--md {
+  font-size: var(--icon-size-md);
+}
+
+.portapapeles {
+  cursor: pointer;
 }
 
 /* SELECTBOX ============================================================================ */

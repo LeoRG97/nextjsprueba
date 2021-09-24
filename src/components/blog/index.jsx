@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { AutorComponent } from '@/components';
 
 const BlogComponent = ({
-  blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked,
+  blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
 }) => {
   const renderCode = (item) => {
     if (item.type === 'linkVideo') {
@@ -37,6 +37,7 @@ const BlogComponent = ({
             cssSaved={cssSaved}
             quitSaved={quitSaved}
             saveArt={saveArt}
+            shareArt={shareArt}
           />
           <div className="article-content">
             {
@@ -65,6 +66,7 @@ const BlogComponent = ({
             cssSaved={cssSaved}
             quitSaved={quitSaved}
             saveArt={saveArt}
+            shareArt={shareArt}
           />
         </div>
       </Container>
@@ -80,6 +82,7 @@ BlogComponent.propTypes = {
   cssSaved: PropTypes.string,
   quitSaved: PropTypes.func.isRequired,
   saveArt: PropTypes.func.isRequired,
+  shareArt: PropTypes.func.isRequired,
 };
 
 BlogComponent.defaultProps = {
