@@ -22,9 +22,9 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
 
   useEffect(() => {
     if (data && pageNum === 1) {
-      setArticles(data);
+      setArticles(data.data);
     } else if (data && pageNum > 1) {
-      setArticles([...articles, ...data]);
+      setArticles([...articles, ...data.data]);
     }
   }, [data]);
 
@@ -56,6 +56,14 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
 
   return (
     <>
+      {query.search && (
+        <div className="text-center">
+          <p className={`subtitle d-block ${styles.topPadding}`}>{data ? `${data.registros} resultados para` : 'Cargando...'}</p>
+          <h1 className="title-xl">
+            {`"${query.search}"`}
+          </h1>
+        </div>
+      )}
       {!router.query.user && <TrendingFilterComponent preferences={preferences} />}
       <div className="selects-container">
         <div className="select-recent">
@@ -109,7 +117,7 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
         ) : (
           <>
             {!data && <LoadingIndicator />}
-            {data && data.length > 0 && (
+            {data && data.data.length > 0 && (
               <button
                 className="button button--theme-secondary"
                 onClick={() => setPageNum(pageNum + 1)}

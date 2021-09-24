@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import Link from 'next/link';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import Switch from '@/components/switch/Switch';
 import styles from './tBanner.module.css';
@@ -19,7 +20,7 @@ const TrendingBannerComponent = ({ loggedIn }) => {
 
   const getTitle = () => {
     if (query.search) {
-      return `"${query.search}"`;
+      return null;
     } if (query.user) {
       return 'Selección de publicaciones de acuerdo a tus intereses';
     }
@@ -61,13 +62,16 @@ const TrendingBannerComponent = ({ loggedIn }) => {
           </div>
         )}
         {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
-        {query.search && <p className={`subtitle d-block ${styles.topPadding}`}>Resultados para</p>}
         <h1 className="title-xl text-center">
           {getTitle()}
         </h1>
       </div>
     </>
   );
+};
+
+TrendingBannerComponent.propTypes = {
+  loggedIn: PropTypes.bool.isRequired,
 };
 
 export default TrendingBannerComponent;

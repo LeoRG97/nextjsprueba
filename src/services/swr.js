@@ -40,7 +40,7 @@ export const fetchPaginatedData = async (route, query, pageNum) => {
       ...(search && { cadena: search }),
     },
   });
-  return res.data;
+  return res;
 };
 
 export const fetchInvitationsData = async (...args) => {
