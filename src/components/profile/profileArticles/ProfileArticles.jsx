@@ -16,7 +16,7 @@ import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import styles from './profile.module.css';
 
-const ProfileArticles = () => {
+const ProfileArticles = ({ estado }) => {
   const router = useRouter();
   const [loadModal, setLoadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
@@ -37,7 +37,7 @@ const ProfileArticles = () => {
     }
 
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.ArticlesUserAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}`; // API endpoint
+    return `${ApiRoutes.ArticlesUserAuthor}/${session.user.id}?estado=${estado}&pageNum=${pageIndex + 1}&pageSize=9${params}`; // API endpoint
   };
 
   const {
@@ -85,42 +85,46 @@ const ProfileArticles = () => {
 
   return (
     <>
-      <div className="selects-container">
-        <div className="select-recent">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-              { label: 'Blogs', value: 'Blog' },
-              { label: 'Videos', value: 'Video' },
-              { label: 'Podcasts', value: 'Podcast' },
-            ]}
-          />
-        </div>
-        <div className="select-filter">
-          <div className="dropdown BTN-drop align-right">
-            <div className="dropdown-select BTN">
-              <label className="button button--theme-primary">
-                Crear <span className="icon text--theme-light">1</span>
-              </label>
+      {
+        estado === 'publicado' && (
+          <div className="selects-container">
+            <div className="select-recent">
+              <ArticleListSelectComponent
+                defaultTitle="Todos"
+                currentValue={query.type}
+                onChange={handleTypeChange}
+                selectN="2"
+                items={[
+                  { label: 'Todos', value: '' },
+                  { label: 'Blogs', value: 'Blog' },
+                  { label: 'Videos', value: 'Video' },
+                  { label: 'Podcasts', value: 'Podcast' },
+                ]}
+              />
             </div>
-            <ul className={`select-dropdown ${styles.list_content}`}>
-              <li className="text-sm" id="h1" onClick={() => navigateToEditor('blog')}>
-                Blog
-              </li>
-              <li className="text-sm" id="h3" onClick={() => navigateToEditor('video')}>
-                Video
-              </li>
-              <li className="text-sm" id="p" onClick={() => navigateToEditor('podcast')}>
-                Podcast
-              </li>
-            </ul>
+            <div className="select-filter">
+              <div className="dropdown BTN-drop align-right">
+                <div className="dropdown-select BTN">
+                  <label className="button button--theme-primary">
+                    Crear <span className="icon text--theme-light">1</span>
+                  </label>
+                </div>
+                <ul className={`select-dropdown ${styles.list_content}`}>
+                  <li className="text-sm" id="h1" onClick={() => navigateToEditor('blog')}>
+                    Blog
+                  </li>
+                  <li className="text-sm" id="h3" onClick={() => navigateToEditor('video')}>
+                    Video
+                  </li>
+                  <li className="text-sm" id="p" onClick={() => navigateToEditor('podcast')}>
+                    Podcast
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        )
+      }
       <>
         {data && data.map((page) => {
           return page.map((article) => (
