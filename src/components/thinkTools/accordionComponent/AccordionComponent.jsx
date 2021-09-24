@@ -41,7 +41,7 @@ const AccordionComponent = () => {
   return (
     <div className="container">
       <div className="row justify-content-center">
-        <div className="col-12 col-md-6">
+        <div className="col-12">
           <Accordion className={styles.accordion_container}>
             {
               data ? (
