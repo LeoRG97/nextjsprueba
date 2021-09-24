@@ -49,7 +49,7 @@ const TrendingBannerComponent = ({ loggedIn }) => {
         </div>
       )}
       <div className={styles.centeredTitle}>
-        {loggedIn && !query.q && (
+        {loggedIn && !query.search && (
           <div className={`${styles.pageSwitch} ${styles.topPadding}`}>
             <small className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
             <Switch
