@@ -15,6 +15,7 @@ import {
   searchMySaveArt,
   deleteSaveThisArt,
   checkIfLikedThisArt,
+  fetchArticlesSSR,
 } from '@/services/articles';
 import { BASE_URL_PROYECT } from '@/global/constants';
 import { getProfileBySlug } from '@/services/profile';
@@ -26,10 +27,10 @@ import SocialShareModal from '@/components/modalsIndicators/SocialShareModal';
 const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const { query } = useRouter();
   const [session] = useSession();
+  const router = useRouter();
   const [blog, setData] = useState({});
   const [autor, setAutor] = useState();
   const [htmlCode, setCode] = useState({});
-  const [notFind, setFind] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isOnView, setWatch] = useState(false);
   const [cssSaved, setSaved] = useState('');
@@ -118,11 +119,9 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
         }
         setLoading(false);
       } else {
-        setFind(true);
         setLoading(false);
       }
     } else {
-      setFind(true);
       setLoading(false);
     }
   };
@@ -180,6 +179,23 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
     }
   }, [session, blog]);
 
+  if (router.isFallback) {
+    // mientras intenta generar la página
+    return (
+      <Layout className="d-flex justify-content-center align-items-center">
+        <LoadingIndicator />
+      </Layout>
+    );
+  }
+  if (!artInfo) {
+    // si no logró generar la página
+    return (
+      <Layout className="d-flex justify-content-center align-items-center">
+        <h1 className="title">Artículo no encontrado</h1>
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <HeadArticle
@@ -195,81 +211,71 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
               </div>
             ) : (
               <>
-                {
-                  (notFind) ? (
-                    <Row>
-                      <Col className="blog-not-find">
-                        <h3 className="title">Articulo no encontrado</h3>
-                      </Col>
-                    </Row>
-                  ) : (
-                    <Row>
-                      <Col xl="3" lg="3" sm="2" className="col-1">
-                        <div className="content-fixed left">
-                          {
-                            (!isOnView) ? (
-                              <div className="content-btns">
-                                <label className="text-md">Ver en</label>
-                                <button className="Btn-square">P</button>
-                                <button className="Btn-square">S</button>
-                                <button className="Btn-square">N</button>
-                              </div>
-                            ) : (<></>)
-                          }
-                        </div>
-                      </Col>
-                      <Col xl="6" lg="6" sm="8" className="col-12">
-                        <BlogComponent
-                          blogInfo={blog}
-                          htmlCode={htmlCode}
-                          autorInfo={autor}
-                          onLike={handleRateArticle}
-                          isLiked={isLiked}
-                          cssSaved={cssSaved}
-                          quitSaved={quitSaveThisArt}
-                          saveArt={saveThisArt}
-                          shareArt={() => setModalShare(true)}
-                        />
-                      </Col>
-                      <Col xl="3" lg="3" sm="2" className="col-1">
-                        <div className="content-fixed right">
-                          {
-                            (!isOnView) ? (
-                              <div className="content-btns">
-                                <button
-                                  onClick={() => !isLiked && handleRateArticle()}
-                                  className={`Btn-rounded ${isLiked && 'Btn-rounded__active'}`}
-                                >
-                                  c
-                                </button>
-                                {
-                                  (cssSaved !== '') ? (
-                                    <button className={`Btn-rounded ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
-                                  ) : (
-                                    <button className="Btn-rounded" title="Guardar" onClick={saveThisArt}>U</button>
-                                  )
-                                }
-                                <button className="Btn-rounded" onClick={() => setModalShare(true)}>T</button>
-                              </div>
-                            ) : (<></>)
-                          }
-                        </div>
-                      </Col>
-                      <Row>
-                        <Col xl="1" lg="1" sm="1" className=""> </Col>
-                        <Col xl="10" lg="10" sm="12" className="">
-                          <div id="contentCarousel">
-                            <CarouselPrefArt
-                              blogId={blog._id}
-                              categories={blog.categorias}
-                            />
+                <Row>
+                  <Col xl="3" lg="3" sm="2" className="col-1">
+                    <div className="content-fixed left">
+                      {
+                        (!isOnView) ? (
+                          <div className="content-btns">
+                            <label className="text-md">Ver en</label>
+                            <button className="Btn-square">P</button>
+                            <button className="Btn-square">S</button>
+                            <button className="Btn-square">N</button>
                           </div>
-                        </Col>
-                        <Col xl="1" lg="1" sm="1" className=""> </Col>
-                      </Row>
-                    </Row>
-                  )
-                }
+                        ) : (<></>)
+                      }
+                    </div>
+                  </Col>
+                  <Col xl="6" lg="6" sm="8" className="col-12">
+                    <BlogComponent
+                      blogInfo={blog}
+                      htmlCode={htmlCode}
+                      autorInfo={autor}
+                      onLike={handleRateArticle}
+                      isLiked={isLiked}
+                      cssSaved={cssSaved}
+                      quitSaved={quitSaveThisArt}
+                      saveArt={saveThisArt}
+                      shareArt={() => setModalShare(true)}
+                    />
+                  </Col>
+                  <Col xl="3" lg="3" sm="2" className="col-1">
+                    <div className="content-fixed right">
+                      {
+                        (!isOnView) ? (
+                          <div className="content-btns">
+                            <button
+                              onClick={() => !isLiked && handleRateArticle()}
+                              className={`Btn-rounded ${isLiked && 'Btn-rounded__active'}`}
+                            >
+                              c
+                            </button>
+                            {
+                              (cssSaved !== '') ? (
+                                <button className={`Btn-rounded ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
+                              ) : (
+                                <button className="Btn-rounded" title="Guardar" onClick={saveThisArt}>U</button>
+                              )
+                            }
+                            <button className="Btn-rounded" onClick={() => setModalShare(true)}>T</button>
+                          </div>
+                        ) : (<></>)
+                      }
+                    </div>
+                  </Col>
+                  <Row>
+                    <Col xl="1" lg="1" sm="1" className=""> </Col>
+                    <Col xl="10" lg="10" sm="12" className="">
+                      <div id="contentCarousel">
+                        <CarouselPrefArt
+                          blogId={blog._id}
+                          categories={blog.categorias}
+                        />
+                      </div>
+                    </Col>
+                    <Col xl="1" lg="1" sm="1" className=""> </Col>
+                  </Row>
+                </Row>
               </>
             )
           }
@@ -288,9 +294,15 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
 
 // getStaticPaths
 export async function getStaticPaths() {
+  const res = await fetchArticlesSSR({ pageSize: 20 });
+
+  const paths = res.data.map((article) => {
+    return { params: { author: article.usuario_id.slug, slug: article.slug } };
+  });
+
   return {
-    paths: [],
-    fallback: 'blocking',
+    paths,
+    fallback: true,
   };
 }
 
@@ -308,6 +320,7 @@ export async function getStaticProps({ params }) {
           authorInfo: authorInfo || null,
           artCode: artCode || null,
         },
+        revalidate: 60,
       };
     }
   }

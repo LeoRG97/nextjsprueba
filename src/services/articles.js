@@ -13,12 +13,14 @@ export const fetchArticleById = async (id) => {
 };
 
 export const fetchArticlesSSR = async (query) => {
-  const { category, type, sort } = query;
+  const {
+    category, type, sort, pageSize,
+  } = query;
   try {
     const res = await axios().get(ApiRoutes.Articles, {
       params: {
         pageNum: 1,
-        pageSize: 9,
+        pageSize: pageSize || 9,
         ...(category && { categoria: category }),
         ...(type && { tipo: type }),
         ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
