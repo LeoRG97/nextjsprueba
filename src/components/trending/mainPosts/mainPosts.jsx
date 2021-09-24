@@ -12,7 +12,7 @@ import { LoadingIndicator } from '@/components';
 
 const AllPosts = ({ preferences, initialData, loggedIn }) => {
   const router = useRouter();
-  const [articles, setArticles] = useState(initialData);
+  const [articles, setArticles] = useState(initialData.data);
   const [pageNum, setPageNum] = useState(1);
 
   const { data } = useSWR(

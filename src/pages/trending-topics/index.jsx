@@ -48,6 +48,17 @@ export async function getServerSideProps({ query, req }) {
   const session = await getSession({ req });
 
   let results;
+
+  if (query.search) {
+    return {
+      props: {
+        preferences,
+        articulos: {},
+        isAuthenticated: session !== null,
+      },
+    };
+  }
+
   if (query.user) {
     if (!session) {
       return {
@@ -67,7 +78,7 @@ export async function getServerSideProps({ query, req }) {
   return {
     props: {
       preferences,
-      articulos: results.data ? results.data : results,
+      articulos: results,
       isAuthenticated: session !== null,
     },
   };

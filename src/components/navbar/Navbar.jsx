@@ -14,6 +14,7 @@ import UserNavbarComponent from './UserNavbar';
 const NavbarComponent = () => {
   const router = useRouter();
   const [session, loading] = useSession();
+  const [searchText, setSearchText] = useState('');
   const dispatch = useDispatch();
   const { data, fetched } = useSelector((state) => state.profile);
   const [expanded, setExpanded] = useState(false);
@@ -30,6 +31,17 @@ const NavbarComponent = () => {
       dispatch(fetchProfile());
     }
   }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchText.length >= 4) {
+      router.push({
+        pathname: '/trending-topics',
+        query: { search: searchText },
+      }, null, { shallow: true });
+      setExpanded(false);
+    }
+  };
 
   return (
     <div className={styles.navC}>
@@ -86,17 +98,20 @@ const NavbarComponent = () => {
               </div>
 
               <div className={styles.divNavItemStyle}>
-                <div className="input-container w-75">
-                  <input
-                    type="text"
-                    placeholder="Buscar..."
-                    className="input"
-                    required
-                  />
-                  <button className="input__icon" type="button">
-                    <span className="icon icon--theme-secondary">7</span>
-                  </button>
-                </div>
+                <form onSubmit={handleSearch} className="container-fluid">
+                  <div className="input-container w-75">
+                    <input
+                      type="text"
+                      placeholder="Buscar..."
+                      className="input"
+                      value={searchText}
+                      onChange={(e) => setSearchText(e.target.value)}
+                    />
+                    <button className="input__icon" type="button" onClick={handleSearch}>
+                      <span className="icon icon--theme-secondary">7</span>
+                    </button>
+                  </div>
+                </form>
               </div>
               {
                 loading ? (
@@ -104,7 +119,7 @@ const NavbarComponent = () => {
                 ) : (
                   <div className={styles.divNavItemStyle}>
                     <Link href="/" passHref>
-                      <button className="button button--theme-yellow me-2 button_discover">
+                      <button className="button button--theme-yellow me-2 button_discover" onClick={handleSearch}>
                         <span className="button__icon-left text--theme-yellow">9</span>{' '}Descubrir
                       </button>
                     </Link>
@@ -137,12 +152,13 @@ const NavbarComponent = () => {
       </Navbar>
       <Navbar
         className={styles.navbarMobile}
+        expanded={expanded}
         id="navbarMobile"
         expand="lg"
         fixed="top"
       >
         <Container fluid className={expanded === 'expanded' ? styles.containerFluidExpanded : styles.containerFluid}>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" className={expanded === 'expanded' ? styles.iconToggleExpanded : styles.iconToggle} onClick={() => setExpanded(expanded ? false : 'expanded')} />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className={expanded === 'expanded' ? styles.iconToggleExpanded : styles.iconToggle} onClick={() => setExpanded(!expanded)} />
           <Navbar.Brand>
             <Link href="/" passHref>
               <Nav className={styles.a}>
@@ -178,21 +194,24 @@ const NavbarComponent = () => {
               )
             }
           </Navbar.Brand>
-          <Navbar.Collapse id="basic-navbar-nav" className={`${styles.expandenMenuMobile} mt-4`} expanded={expanded.toString()}>
+          <Navbar.Collapse id="basic-navbar-nav" className={`${styles.expandenMenuMobile} mt-4`}>
             <Nav className={styles.linksContainer}>
               <div className="row">
                 <div className="col-12">
-                  <div className="input-container">
-                    <input
-                      type="text"
-                      placeholder="Buscar..."
-                      className="input"
-                      required
-                    />
-                    <button className="input__icon" type="button">
-                      <span className="icon icon--theme-secondary">7</span>
-                    </button>
-                  </div>
+                  <form onSubmit={handleSearch}>
+                    <div className="input-container w-100">
+                      <input
+                        type="text"
+                        placeholder="Buscar..."
+                        className="input"
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
+                      />
+                      <button className="input__icon" type="button">
+                        <span className="icon icon--theme-secondary">7</span>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
 
