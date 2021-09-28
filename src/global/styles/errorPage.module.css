@@ -1,0 +1,82 @@
+.no_padd {
+  padding: 0;
+}
+
+.content_error {
+  background-image: url('/images/imgpr3.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center;
+  min-height: 100vh;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.content_error::after {
+  content: "";
+  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 45%);
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  filter: brightness(100%);
+}
+
+.container_elements {
+  z-index: 0;
+  position: initial;
+  margin: auto;
+  margin-top: 200px;
+  text-align: center;
+  max-width: 480px;
+}
+
+.cont_img {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  background: transparent;
+}
+
+.cont_img::before {
+  display: flex;
+  content: "";
+  padding-top: 100%;
+}
+
+.cont_img img {
+  position: relative;
+  max-width: 100%;
+  height: initial;
+  z-index: 2;
+}
+
+.cont_text {
+  position: relative;
+  margin: auto;
+  padding-top: 5px;
+  max-width: 446px;
+  z-index: 2;
+}
+
+@media (max-width: 720px) {
+  .container_elements {
+    margin-top: 150px;
+  }
+  .content_error {
+    background-size: 100% 100%;
+  }
+}
+
+@media (max-width: 540px) {
+  .container_elements {
+    margin: auto;
+    margin-top: 150px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
