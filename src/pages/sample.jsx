@@ -49,7 +49,7 @@ export default function Home() {
           Highlighted text (or Link text)
         </a>
 
-        <small className="d-block text-regular text--theme-error">
+        <small className="d-block text-md text--theme-error">
           Error text
         </small>
 

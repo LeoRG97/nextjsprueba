@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
+import { useSWRConfig } from 'swr';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import {
@@ -18,6 +19,9 @@ import styles from './profile.module.css';
 
 const ProfileArticles = ({ estado }) => {
   const router = useRouter();
+  const {
+    mutate: globalMutate,
+  } = useSWRConfig();
   const [loadModal, setLoadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const [modalError, setModalError] = useState(false);
@@ -53,6 +57,7 @@ const ProfileArticles = ({ estado }) => {
         const filtered = await existingData.filter((item) => item[0]?._id !== rs.id);
         return filtered;
       });
+      globalMutate([ApiRoutes.UserTotals, session.user.id]);
       setLoadModal(false);
       setSuccessModal(true);
     } catch (error) {

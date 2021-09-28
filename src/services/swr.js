@@ -9,7 +9,7 @@ export const fetchData = async (...args) => {
 // para recuperar un objeto específico mediante su ID
 export const fetchItemById = async (...args) => {
   const res = await axios().get(`${args[0]}/${args[1]}`);
-  return res;
+  return res.data;
 };
 
 export const fetchPaginatedDataWithAuthToken = async (route, query, pageNum) => {

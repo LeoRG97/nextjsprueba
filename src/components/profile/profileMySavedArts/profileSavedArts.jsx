@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import { useSession } from 'next-auth/client';
 import { Container, Row } from 'react-bootstrap';
@@ -9,7 +8,7 @@ import {
   ArticlesListComponent, LoadingIndicator,
 } from '@/components';
 
-const ProfileSavedArts = ({ savedArts }) => {
+const ProfileSavedArts = () => {
   const [pageBlog, setData] = useState(1);
   const [arrayBlog, setArrayData] = useState([]);
   const [initData, setInitData] = useState();
@@ -41,9 +40,6 @@ const ProfileSavedArts = ({ savedArts }) => {
         });
         setArrayData(arrayArt);
       }
-    }
-    if (data.registros) {
-      savedArts(data.registros);
     }
   };
 
@@ -95,10 +91,6 @@ const ProfileSavedArts = ({ savedArts }) => {
       }
     </>
   );
-};
-
-ProfileSavedArts.propTypes = {
-  savedArts: PropTypes.func.isRequired,
 };
 
 export default ProfileSavedArts;
