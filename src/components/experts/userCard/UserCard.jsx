@@ -25,7 +25,7 @@ const UserCard = ({ user }) => {
         <div className={styles.infoTop}>
           <h3 className="title">{`${name} ${apellidos || ''}`}</h3>
           <div>
-            <span className="text-regular text--theme-light d-block">{position}</span>
+            <span className="text-md text--theme-light d-block">{position}</span>
             <small className="text-sm d-block">{company}</small>
           </div>
         </div>

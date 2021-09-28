@@ -14,6 +14,7 @@ module.exports = {
     Experts: 'users/expertos',
     UserRatedArticles: 'users/likes',
     UserSavedArticles: '/guardados',
+    UserTotals: 'users/totales',
     Articles: 'articulos',
     ArticlesUserPreference: 'articulos/preferencias/usuario',
     Invitation: 'invitaciones',

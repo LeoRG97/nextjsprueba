@@ -58,12 +58,12 @@ const TrendingFilterComponent = ({ preferences }) => {
       <div className={styles.filterContainer}>
         <div className={styles.filterOpacity1} />
         <div className={`items ${styles.filters}`}>
-          <div className={`text-regular ${styles.filter} ${!category && styles.current}`} onClick={() => navigateToFilter('')}>
+          <div className={`text-md ${styles.filter} ${!category && styles.current}`} onClick={() => navigateToFilter('')}>
             <div>Todos</div>
           </div>
           {
             preferences.map((pref) => (
-              <div key={pref._id} className={`text-regular ${styles.filter} ${category === pref.slug && styles.current}`} onClick={() => navigateToFilter(pref.slug)}>
+              <div key={pref._id} className={`text-md ${styles.filter} ${category === pref.slug && styles.current}`} onClick={() => navigateToFilter(pref.slug)}>
                 <div>{pref.nombre}</div>
               </div>
             ))

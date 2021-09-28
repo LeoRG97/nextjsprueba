@@ -100,7 +100,7 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
       ) : <></>}
       <div className="d-flex justify-content-center">
         {!loggedIn ? (
-          <div className={`${styles.listFooter} text-regular text--theme-light`}>
+          <div className={`${styles.listFooter} text-md text--theme-light`}>
             <div>
               Para ver más
               <Link href="/create-account" passHref>
@@ -110,7 +110,7 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
             <div>
               ó
               <Link href="/login" passHref>
-                <a className="text-regular text-link ms-2">Inicia sesión</a>
+                <a className="text-md text-link ms-2">Inicia sesión</a>
               </Link>
             </div>
           </div>

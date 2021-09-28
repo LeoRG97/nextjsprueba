@@ -3,14 +3,21 @@ import { useSession } from 'next-auth/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import useSWR from 'swr';
 import { adminAccess, authorAccess, reviewerAccess } from '@/helpers/accessVerifiers';
 import styles from './profileMenu.module.css';
+import { ApiRoutes } from '@/global/constants';
+import { fetchItemById } from '@/services/swr';
 
-const TabMenu = ({ artsNumb }) => {
+const TabMenu = () => {
   const { query } = useRouter();
   const [session] = useSession();
 
   const { user } = session;
+  const { data } = useSWR(
+    [ApiRoutes.UserTotals, session.user.id],
+    fetchItemById,
+  );
 
   useEffect(() => {
     const slider = document.querySelector('#profileNavbar');
@@ -40,6 +47,7 @@ const TabMenu = ({ artsNumb }) => {
     if (query.setting === 'about-me') {
       slider.scrollLeft = slider.scrollWidth;
     }
+
     dragScroll();
   });
 
@@ -51,14 +59,16 @@ const TabMenu = ({ artsNumb }) => {
             <a
               className={`subtitle ${styles.item} ${query.setting === 'articles' && styles.active}`}
             >
-              Publicaciones<span className="ms-2">0</span>
+              Publicaciones
+              <span className="ms-2 text-md text--theme-secondary">{data && data.publicacones ? data.publicacones : 0}</span>
             </a>
           </Link>
           <Link href="/profile/drafts" passHref scroll={false}>
             <a
               className={`subtitle ${styles.item} ${query.setting === 'drafts' && styles.active}`}
             >
-              Borradores<span className="ms-2">0</span>
+              Borradores
+              <span className="ms-2 text-md text--theme-secondary">{data && data.borradores ? data.borradores : 0}</span>
             </a>
           </Link>
           {reviewerAccess(user.role) && (
@@ -66,7 +76,8 @@ const TabMenu = ({ artsNumb }) => {
               <a
                 className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
               >
-                Herramientas<span className="ms-2">0</span>
+                Herramientas
+                <span className="ms-2 text-md text--theme-secondary">{data && data.herramientas ? data.herramientas : 0}</span>
               </a>
             </Link>
           )}
@@ -75,7 +86,8 @@ const TabMenu = ({ artsNumb }) => {
               <a
                 className={`subtitle ${styles.item} ${query.setting === 'members-and-invitations' && styles.active}`}
               >
-                Miembros e invitaciones<span className="ms-2">0</span>
+                Miembros e invitaciones
+                <span className="ms-2 text-md text--theme-secondary">{data && data.invitaciones ? data.invitaciones : 0}</span>
               </a>
             </Link>
           )}
@@ -85,14 +97,16 @@ const TabMenu = ({ artsNumb }) => {
         <a
           className={`subtitle ${styles.item} ${query.setting === 'library' && styles.active}`}
         >
-          Biblioteca<span className="ms-2">{(artsNumb) || (<></>)}</span>
+          Biblioteca
+          <span className="ms-2 text-md text--theme-secondary">{data && data.biblioteca ? data.biblioteca : 0}</span>
         </a>
       </Link>
       <Link href="/profile/ratings" passHref scroll={false}>
         <a
           className={`subtitle ${styles.item} ${query.setting === 'ratings' && styles.active}`}
         >
-          Valoraciones<span className="ms-2">0</span>
+          Valoraciones
+          <span className="ms-2 text-md text--theme-secondary">{data && data.valoraciones ? data.valoraciones : 0}</span>
         </a>
       </Link>
       <Link href="/profile/about-me" passHref scroll={false}>
