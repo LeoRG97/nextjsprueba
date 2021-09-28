@@ -8,9 +8,12 @@ const HeadArticle = ({
   currentUrl,
 }) => {
   // eslint-disable-next-line no-console
+  console.log(dataArticle);
   return (
     <Head>
       <meta name="twitter:card" content="summary" />
+      <meta name="twitter:description" content={dataArticle.portada ? dataArticle.portada.descripcion : ''} />
+      <meta name="twitter:title" content={dataArticle.portada ? dataArticle.portada.titulo : ''} />
       <meta property="og:url" content={currentUrl} />
       <meta property="og:type" content="website" />
       <meta property="og:title" content={dataArticle.portada ? dataArticle.portada.titulo : ''} />
