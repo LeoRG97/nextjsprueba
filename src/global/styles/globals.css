@@ -1329,6 +1329,15 @@ html {
   border: none;
 }
 
+.dropdown.More-drop {
+  width: fit-content;
+  border: 1px solid transparent;
+}
+
+.dropdown.More-drop:hover {
+  border: 1px solid var(--backgroung-color-low-dark);
+}
+
 .dropdown.no-m {
   margin: auto;
 }
@@ -1351,6 +1360,20 @@ html {
   line-height: 20px;
   padding: 5px;
   max-width: max-content;
+}
+
+.dropdown .dropdown-select.More {
+  padding: 0;
+  padding-bottom: 5px;
+  width: 35px;
+}
+
+.dropdown .dropdown-select.More > button {
+  width: -moz-available;
+  width: -webkit-fill-available;
+  text-align: center;
+  background-color: transparent;
+  border: 0;
 }
 
 .select-dropdown {
