@@ -69,7 +69,9 @@ const ForumsComponent = ({
                     {
                       showSubs && (
                         <div className={styles.forum_btn_cont}>
-                          <button className="button button--theme-primary" onClick={() => subscribeForum(forum._id)}>Unirme</button>
+                          <a href={forum.url} target="_blank" rel="noreferrer">
+                            <button className="button button--theme-primary" onClick={() => subscribeForum(forum._id)}>Unirme</button>
+                          </a>
                         </div>
                       )
                     }
