@@ -91,3 +91,13 @@ export const fetchToolContent = async (id) => {
   const res = await axios().get(`herramientas/archivo/${id}`);
   return res.data;
 };
+
+export const fetchToolsCategories = async () => {
+  const res = await axios().get('categorias-herramientas');
+  return res.data;
+};
+
+export const fetchTools = async () => {
+  const res = await axios().get('herramientas');
+  return res.data;
+};

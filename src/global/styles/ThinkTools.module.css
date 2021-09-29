@@ -19,7 +19,6 @@
   }
 }
 
-
 .containerInner {
   width: 100%;
   display: flex;
@@ -28,7 +27,15 @@
 
 .modalInner {
   width: 100%;
+  padding: 2rem 1.5rem;
 }
 .accordion {
   width: 100% !important;
+}
+
+@media (max-width: 575.98px) {
+  .modalInner {
+    width: 100%;
+    padding: 2rem 0rem;
+  }
 }

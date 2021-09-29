@@ -4,8 +4,9 @@ import Head from 'next/head';
 import { Modal } from 'react-bootstrap';
 import { Layout, AccordionComponent } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
+import { fetchTools, fetchToolsCategories } from '@/services/tools';
 
-export default function ThinkTools() {
+export default function ThinkTools({ toolsData }) {
   const [onShowTools, setOnShowTools] = useState(false);
   // const [session] = useSession();
 
@@ -55,10 +56,12 @@ export default function ThinkTools() {
             centered
             onHide={() => setOnShowTools(!onShowTools)}
           >
-            <div className={`container-fluid ${styles.modalInner} p-4`}>
+            <div className={`container-fluid ${styles.modalInner}`}>
               <h1 className="title-xl text-center py-3">Me gustaría...</h1>
               <div className={styles.accordion}>
-                <AccordionComponent />
+                <AccordionComponent
+                  accordionData={toolsData}
+                />
               </div>
             </div>
           </Modal>
@@ -67,4 +70,24 @@ export default function ThinkTools() {
       </main>
     </Layout>
   );
+}
+
+export async function getStaticProps() {
+  const categories = await fetchToolsCategories();
+  const tools = await fetchTools();
+
+  const toolsData = categories.map((cat) => {
+    const categoryTools = tools.filter((item) => item.categoria_id === cat._id);
+    return {
+      ...cat,
+      herramientasCategoria: categoryTools,
+    };
+  });
+
+  return {
+    props: {
+      toolsData,
+    },
+    revalidate: 60,
+  };
 }

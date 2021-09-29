@@ -4,20 +4,20 @@ import ContextAwareToggle from './ContextAwareToggle';
 import styles from './accordion.module.css';
 import AccordionCollapse from './AccordionCollapse';
 
-const CardAccordionComponent = ({ data, number }) => {
+const CardAccordionComponent = ({ data, number, isEditable }) => {
   return (
     <Card className={styles.card_container}>
       <Card.Header className={styles.card_title}>
         <div className="row align-items-center">
-          <div className="col-3 col-md-2 ">
+          <div className="col-2 col-lg-2 ">
             <div className={styles.icon_container}>
-              <span className={`icon-md ${styles.icon_card}`}>{data.categoriaIcono}</span>
+              <img src={data.imagen} alt={data.imagen ? data.imagen.split('icons/')[1] : ''} className={styles.icon_card} />
             </div>
           </div>
-          <div className="col-7 col-md-7 title">
-            <span>{data.categoria}</span>
+          <div className="col-8 col-lg-5 title">
+            <span className={styles.categoryTitle}>{data.nombre}</span>
           </div>
-          <div className="col-2 offset-md-1 col-md-2 justify-content-end">
+          <div className="col-2 offset-lg-3 col-lg-2 d-flex justify-content-end">
             <ContextAwareToggle eventKey={number.toString()} />
           </div>
         </div>
@@ -30,6 +30,7 @@ const CardAccordionComponent = ({ data, number }) => {
                 <AccordionCollapse
                   key={herramienta._id}
                   herramienta={herramienta}
+                  isEditable={isEditable}
                 />
               );
             })
