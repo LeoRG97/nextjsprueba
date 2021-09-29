@@ -95,6 +95,9 @@ const NavbarComponent = () => {
                 <Link href="/think-tools" passHref>
                   <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
                 </Link>
+                <Link href="/think-team" passHref>
+                  <Nav.Link className="text-md text--theme-light">Think team</Nav.Link>
+                </Link>
               </div>
 
               <div className={styles.divNavItemStyle}>
@@ -229,6 +232,9 @@ const NavbarComponent = () => {
                 </Link>
                 <Link href="/think-tools" passHref>
                   <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
+                </Link>
+                <Link href="/think-team" passHref>
+                  <Nav.Link className="text-md text--theme-light">Think team</Nav.Link>
                 </Link>
                 {
                   /** data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg> */
