@@ -14,7 +14,7 @@ const LoadingIndicatorModal = ({
     <>
       <Modal show={show} size="md" centered onHide={() => onClose()}>
         <Modal.Body className={styles.container}>
-          <div className="row">
+          <div className="row d-flex justify-content-center">
             <LoadingIndicator />
           </div>
           <div className="row mt-3">

@@ -19,7 +19,7 @@ const DropDownOptions = ({ options, data }) => {
 
   return (
     <Fragment>
-      <div className={`btn-group ${styles.button_dropdown_content}`}>
+      <div className="btn-group">
         <DropdownButton
           ref={ref}
           title="0"
