@@ -176,6 +176,60 @@ const ToolsComponent = ({
             </div>
           </>
         );
+      case 'tool':
+        return (
+          <>
+            {
+              (!enableVideo) ? (
+                <div className={styles.tools}>
+                  <section>
+                    <div className={`${styles.files} text-md`}>Insertar</div>
+                  </section>
+                  <section className={`${styles.tools_select} `}>
+                    <TooltipContainer placement="top" tooltipText="Video">
+                      <div
+                        className={`icon ${styles.tools_media}`}
+                        onClick={() => setModalShowVideo(true)}
+                      >F
+                      </div>
+                    </TooltipContainer>
+                  </section>
+                </div>
+              ) : (<></>)
+            }
+            <div className={styles.tools}>
+              <section>
+                <div className={`${styles.files} text-md`}>Insertar</div>
+              </section>
+              <section className={`${styles.tools_select} `}>
+                <TooltipContainer placement="top" tooltipText="Párrafo">
+                  <div
+                    className={`icon ${styles.tools_media}`}
+                    onClick={() => addTextFunct('p')}
+                  >D
+                  </div>
+                </TooltipContainer>
+              </section>
+            </div>
+          </>
+        );
+      case 'toolDescription':
+        return (
+          <div className={styles.tools}>
+            <section>
+              <div className={`${styles.files} text-md`}>Insertar</div>
+            </section>
+            <section className={`${styles.tools_select} `}>
+              <TooltipContainer placement="top" tooltipText="Párrafo">
+                <div
+                  className={`icon ${styles.tools_media}`}
+                  onClick={() => addTextFunct('p')}
+                >D
+                </div>
+              </TooltipContainer>
+            </section>
+          </div>
+        );
       default:
         return (<> </>);
     }
@@ -192,16 +246,20 @@ ToolsComponent.propTypes = {
   option: PropTypes.string,
   addedVideo: PropTypes.bool,
   addedAudio: PropTypes.bool,
-  addTextFunct: PropTypes.func.isRequired,
-  setModalShowVideo: PropTypes.func.isRequired,
-  setModalShow: PropTypes.func.isRequired,
-  addImage: PropTypes.func.isRequired,
+  addTextFunct: PropTypes.func,
+  setModalShowVideo: PropTypes.func,
+  setModalShow: PropTypes.func,
+  addImage: PropTypes.func,
 };
 
 ToolsComponent.defaultProps = {
   option: '',
   addedVideo: false,
   addedAudio: false,
+  addImage: () => {},
+  setModalShow: () => {},
+  setModalShowVideo: () => {},
+  addTextFunct: () => {},
 };
 
 export default ToolsComponent;

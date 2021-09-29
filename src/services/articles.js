@@ -164,7 +164,7 @@ export const updateArticle = async (article, details, userId, initialData) => {
 
   try {
     const { ruta, portada } = initialData;
-    const routeId = ruta.split('/articles')[0]; // obtener directorio base de SE
+    const routeId = ruta.split('/articles')[0]; // obtener directorio base de S3
     const currentJsonKey = ruta.split('articles/')[1]; // obtener nombre del artículo
     fileRes = await saveFile(article, `${routeId}/articles`, currentJsonKey);
     if (details.portada) {
