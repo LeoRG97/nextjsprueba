@@ -20,5 +20,6 @@ module.exports = {
     ArticlesUserPreference: 'articulos/preferencias/usuario',
     Invitation: 'invitaciones',
     ArticlesUserAuthor: 'articulos/autor',
+    Forums: 'foros/',
   },
 };

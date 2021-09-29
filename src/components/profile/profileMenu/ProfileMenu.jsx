@@ -72,14 +72,24 @@ const TabMenu = () => {
             </a>
           </Link>
           {reviewerAccess(user.role) && (
-            <Link href="/profile/tools" passHref scroll={false}>
-              <a
-                className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
-              >
-                Herramientas
-                <span className="ms-2 text-md text--theme-secondary">{data && data.herramientas ? data.herramientas : 0}</span>
-              </a>
-            </Link>
+            <>
+              <Link href="/profile/tools" passHref scroll={false}>
+                <a
+                  className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
+                >
+                  Herramientas
+                  <span className="ms-2 text-md text--theme-secondary">{data && data.herramientas ? data.herramientas : 0}</span>
+                </a>
+              </Link>
+              <Link href="/profile/forums" passHref scroll={false}>
+                <a
+                  className={`subtitle ${styles.item} ${query.setting === 'forums' && styles.active}`}
+                >
+                  Foros
+                  <span className="ms-2 text-md text--theme-secondary">{data && data.foros ? data.foros : 0}</span>
+                </a>
+              </Link>
+            </>
           )}
           {adminAccess(user.role) && (
             <Link href="/profile/members-and-invitations" passHref scroll={false}>
