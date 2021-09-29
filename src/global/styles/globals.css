@@ -1142,6 +1142,10 @@ html {
   opacity: 0;
 }
 
+.Edit-btn.disabled {
+  visibility: hidden;
+}
+
 .Edit-btn.move-btn{
   cursor: grab;
 }

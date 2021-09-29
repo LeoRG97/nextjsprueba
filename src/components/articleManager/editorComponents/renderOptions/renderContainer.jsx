@@ -7,7 +7,7 @@ import { Draggable } from 'react-beautiful-dnd';
 
 const EditorOptionRender = memo(({
   deleteComponentEditor, handleChange, handleChangeImage, data, editComponentFunct, activeOption,
-  setActiveClass, index,
+  setActiveClass, index, dragDisabled,
 }) => {
   const [active, setActive] = useState('');
 
@@ -83,13 +83,13 @@ const EditorOptionRender = memo(({
   }, [activeOption]);
 
   return (
-    <Draggable draggableId={data.id} index={index}>
+    <Draggable draggableId={data.id} index={index} isDragDisabled={dragDisabled}>
       {(provided) => (
         <div className="container-fluid" {...provided.draggableProps} ref={provided.innerRef}>
           <div className="row">
             <div className="col">
               <div className="Editor-content" onClick={() => setActiveClass(data.id)}>
-                <div className="Edit-btn move-btn icon" {...provided.dragHandleProps}>4</div>
+                <div className={`Edit-btn move-btn icon ${dragDisabled && 'disabled'}`} {...provided.dragHandleProps}>4</div>
                 <div className="Editor-container">
                   {renderElement(data)}
                 </div>
@@ -149,14 +149,18 @@ EditorOptionRender.propTypes = {
   activeOption: PropTypes.string,
   deleteComponentEditor: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
-  handleChangeImage: PropTypes.func.isRequired,
-  editComponentFunct: PropTypes.func.isRequired,
+  handleChangeImage: PropTypes.func,
+  editComponentFunct: PropTypes.func,
   setActiveClass: PropTypes.func.isRequired,
+  dragDisabled: PropTypes.bool,
 };
 
 EditorOptionRender.defaultProps = {
   data: {},
   activeOption: '',
+  dragDisabled: false,
+  handleChangeImage: () => {},
+  editComponentFunct: () => {},
 };
 
 export default EditorOptionRender;

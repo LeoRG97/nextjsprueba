@@ -11,6 +11,7 @@ export { default as LoginHeader } from './loginHeader/LoginHeader';
 export { default as CreateAccountForm } from './createAccountForm/CreateAccountForm';
 export { default as ConfirmationUser } from './userInvitation/confirmationUser';
 export { default as EditorComponent } from './articleManager';
+export { default as ToolEditorComponent } from './articleManager/toolEditor';
 export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader';
 export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
 export { default as MailPasswdComponent } from './profile/mailPasswd/mailPasswdComponent';
