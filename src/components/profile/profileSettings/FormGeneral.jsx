@@ -1,7 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { updateUserData, uploadImgProfile } from '@/services/profile';
+import { fetch as fetchProfile } from '@/reducers/profile';
 import styles from './profileS.module.css';
+import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
+import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
+import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const FormGeneral = ({
   id,
@@ -9,8 +15,11 @@ const FormGeneral = ({
   lastName,
   userBio,
   pictureU,
-  updateDU,
 }) => {
+  const dispatch = useDispatch();
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalSucces, setModalSucces] = useState(false);
+  const [modalError, setModalError] = useState(false);
   const [validated, setValidated] = useState(false);
   const [profile, saveProfile] = useState({
     name: nameU,
@@ -38,23 +47,43 @@ const FormGeneral = ({
     }
   };
 
+  const updateDataUser = async (userData) => {
+    setModalLoading(true);
+    setModalSucces(false);
+    const res = await updateUserData(id, userData);
+    if (res._id) {
+      dispatch(fetchProfile());
+      setModalLoading(false);
+      setModalSucces(true);
+    }
+  };
+
   // EVENTO IMAGEN
-  const _handleImageChange = (e) => {
+  const _handleImageChange = async (e) => {
     e.preventDefault();
 
+    const path = `${id}/resources`;
     const reader = new FileReader();
     const file = e.target.files[0];
-    reader.onloadend = () => {
+
+    const res = await uploadImgProfile(path, file, file.name);
+
+    if (res.ok) {
       saveProfile({
         ...profile,
-        [e.target.name]: `https://ilovet-app.s3.us-east-2.amazonaws.com/${id}/resources/${file.name}`,
+        picture: res.file,
       });
-      previewImg({
-        fileU: file,
-        imgP: reader.result,
-      });
-    };
-    reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        previewImg({
+          fileU: file,
+          imgP: reader.result,
+        });
+      };
+      reader.readAsDataURL(file);
+      updateDataUser({ picture: res.file });
+    } else {
+      setModalError(true);
+    }
   };
 
   // EVENTO SUBMIT FORM
@@ -68,7 +97,7 @@ const FormGeneral = ({
     }
 
     if (form.checkValidity() === true) {
-      updateDU(profile, preImg);
+      updateDataUser(profile);
     }
 
     setValidated(true);
@@ -88,7 +117,7 @@ const FormGeneral = ({
   return (
     <div>
       <h1 className="title">General</h1>
-      <Form noValidate validated={validated} onSubmit={submitForm}>
+      <Form>
         <div>
           <div className="text-md">Imagen de perfil</div>
           <div className={styles.profileSettingsImg}>
@@ -126,6 +155,8 @@ const FormGeneral = ({
             </div>
           </div>
         </div>
+      </Form>
+      <Form noValidate validated={validated} onSubmit={submitForm}>
         <Form.Group className="mb-3" controlId="IpuntName">
           <Form.Label className="text-md">Nombre(s)*</Form.Label>
           <input
@@ -180,6 +211,24 @@ const FormGeneral = ({
           </button>
         </div>
       </Form>
+      <LoadingIndicatorModal
+        show={modalLoading}
+        onClose={() => setModalLoading(false)}
+        textHeader="Actualizando información..."
+        textBody="Esta operación podría tardar unos minutos, por favor espere."
+      />
+      <SuccessIndicatorModal
+        show={modalSucces}
+        onClose={() => setModalSucces(false)}
+        textHeader="Información actualizada"
+        textBody="La información de su perfil ha sido actualizada correctamente."
+      />
+      <ErrorIndicatorModal
+        show={modalError}
+        onClose={() => setModalError(false)}
+        textHeader="Ha ocurrido un error"
+        textBody="Algo ha salido mal, intente con una imagen mas pequeña."
+      />
     </div>
   );
 };

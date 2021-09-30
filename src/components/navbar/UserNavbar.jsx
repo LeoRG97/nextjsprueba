@@ -34,6 +34,10 @@ const UserNavbarComponent = ({
     router.push('/profile/about-me');
   };
 
+  const navigateToSettings = () => {
+    router.push('/profile/edit/general');
+  };
+
   return (
     <>
       <NavDropdown
@@ -45,7 +49,7 @@ const UserNavbarComponent = ({
         onMouseLeave={hideDropdown}
       >
         <NavDropdown.Item onClick={navigateToProfile}>Perfil</NavDropdown.Item>
-        <NavDropdown.Item>Ajustes</NavDropdown.Item>
+        <NavDropdown.Item onClick={navigateToSettings}>Ajustes</NavDropdown.Item>
         <NavDropdown.Item onClick={() => logOut()}>Cerrar sesión</NavDropdown.Item>
       </NavDropdown>
     </>

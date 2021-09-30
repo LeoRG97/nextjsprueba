@@ -6,7 +6,6 @@ import { fetch as fetchProfile } from '@/reducers/profile';
 import {
   Footer, Layout, ProfileNavComponent, MailPasswdComponent,
 } from '@/components';
-import { updateUserData, uploadImgProfile } from '@/services/profile';
 import FormGeneral from '@/components/profile/profileSettings/FormGeneral';
 import DataAndPreferencesForm from '@/components/profile/profileSettings/DataAndPreferencesForm';
 import RedesSocialesForm from '@/components/profile/profileSettings/RedesSocialesForm';
@@ -25,16 +24,6 @@ const EditProfile = ({ preferences }) => {
     }
   }, []);
 
-  const updateDataUser = async (userData, userImg) => {
-    const path = `${data._id}/resources`;
-
-    updateUserData(data._id, userData);
-
-    const res = await uploadImgProfile(path, userImg.fileU, userImg.fileU.name);
-    if (res.ok) {
-      document.getElementById('mensaje-final').style.display = 'block';
-    }
-  };
   return (
     <Layout>
       <Container className="mb-lg-5">
@@ -59,7 +48,6 @@ const EditProfile = ({ preferences }) => {
                       lastName={data.apellidos}
                       userBio={data.biography}
                       pictureU={data.picture}
-                      updateDU={updateDataUser}
                     />
                   )
                 }
