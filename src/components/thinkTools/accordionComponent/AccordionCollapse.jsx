@@ -38,7 +38,7 @@ const AccordionCollapse = ({ herramienta, isEditable }) => {
       <div className="col-6 offset-2">
         {
           (session) ? (
-            <Link href="/think-tools" passHref>
+            <Link href={`/think-tools/${herramienta.slug}`} passHref>
               <a>
                 <div className="text-md">{herramienta.objetivo}</div>
                 <div className="text--theme-secondary text-md">{herramienta.nombre}</div>
