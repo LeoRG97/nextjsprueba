@@ -3,10 +3,10 @@
 }
 
 .content_error {
-  background-image: url('/images/imgpr3.jpg');
+  background-image: url('/images/think-tools/Fondo-textura.png');
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-position: center;
+  background-position: top;
   min-height: 100vh;
   text-align: center;
   position: relative;
@@ -24,6 +24,7 @@
   bottom: 0px;
   left: 0px;
   filter: brightness(100%);
+  opacity: 0.5;
 }
 
 .container_elements {
@@ -68,7 +69,7 @@
     margin-top: 150px;
   }
   .content_error {
-    background-size: 100% 100%;
+    background-size: 100% 50%;
   }
 }
 

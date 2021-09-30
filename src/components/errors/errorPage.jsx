@@ -7,7 +7,7 @@ export default function ErrorPageComp({ statusCode }) {
       <div className={styles.content_error}>
         <div className={styles.container_elements}>
           <div className={styles.cont_img}>
-            <img src="/images/imgpr2.jpg" alt="page not found" />
+            <img src="/images/resourses/404.png" alt="page not found" />
           </div>
           <div className={styles.cont_text}>
             <h3 className="title-xl">Lo sentimos, algo salió mal</h3>

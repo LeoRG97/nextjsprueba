@@ -4,13 +4,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--colorLight);
   padding-top: 80px;
-  background-image: url("/images/imgpr3.jpg");
+  position: relative;
+}
+
+.footer::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-image: url(/images/think-tools/Fondo-textura.png);
   background-repeat: no-repeat;
   background-size: 100% auto;
-  background-position: bottom;
-  position: relative;
+  background-position: top;
+  transform: rotate(180deg);
 }
 
 .footer::after {
@@ -26,7 +34,8 @@
   right: 0px;
   bottom: 0px;
   left: 0px;
-  filter: brightness(80%);
+  opacity: 0.5;
+  /* filter: brightness(80%);*/
 }
 
 .link {

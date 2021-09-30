@@ -72,13 +72,32 @@
 }
 
 .content_video {
-  background-image: url('/images/imgpr2.jpg');
+  position: relative;
+  background-image: url('/images/resourses/PortadaVideoHome.png');
   border-radius: 28px;
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
   height: 720px;
   text-align: center;
+  z-index: 0;
+}
+
+.content_video::after {
+  content: "";
+  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 95%);
+  position: absolute;
+  height: 100%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.8;
+}
+
+.content_video > div {
+  position: relative;
+  z-index: 1;
 }
 
 .content_map {
@@ -158,7 +177,8 @@
 
 .image_1 {
   max-width: 475px;
-  min-height: 650px;
+  min-height: auto;
+  margin: auto;
 }
 
 .image_2 {
@@ -184,10 +204,10 @@
 }
 
 .content_observatory {
-  background-image: url('/images/imgpr3.jpg');
-  background-repeat: no-repeat;
+  background-image: url('/images/think-tools/Fondo-textura.png');
+  background-repeat: repeat-y;
   background-size: 100% auto;
-  background-position: bottom;
+  background-position: center;
   min-height: 765px;
   position: relative;
 }
