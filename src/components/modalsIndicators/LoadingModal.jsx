@@ -20,7 +20,7 @@ const LoadingIndicatorModal = ({
           <div className="row mt-3">
             <h1 className="title mt-3">{textHeader}</h1>
           </div>
-          <div className="row justify-content-md-center mt-2">
+          <div className="row justify-content-center mt-2">
             <div className="col-10">
               <p className="text-sm">{textBody}</p>
             </div>

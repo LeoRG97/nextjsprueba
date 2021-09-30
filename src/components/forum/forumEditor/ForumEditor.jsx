@@ -4,20 +4,24 @@ import useSWR, { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/client';
 import ImagePicker from '@/components/imagePicker/ImagePicker';
 import styles from './forumEditor.module.css';
-import { saveForum } from '@/services/forums';
+import { saveForum, updateForum } from '@/services/forums';
 import { ApiRoutes } from '@/global/constants';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { forumValidation } from './forumValidation';
 
-const ForumModal = ({ show, onClose }) => {
+const ForumModal = ({ show, onClose, idEdit }) => {
   const { mutate } = useSWRConfig();
-  const { data } = useSWR(ApiRoutes.Forums);
+  const { data: forums } = useSWR(ApiRoutes.Forums);
   const [session] = useSession();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [successData, setSuccessData] = useState({
+    show: false,
+    title: '',
+    message: '',
+  });
   const [showError, setShowError] = useState(false);
   const [formData, setFormData] = useState({
     archivo: '',
@@ -36,6 +40,11 @@ const ForumModal = ({ show, onClose }) => {
     descripcion,
   } = formData;
 
+  const handleClose = () => {
+    setFormData({});
+    onClose();
+  };
+
   const handleCoverChange = (file) => {
     setFormData({ ...formData, archivo: file });
   };
@@ -51,8 +60,20 @@ const ForumModal = ({ show, onClose }) => {
     }
   }, [formData]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (idEdit) {
+      // preparar datos para editar un foro
+      const currentForum = forums.data.find((forum) => forum._id === idEdit);
+      setFormData({
+        ...currentForum,
+      });
+    } else {
+      setSubmitted(false);
+      setFormData({});
+    }
+  }, [idEdit]);
+
+  const handleCreateForum = async () => {
     setSubmitted(true);
     const errorObj = forumValidation(formData);
     if (!errorObj.isValid) {
@@ -63,23 +84,63 @@ const ForumModal = ({ show, onClose }) => {
       const res = await saveForum(formData);
       setSubmitting(false);
       if (res.ok) {
-        setShowSuccess(true);
+        setSuccessData({
+          show: true,
+          title: 'Publicación finalizada',
+          message: 'La información del foro ha sido publicada correctamente',
+        });
         mutate(ApiRoutes.Forums, {
-          ...data,
-          data: [...data.data, res.data],
+          ...forums,
+          data: [...forums.data, res.data],
         }, false);
         mutate([ApiRoutes.UserTotals, session.user.id]);
         setSubmitted(false);
-        setFormData({
-          titulo: '',
-          descripcion: '',
-          url: '',
-          archivo: '',
-          imagen: '',
-        });
+        setFormData({});
       } else {
         setShowError(true);
       }
+    }
+  };
+
+  const handleEditForum = async () => {
+    setSubmitted(true);
+    const errorObj = forumValidation(formData);
+    if (!errorObj.isValid) {
+      setErrors(errorObj);
+    } else {
+      setSubmitting(true);
+      onClose();
+      const res = await updateForum(idEdit, formData);
+      setSubmitting(false);
+      if (res.ok) {
+        setSuccessData({
+          show: true,
+          title: 'Foro actualizado',
+          message: 'La información del foro ha sido actualizada correctamente',
+        });
+        mutate(ApiRoutes.Forums, async (data) => {
+          const updatedData = data.data.map((item) => {
+            if (item._id === idEdit) {
+              return { ...formData, imagen: `${item.imagen}?${Date.now()}` };
+            }
+            return item;
+          });
+          return { ...data, data: updatedData };
+        }, false);
+        setSubmitted(false);
+        setFormData({});
+      } else {
+        setShowError(true);
+      }
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (idEdit) {
+      handleEditForum();
+    } else {
+      handleCreateForum();
     }
   };
 
@@ -88,7 +149,6 @@ const ForumModal = ({ show, onClose }) => {
       <Modal
         show={show}
         centered
-        className="d-flex justify-content-center"
         contentClassName={styles.container}
         backdrop="static"
       >
@@ -144,7 +204,7 @@ const ForumModal = ({ show, onClose }) => {
           <span className="text-sm text--theme-error">{errors.url}</span>
         </Modal.Body>
         <Modal.Footer className={styles.footer}>
-          <button className="button button--theme-secondary" onClick={onClose}>Cancelar</button>
+          <button className="button button--theme-secondary" onClick={handleClose}>Cancelar</button>
           <button className="button button--theme-primary" onClick={handleSubmit}>
             <span className="button__icon-left text--theme-light">H</span>{' '}Publicar
           </button>
@@ -157,10 +217,10 @@ const ForumModal = ({ show, onClose }) => {
         textBody="Esta operación podría tardar unos minutos, por favor espere."
       />
       <SuccessIndicatorModal
-        show={showSuccess}
-        onClose={() => setShowSuccess(false)}
-        textHeader="Publicación finalizada"
-        textBody="La información del foro ha sido publicada correctamente"
+        show={successData.show}
+        onClose={() => setSuccessData({ ...successData, show: false })}
+        textHeader={successData.title}
+        textBody={successData.message}
       />
       <ErrorIndicatorModal
         show={showError}
