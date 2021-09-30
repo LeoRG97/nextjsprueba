@@ -1,15 +1,18 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import useSWR from 'swr';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 import { fetchData } from '@/services/swr';
 import { BUCKET_URL, ApiRoutes } from '@/global/constants';
 import styles from './forums.module.css';
+import ForumModal from './forumEditor/ForumEditor';
 
 const ForumsComponent = ({
   showOptions, showSubs,
 }) => {
+  const [showModal, setShowModal] = useState(false);
   const { data } = useSWR(
-    [ApiRoutes.Forums],
+    ApiRoutes.Forums,
     fetchData,
   );
 
@@ -43,14 +46,13 @@ const ForumsComponent = ({
     <Container>
       {
         showOptions && (
-          <Row>
-            <Col xl="6" lg="6" sm="12" className="col-12"> </Col>
-            <Col xl="6" lg="6" sm="12" className="col-12">
-              <div className={styles.forum_add_cont}>
-                <button className="button button--theme-primary">Nuevo foro</button>
-              </div>
-            </Col>
-          </Row>
+          <div className="d-flex justify-content-center justify-content-lg-end mb-4">
+            <button
+              className="button button--theme-primary"
+              onClick={() => setShowModal(true)}
+            >Nuevo foro
+            </button>
+          </div>
         )
       }
       {
@@ -107,6 +109,10 @@ const ForumsComponent = ({
         })
       }
       <div className={styles.forum_separator}> </div>
+      <ForumModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </Container>
   );
 };

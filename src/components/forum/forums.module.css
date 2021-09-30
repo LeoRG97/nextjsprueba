@@ -10,11 +10,6 @@
   display: flex;
 }
 
-.forum_add_cont {
-  float: right;
-  margin-bottom: 10px;
-}
-
 .forum_conten_img {
   margin-right: 20px;
   border-radius: 50px;
@@ -31,7 +26,8 @@
   min-height: 180px;
 }
 
-.forum_btn_cont, .forum_drop_cont {
+.forum_btn_cont,
+.forum_drop_cont {
   display: block;
 }
 
@@ -40,7 +36,7 @@
   margin-bottom: 10px;
 }
 
-.forum_drop_cont>div {
+.forum_drop_cont > div {
   margin-top: 20px;
 }
 
@@ -53,7 +49,7 @@
   padding-top: 10px;
 }
 
-.forum_drop_cont li>span {
+.forum_drop_cont li > span {
   position: relative;
   top: -4px;
   margin-right: 10px;
@@ -67,7 +63,7 @@
 }
 
 @media (max-width: 991px) {
-  .forum_row > div{
+  .forum_row > div {
     margin-bottom: 10px;
   }
   .forum_img {
