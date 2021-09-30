@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './detailsModal.module.css';
 import { getPreferencesService } from '@/services/preferences';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
-import ImagePicker from './imagePicker/ImagePicker';
+import ImagePicker from '../../../imagePicker/ImagePicker';
 // import FileInput from './fileInput/FileInput';
 import Switch from '@/components/switch/Switch';
 import { detailsValidation } from './detailsModalValidation';
