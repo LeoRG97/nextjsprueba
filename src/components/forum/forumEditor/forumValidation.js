@@ -1,5 +1,5 @@
 export const forumValidation = ({
-  archivo, titulo, url, descripcion,
+  archivo, titulo, url, descripcion, imagen,
 }) => {
   const errors = {
     isValid: true,
@@ -17,7 +17,11 @@ export const forumValidation = ({
     errors.url = 'La URL del foro es requerida';
     errors.isValid = false;
   }
-  if (!archivo) {
+  if (url && !url.match('https://.*')) {
+    errors.url = 'No es una dirección URL válida';
+    errors.isValid = false;
+  }
+  if (!archivo && !imagen) {
     errors.archivo = 'La imagen de portada es requerida';
     errors.isValid = false;
   }

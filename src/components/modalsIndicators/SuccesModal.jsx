@@ -13,7 +13,7 @@ const SuccessIndicatorModal = ({
     <>
       <Modal show={show} size="md" centered onHide={onClose}>
         <Modal.Body className={styles.container}>
-          <div className="row content-m-centered">
+          <div className="d-flex justify-content-center">
             <div className={styles.container_icon}>
               <span className="icon icon-modal--succes">g</span>
             </div>
@@ -21,7 +21,7 @@ const SuccessIndicatorModal = ({
           <div className="row mt-3">
             <h1 className="title mt-3">{textHeader}</h1>
           </div>
-          <div className="row content-m-centered mt-2">
+          <div className="row justify-content-center mt-2">
             <div className="col-10">
               <p className="text-sm">{textBody}</p>
             </div>

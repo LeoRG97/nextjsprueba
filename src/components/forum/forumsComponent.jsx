@@ -1,45 +1,74 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
+import { useSession } from 'next-auth/client';
 import { fetchData } from '@/services/swr';
 import { BUCKET_URL, ApiRoutes } from '@/global/constants';
 import styles from './forums.module.css';
 import ForumModal from './forumEditor/ForumEditor';
+import DeleteModal from '../modalsIndicators/DeleteModal';
+import { deleteForum } from '@/services/forums';
+import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
+import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
+import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 
 const ForumsComponent = ({
   showOptions, showSubs,
 }) => {
+  const [session] = useSession();
   const [showModal, setShowModal] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [idEdit, setIdEdit] = useState('');
+  const { mutate } = useSWRConfig();
   const { data } = useSWR(
     ApiRoutes.Forums,
     fetchData,
   );
 
-  const setBackground = (url) => {
-    let stylleImg = null;
-    if (url.includes(BUCKET_URL)) {
-      stylleImg = {
-        backgroundImage: `url(${url})`,
-      };
-    } else {
-      stylleImg = {
-        backgroundImage: `url(${BUCKET_URL}${url})`,
-      };
-    }
-    return stylleImg;
-  };
-
   const subscribeForum = async (idForum) => {
     return idForum;
   };
 
-  const updateForum = async (idForum) => {
-    return idForum;
+  const closeModal = () => {
+    setShowModal(false);
+    setIdEdit('');
   };
 
-  const deleteForum = async (idForum) => {
-    return idForum;
+  const closeDeleteModal = () => {
+    setShowDelete(false);
+    setIdEdit('');
+  };
+
+  const updateForumModal = (idForum) => {
+    setIdEdit(idForum);
+    setShowModal(true);
+  };
+
+  const deleteForumModal = (idForum) => {
+    setIdEdit(idForum);
+    setShowDelete(true);
+  };
+
+  const handleDelete = async () => {
+    setShowDelete(false);
+    setSubmitting(true);
+    const res = await deleteForum(idEdit);
+    setSubmitting(false);
+    if (res.ok) {
+      mutate(ApiRoutes.Forums, {
+        ...data,
+        data: data.data.filter((item) => item._id !== idEdit),
+      }, false);
+      mutate([ApiRoutes.UserTotals, session.user.id]);
+      setIdEdit('');
+      setShowSuccess(true);
+    } else {
+      setShowError(true);
+    }
   };
 
   return (
@@ -62,7 +91,11 @@ const ForumsComponent = ({
               <Col xl="6" lg="6" sm="12" className="col-12">
                 <div className={styles.forum_info_cont}>
                   <div className={styles.forum_conten_img}>
-                    <div style={setBackground(forum.imagen)} className={styles.forum_img}> </div>
+                    <img
+                      src={`${BUCKET_URL}${forum.imagen}`}
+                      className={styles.forum_img}
+                      alt={forum.titulo}
+                    />
                   </div>
                   <div>
                     <div>
@@ -87,10 +120,10 @@ const ForumsComponent = ({
                               </button>
                             </div>
                             <ul className={`select-dropdown ${styles.list_content}`}>
-                              <li className="text-sm" onClick={() => updateForum(forum._id)}>
+                              <li className="text-sm" onClick={() => updateForumModal(forum._id)}>
                                 <span className="icon text--theme-light">K</span>Modificar
                               </li>
-                              <li className="text-sm" onClick={() => deleteForum(forum._id)}>
+                              <li className="text-sm" onClick={() => deleteForumModal(forum._id)}>
                                 <span className="icon text--theme-light">L</span>Eliminar
                               </li>
                             </ul>
@@ -111,7 +144,35 @@ const ForumsComponent = ({
       <div className={styles.forum_separator}> </div>
       <ForumModal
         show={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={closeModal}
+        idEdit={idEdit}
+      />
+      <DeleteModal
+        show={showDelete}
+        onClose={closeDeleteModal}
+        functionDelete={handleDelete}
+        btnConfirm="Confirmar"
+        btnCancel="Cancelar"
+        textHeader="Alerta"
+        textBody="Estás a punto de eliminar la información de este foro. ¿Seguro que deseas continuar?"
+      />
+      <LoadingIndicatorModal
+        show={submitting}
+        onClose={() => setSubmitting(false)}
+        textHeader="Eliminando foro"
+        textBody="Esta operación podría tardar unos minutos, por favor espere."
+      />
+      <SuccessIndicatorModal
+        show={showSuccess}
+        onClose={() => setShowSuccess(false)}
+        textHeader="Foro eliminado"
+        textBody="La información del foro ha sido eliminada correctamente"
+      />
+      <ErrorIndicatorModal
+        show={showError}
+        onClose={() => setShowError(false)}
+        textHeader="Ha ocurrido un error"
+        textBody="Vuelva a intentarlo más tarde"
       />
     </Container>
   );

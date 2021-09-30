@@ -2,8 +2,7 @@
   width: 120px;
   height: 120px;
   border-radius: 70px;
-  background-size: cover;
-  background-position: center;
+  object-fit: cover;
 }
 
 .forum_info_cont {
