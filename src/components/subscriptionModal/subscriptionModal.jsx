@@ -27,7 +27,7 @@ const SubscriptionModal = ({ show, setModal }) => {
         >
           <Modal.Header className={styles.modal_header}>
             <Modal.Title className={styles.modal_title_cont}>
-              <img src="/images/imgpr2.jpg" alt="Unete" className={styles.modal_img} />
+              <img src="/images/resourses/HuellaDigital.png" alt="Unete" className={styles.modal_img} />
             </Modal.Title>
           </Modal.Header>
           <Modal.Body className={styles.modal_body_cont}>

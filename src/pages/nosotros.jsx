@@ -91,7 +91,7 @@ export default function Home() {
               <Row className={`${styles.content_pt_sect} ${styles.content_pb_sect}`}>
                 <Col xl="6" lg="6" sm="12">
                   <div className={`${styles.content_m_img} ${styles.image_content} `}>
-                    <img src="/images/imgpr2.jpg" alt="" className={styles.image_1} />
+                    <img src="/images/resourses/vortice.png" alt="" className={styles.image_1} />
                   </div>
                 </Col>
                 <Col xl="6" lg="6" sm="12" className="p-r">
