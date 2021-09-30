@@ -1,4 +1,14 @@
+import { ApiRoutes } from '@/global/constants';
 import axios from './axios';
+
+export const fetchToolsById = async (idTool) => {
+  try {
+    const res = await axios().get(`${ApiRoutes.Tools}/${idTool}`);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
 
 const saveFile = async (file, route, prevFileKey) => {
   const formData = new FormData();
@@ -85,6 +95,20 @@ export const updateTool = async (article, details, initialData) => {
 export const fetchToolById = async (id) => {
   const res = await axios().get(`herramientas/${id}`);
   return res.data;
+};
+
+export const fetchToolBySlug = async (slug) => {
+  const res = await axios().get(`${ApiRoutes.Tools}/slug/${slug}`);
+  return res;
+};
+
+export const fetchToolsContent = async (id) => {
+  try {
+    const res = await axios().get(`${ApiRoutes.Tools}/archivo/${id}`);
+    return res;
+  } catch (err) {
+    return err;
+  }
 };
 
 export const fetchToolContent = async (id) => {

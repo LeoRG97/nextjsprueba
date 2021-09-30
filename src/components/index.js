@@ -42,3 +42,4 @@ export { default as ProfileTools } from './profile/profileTools/ProfileTools';
 export { default as AccordionComponent } from './thinkTools/accordionComponent/AccordionComponent';
 export { default as ErrorPageComp } from './errors/errorPage';
 export { default as ForumsComponent } from './forum/forumsComponent';
+export { default as ToolsContent } from './thinkTools/toolsContent';

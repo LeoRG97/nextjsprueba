@@ -86,6 +86,7 @@
   --text-color-secondary: var(--gray);
   --text-color-highlight: var(--blue);
   --text-color-error: var(--colorError);
+  --text-color-warning: var(--yellow);
   --text-color-link: var(--blue2);
 
   /* ARTICLE CARD COLORS */
@@ -98,6 +99,7 @@
   --backgroung-color-low-dark: var(--gblue);
 
   --background-color-button-modal: var(--blue2);
+  --background-color-button-warning: var(--yellow-20);
   /* EDITOR COLORS */
 
   --text-color-error: var(--orange);
@@ -221,6 +223,10 @@ a {
 
 .text--theme-error {
   color: var(--text-color-error);
+}
+
+.text--theme-warning {
+  color: var(--text-color-warning) !important;
 }
 
 .text-link {
@@ -378,6 +384,15 @@ a {
   color: var(--text-color-light);
   background-color: var(--contentTransparentRGB);
   border: 1px solid var(--colorLight);
+}
+
+.button--theme-warnig {
+  color: var(--text-color-light);
+  background-color: var(--background-color-button-warning);
+}
+
+.button--theme-warnig:hover {
+  filter: brightness(150%);
 }
 
 .button:active {
@@ -933,6 +948,12 @@ html {
 
 .p-r {
   position: relative;
+}
+
+.container_top_ {
+  padding-top: 200px;
+  padding-bottom: 200px;
+  text-align: center;
 }
 
 /*EMBLA CAROUSEL*/
