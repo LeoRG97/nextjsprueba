@@ -7,7 +7,7 @@
 }
 
 .content_back_img {
-  background-image: url(/images/think-tools/Fondo-textura.png);
+  background-image: url(/images/resourses/TexturaFondo.png);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;
@@ -68,7 +68,7 @@
   margin-top: 50px;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .content_back_img {
     background-size: cover;
     background-position: left;

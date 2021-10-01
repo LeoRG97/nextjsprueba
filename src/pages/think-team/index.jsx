@@ -6,7 +6,7 @@ import styles from './think.module.css';
 
 const ThinkTeam = () => {
   return (
-    <Layout>
+    <Layout className="texture-top">
       <div className={styles.forum_title_cont}>
         <h2 className="title-xl">Únete a la conversación sobre...</h2>
       </div>

@@ -1,9 +1,5 @@
 .headerContainer {
   align-items: center;
-  /* background-image: url("/images/imgpr3.jpg"); */
-  background-position: bottom;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
   display: flex;
   justify-content: center;
   min-height: 30rem;
@@ -20,7 +16,7 @@
 .imgFrame {
   width: 7.5rem;
   height: 7.5rem;
-  background-image: url(/images/profile/no-profile-img.png);
+  background: var(--colorPrimaryDark);
   border-radius: 50%;
   margin-bottom: 1rem;
   overflow: hidden;

@@ -144,21 +144,27 @@ const HomePage = ({ articulos }) => {
         <Row className={styles.content_margin}>
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
-              <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
+              <div className={`${styles.iconOutline} ${styles.faintOutlineSuccess}`}>
+                <span className={`icon icon--theme-success ${styles.largeIcon}`}>f</span>
+              </div>
               <p className="title">Aumenta<br />tu conocimiento</p>
               <button className="button button--theme-primary">Trending topics</button>
             </div>
           </Col>
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
-              <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
+              <div className={`${styles.iconOutline} ${styles.faintOutlineYellow}`}>
+                <span className={`icon icon--theme-yellow ${styles.largeIcon}`}>e</span>
+              </div>
               <p className="title">Desarrolla<br />nuevas habilidades</p>
               <button className="button button--theme-primary">Think tools</button>
             </div>
           </Col>
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
-              <img src="/images/imgpr2.jpg" alt="" className={styles.help_img} />
+              <div className={`${styles.iconOutline} ${styles.faintOutlinePrimary}`}>
+                <span className={`icon icon--theme-primary ${styles.largeIcon}`}>d</span>
+              </div>
               <p className="title">Comparte<br />tu opinión</p>
               <button className="button button--theme-primary">Think team</button>
             </div>
@@ -170,7 +176,7 @@ const HomePage = ({ articulos }) => {
           <Col xl="6" lg="6" sm="12" className={styles.margin_movil_y}>
             <small className="text-md text--theme-secondary">Expertos</small>
             <h2 className="title-xl">Conoce a <br />nuestros expertos</h2>
-            <p className="text-md">Más de 300 colaboradores creando y compartiendo publicaciones de
+            <p className="text-md mt-4 mb-4">Más de 300 colaboradores creando y compartiendo publicaciones de
               relevancia, especialmente diseñados para mentes visionarias,
               como tú.
             </p>
@@ -180,7 +186,7 @@ const HomePage = ({ articulos }) => {
           </Col>
           <Col xl="6" lg="6" sm="12">
             <div className={styles.expert_img}>
-              <img src="/images/imgpr2.jpg" alt="" />
+              <img src="/images/home/Rompecabezas.png" alt="" />
             </div>
           </Col>
         </Row>

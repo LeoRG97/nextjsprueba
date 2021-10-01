@@ -50,7 +50,7 @@
   --blue-20: #0080b133;
   --orange-20: #bc432833;
   --yellow-20: #e6b60033;
-  --green-20: #bc432833;
+  --green-20: #83b25433;
   --green-30: #83b2546b;
   --magenta-20: #aa3c8033;
 
@@ -169,6 +169,12 @@ a {
   background-color: var(--colorPrimaryDark);
 }
 
+.texture-top {
+  background: url("/images/resourses/TexturaFondo.png"), var(--colorPrimaryDark);
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
 /* TEXT */
 
 .title-xl {
@@ -269,12 +275,20 @@ a {
   color: var(--text-color-secondary);
 }
 
-.icon--theme-blue {
-  color: var(--blue2);
+.icon--theme-primary {
+  color: var(--colorPrimary);
 }
 
 .icon--theme-highlight {
   color: var(--text-color-highlight);
+}
+
+.icon--theme-yellow {
+  color: var(--yellow);
+}
+
+.icon--theme-success {
+  color: var(--colorSuccess);
 }
 
 .icon-modal--succes {
@@ -1671,9 +1685,13 @@ div[disabled] {
 }
 
 
-@media (max-width: 991px) {
+@media (max-width: 991.98px) {
   .justify-content-md-center {
     text-align: center;
+  }
+
+  .texture-top {
+    background-position: top left;
   }
 
 }

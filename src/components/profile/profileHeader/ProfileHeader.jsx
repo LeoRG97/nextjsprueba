@@ -8,7 +8,7 @@ const ProfileHeader = ({
   picture, name, state, country,
 }) => {
   return (
-    <div className={styles.headerContainer}>
+    <div className={`${styles.headerContainer} texture-top`}>
       <div className={styles.profileCard}>
         <div className={styles.imgFrame}>
           <Image layout="fill" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />

@@ -18,16 +18,16 @@
 
 .authorSection {
   border-right: 1px solid var(--colorItemBorder);
-  margin-right: 3rem;
-  padding-right: 3rem;
+  margin-right: 2.5rem;
+  padding-right: 2.5rem;
 }
 
 .item {
   color: var(--colorSecondary);
   cursor: pointer;
   text-decoration: none;
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
   -webkit-user-drag: none;
 }
 
