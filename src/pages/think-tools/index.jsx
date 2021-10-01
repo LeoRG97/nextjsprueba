@@ -17,19 +17,12 @@ export default function ThinkTools({ toolsData }) {
         <meta name="description" content="NTT Data Think Tools" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container-fluid pt-5">
+      <main className={`container-fluid pt-5 ${styles.textureBg}`}>
         <div className={
           `container mt-5 ${styles.contentHeight}
           d-flex justify-content-center align-items-center`
         }
         >
-
-          <img
-            className={`img-fluid position-absolute top-0 start-0
-            ${styles.imgZindex}`}
-            src="/images/think-tools/Fondo-textura.png"
-            alt="Fondo-textura"
-          />
 
           <div className={`row p-5 d-flex align-items-center  ${onShowTools && styles.modalOpen}`}>
             <div className="col-lg-6 col-md-6 col-sm-12 px-4">

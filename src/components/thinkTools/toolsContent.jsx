@@ -16,9 +16,9 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
   };
 
   return (
-    <div>
+    <div className="texture-top">
       <Container fluid className="content-n-p">
-        <div className={styles.content_back_img}>
+        <div>
           <Container className={styles.content_tool}>
             <div className={styles.centered}>
               <h5 className="title">

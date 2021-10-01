@@ -2,6 +2,12 @@
   height: 700px;
 }
 
+.textureBg {
+  background: url("/images/resourses/TexturaFondo.png"), var(--colorPrimaryDark);
+  background-repeat: no-repeat;
+  background-position: center top;
+}
+
 /* Small devices (landscape phones, 576px and up) */
 @media (max-width: 768px) {
   .btnTool {
