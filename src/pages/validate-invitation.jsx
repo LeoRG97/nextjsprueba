@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import EditorContextProvider from '@/helpers/contexts/editorContext';
 import { Layout, LoadingIndicator } from '@/components';
 import { updateInvitationService } from '@/services/invitations';
@@ -10,6 +11,7 @@ const ValidateInvitation = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { fetched } = useSelector((state) => state.profile);
+  const [session] = useSession();
 
   const [dataInvite, setDataInvite] = useState({
     email: '',
@@ -32,6 +34,7 @@ const ValidateInvitation = () => {
   const updateInvitation = async () => {
     const res = await updateInvitationService(dataInvite.idInvitation, {
       estatus: true,
+      invitado_id: session.user.id || null,
     });
     if (res.updated) {
       localStorage.setItem('dataInvitation', JSON.stringify(''));

@@ -9,6 +9,7 @@ import { ApiRoutes } from '@/global/constants';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { SuccessIndicatorModal } from '@/components';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import styles from './profileMembersAndInvitations.module.css';
 
 const ProfileMembersAndInvitations = () => {
   const router = useRouter();
@@ -50,10 +51,11 @@ const ProfileMembersAndInvitations = () => {
           <InviteMemberForm />
         </div>
         <div className="col-md-8">
-          <h1 className="title">Listado de miembros</h1>
+          <h1 className={`title ${styles.content_table}`}>Listado de miembros</h1>
           <TableMember
             data={dataMembers}
             deleteMember={deleteMember}
+            mutate={mutate}
           />
         </div>
       </div>

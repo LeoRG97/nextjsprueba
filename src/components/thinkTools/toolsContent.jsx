@@ -21,7 +21,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
         <div>
           <Container className={styles.content_tool}>
             <div className={styles.centered}>
-              <h5 className="title">
+              <h5 className={`title ${styles.content_title}`}>
                 <span className={`icon ${styles.doots}`}>h</span>
                 {toolsInfo.categoria}
                 <span className={`icon ${styles.doots}`}>j</span>

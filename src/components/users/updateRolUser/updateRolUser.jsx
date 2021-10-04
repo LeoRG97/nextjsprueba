@@ -1,23 +1,23 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/client';
+// import { useSession } from 'next-auth/client';
 // import PropTypes from 'prop-types';
 import {
   Modal,
 } from 'react-bootstrap';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import { updateUserData } from '@/services/profile';
+import { updateInvitationService } from '@/services/invitations';
 import styles from './updateRol.module.css';
 
-const UpdateRolUserModal = (/* props */) => {
-  /* const {
-    show, idUser, showModal,
-  } = props; */
-  const [session] = useSession();
+const UpdateRolUserModal = ({
+  show, idUserRol, idUserInvt, showModal, mutate,
+}) => {
+  // const [session] = useSession();
   const [loading, setLoading] = useState(false);
   const [errorUpdate, setError] = useState(false);
   const [updated, setUpdated] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
-  const [idUserRol, setUser] = useState('');
+  // const [modalShow, setModalShow] = useState(false);
+  // const [idUserRol, setUser] = useState('');
   const [optionRol, setOptionRol] = useState('admin');
 
   const handleChange = (e) => {
@@ -25,39 +25,44 @@ const UpdateRolUserModal = (/* props */) => {
     setOptionRol(e.target.value);
   };
 
-  const showModal = (idUser) => {
+  /* const showModal = (idUser) => {
     setUser(idUser);
     setModalShow(!modalShow);
     setUpdated(false);
-  };
+  }; */
 
-  const updateRoleFunc = () => {
+  const updateRoleFunc = async () => {
     setLoading(true);
     const newRol = {
       role: optionRol,
     };
-    updateUserData(idUserRol, newRol).then((resp) => {
-      if (resp) {
-        setLoading(false);
-        setUpdated(true);
-      } else {
-        setError(true);
-        setLoading(false);
-      }
-    }).catch(() => {
+
+    const respInvt = await updateInvitationService(idUserInvt,
+      { rol: optionRol });
+    const respUser = await updateUserData(idUserRol, newRol);
+    if (respUser && respInvt) {
+      mutate();
+      setLoading(false);
+      setUpdated(true);
+    } else {
       setError(true);
       setLoading(false);
-    });
+    }
   };
 
   useEffect(() => {
-  }, [session]);
+    return () => {
+      setUpdated(false);
+    };
+  }, [show]);
 
   return (
     <div>
-      <button onClick={() => showModal('123')} className="Btn-cancel">Cambiar rol</button>
+      {
+        /* <button onClick={() => showModal('123')} className="Btn-cancel">Cambiar rol</button> */
+      }
       <Modal
-        show={modalShow}
+        show={show}
         onHide={() => showModal}
         backdrop="static"
         keyboard={false}
@@ -86,7 +91,8 @@ const UpdateRolUserModal = (/* props */) => {
                         <option value="admin">Admin</option>
                         <option value="user-author">Colaborador</option>
                         <option value="user-reviewer">Curador</option>
-                        <option value="usuario">Usuario</option>
+                        <option value="user-premium">Premium</option>
+                        <option value="user">Usuario</option>
                       </select>
                       <span className="text-sm text--theme-error ">&nbsp;{(errorUpdate) ? ('Error al intentar actualizar') : (<></>)}</span>
                     </Modal.Body>

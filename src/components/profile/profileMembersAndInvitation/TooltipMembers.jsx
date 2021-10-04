@@ -7,7 +7,7 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import styles from './profileMembersAndInvitations.module.css';
 
-const TooltipsMembers = ({ options, data }) => {
+const TooltipsMembers = ({ options, data, opacityCss }) => {
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(this);
   const ref = useRef(null);
@@ -19,7 +19,7 @@ const TooltipsMembers = ({ options, data }) => {
 
   return (
     <Fragment>
-      <div className={`btn-group ${styles.button_dropdown_content}`}>
+      <div className={`btn-group ${styles.button_dropdown_content}`} style={{ opacity: opacityCss }}>
         <DropdownButton
           ref={ref}
           title="..."
@@ -32,7 +32,7 @@ const TooltipsMembers = ({ options, data }) => {
           rootclose="true"
         >
           {
-            options.map((index, i) => {
+            options && data && options.map((index, i) => {
               const objData = {
                 data,
               };
@@ -41,7 +41,7 @@ const TooltipsMembers = ({ options, data }) => {
                   className={styles.item_dropdown}
                   key={index.option}
                   onClick={() => (options[i].event
-                    ? options[i].eventName(objData.data._id)
+                    ? options[i].eventName(objData.data._id, objData.data.invitado_id)
                     : null)}
                 >
                   <span className="icon">{options[i].iconType}</span>
@@ -50,7 +50,6 @@ const TooltipsMembers = ({ options, data }) => {
               );
             })
           }
-
         </DropdownButton>
       </div>
     </Fragment>
