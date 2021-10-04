@@ -85,3 +85,16 @@
   margin-left: 0.5rem;
   position: relative;
 }
+
+@media (max-width: 991px) {
+  .content_table {
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: 768px) {
+  .table_size_mb > div {
+    min-width: 636px;
+    margin-bottom: 70px;
+  }
+}

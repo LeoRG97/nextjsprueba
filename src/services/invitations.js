@@ -1,8 +1,9 @@
 import axios from './axios';
+import { ApiRoutes } from '@/global/constants';
 
 export const deleteInvitationService = async (idInvitation) => {
   try {
-    const res = await axios().delete(`invitaciones/${idInvitation}`);
+    const res = await axios().delete(`${ApiRoutes.Invitation}/${idInvitation}`);
     return res;
   } catch (err) {
     return err;
@@ -11,7 +12,7 @@ export const deleteInvitationService = async (idInvitation) => {
 
 export const updateInvitationService = async (idInvitation, data) => {
   try {
-    const res = await axios().put(`invitaciones/${idInvitation}`, { ...data });
+    const res = await axios().put(`${ApiRoutes.Invitation}/${idInvitation}`, { ...data });
     return res;
   } catch (err) {
     return err;

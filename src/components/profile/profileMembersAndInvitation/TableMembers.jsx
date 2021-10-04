@@ -5,10 +5,10 @@ import { useRouter } from 'next/router';
 import BootstrapTable from 'react-bootstrap-table-next';
 import styles from './profileMembersAndInvitations.module.css';
 import TooltipsMembers from './TooltipMembers';
-import { DeleteModal } from '@/components';
+import { DeleteModal, UpdateRolUserModal } from '@/components';
 import { Roles } from '@/global/constants';
 
-const TableMember = ({ data, deleteMember }) => {
+const TableMember = ({ data, deleteMember, mutate }) => {
   const router = useRouter();
   useEffect(() => {
 
@@ -33,12 +33,33 @@ const TableMember = ({ data, deleteMember }) => {
     deleteMember(optionsModal.fncConfirm);
   };
 
+  const [modalShow, setModalShow] = useState(false);
+  const [idUserRol, setUser] = useState('');
+  const [idUserInvt, setUserInvt] = useState('');
+  const [updated, setUpdated] = useState(false);
+
+  const showModalUpdate = (idUser, idInvit) => {
+    setUpdated(false);
+    setUser(idUser);
+    setUserInvt(idInvit);
+    setModalShow(!modalShow);
+  };
+
+  const showModalUpdateFunc = () => {
+    setUpdated(false);
+    setModalShow(!modalShow);
+  };
+
+  const updateRoleMember = (idInvit, userId) => {
+    showModalUpdate(userId, idInvit);
+  };
+
   const [hoverIdx, setHoverIdx] = useState(null);
   const [optionsToolTip] = useState([
     {
       option: 'Actualizar Rol',
       event: true,
-      eventName: () => console.log('update'),
+      eventName: updateRoleMember,
       data: true,
       iconType: '6',
     },
@@ -73,6 +94,8 @@ const TableMember = ({ data, deleteMember }) => {
         rol = 'Premium';
       } else if (Roles.Reviewer === _cell) {
         rol = 'Curador';
+      } else if (Roles.User === _cell) {
+        rol = 'Usuario';
       }
       return <>{rol}</>;
     },
@@ -110,17 +133,18 @@ const TableMember = ({ data, deleteMember }) => {
             id={rowIndex}
             data={row}
             options={optionsToolTip}
+            opacityCss="1"
           />
         );
       }
-      return (<></>);
+      return (<TooltipsMembers opacityCss="0" />);
     },
     formatExtraData: { hoverId: hoverIdx },
   },
   ];
 
   return (
-    <div className="table-responsive-lg">
+    <div className={`table-responsive-lg ${styles.table_size_mb}`}>
       <BootstrapTable
         responsive
         bootstrap4
@@ -142,6 +166,14 @@ const TableMember = ({ data, deleteMember }) => {
         btnCancel={optionsModal.cancel}
         textHeader={optionsModal.textHeader}
         textBody={optionsModal.textBody}
+      />
+      <UpdateRolUserModal
+        show={modalShow}
+        idUserRol={idUserRol}
+        idUserInvt={idUserInvt}
+        showModal={showModalUpdateFunc}
+        isUpdated={updated}
+        mutate={mutate}
       />
     </div>
   );
