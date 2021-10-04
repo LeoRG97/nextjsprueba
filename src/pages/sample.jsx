@@ -25,7 +25,7 @@ export default function Home() {
           Super Title (Light)
         </h1>
 
-        <h1 className="title-xl text--theme-dark bg-secondary">
+        <h1 className="title-xl text--theme-dark bg-light">
           Super Title (Dark)
         </h1>
 
@@ -73,6 +73,10 @@ export default function Home() {
           Light
         </button>
 
+        <button className="button button--theme-warning me-2">
+          Warning
+        </button>
+
         <button className="button button--theme-primary me-2">
           <span className="button__icon-left text--theme-light">I</span>{' '}Left icon
         </button>
@@ -81,13 +85,9 @@ export default function Home() {
           Right icon{' '}<span className="button__icon-right text--theme-light">I</span>
         </button>
 
-        <button className="button button--theme-yellow me-2">
-          <span className="button__icon-left text--theme-yellow">9</span>{' '}Left icon Yellow
-        </button>
-
         <hr className="bg-light" />
 
-        <h6 className="subtitle">Botones redondos</h6>
+        <h6 className="subtitle">Botones de iconos</h6>
         <div className="d-flex">
           <button className="icon-button icon-button--primary me-2">H</button>
           <button className="icon-button icon-button--secondary me-2">H</button>
@@ -191,7 +191,7 @@ export default function Home() {
                 <div className="Editor-content">
                   <button className="Edit-btn move-btn icon">4</button>
                   <div className="Editor-container">
-                    <textarea className="Edit-area" defaultValue="" />
+                    <textarea className="Edit-area text--theme-light" defaultValue="" />
                   </div>
                   <div className="Edit-dropdown-content">
                     <div className="Edit-dropdown">
