@@ -1,0 +1,30 @@
+.container {
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+.container_icon {
+  top: -0.5rem;
+  position: relative;
+  color: var(--blue);
+}
+
+.text_modal {
+  line-height: 0.5rem !important;
+}
+
+.textarea {
+  color: var(--text-color-light);
+}
+
+.textarea::placeholder {
+  color: var(--text-color-light);
+}
+
+.textarea:focus {
+  background-color: transparent !important;
+}
+
+
+

@@ -251,6 +251,22 @@
 .full-content {
   width: 100% !important;
 }
+.select-area::selection{
+  background-color: var(--blue) !important;
+}
+
+.select-area > p::selection{
+  background-color: var(--blue) !important;
+}
+
+.select-area > h1::selection{
+  background-color: var(--blue) !important;
+}
+
+.select-area > h3::selection{
+  background-color: var(--blue) !important;
+}
+
 
 @media (max-width: 576px) {
   .content-btns {
