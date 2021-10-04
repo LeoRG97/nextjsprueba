@@ -75,12 +75,13 @@ const NavbarComponent = () => {
         <Container fluid className={styles.navContentStyle}>
           <Link href="/" passHref>
             <Navbar.Brand className={styles.a}>
-              <Image
-                src="/images/logos/NTTBlanco.png"
-                alt="Logo"
-                width={130}
-                height={20}
-              />
+              <div className={styles.logo}>
+                <Image
+                  src="/images/logos/Marca.png"
+                  alt="Logo"
+                  layout="fill"
+                />
+              </div>
             </Navbar.Brand>
           </Link>
           <Navbar.Collapse id="basic-navbar-nav">
@@ -110,8 +111,8 @@ const NavbarComponent = () => {
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
                     />
-                    <button className="input__icon" type="button" onClick={handleSearch}>
-                      <span className="icon icon--theme-secondary">7</span>
+                    <button className="icon input__icon" type="button" onClick={handleSearch}>
+                      7
                     </button>
                   </div>
                 </form>
@@ -122,8 +123,8 @@ const NavbarComponent = () => {
                 ) : (
                   <div className={styles.divNavItemStyle}>
                     <Link href="/" passHref>
-                      <button className="button button--theme-yellow me-2 button_discover" onClick={handleSearch}>
-                        <span className="button__icon-left text--theme-yellow">9</span>{' '}Descubrir
+                      <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
+                        <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                       </button>
                     </Link>
                     {
@@ -164,14 +165,13 @@ const NavbarComponent = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" className={expanded === 'expanded' ? styles.iconToggleExpanded : styles.iconToggle} onClick={() => setExpanded(!expanded)} />
           <Navbar.Brand>
             <Link href="/" passHref>
-              <Nav className={styles.a}>
+              <div className={styles.logo}>
                 <Image
-                  src="/images/logos/NTTBlanco.png"
+                  src="/images/logos/Marca.png"
                   alt="Logo"
-                  width={130}
-                  height={20}
+                  layout="fill"
                 />
-              </Nav>
+              </div>
             </Link>
           </Navbar.Brand>
           <Navbar.Brand>
@@ -220,8 +220,8 @@ const NavbarComponent = () => {
 
               <div className={`${styles.divNavItemStyle} mt-4`}>
                 <Link href="/nosotros" passHref>
-                  <button className="button button--theme-yellow">
-                    <span className="button__icon-left text--theme-yellow">9</span>{' '}Descubrir
+                  <button className="button button--theme-warning">
+                    <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                   </button>
                 </Link>
                 <Link href="/nosotros" passHref>

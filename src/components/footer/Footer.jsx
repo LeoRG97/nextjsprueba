@@ -9,8 +9,8 @@ const Footer = () => {
     <footer className={styles.footer}>
       <Container className={styles.footer_container}>
         <Row className={styles.footer_container_row}>
-          <Col sm="12" lg="auto">
-            <img src="/images/logos/NTTBlanco.png" alt="NTT" className={styles.img_NTT} />
+          <Col sm="12" lg="12">
+            <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
           </Col>
           <Col xs="12" sm="auto" lg="auto">
             <Row className={styles.footer_container_row_links}>

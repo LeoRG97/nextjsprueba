@@ -19,19 +19,25 @@
   display: flex !important;
   padding-left: 60px;
   padding-right: 60px;
-  background-color: #0d0c22 !important;
+  background-color: var(--colorPrimaryDark) !important;
 }
 
 .navbarMobile {
   display: none !important;
   padding-left: 60px;
   padding-right: 60px;
-  background-color: #0d0c22 !important;
+  background-color: var(--colorPrimaryDark) !important;
 }
 
 .a {
   display: flex;
   margin-right: 5px;
+}
+
+.logo {
+  position: relative;
+  width: 128px;
+  height: 44px;
 }
 
 .linksContainer {

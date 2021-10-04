@@ -154,7 +154,7 @@ const HomePage = ({ articulos }) => {
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
               <div className={`${styles.iconOutline} ${styles.faintOutlineYellow}`}>
-                <span className={`icon icon--theme-yellow ${styles.largeIcon}`}>e</span>
+                <span className={`icon icon--theme-warning ${styles.largeIcon}`}>e</span>
               </div>
               <p className="title">Desarrolla<br />nuevas habilidades</p>
               <button className="button button--theme-primary">Think tools</button>

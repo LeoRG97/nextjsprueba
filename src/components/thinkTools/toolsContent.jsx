@@ -29,7 +29,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
               <p className="text-md">{toolsInfo.objetivo}</p>
               <Link href="/think-tools" passHref>
                 <a>
-                  <button className="button button--theme-warnig"><span className="button__icon-left text--theme-warning">9</span>Explorar más herramientas</button>
+                  <button className="button button--theme-warning"><span className="button__icon-left text--theme-warning">9</span>Explorar más herramientas</button>
                 </a>
               </Link>
             </div>

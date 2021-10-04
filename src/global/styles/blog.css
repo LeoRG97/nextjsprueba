@@ -103,7 +103,7 @@
 }
 
 .Btn-rounded__active{
-  background-color: var(--colorPrimaryFaint);
+  background-color: var(--colorPrimaryTransp);
   color: var(--text-color-highlight);
 }
 

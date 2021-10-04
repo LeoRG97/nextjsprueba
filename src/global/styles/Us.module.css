@@ -151,11 +151,11 @@
 }
 
 .pink_icon {
-  background-color: var(--colorWarningTransp);
+  background-color: var(--magenta-20);
 }
 
 .pink_icon span {
-  color: var(--colorWarning);
+  color: var(--magenta);
 }
 
 .green_icon {
