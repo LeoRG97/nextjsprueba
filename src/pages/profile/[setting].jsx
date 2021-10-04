@@ -9,6 +9,7 @@ import {
 import withAuth from '@/helpers/withAuth';
 import { fetch as fetchProfile } from '@/reducers/profile';
 import ProfileMembersAndInvitations from '@/components/profile/profileMembersAndInvitation/ProfileMembersAndInvitations';
+import ProfileNotes from '@/components/profile/profileNotes/ProfileNotes';
 
 const ProfileScreen = () => {
   const { query } = useRouter();
@@ -38,6 +39,7 @@ const ProfileScreen = () => {
         {query.setting === 'library' && <ProfileSavedArts />}
         {query.setting === 'about-me' && <AboutMeComponent />}
         {query.setting === 'ratings' && <RatedArticles />}
+        {query.setting === 'notes' && <ProfileNotes />}
         {query.setting === 'tools' && <ProfileTools />}
         {query.setting === 'forums' && <ForumsComponent showOptions showSubs={false} />}
 

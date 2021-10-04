@@ -22,5 +22,6 @@ module.exports = {
     Invitation: 'invitaciones',
     ArticlesUserAuthor: 'articulos/autor',
     Forums: 'foros/',
+    UserNotes: 'notas/usuario',
   },
 };
