@@ -36,7 +36,6 @@ const HomePage = ({ articulos }) => {
     window.setTimeout(() => {
       setData(counter);
       setFade(true);
-      setBackgroundImage();
     }, 500);
   };
 
@@ -49,9 +48,12 @@ const HomePage = ({ articulos }) => {
     window.setTimeout(() => {
       setData(counter);
       setFade(true);
-      setBackgroundImage();
     }, 500);
   };
+
+  useEffect(() => {
+    setBackgroundImage();
+  }, [optionSelect]);
 
   const checkActiveOption = (option) => {
     if (optionSelect !== option) {
@@ -59,10 +61,6 @@ const HomePage = ({ articulos }) => {
     }
     return styles.active;
   };
-
-  useEffect(() => {
-    setBackgroundImage();
-  }, []);
 
   return (
     <Container fluid className={styles.content_no_padd}>
@@ -98,7 +96,7 @@ const HomePage = ({ articulos }) => {
                             <div>
                               <Link href={`trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
                                 <a>
-                                  <button className="Btn-outline-light">Ir a la publicación</button>
+                                  <button className="button button--theme-light">Ir a la publicación</button>
                                 </a>
                               </Link>
                             </div>
@@ -113,8 +111,8 @@ const HomePage = ({ articulos }) => {
           }
           <Row className="my-4">
             <div className={`${styles.content_left} ${styles.margin_movil_y}`}>
-              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleBefore}>a</span>
-              <span className={`${styles.buton_m} icon Btn-round-light`} onClick={handleAfter}>b</span>
+              <span className="icon-button icon-button--secondary me-3" onClick={handleBefore}>a</span>
+              <span className="icon-button icon-button--secondary" onClick={handleAfter}>b</span>
             </div>
           </Row>
           <Row>
@@ -122,7 +120,7 @@ const HomePage = ({ articulos }) => {
               <p className="title">Descubre más publicaciones</p>
               <Link href="trending-topics/" passHref>
                 <a>
-                  <button className="Btn-outline-light faint">Ver más</button>
+                  <button className="button button--theme-secondary">Ver más</button>
                 </a>
               </Link>
             </div>
@@ -136,7 +134,7 @@ const HomePage = ({ articulos }) => {
             <h2 className="title-xl">Hay más de una forma <br />en la que podemos ayudarte</h2>
             <Link href="/nosotros" passHref>
               <a>
-                <button className="Btn-outline-light faint">Acerca de nosotros</button>
+                <button className="button button--theme-secondary">Acerca de nosotros</button>
               </a>
             </Link>
           </div>
@@ -148,7 +146,9 @@ const HomePage = ({ articulos }) => {
                 <span className={`icon icon--theme-success ${styles.largeIcon}`}>f</span>
               </div>
               <p className="title">Aumenta<br />tu conocimiento</p>
-              <button className="button button--theme-primary">Trending topics</button>
+              <Link href="/trending-topics" passHref>
+                <button className="button button--theme-primary">Trending topics</button>
+              </Link>
             </div>
           </Col>
           <Col xl="4" lg="4" sm="12">
@@ -157,16 +157,20 @@ const HomePage = ({ articulos }) => {
                 <span className={`icon icon--theme-warning ${styles.largeIcon}`}>e</span>
               </div>
               <p className="title">Desarrolla<br />nuevas habilidades</p>
-              <button className="button button--theme-primary">Think tools</button>
+              <Link href="/think-tools" passHref>
+                <button className="button button--theme-primary">Think tools</button>
+              </Link>
             </div>
           </Col>
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
               <div className={`${styles.iconOutline} ${styles.faintOutlinePrimary}`}>
-                <span className={`icon icon--theme-primary ${styles.largeIcon}`}>d</span>
+                <span className={`icon icon--theme-accent ${styles.largeIcon}`}>d</span>
               </div>
               <p className="title">Comparte<br />tu opinión</p>
-              <button className="button button--theme-primary">Think team</button>
+              <Link href="/think-team" passHref>
+                <button className="button button--theme-primary">Think team</button>
+              </Link>
             </div>
           </Col>
         </Row>

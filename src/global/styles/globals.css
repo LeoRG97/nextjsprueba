@@ -260,6 +260,10 @@ a {
   color: var(--colorPrimary);
 }
 
+.icon--theme-accent {
+  color: var(--cyan);
+}
+
 .icon--theme-highlight {
   color: var(--text-color-highlight);
 }
