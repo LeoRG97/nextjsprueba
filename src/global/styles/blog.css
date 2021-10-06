@@ -287,3 +287,79 @@
   }
 }
 /*#######################################################*/
+
+
+/************notas**********/
+.tooltip-notas-menu {
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  transition: all .3s ease;
+  opacity: 1 !important;
+  -webkit-transition: all .3s ease;
+  cursor: pointer;
+}
+
+.tooltip-notas-menu > .tooltip-inner {
+  border-radius: 0 !important;
+}
+
+.tooltip-notas-menu span{
+  color: var(--text-color-light) !important;
+}
+
+.appear {
+    -webkit-animation: appear .2s;
+    animation: appear .2s;
+}
+
+.disappear {
+    -webkit-animation: disappear .2s;
+    animation: disappear .2s;
+}
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    margin-top: -25px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    margin-top: -5px;
+  }
+  100% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+}
+
+@-webkit-keyframes disappear {
+  0% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+  100% {
+    opacity: 0;
+    margin-top: -5px;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+    margin-top: 0px;
+  }
+  100% {
+    opacity: 0;
+    margin-top: -5px;
+  }
+}

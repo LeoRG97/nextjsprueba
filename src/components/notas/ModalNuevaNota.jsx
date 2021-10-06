@@ -125,12 +125,12 @@ const ModalNuevaNota = ({
             <div className="row mt-2 mb-3 justify-content-md-center">
               <div className="col-12">
                 <div className="row justify-content-md-end mt-3">
-                  <div className="col-auto">
+                  <div className="col-6 col-md-auto">
                     <button className="button button--theme-secondary" onClick={() => onClose()} type="button">
                       Descartar
                     </button>
                   </div>
-                  <div className="col-auto">
+                  <div className="col-6 col-md-auto">
                     <button className="button button--theme-primary" onClick={handleSubmit} type="submit">
                       Guardar nota
                     </button>
