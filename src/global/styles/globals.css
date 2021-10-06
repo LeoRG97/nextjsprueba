@@ -87,7 +87,7 @@
 
   --btnBorderRadius: 0;
   --inputBorderRadius: 0;
-  
+
   --font-bold: Roboto-Bold;
   --font-medium: Roboto-Regular;
   --font-regular: Roboto-Regular;
@@ -130,6 +130,7 @@ a {
 
 .main-container {
   width: 100%;
+  height: auto;
   min-height: 100vh;
 }
 
@@ -148,6 +149,18 @@ a {
 
 .main-bg {
   background-color: var(--colorPrimaryDark);
+}
+
+.main-auth {
+  background-image: url('/images/auth/TexturaFondoCompleta.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.main-tranps {
+  background-color: transparent;
 }
 
 .texture-top {
@@ -514,6 +527,30 @@ label.input {
   margin-top: 5px;
   margin-bottom: 5px;
   width: 100%;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.select::-ms-expand {
+  display: none;
+}
+
+.select-arrow {
+  position: relative;
+}
+
+.select-arrow:after {
+  position: absolute;
+  content: '1';
+  font-family: Icons;
+  font-size: var(--icon-size-md);
+  color: var(--text-color-secondary);
+  right: 4px;
+  top: 6px;
+  bottom: 5px;
+  height: 0;
+  pointer-events: none;
 }
 
 .select:focus {
