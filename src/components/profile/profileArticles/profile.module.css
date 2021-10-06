@@ -1,5 +1,21 @@
+.optionsContainer {
+  position: relative;
+}
+
 .list_content {
-  right: 5px;
-  width: 130px;
+  display: none;
+  position: absolute;
   z-index: 2;
+  padding-top: 0.5rem;
+  right: 0;
+}
+
+.optionsContainer:hover .list_content {
+  display: block;
+}
+
+@media (max-width: 999.92px) {
+  .hideMobile {
+    display: none;
+  }
 }
