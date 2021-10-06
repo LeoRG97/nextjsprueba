@@ -149,18 +149,20 @@ export default function Home() {
         <hr className="bg-light" />
         <h6 className="subtitle">Select</h6>
         <div className="col-12 col-md-6">
-          <select
-            id="rol"
-            name="rol"
-            placeholder="Selecciona uno"
-            className="select"
-          >
-            <option value="">Selecciona uno</option>
-            <option value="admin">Administrador</option>
-            <option value="user-author">Colaborador</option>
-            <option value="user-reviewer">Curador</option>
-            <option value="user-premium">Premium</option>
-          </select>
+          <div className="select-arrow">
+            <select
+              id="rol"
+              name="rol"
+              placeholder="Selecciona uno"
+              className="select"
+            >
+              <option value="">Selecciona uno</option>
+              <option value="admin">Administrador</option>
+              <option value="user-author">Colaborador</option>
+              <option value="user-reviewer">Curador</option>
+              <option value="user-premium">Premium</option>
+            </select>
+          </div>
         </div>
 
         <hr className="bg-light" />
@@ -171,8 +173,8 @@ export default function Home() {
             <CategorySelector
               data={data.data}
               placeholder="Selecciona las categorías"
-              addCategory={() => {}}
-              deleteCategory={() => {}}
+              addCategory={() => { }}
+              deleteCategory={() => { }}
             />
           )}
         </div>

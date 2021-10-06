@@ -115,7 +115,7 @@ const CreateAccountForm = ({ preferences }) => {
   const [dataInvite, setDataInvite] = useState({
     email: '',
     idInvitation: '',
-    role: '',
+    role: 'user',
     invitation: false,
   });
 
@@ -443,7 +443,7 @@ const CreateAccountForm = ({ preferences }) => {
       newsLetter,
       birthDay,
       preferences: values,
-      role: dataInvite ? dataInvite.role : '',
+      role: dataInvite ? dataInvite.role : 'user',
     };
 
     if (values.length < 3) {
@@ -607,84 +607,94 @@ const CreateAccountForm = ({ preferences }) => {
                 <div className="row mb-2">
                   <div className="d-block subtitle">Fecha de nacimiento* </div>
                   <div className="col-6 col-sm-4 flechita">
-                    <DayPicker
-                      defaultValue="Día"
-                      year={yearValue}
-                      month={mounthValue}
-                      endYearGiven
-                      required
-                      value={dayValue}
-                      onChange={(day) => {
-                        setDayValue(day);
-                      }}
-                      id="day"
-                      name="day"
-                      classes="classes select"
-                      optionClasses="option classes"
-                    />
+                    <div className="select-arrow">
+                      <DayPicker
+                        defaultValue="Día"
+                        year={yearValue}
+                        month={mounthValue}
+                        endYearGiven
+                        required
+                        value={dayValue}
+                        onChange={(day) => {
+                          setDayValue(day);
+                        }}
+                        id="day"
+                        name="day"
+                        classes="classes select"
+                        optionClasses="option classes"
+                      />
+                    </div>
                   </div>
                   <div className="col-6 col-sm-4">
-                    <MonthPicker
-                      defaultValue="Mes"
-                      numeric // to get months as numbers
-                      endYearGiven // mandatory if end={} is given in YearPicker
-                      year={yearValue} // mandatory
-                      required // default is false
-                      value={mounthValue} // mandatory
-                      onChange={(month) => { // mandatory
-                        setMounthValue(month);
-                      }}
-                      id="month"
-                      name="month"
-                      classes="classes select"
-                      optionClasses="option classes"
-                    />
+                    <div className="select-arrow">
+                      <MonthPicker
+                        defaultValue="Mes"
+                        numeric // to get months as numbers
+                        endYearGiven // mandatory if end={} is given in YearPicker
+                        year={yearValue} // mandatory
+                        required // default is false
+                        value={mounthValue} // mandatory
+                        onChange={(month) => { // mandatory
+                          setMounthValue(month);
+                        }}
+                        id="month"
+                        name="month"
+                        classes="classes select"
+                        optionClasses="option classes"
+                      />
+                    </div>
                   </div>
                   <div className="col-12 col-sm-4">
-                    <YearPicker
-                      defaultValue="Año"
-                      start={1921} // default is 1900 (end default is current year)
-                      reverse // default is ASCENDING
-                      required // default is false
-                      value={yearValue} // mandatory
-                      onChange={(year) => { // mandatory
-                        setYearValue(year);
-                      }}
-                      id="year"
-                      name="year"
-                      classes="classes select"
-                      optionClasses="option classes"
-                    />
+                    <div className="select-arrow">
+                      <YearPicker
+                        defaultValue="Año"
+                        start={1921} // default is 1900 (end default is current year)
+                        reverse // default is ASCENDING
+                        required // default is false
+                        value={yearValue} // mandatory
+                        onChange={(year) => { // mandatory
+                          setYearValue(year);
+                        }}
+                        id="year"
+                        name="year"
+                        classes="classes select"
+                        optionClasses="option classes"
+                      />
+                    </div>
                   </div>
                   {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
                 </div>
                 <div className="row">
                   <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="country">País o región*
-                      <CountryDropdown
-                        required
-                        id="country"
-                        name="country"
-                        defaultOptionLabel="País"
-                        className="select"
-                        value={country}
-                        onChange={(val) => setCountry(val)}
-                      />
+                      <div className="select-arrow">
+                        <CountryDropdown
+                          required
+                          id="country"
+                          name="country"
+                          defaultOptionLabel="País"
+                          className="select"
+                          value={country}
+                          onChange={(val) => setCountry(val)}
+                        />
+                      </div>
                       {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
                     </label>
                   </div>
                   <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="state">Provincia o estado*
-                      <RegionDropdown
-                        id="state"
-                        name="state"
-                        defaultOptionLabel="Estado"
-                        className="select"
-                        country={country}
-                        value={state}
-                        onChange={(val) => setState(val)}
-                        required
-                      />
+                      <div className="select-arrow">
+                        <RegionDropdown
+                          id="state"
+                          name="state"
+                          defaultOptionLabel="Estado"
+                          className="select"
+                          country={country}
+                          value={state}
+                          onChange={(val) => setState(val)}
+                          required
+                        />
+                      </div>
                       {errorState.status && <span className={`text-sm ${styles.error}`}>{errorState.text}</span>}
                     </label>
                   </div>
