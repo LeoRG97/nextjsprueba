@@ -128,71 +128,57 @@
   }
 }
 
-.trendingContentAdminOptions {
+.options {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.optionsMobile {
   display: none;
 }
 
-.trendingLabelAdmin {
-  background-color: var(--colorArticleLabel);
-  z-index: 25;
-  padding: 12px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-  border: 1px solid var(--colorBackgroundDarkSec);
-  transition: 0.5s;
-  cursor: pointer;
+@media (max-width: 991.98px) {
+  .options {
+    display: none;
+  }
+
+  .optionsMobile {
+    display: inline-block;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
 }
 
-.adminOptionsOverArticle {
-  left: unset;
-  right: 10px;
-  width: 30px;
-  background-color: var(--colorBackgroundDarkSec);
-  opacity: 1;
+.button_dropdown {
+  background-color: var(--colorItemBg) !important;
+  margin: 0 !important;
+  border-radius: 0;
 }
 
-.adminOptionsMenu {
-  background-color: var(--colorBackgroundDarkSec);
-  left: unset;
-  right: 10px;
+.button_dropdown > button {
+  border: 0px solid var(--colorItemBorder);
+  border-radius: 0px;
+  width: 46px;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  font-family: Icons;
+  font-size: var(--icon-size-sm);
+  color: var(--colorSecondary) !important;
+  justify-content: end !important;
+  background-color: transparent !important;
 }
 
-.updateOption:hover {
-  background-color: var(--colorItemBgRGB);
-  border-radius: 5px;
-  color: var(--colorLight) !important;
-  transition: 0.5s;
-  cursor: pointer;
-  width: auto;
+.button_dropdown > button::after {
+  display: none !important;
 }
 
-.updateOption:hover span {
-  color: var(--colorLight) !important;
-}
-
-.deleteOption:hover {
-  background-color: var(--colorItemBgRGB);
-  border-radius: 5px;
-  color: var(--colorLight) !important;
-  transition: 0.5s;
-  cursor: pointer;
-  width: auto;
-}
-
-.deleteOption:hover span {
-  color: var(--colorLight) !important;
-}
-
-.cardContainer:hover .trendingContentAdminOptions {
-  display: table-row;
-  width: 110px;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 10px;
-  right: -15%;
-  z-index: 25 !important;
+.button_dropdown > div {
+  opacity: 1 !important;
+  padding: 0;
+  background-color: var(--colorItemBg);
+  border-radius: 7px;
+  min-width: 8rem;
 }

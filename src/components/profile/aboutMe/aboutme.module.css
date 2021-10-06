@@ -11,36 +11,32 @@
   display: inline;
 }
 
-.content_ul li {
+.listItem {
   display: inherit;
   padding: 5px 8px;
-  background-color: var(--colorItemBg);
+  background-color: var(--colorItemBgFocused);
   margin-right: 10px;
-  border-radius: 3px;
 }
 
-.content_ul.social li,
-.content_ul.social a {
-  background-color: var(--contentTransparentRGB);
-  font-size: 110%;
-}
-
-.content_ul.social a {
-  max-width: 20px;
+.socialLink {
+  display: inline-block;
+  margin-right: 0.8rem;
+  padding-top: 0.5rem;
 }
 
 @media (max-width: 991px) {
   .content_ul {
     display: inline-block;
   }
-  .content_ul li {
+  .listItem {
     margin-top: 5px;
     margin-bottom: 5px;
   }
   .content_ul.social {
     display: inline-block;
   }
-  .content_ul.social a {
-    display: inline-block;
+
+  .socialLink {
+    padding-bottom: 0.8rem;
   }
 }
