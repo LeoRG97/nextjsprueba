@@ -286,9 +286,8 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
     setErrorStatus(false);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, bornDay) => {
     e.preventDefault();
-
     const model = {
       company,
       position,
@@ -296,7 +295,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       state,
       city,
       tel,
-      birthDay,
+      birthDay: bornDay || birthDay,
       preferences: (preferencesState.map((p) => p._id)),
     };
 
@@ -324,18 +323,18 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
     }
   };
 
-  const handleFirstForm = async (e) => {
+  const handleFirstForm = (e) => {
     e.preventDefault();
 
     if (company === ''
-    || position === ''
-    || tel === ''
-    || city === ''
-    || country === ''
-    || state === ''
-    || yearValue === '' || yearValue === 'Año'
-    || mounthValue === '' || mounthValue === 'Mes'
-    || dayValue === '' || dayValue === 'Día') {
+      || position === ''
+      || tel === ''
+      || city === ''
+      || country === ''
+      || state === ''
+      || yearValue === '' || yearValue === 'Año'
+      || mounthValue === '' || mounthValue === 'Mes'
+      || dayValue === '' || dayValue === 'Día') {
       validate(company, 'company');
       validate(position, 'position');
       validate(tel, 'tel');
@@ -346,7 +345,6 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       validate(mounthValue, 'mounthValue');
       validate(dayValue, 'dayValue');
     } else {
-      const yyyy = yearValue;
       let mm = 0;
       let dd = 0;
       if (yearValue !== '' && mounthValue !== '' && dayValue !== '') {
@@ -360,12 +358,13 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
         } else {
           dd = dayValue;
         }
-        setBirthDay(`${yyyy}-${mm}-${dd}`);
+        setBirthDay(`${yearValue}-${mm}-${dd}`);
       }
+      const bornDay = `${yearValue}-${mm}-${dd}`;
       if (!errorGeneral) {
         setError('');
         setErrorStatus(false);
-        handleSubmit(e);
+        handleSubmit(e, bornDay);
       }
     }
   };
@@ -418,31 +417,35 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
         <div className="row">
           <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="country">País o región*
-              <CountryDropdown
-                required
-                id="country"
-                name="country"
-                defaultOptionLabel="País"
-                className="select"
-                value={country}
-                onChange={(val) => setCountry(val)}
-              />
+              <div className="select-arrow">
+                <CountryDropdown
+                  required
+                  id="country"
+                  name="country"
+                  defaultOptionLabel="País"
+                  className="select"
+                  value={country}
+                  onChange={(val) => setCountry(val)}
+                />
+              </div>
               {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
             </label>
           </div>
           <div className="col-6 full-content-mob">
             <label className="d-block subtitle mb-2" htmlFor="state">Provincia o estado*
-              <RegionDropdown
-                id="state"
-                name="state"
-                defaultOptionLabel="Estado"
-                className="select"
-                country={country}
-                value={state}
-                onChange={(val) => setState(val)}
-                required
-              />
-              {errorState.status && <span className={`text-sm ${styles.error}`}>{errorState.text}</span>}
+              <div className="select-arrow">
+                <RegionDropdown
+                  id="state"
+                  name="state"
+                  defaultOptionLabel="Estado"
+                  className="select"
+                  country={country}
+                  value={state}
+                  onChange={(val) => setState(val)}
+                  required
+                />
+                {errorState.status && <span className={`text-sm ${styles.error}`}>{errorState.text}</span>}
+              </div>
             </label>
           </div>
         </div>
@@ -475,55 +478,60 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
         <div className="row mb-2">
           <div className="d-block subtitle">Fecha de nacimiento* </div>
           <div className="col-4 flechita">
-            <DayPicker
-              defaultValue="Día"
-              year={yearValue}
-              month={mounthValue}
-              endYearGiven
-              required
-              value={dayValue}
-              onChange={(day) => {
-                setDayValue(day);
-              }}
-              id="day"
-              name="day"
-              classes="classes select"
-              optionClasses="option classes"
-            />
+            <div className="select-arrow">
+              <DayPicker
+                defaultValue="Día"
+                year={yearValue}
+                month={mounthValue}
+                endYearGiven
+                required
+                value={dayValue}
+                onChange={(day) => {
+                  setDayValue(day);
+                }}
+                id="day"
+                name="day"
+                classes="classes select"
+                optionClasses="option classes"
+              />
+            </div>
           </div>
           <div className="col-4">
-            <MonthPicker
-              defaultValue="Mes"
-              numeric // to get months as numbers
-              endYearGiven // mandatory if end={} is given in YearPicker
-              year={yearValue} // mandatory
-              required // default is false
-              value={mounthValue} // mandatory
-              onChange={(month) => { // mandatory
-                setMounthValue(month);
-              }}
-              id="month"
-              name="month"
-              classes="classes select"
-              optionClasses="option classes"
-            />
+            <div className="select-arrow">
+              <MonthPicker
+                defaultValue="Mes"
+                numeric // to get months as numbers
+                endYearGiven // mandatory if end={} is given in YearPicker
+                year={yearValue} // mandatory
+                required // default is false
+                value={mounthValue} // mandatory
+                onChange={(month) => { // mandatory
+                  setMounthValue(month);
+                }}
+                id="month"
+                name="month"
+                classes="classes select"
+                optionClasses="option classes"
+              />
+            </div>
           </div>
           <div className="col-4">
-            <YearPicker
-              defaultValue="Año"
-              start={1921} // default is 1900
-              end={2021} // default is current year
-              reverse // default is ASCENDING
-              required // default is false
-              value={yearValue} // mandatory
-              onChange={(year) => { // mandatory
-                setYearValue(year);
-              }}
-              id="year"
-              name="year"
-              classes="classes select"
-              optionClasses="option classes"
-            />
+            <div className="select-arrow">
+              <YearPicker
+                defaultValue="Año"
+                start={1921} // default is 1900
+                reverse // default is ASCENDING
+                required // default is false
+                value={yearValue} // mandatory
+                onChange={(year) => { // mandatory
+                  setYearValue(year);
+                }}
+                id="year"
+                name="year"
+                classes="classes select"
+                optionClasses="option classes"
+              />
+            </div>
           </div>
           {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
         </div>
