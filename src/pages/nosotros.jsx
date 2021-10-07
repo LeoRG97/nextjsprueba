@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useRouter } from 'next/router';
 import styles from '@/global/styles/Us.module.css';
 import { Footer, Layout } from '@/components';
 import WorldComponent from '../components/world/World';
@@ -11,6 +12,12 @@ export default function Home() {
     dragFree: true,
     containScroll: 'trimSnaps',
   });
+
+  const router = useRouter();
+
+  const goObservatorio = () => {
+    router.push('/think-tools');
+  };
 
   return (
     <Layout>
@@ -80,7 +87,9 @@ export default function Home() {
                   <div className={styles.content_title_text}>
                     <small className="text-sm text--theme-light">Nuestro propósito</small>
                     <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
-                    <button className="Btn-outline-light"><span className="icon">F</span>Muéstrame cómo</button>
+                    <button className="button button--theme-light me-2">
+                      <span className="button__icon-left text--theme-light">F</span>Muéstrame cómo
+                    </button>
                   </div>
                 </div>
               </Row>
@@ -105,7 +114,9 @@ export default function Home() {
                         // eslint-disable-next-line max-len
                         <p className="text-md">NTT DATA es su socio de innovación en cualquier parte del mundo. Con sede en Tokio, con operaciones comerciales en más de 50 países y regiones, enfatizamos el compromiso a largo plazo y combinamos el alcance global y la intimidad local para proporcionar servicios profesionales de primer nivel, desde consultoría, desarrollo de sistemas hasta externalización de TI empresarial.</p>
                       }
-                      <button className="Btn-outline-light">Ir al observatorio</button>
+                      <button className="button button--theme-primary me-2" onClick={() => goObservatorio()}>
+                        Ir al observatorio
+                      </button>
                     </div>
                   </div>
                 </Col>

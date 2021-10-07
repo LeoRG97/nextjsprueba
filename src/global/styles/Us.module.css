@@ -204,17 +204,16 @@
 }
 
 .content_observatory {
-  background-image: url('/images/think-tools/Fondo-textura.png');
-  background-repeat: repeat-y;
+  background-image: url('/images/resourses/TexturaFondoInversa.png');
+  background-repeat: no-repeat;
   background-size: 100% auto;
-  background-position: center;
+  background-position: bottom;
   min-height: 765px;
   position: relative;
 }
 
 .content_observatory::after {
   content: "";
-  background-image: linear-gradient(to bottom, var(--colorItemBgRGB), var(--contentTransparentRGB), var(--colorItemBgRGB));
   position: absolute;
   max-height: 100%;
   top: 0px;
@@ -296,7 +295,7 @@
     /* margin: auto; */
   /* } */
   .content_observatory {
-    background-size: 100% 100%;
+    background-size: 100% auto;
   }
   .content_title_video {
     position: absolute;
