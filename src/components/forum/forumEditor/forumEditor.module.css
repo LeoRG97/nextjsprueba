@@ -2,7 +2,7 @@
   background-color: var(--colorItemBg);
   width: max-content;
   padding: 2.5rem;
-  border-radius: 10px;
+  border-radius: 0px;
   margin-left: auto;
   margin-right: auto;
 }

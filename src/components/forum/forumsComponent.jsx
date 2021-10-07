@@ -12,11 +12,16 @@ import { deleteForum } from '@/services/forums';
 import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
+import OptionDropdown from '../optionsDropdown/OptionsDropdown';
 
 const ForumsComponent = ({
   showOptions, showSubs,
 }) => {
   const [session] = useSession();
+  const [showOptionsForum, setShowOptionsForum] = useState({
+    show: false,
+    idForum: '',
+  });
   const [showModal, setShowModal] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -71,6 +76,26 @@ const ForumsComponent = ({
     }
   };
 
+  const activateShowOptions = (show, idForum) => {
+    if (show) {
+      if (idForum !== showOptionsForum.idForum) {
+        setShowOptionsForum({
+          show,
+          idForum,
+        });
+      } else {
+        setShowOptionsForum({
+          show,
+        });
+      }
+    } else {
+      setShowOptionsForum({
+        show: false,
+        idForum: '',
+      });
+    }
+  };
+
   return (
     <Container>
       {
@@ -87,7 +112,12 @@ const ForumsComponent = ({
       {
         data && data.data && data.data.map((forum) => {
           return (
-            <Row className={styles.forum_row} key={forum._id}>
+            <Row
+              className={styles.forum_row}
+              key={forum._id}
+              onMouseEnter={() => activateShowOptions(true, forum._id)}
+              onMouseLeave={() => setShowOptionsForum(false, forum._id)}
+            >
               <Col xl="6" lg="6" sm="12" className="col-12">
                 <div className={styles.forum_info_cont}>
                   <div className={styles.forum_conten_img}>
@@ -111,25 +141,25 @@ const ForumsComponent = ({
                       )
                     }
                     {
-                      showOptions && (
-                        <div className={styles.forum_drop_cont}>
-                          <div className="dropdown More-drop">
-                            <div className="dropdown-select More">
-                              <button>
-                                <span className="icon text--theme-secondary">0</span>
-                              </button>
-                            </div>
-                            <ul className={`select-dropdown ${styles.list_content}`}>
-                              <li className="text-sm" onClick={() => updateForumModal(forum._id)}>
-                                <span className="icon text--theme-light">K</span>Modificar
-                              </li>
-                              <li className="text-sm" onClick={() => deleteForumModal(forum._id)}>
-                                <span className="icon text--theme-light">L</span>Eliminar
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      )
+                      (showOptions && showOptionsForum && forum._id === showOptionsForum.idForum)
+                        && (
+                          <OptionDropdown
+                            options={[
+                              {
+                                option: 'Modificar',
+                                event: true,
+                                eventName: () => updateForumModal(forum._id),
+                                iconType: 'K',
+                              },
+                              {
+                                option: 'Eliminar',
+                                event: true,
+                                eventName: () => deleteForumModal(forum._id),
+                                iconType: 'L',
+                              },
+                            ]}
+                          />
+                        )
                     }
                   </div>
                 </div>
