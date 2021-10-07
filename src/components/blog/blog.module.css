@@ -10,11 +10,18 @@
   margin-bottom: 40px;
 }
 
-.btn_top {
-  top: 5px;
-}
-
 .author_pict {
   border-radius: 50px;
 }
 
+.buttonsContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+@media (max-width: 991.92px) {
+  .buttonsContainer {
+    justify-content: flex-start;
+    margin-top: 1rem;
+  }
+}
