@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
+import { useSWRConfig } from 'swr';
 import NoteComponent from './NoteComponent';
 import ModalEditNote from './ModalEditNote';
 import { ApiRoutes } from '@/global/constants';
@@ -15,6 +15,7 @@ import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const ProfileNotes = () => {
   const router = useRouter();
+  const { mutate: globalMutate } = useSWRConfig();
   useEffect(() => {
 
   }, [router]);
@@ -88,9 +89,9 @@ const ProfileNotes = () => {
     setModalSucces(false);
     setModalError(false);
     const res = await deleteNotesService(idNote);
-    console.log(res);
     if (res.ok) {
       mutate(data);
+      globalMutate([ApiRoutes.UserTotals, session.user.id]);
       setModalLoading(false);
       setModalSucces(true);
       setModalError(false);
