@@ -33,7 +33,9 @@ const ArticleListSelectComponent = (props) => {
     <div className={`select-posts ${styles.selectContainer}`}>
       <DropdownButton className="text-md" id={`dropdown-basic-button-${selectN}`} title={btnLabel}>
         {items.map((item) => (
-          <Dropdown.Item key={item.value} className="text-sm" onClick={() => filtroS(item)}>{item.label}</Dropdown.Item>
+          <Dropdown.Item key={item.value} className="text-sm drop-item" onClick={() => filtroS(item)}>
+            <div className="drop-item__content">  {item.label} </div>
+          </Dropdown.Item>
         ))}
       </DropdownButton>
     </div>

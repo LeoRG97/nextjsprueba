@@ -20,22 +20,14 @@
 }
 
 .filterOpacity1 {
-  background: rgb(13, 12, 34);
-  background: linear-gradient(
-    90deg,
-    rgba(13, 12, 34, 1) 0%,
-    rgba(13, 12, 34, 0.2049194677871149) 100%
-  );
+  background: rgb(15,28,80);
+  background: linear-gradient(90deg, rgba(15,28,80,1) 0%, rgba(15,28,80,0) 35%);
   left: 0%;
 }
 
 .filterOpacity2 {
-  background: rgb(13, 12, 34);
-  background: linear-gradient(
-    270deg,
-    rgba(13, 12, 34, 1) 0%,
-    rgba(13, 12, 34, 0.2049194677871149) 100%
-  );
+  background: rgb(15,28,80);
+  background: linear-gradient(270deg, rgba(15,28,80,1) 0%, rgba(15,28,80,0) 35%);
   right: 0%;
 }
 
@@ -62,7 +54,7 @@
   text-align: center;
   color: var(--text-color-secondary);
   border: 1px solid var(--colorItemBorder);
-  border-radius: 1.25rem;
+  border-radius: 0rem;
   min-width: 80px;
   padding-left: 1rem;
   padding-right: 1rem;
