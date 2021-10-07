@@ -1641,9 +1641,10 @@ html {
 }
 /*************drodown nav**********************/
 #nav-dropdown-profile::after{
-  position: absolute;
-  right: -10%;
-  top: 1.4rem;
+  display: none;
+  position: relative;
+  top: -2.5rem;
+  left: 100%;
   font-family: Icons;
   font-size: var(--icon-size-sm);
   content: "1";
@@ -1651,10 +1652,15 @@ html {
   color: var(--text-color-secondary) !important;
 }
 
+.navbar-light .navbar-toggler {
+  color: transparent;
+}
+
 #nav-dropdown-profile + .dropdown-menu{
   background-color: var(--colorItemBg);
   padding: 0;
-  margin-left: 33.33%;
+  right: 0 !important;
+  left: auto !important;
 }
 
 #nav-dropdown-profile + .dropdown-menu > a{
@@ -1682,6 +1688,11 @@ div[disabled] {
   margin-top: 45px;
 }
 
+/** Modal ****/
+.modal-content {
+  border-radius: 0 !important;
+}
+
 /**** table ******/
 .react-bs-table-no-data {
   color: var(--colorLightFaint);
@@ -1705,28 +1716,12 @@ div[disabled] {
   .mt-lg-title {
     margin-top: 80px !important;
   }
-
-  #nav-dropdown-profile::after{
-    top: 1rem;
-  }
 }
 
-@media (max-width: 1300px) {
-  #nav-dropdown-profile::after{
-    top: 1.2rem;
-  }
-}
-
-@media (max-width: 1250px) {
-  #nav-dropdown-profile::after{
-    top: 0.9rem;
-  }
-}
-
-@media (max-width: 1100px) {
+@media (max-width: 1120px) {
   .button_discover{
-    padding-left: 3.25rem !important;
-    padding-right: 3.25rem !important;
+    padding-left: 0.25rem !important;
+    padding-right: 0.25rem !important;
   }
 }
 
