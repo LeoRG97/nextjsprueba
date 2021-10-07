@@ -109,7 +109,7 @@ const ArticlesDetailComponent = ({
           {
             article.portada && article.portada.descripcion && (
               <>
-                <div onClick={showArticle} className="text-sm">
+                <div onClick={showArticle} className="text-sm text--theme-light">
                   {article.portada.descripcion || 'Sin descripción'}
                 </div>
               </>

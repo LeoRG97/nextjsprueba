@@ -33,7 +33,7 @@
   cursor: pointer;
   width: 46px;
   height: 40px;
-  border-radius: 10px;
+  border-radius: 0px;
   background-color: var(--backgroung-color-dark);
   border: 1px solid var(--backgroung-color-low-dark);
   color: var(--text-color-secondary);
