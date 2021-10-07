@@ -39,9 +39,12 @@
 }
 
 .content-btns {
-  margin: auto;
+  /* margin: auto; */
   margin-top: 28vh;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .content-btns-last {
@@ -102,7 +105,7 @@
   cursor: pointer;
 }
 
-.Btn-rounded__active{
+.button__active{
   background-color: var(--colorPrimaryTransp);
   color: var(--text-color-highlight);
 }
@@ -121,6 +124,32 @@
 .Btn-square.d-i {
   margin: 10px;
   display: inline;
+}
+
+.Btn-like {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--colorPrimary);
+  border: none;
+  font-family: var(--colorLight);
+  color: var(--colorLight);
+  width: 7.5rem;
+  height: 40px;
+  position: relative;
+  transition: 0.2s;
+  transition-property: width, border, color, background-color;
+}
+
+.Btn-like:active {
+  filter: brightness(0.8);
+}
+
+.Btn-like__active {
+  width: 4rem;
+  height: 2.5rem;
+  background-color: var(--colorPrimaryTransp);
+  border: none;
 }
 
 .loader-big {
@@ -204,7 +233,6 @@
 
 .content-fixed {
   position: fixed;
-  z-index: 10;
 }
 
 .content-fixed.left {
@@ -239,13 +267,9 @@
 }
 
 .icon-btn {
-  position: absolute;
   font-family: Icons;
   font-style: normal;
-  font-size: 122%;
-  padding: 4px;
-  left: 13px;
-  top: 1px;
+  margin-right: 0.5rem;
 }
 
 .full-content {

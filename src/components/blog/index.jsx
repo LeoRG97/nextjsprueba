@@ -144,9 +144,9 @@ const BlogComponent = ({
           </div>
           <div className="content-btns-last">
             <label className="text-md">Ver en</label>
-            <button className="Btn-square d-i">P</button>
-            <button className="Btn-square d-i">S</button>
-            <button className="Btn-square d-i">N</button>
+            <button className="icon-button icon-button--secondary m-2">P</button>
+            <button className="icon-button icon-button--secondary m-2">S</button>
+            <button className="icon-button icon-button--secondary m-2">N</button>
           </div>
           {
             selectMenu && (

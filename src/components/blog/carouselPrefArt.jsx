@@ -63,7 +63,7 @@ const CarouselPrefArt = ({ blogId, categories }) => {
                   <div className="embla__slide__inner">
                     <div className={styles.content_more}>
                       <Link href="/trending-topics">
-                        <a><button className="Btn-cancel">Ver mas</button></a>
+                        <a><button className="button button--theme-secondary">Ver mas</button></a>
                       </Link>
                     </div>
                   </div>

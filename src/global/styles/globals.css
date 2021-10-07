@@ -1002,34 +1002,6 @@ html {
   filter: brightness(120%);
 }
 
-.Btn-like {
-  display: inline-flex;
-  align-items: center;
-  border-radius: 50px;
-  background-color: var(--colorPrimary);
-  border: 1px solid var(--colorPrimary);
-  font-family: var(--colorLight);
-  font-size: var(--font-size-md);
-  padding: 1px 27px 1px 48px;
-  color: var(--colorLight);
-  width: 7.5rem;
-  height: 40px;
-  position: relative;
-  transition: 0.2s;
-  transition-property: width, border, color, background-color;
-}
-
-.Btn-like:hover {
-  filter: brightness(120%);
-}
-
-.Btn-like__active {
-  width: 2rem;
-  height: 2.5rem;
-  background-color: var(--colorPrimaryTransp);
-  border: none;
-}
-
 .m-a {
   margin: auto;
 }
