@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
 import { useState } from 'react';
 import {
-  Footer, LoadingIndicator, Switch, SubscriptionModal,
+  Footer, LoadingIndicator, Switch, SubscriptionModal, CourseDetailComponent,
 } from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchData } from '@/services/swr';
@@ -244,6 +244,7 @@ export default function Home() {
           </Container>
         </div>
         <SubscriptionModal />
+        <CourseDetailComponent />
       </main>
 
       <Footer />
