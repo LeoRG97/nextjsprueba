@@ -176,9 +176,9 @@ export const ListItem = ({ comment }) => {
                 data && data.map((page) => {
                   return page.map((reply) => (
                     <li key={reply._id}>
-                      <div className="d-flex justify-content-center align-items-center">
-                        <div className="col-lg-1 d-flex justify-content-center align-items-center">
 
+                      <div className="row py-4">
+                        <div className="col-lg-1 col-md-2 col-sm-12">
                           <Image
                             height="45"
                             width="45"
@@ -186,44 +186,43 @@ export const ListItem = ({ comment }) => {
                             src={reply.usuario_id.picture === 'string' || !reply.usuario_id.picture ? '/images/profile/no-profile-img.png' : reply.usuario_id.picture}
                             className={styles.author_pict}
                           />
-
                         </div>
 
-                        <div className="col-lg-10 mx-3">
-                          <div className="d-flex justify-content-between">
-                            <h3 className="subtitle">
+                        <div className="col-lg-11 col-md-10 col-sm-12">
+                          <div className="d-flex bd-highlight mb-2">
+                            <small className="subtitle">
                               {
                                 reply.usuario_id.name
                                   ? reply.usuario_id.name : ''
                               }
-                            </h3>
+                            </small>
+
+                            <small className={`${styles.positionDate} text-sm`}>
+                              {converDate(reply.createdAt)} | {getHour(reply.createdAt)}
+                            </small>
                           </div>
+
                           <div className="text-md theme-secondary">
                             <div>
                               {reply.titulo}
                             </div>
-                            <div className="row py-2">
-                              <div className="col-lg-4">
-                                <small
-                                  onClick={() => replyValoracion(reply._id)}
-                                  className="subtitle text-link me-4"
-                                >Valorar
-                                </small>
-                                <div className="icon">
-                                  0
-                                </div>
-                                <div>
-                                  <p>{reply.like}</p>
-                                </div>
-                              </div>
+                          </div>
+
+                          <div className="d-flex my-2">
+                            <small
+                              className="subtitle text-link me-3"
+                              onClick={replyValoracion}
+                            >
+                              Valorar
+                            </small>
+                            <small className="icon">
+                              0
+                            </small>
+                            <div className="d-flex align-items-center position-absolute end-0">
+                              <small className={`icon ${reply.liked && 'text--theme-highlight'}`}>c</small>
+                              <small className="text--theme-highlight">{reply.likes}</small>
                             </div>
                           </div>
-                        </div>
-
-                        <div className="col-lg-1">
-                          <small className="text-sm text-nowrap">
-                            {converDate(reply.createdAt)} | {getHour(reply.createdAt)}
-                          </small>
                         </div>
                       </div>
                     </li>

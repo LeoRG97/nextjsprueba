@@ -18,7 +18,7 @@ export const AddComment = React.memo(({
   }, []);
 
   return (
-    <li>
+    <li className={styles.liFormat}>
       <div className="d-flex justify-content-center align-items-center">
         <div className="col-lg-1 d-flex justify-content-center align-items-center">
           <Image

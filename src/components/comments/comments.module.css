@@ -3,6 +3,10 @@
   position: relative;
 }
 
+.liFormat{
+  list-style-type: none;
+}
+
 .hiddeInputReply {
   display: none;
 }

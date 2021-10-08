@@ -2,6 +2,7 @@ import React from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import styles from '../comments.module.css';
+// import { useSWRConfig } from 'swr';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { ListItem } from './ListItem';
@@ -16,18 +17,7 @@ export const ListComment = ({ blogInfo }) => {
   const { comentario } = values;
 
   const session = useSession();
-
-  const handleSubmitComment = async () => {
-    if (comentario !== '') {
-      const commentData = {
-        articulo_id: blogInfo,
-        usuario_id: session[0].user.id,
-        comentario,
-      };
-      await addComment(commentData);
-      resetForm();
-    }
-  };
+  // const { mutate: globalMutate } = useSWRConfig();
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -39,6 +29,20 @@ export const ListComment = ({ blogInfo }) => {
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
+
+  const handleSubmitComment = async () => {
+    if (comentario !== '') {
+      const commentData = {
+        articulo_id: blogInfo,
+        usuario_id: session[0].user.id,
+        comentario,
+      };
+      await addComment(commentData);
+      // mutar objecto de comentarios
+      // console.log(rsp)
+      resetForm();
+    }
+  };
 
   return (
     <div className="content-n-p content-blog-autor">
