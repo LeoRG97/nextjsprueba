@@ -4,6 +4,7 @@
 import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { AutorComponent } from '@/components';
+import { ListComment } from '../comments/comments-article/ListComment';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
@@ -68,6 +69,11 @@ const BlogComponent = ({
             saveArt={saveArt}
             shareArt={shareArt}
           />
+
+          <ListComment
+            blogInfo={blogInfo._id}
+          />
+
         </div>
       </Container>
     </>

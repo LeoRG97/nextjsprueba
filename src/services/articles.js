@@ -357,3 +357,47 @@ export const checkIfLikedThisArt = async (idArt, token) => {
     return err;
   }
 };
+
+export const addComment = async (comentData) => {
+  try {
+    const dataRes = await axios().post('/comentarios', {
+      ...comentData,
+    });
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addCommentReply = async (comentarioId, comentData) => {
+  try {
+    const dataRes = await axios().post(`/comentarios/respuesta/${comentarioId}`, {
+      ...comentData,
+    });
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addValoracionComentario = async (comentarioId) => {
+  try {
+    const dataRes = await axios().post(`/comentarios/valoracion-comentario/${comentarioId}`);
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addValoracionRespuesta = async (comentarioId, respuestaId) => {
+  try {
+    const dataRes = await axios().post(
+      `/comentarios/valoracion-respuesta/${comentarioId}`, {
+        respuestaId,
+      },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};

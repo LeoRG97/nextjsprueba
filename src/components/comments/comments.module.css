@@ -1,0 +1,40 @@
+.commentList {
+  list-style-type: none;
+  position: relative;
+}
+
+.hiddeInputReply {
+  display: none;
+}
+
+/* //lines */
+.commentList::before {
+  content: "";
+  width: 2px;
+  height: 100%;
+  background: var(--colorPrimaryTransp);
+  position: absolute;
+  left: 6%;
+  top: 0;
+}
+.mainLevel::after {
+  content: "";
+  width: 0;
+  height: 0;
+  display: block;
+  clear: both;
+}
+.commentList li {
+  margin-bottom: 15px;
+  display: block;
+  position: relative;
+}
+
+.author_pict {
+  border-radius: 50px;
+}
+
+.positionDate {
+  position: absolute;
+  right: 0;
+}
