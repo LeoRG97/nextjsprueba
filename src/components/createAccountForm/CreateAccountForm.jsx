@@ -2,17 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
-import Script from 'next/script';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/client';
 import styles from './createAccountForm.module.css';
 import { registerService } from '@/services/register';
-import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
+import CategorySelector from '../categorySelector/CategorySelector';
+import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
+import { SuccessIndicatorModal } from '..';
+import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 
 const CreateAccountForm = ({ preferences }) => {
   const [nextStep, setNextStep] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalSucces, setModalSucces] = useState(false);
+  const [modalError, setModalError] = useState(
+    {
+      status: false,
+      text: '',
+    },
+  );
   const [firstName, setFirstName] = useState('');
   const [errorFirstName, setErrorFirstName] = useState(
     {
@@ -104,13 +114,12 @@ const CreateAccountForm = ({ preferences }) => {
     },
   );
 
-  const [preferencesState, setPreferencesState] = useState(preferences);
+  const [preferencesState, setPreferencesState] = useState([]);
+
   const [newsLetter, setNewsletterState] = useState(false);
   const [error, setError] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
   const [errorGeneral, setErrorGeneral] = useState(false);
-  const [status, setStatus] = useState('idle');
-  /* const [submited, setSubmited] = useState('idle'); */
 
   const [dataInvite, setDataInvite] = useState({
     email: '',
@@ -118,6 +127,24 @@ const CreateAccountForm = ({ preferences }) => {
     role: 'user',
     invitation: false,
   });
+
+  const handleAddCategory = (newItem) => {
+    const newCategories = [...preferencesState, newItem];
+    setPreferencesState(newCategories);
+    if (newCategories.length >= 3) {
+      setError('');
+      setErrorStatus(false);
+    }
+  };
+
+  const handleDeleteCategory = (removedItem) => {
+    const newCategories = preferencesState.filter((item) => item !== removedItem);
+    setPreferencesState(newCategories);
+    if (newCategories.length < 3) {
+      setError('Por favor, selecciona por lo menos 3 preferencias');
+      setErrorStatus(true);
+    }
+  };
 
   const router = useRouter();
 
@@ -138,6 +165,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce el nombre.',
         });
+        setFirstName(value);
         setErrorGeneral(true);
       } else {
         setErrorFirstName({
@@ -154,6 +182,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce el apellido.',
         });
+        setLastName(value);
         setErrorGeneral(true);
       } else {
         setErrorLastName({
@@ -165,24 +194,26 @@ const CreateAccountForm = ({ preferences }) => {
       }
     }
     if (type === 'email') {
-      if (!value || value === '') {
+      if (!value || value === '' || value === undefined) {
         setErrorEmail({
           status: true,
           text: 'Introduce un correo válido.',
         });
+        setEmail(value);
         setErrorGeneral(true);
-      } else if (!/\S+@\S+\.\S+/.test(value)) {
+      } else if (!/\S+@\S+\.\S+/.test(value.replace(/ /g, ''))) {
         setErrorEmail({
           status: true,
           text: 'Introduce un correo válido.',
         });
+        setEmail(value);
         setErrorGeneral(true);
       } else {
         setErrorEmail({
           status: false,
           text: '',
         });
-        setEmail(value);
+        setEmail(value.replace(/ /g, ''));
         setErrorGeneral(false);
       }
     }
@@ -192,12 +223,14 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce una contraseña.',
         });
+        setPassword(value);
         setErrorGeneral(true);
       } else if (value.length < 6) {
         setErrorPassword({
           status: true,
           text: 'Introduce por lo menos 6 dígitos.',
         });
+        setPassword(value);
         setErrorGeneral(true);
       } else {
         setErrorPassword({
@@ -214,6 +247,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce una empresa.',
         });
+        setCompany(value);
         setErrorGeneral(true);
       } else {
         setErrorCompany({
@@ -230,6 +264,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce tu puesto.',
         });
+        setPosition(value);
         setErrorGeneral(true);
       } else {
         setErrorPosition({
@@ -246,12 +281,14 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce un número de telefono.',
         });
+        setTel(value);
         setErrorGeneral(true);
       } else if (value.length !== 10) {
         setErrorTel({
           status: true,
           text: 'Introduce solo 10 dígitos.',
         });
+        setTel(value);
         setErrorGeneral(true);
       } else {
         setErrorTel({
@@ -268,6 +305,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Introduce una ciudad.',
         });
+        setCity(value);
         setErrorGeneral(true);
       } else {
         setErrorCity({
@@ -284,6 +322,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Selecciona un país.',
         });
+        setCountry(value);
         setErrorGeneral(true);
       } else {
         setErrorCountry({
@@ -300,6 +339,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Selecciona la región administrativa.',
         });
+        setState(value);
         setErrorGeneral(true);
       } else {
         setErrorState({
@@ -310,13 +350,13 @@ const CreateAccountForm = ({ preferences }) => {
         setErrorGeneral(false);
       }
     }
-
     if (type === 'yearValue') {
       if (!value || value === '' || value === 'Año') {
         setErrorBirthDay({
           status: true,
           text: 'Selecciona una fecha válida.',
         });
+        setYearValue(value);
         setErrorGeneral(true);
       } else if (mounthValue !== '' && dayValue !== '' && mounthValue !== 'Mes' && dayValue !== 'Día') {
         setErrorBirthDay({
@@ -325,6 +365,13 @@ const CreateAccountForm = ({ preferences }) => {
         });
         setYearValue(value);
         setErrorGeneral(false);
+      } else {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setYearValue(value);
+        setErrorGeneral(true);
       }
     }
     if (type === 'mounthValue') {
@@ -333,6 +380,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Selecciona una fecha válida.',
         });
+        setMounthValue(value);
         setErrorGeneral(true);
       } else if (yearValue !== '' && dayValue !== '' && yearValue !== 'Año' && dayValue !== 'Día') {
         setErrorBirthDay({
@@ -341,6 +389,13 @@ const CreateAccountForm = ({ preferences }) => {
         });
         setMounthValue(value);
         setErrorGeneral(false);
+      } else {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setMounthValue(value);
+        setErrorGeneral(true);
       }
     }
     if (type === 'dayValue') {
@@ -349,6 +404,7 @@ const CreateAccountForm = ({ preferences }) => {
           status: true,
           text: 'Selecciona una fecha válida.',
         });
+        setDayValue(value);
         setErrorGeneral(true);
       } else if (mounthValue !== '' && yearValue !== '' && mounthValue !== 'Mes' && yearValue !== 'Año') {
         setErrorBirthDay({
@@ -357,6 +413,13 @@ const CreateAccountForm = ({ preferences }) => {
         });
         setDayValue(value);
         setErrorGeneral(false);
+      } else {
+        setErrorBirthDay({
+          status: true,
+          text: 'Selecciona una fecha válida.',
+        });
+        setDayValue(value);
+        setErrorGeneral(true);
       }
     }
   };
@@ -365,22 +428,71 @@ const CreateAccountForm = ({ preferences }) => {
     setNewsletterState(!newsLetter);
   };
 
-  const handleFirstForm = async (e) => {
-    e.preventDefault();
+  const withoutError = () => {
+    setFirstName({
+      status: false,
+      text: '',
+    });
+    setLastName({
+      status: false,
+      text: '',
+    });
+    setEmail({
+      status: false,
+      text: '',
+    });
+    setPassword({
+      status: false,
+      text: '',
+    });
+    setErrorCompany({
+      status: false,
+      text: '',
+    });
+    setErrorPosition({
+      status: false,
+      text: '',
+    });
+    setErrorTel({
+      status: false,
+      text: '',
+    });
+    setErrorCity({
+      status: false,
+      text: '',
+    });
+    setErrorCountry({
+      status: false,
+      text: '',
+    });
+    setErrorState({
+      status: false,
+      text: '',
+    });
+    setErrorBirthDay({
+      status: false,
+      text: '',
+    });
+    setError('');
+    setErrorStatus(false);
+    setErrorGeneral(false);
+  };
 
+  const handleFirstForm = (e) => {
+    e.preventDefault();
     if (firstName === ''
-      || lastName === ''
-      || email === ''
-      || password === ''
-      || company === ''
-      || position === ''
-      || tel === ''
-      || city === ''
-      || country === ''
-      || state === ''
-      || yearValue === '' || yearValue === 'Año'
-      || mounthValue === '' || mounthValue === 'Mes'
-      || dayValue === '' || dayValue === 'Día') {
+    || lastName === ''
+    || email === '' || email === undefined
+    || password === ''
+    || company === ''
+    || position === ''
+    || tel === ''
+    || city === ''
+    || country === ''
+    || state === ''
+    || yearValue === '' || yearValue === 'Año'
+    || mounthValue === '' || mounthValue === 'Mes'
+    || dayValue === '' || dayValue === 'Día') {
       validate(firstName, 'name');
       validate(lastName, 'lastName');
       validate(email, 'email');
@@ -417,18 +529,10 @@ const CreateAccountForm = ({ preferences }) => {
         setNextStep(true);
       }
     }
-
-    /* if (tel.length !== 10) {
-      setError('El número de telefóno debe contener solo 10 digitos');
-      setErrorStatus(true);
-    } */
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const options = document.getElementById('preferences').selectedOptions;
-    const values = Array.from(options).map(({ value }) => value);
-    setPreferencesState(values);
     const model = {
       email,
       password,
@@ -442,20 +546,31 @@ const CreateAccountForm = ({ preferences }) => {
       state,
       newsLetter,
       birthDay,
-      preferences: values,
+      preferences: preferencesState,
       role: dataInvite ? dataInvite.role : 'user',
     };
 
-    if (values.length < 3) {
+    if (preferencesState.length < 3) {
       setError('Por favor, selecciona por lo menos 3 preferencias');
       setErrorStatus(true);
     } else {
       setError('');
       setErrorStatus(false);
-      setStatus('loading');
+      setModalLoading(true);
+      setModalSucces(false);
+      setModalError({
+        status: false,
+        text: '',
+      });
       const res = await registerService(model);
       if (res.token) {
-        setStatus('success');
+        setModalLoading(false);
+        setModalSucces(true);
+        setModalError({
+          status: false,
+          text: '',
+        });
+        withoutError();
         const resSignIn = await signIn('credentials', {
           email: model.email,
           password: model.password,
@@ -463,7 +578,13 @@ const CreateAccountForm = ({ preferences }) => {
         });
 
         if (resSignIn?.error) {
-          setError('Dirección de correo electrónico y/o contraseña incorrectos.');
+          setModalLoading(false);
+          setModalSucces(false);
+          setModalError({
+            status: true,
+            text: 'Dirección de correo electrónico y/o contraseña incorrectos.',
+          });
+          setError('');
         }
         if (resSignIn.url) {
           if (dataInvite.invitation && (dataInvite.email === model.email)) {
@@ -474,8 +595,15 @@ const CreateAccountForm = ({ preferences }) => {
           }
         }
       } else {
-        setStatus('error');
-        setError('Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde');
+        setModalLoading(false);
+        setModalSucces(false);
+        setNextStep(false);
+        setError('');
+        setErrorStatus(false);
+        setModalError({
+          status: true,
+          text: 'Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde, es posible que ya este registrado un usuario con el mismo correo',
+        });
       }
     }
   };
@@ -510,7 +638,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Nombre"
                         className="input"
                         value={firstName}
-                        onChange={(event) => setFirstName(event.target.value)}
+                        onChange={(event) => validate(event.target.value, 'name')}
                         required
                       />
                       {errorFirstName.status && <span className={`text-sm ${styles.error}`}>{errorFirstName.text}</span>}
@@ -525,7 +653,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Apellidos"
                         className="input"
                         value={lastName}
-                        onChange={(event) => setLastName(event.target.value)}
+                        onChange={(event) => validate(event.target.value, 'lastName')}
                         required
                       />
                       {errorLastName.status && <span className={`text-sm ${styles.error}`}>{errorLastName.text}</span>}
@@ -540,7 +668,7 @@ const CreateAccountForm = ({ preferences }) => {
                     placeholder="Dirección de correo electrónico"
                     className="input"
                     value={email}
-                    onChange={(event) => setEmail(event.target.value)}
+                    onChange={(event) => validate(event.target.value, 'email')}
                     required
                   />
                   {errorEmail.status && <span className={`text-sm ${styles.error}`}>{errorEmail.text}</span>}
@@ -554,7 +682,7 @@ const CreateAccountForm = ({ preferences }) => {
                     placeholder="6+ caracteres"
                     className="input"
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={(event) => validate(event.target.value, 'password')}
                     required
                   />
                   {errorPassword.status && <span className={`text-sm ${styles.error}`}>{errorPassword.text}</span>}
@@ -569,7 +697,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Nombre de la empresa"
                         className="input"
                         value={company}
-                        onChange={(event) => setCompany(event.target.value)}
+                        onChange={(event) => validate(event.target.value, 'company')}
                         required
                       />
                       {errorCompany.status && <span className={`text-sm ${styles.error}`}>{errorCompany.text}</span>}
@@ -584,7 +712,7 @@ const CreateAccountForm = ({ preferences }) => {
                         placeholder="Puesto que ocupa"
                         className="input"
                         value={position}
-                        onChange={(event) => setPosition(event.target.value)}
+                        onChange={(event) => validate(event.target.value, 'position')}
                         required
                       />
                       {errorPosition.status && <span className={`text-sm ${styles.error}`}>{errorPosition.text}</span>}
@@ -599,7 +727,7 @@ const CreateAccountForm = ({ preferences }) => {
                     placeholder="Número de teléfono"
                     className="input"
                     value={tel}
-                    onChange={(event) => setTel(event.target.value)}
+                    onChange={(event) => validate(event.target.value, 'tel')}
                     required
                   />
                   {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
@@ -616,7 +744,7 @@ const CreateAccountForm = ({ preferences }) => {
                         required
                         value={dayValue}
                         onChange={(day) => {
-                          setDayValue(day);
+                          validate(day, 'dayValue');
                         }}
                         id="day"
                         name="day"
@@ -635,7 +763,7 @@ const CreateAccountForm = ({ preferences }) => {
                         required // default is false
                         value={mounthValue} // mandatory
                         onChange={(month) => { // mandatory
-                          setMounthValue(month);
+                          validate(month, 'mounthValue');
                         }}
                         id="month"
                         name="month"
@@ -653,7 +781,7 @@ const CreateAccountForm = ({ preferences }) => {
                         required // default is false
                         value={yearValue} // mandatory
                         onChange={(year) => { // mandatory
-                          setYearValue(year);
+                          validate(year, 'yearValue');
                         }}
                         id="year"
                         name="year"
@@ -675,7 +803,7 @@ const CreateAccountForm = ({ preferences }) => {
                           defaultOptionLabel="País"
                           className="select"
                           value={country}
-                          onChange={(val) => setCountry(val)}
+                          onChange={(val) => validate(val, 'country')}
                         />
                       </div>
                       {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
@@ -691,7 +819,7 @@ const CreateAccountForm = ({ preferences }) => {
                           className="select"
                           country={country}
                           value={state}
-                          onChange={(val) => setState(val)}
+                          onChange={(val) => validate(val, 'state')}
                           required
                         />
                       </div>
@@ -707,7 +835,7 @@ const CreateAccountForm = ({ preferences }) => {
                     placeholder="Ciudad o localidad"
                     className="input"
                     value={city}
-                    onChange={(event) => setCity(event.target.value)}
+                    onChange={(event) => validate(event.target.value, 'city')}
                     required
                   />
                   {errorCity.status && <span className={`text-sm ${styles.error}`}>{errorCity.text}</span>}
@@ -750,177 +878,68 @@ const CreateAccountForm = ({ preferences }) => {
               <h1 className="title mb-3">
                 ¡Ya casi está listo!
               </h1>
-              <span className="text-sm d-block mb-5">
+              <span className="text-sm d-block mb-4">
                 Antes de continuar, es necesario que elijas al menos tres categorías de tu
                 preferencia, de esta manera, podremos mostrarte contenido que sea relevante
                 para ti.
                 Recuerda que siempre podrás modificarlas o añadir más ingresando a la opción
                 Editar perfil.
               </span>
-              <form onSubmit={handleSubmit} className="mt-3">
+              <form onSubmit={handleSubmit} className="mb-2">
+                <span className="d-block subtitle mb-2">Me interesa el contenido relacionado con</span>
                 {
-                  errorStatus || status === 'error' ? (
+                  preferences.length > 0 ? (
+                    <>
+                      <CategorySelector
+                        data={preferences}
+                        initialSelectedItems={preferencesState}
+                        placeholder="+3 categorías"
+                        addCategory={handleAddCategory}
+                        deleteCategory={handleDeleteCategory}
+                      />
+                    </>
+                  ) : (
+                    <option value="0">No se encontraron resultados</option>
+                  )
+                }
+                {
+                  errorStatus ? (
                     <p className={`text-sm ${styles.error}`}>{error}</p>
                   ) : (
                     <p />
                   )
                 }
-                <span className="d-block subtitle mb-2">Me interesa el contenido relacionado con</span>
-                <select id="preferences" defaultValue={preferencesState} multiple data-placeholder="+3 categorías">
-                  {
-                    preferences.length > 0 ? (
-                      preferences.map((preference) => (
-                        <option
-                          key={preference._id}
-                          value={preference._id}
-                        >
-                          {preference.nombre}
-                        </option>
-                      ))
-                    ) : (
-                      <option value="0">No se encontraron resultados</option>
-                    )
-                  }
-                </select>
-                <div className={styles.buttonContinue}>
-                  {
-                    status === 'loading' ? (
-                      <LoadingIndicator />
-                    ) : (
-                      <button id="btnPreferences" className="button button--theme-primary" type="submit">
-                        Finalizar
-                      </button>
-                    )
-                  }
+                <div className={`${styles.buttonContinue} mt-5`}>
+                  <button id="btnPreferences" className="button button--theme-primary" type="submit">
+                    Finalizar
+                  </button>
                 </div>
               </form>
             </div>
-            <Script
-              dangerouslySetInnerHTML={{
-                __html: `
-                  $(document).ready(function() {
-
-                    var select = $('#preferences');
-                    var options = select.find('option');
-
-                    var div = $('<div />').addClass('selectMultiple');
-                    var active = $('<div />');
-                    var list = $('<ul />');
-                    var placeholder = select.data('placeholder');
-                    var selectedOptions = [];
-
-                    var span = $('<span />').text(placeholder).appendTo(active);
-
-                    options.each(function() {
-                        var text = $(this).text();
-                        var valueSelect = $(this).val();
-
-                        if($(this).is(':selected')) {
-                            active.append($('<a />').html('<em>' + text + '</em><i></i>'));
-                            span.addClass('hide');
-                        } else {
-                            list.append(
-                              $("<li>", {
-                                text: text,
-                                attr: {
-                                  ["data-valueOption"]: valueSelect
-                                }
-                              })
-                            );
-                        }
-                    });
-
-                    active.append($('<div />').addClass('arrow'));
-                    div.append(active).append(list);
-
-                    select.wrap(div);
-
-                    $(document).on('click', '.selectMultiple ul li', function(e) {
-                        var select = $(this).parent().parent();
-                        var li = $(this);
-                        var valueOption = li.attr('data-valueOption');
-                        if(!select.hasClass('clicked')) {
-                            select.addClass('clicked');
-                            li.prev().addClass('beforeRemove');
-                            li.next().addClass('afterRemove');
-                            li.addClass('remove');
-                            selectedOptions.push(li.attr('data-valueOption'))
-                            var a = $('<a />').attr( "data-valueOption", valueOption ).addClass('notShown').html('<em>' + li.text() + '</em><i></i>').hide().appendTo(select.children('div'))
-                            ;
-                            a.slideDown(400, function() {
-                                setTimeout(function() {
-                                    a.addClass('shown');
-                                    select.children('div').children('span').addClass('hide');
-                                    select.find('option:contains(' + li.text() + ')').prop('selected', true);
-                                }, 500);
-                            });
-                            setTimeout(function() {
-                                if(li.prev().is(':last-child')) {
-                                    li.prev().removeClass('beforeRemove');
-                                }
-                                if(li.next().is(':first-child')) {
-                                    li.next().removeClass('afterRemove');
-                                }
-                                setTimeout(function() {
-                                    li.prev().removeClass('beforeRemove');
-                                    li.next().removeClass('afterRemove');
-                                }, 200);
-
-                                li.slideUp(400, function() {
-                                    li.remove();
-                                    select.removeClass('clicked');
-                                });
-                            }, 600);
-                        }
-                    });
-
-                    $(document).on('click', '.selectMultiple > div a', function(e) {
-                        var removeItemFromArr = ( arr, item ) => {
-                          var i = arr.indexOf( item );
-                          i !== -1 && arr.splice( i, 1 );
-                        };
-                        var select = $(this).parent().parent();
-                        var self = $(this);
-                        self.removeClass().addClass('remove');
-                        removeItemFromArr( selectedOptions, self.attr('data-valueOption') );
-                        select.addClass('open');
-                        setTimeout(function() {
-                            self.addClass('disappear');
-                            setTimeout(function() {
-                                self.animate({
-                                    width: 0,
-                                    height: 0,
-                                    padding: 0,
-                                    margin: 0
-                                }, 300, function() {
-                                    var li = $('<li />').attr( "data-valueOption", self.attr('data-valueOption') ).text(self.children('em').text()).addClass('notShown').appendTo(select.find('ul'));
-                                    li.slideDown(400, function() {
-                                        li.addClass('show');
-                                        setTimeout(function() {
-                                            select.find('option:contains(' + self.children('em').text() + ')').prop('selected', false);
-                                            if(!select.find('option:selected').length) {
-                                                select.children('div').children('span').removeClass('hide');
-                                            }
-                                            li.removeClass();
-                                        }, 400);
-                                    });
-                                    self.remove();
-                                })
-                            }, 300);
-                        }, 400);
-                    });
-
-                    $(document).on('click', '.selectMultiple > div .arrow, .selectMultiple > div span', function(e) {
-                        $(this).parent().parent().toggleClass('open');
-                    });
-
-                });
-                    `,
-              }}
-            />
           </div>
         )
       }
+      <LoadingIndicatorModal
+        show={modalLoading}
+        onClose={() => setModalLoading(false)}
+        textHeader="Agregando..."
+        textBody="Esta operación podría tardar unos minutos, por favor espere."
+      />
+      <SuccessIndicatorModal
+        show={modalSucces}
+        onClose={() => setModalSucces(false)}
+        textHeader="Agregado"
+        textBody="Se ha creado el usuario correctamente. ¡Bienvenido!"
+      />
+      <ErrorIndicatorModal
+        show={modalError.status}
+        onClose={() => setModalError({
+          status: false,
+          text: '',
+        })}
+        textHeader="Ha ocurrido un error"
+        textBody={modalError.text}
+      />
     </>
   );
 };
