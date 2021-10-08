@@ -1,18 +1,49 @@
-/* eslint-disable no-console */
 import { useSession } from 'next-auth/client';
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSWRConfig } from 'swr';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
-import { SubscriptionModal } from '@/components';
+import { ApiRoutes } from '@/global/constants';
+import { DeleteModal, SubscriptionModal, SuccessIndicatorModal } from '@/components';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import styles from './accordion.module.css';
+import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
+import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import { deleteToolService } from '@/services/tools';
 
-const AccordionCollapse = ({ herramienta, isEditable }) => {
+const AccordionCollapse = ({ herramienta, isEditable, mutate }) => {
   const router = useRouter();
   const [hover, setHover] = useState(false);
   const [session] = useSession();
   const [show, setModal] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
+  const [modalLoading, setModalLoading] = useState(false);
+  const [modalSucces, setModalSucces] = useState(false);
+  const [modalError, setModalError] = useState(false);
+
+  const { mutate: globalMutate } = useSWRConfig();
+
+  const deleteTool = async (id) => {
+    setModalDelete(false);
+    setModalLoading(true);
+    setModalSucces(false);
+    setModalError(false);
+    const res = await deleteToolService(id);
+    if (res.ok) {
+      mutate();
+      globalMutate([ApiRoutes.UserTotals, session.user.id]);
+      setModalLoading(false);
+      setModalSucces(true);
+      setModalError(false);
+      setModalDelete(false);
+    } else {
+      setModalLoading(false);
+      setModalSucces(false);
+      setModalError(true);
+      setModalDelete(false);
+    }
+  };
 
   const [optionsDropDown] = useState([
     {
@@ -25,7 +56,7 @@ const AccordionCollapse = ({ herramienta, isEditable }) => {
       option: 'Eliminar',
       iconType: 'L',
       event: true,
-      eventName: (() => console.log(`delete ${herramienta._id}`)),
+      eventName: (() => setModalDelete(true)),
     },
   ]);
 
@@ -68,6 +99,33 @@ const AccordionCollapse = ({ herramienta, isEditable }) => {
           )}
         </div>
         <SubscriptionModal show={show} setModal={setModal} />
+        <DeleteModal
+          show={modalDelete}
+          onClose={() => setModalDelete(false)}
+          functionDelete={() => deleteTool(herramienta._id)}
+          btnConfirm="Eliminar herramienta"
+          btnCancel="Cancelar"
+          textHeader="Alerta"
+          textBody="Estás apunto de eliminar esta herramienta y todo su contenido ¿Seguro que deseas continuar?"
+        />
+        <LoadingIndicatorModal
+          show={modalLoading}
+          onClose={() => setModalLoading(false)}
+          textHeader="Eliminando información..."
+          textBody="Esta operación podría tardar unos minutos, por favor espere."
+        />
+        <SuccessIndicatorModal
+          show={modalSucces}
+          onClose={() => setModalSucces(false)}
+          textHeader="Herramienta eliminada"
+          textBody="La herramienta ha sido eliminada exitosamente."
+        />
+        <ErrorIndicatorModal
+          show={modalError}
+          onClose={() => setModalError(false)}
+          textHeader="Ha ocurrido un error"
+          textBody="Por favor, revice su información y vuelva a intentarlo."
+        />
       </div>
     </div>
   );

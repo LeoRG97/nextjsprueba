@@ -9,7 +9,7 @@ import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 const ProfileTools = () => {
   const router = useRouter();
   const { data: categories } = useSWR(ApiRoutes.ToolsCategories, fetchData);
-  const { data: tools } = useSWR(ApiRoutes.Tools, fetchData);
+  const { data: tools, mutate } = useSWR(ApiRoutes.Tools, fetchData);
   const [loading, setLoading] = useState(true);
   const [accordionData, setAccordionData] = useState([]);
 
@@ -42,6 +42,7 @@ const ProfileTools = () => {
             <AccordionComponent
               accordionData={accordionData}
               isEditable
+              mutate={() => mutate({ ...tools })}
             />
           </div>
         )}
