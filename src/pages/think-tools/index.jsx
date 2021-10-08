@@ -58,7 +58,7 @@ export default function ThinkTools({ toolsData }) {
               </div>
             </div>
           </Modal>
-          ) : (<></>)
+          {/* ) : (<></>) */}
         </div>
       </main>
     </Layout>

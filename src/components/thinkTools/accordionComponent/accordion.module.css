@@ -17,8 +17,8 @@
 }
 
 .icon_container {
-  border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border: 1px solid var(--colorItemBorder); */
+  /* border-radius: 50%; */
   width: 3.5rem;
   height: 3.5rem;
   display: flex;
@@ -54,7 +54,7 @@
 
 .flag {
   border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border-radius: 50%; */
   min-width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
@@ -62,7 +62,7 @@
 
 .flag_selected {
   border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border-radius: 50%; */
   min-width: 2.5rem;
   height: 2.5rem;
   background-color: var(--colorBackgroundDarkSec);
