@@ -24,7 +24,7 @@ const DropDownNotes = ({ options, data }) => {
           ref={ref}
           title="0"
           onClick={handleOptionsClick}
-          className={styles.button_dropdown}
+          className={`text--theme-secondary ${styles.button_dropdown}`}
           align={{ sm: 'start' }}
           target={target}
           show={show}

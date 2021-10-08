@@ -31,9 +31,10 @@
 }
 
 .button_dropdown {
-  background-color: transparent !important;
+  background-color: var(--colorItemBg) !important;
   margin: 0 !important;
-  border: 0px solid var(--colorItemBorder) !important;
+  border-radius: 0;
+  width: max-content;
 }
 
 .button_dropdown > button {
