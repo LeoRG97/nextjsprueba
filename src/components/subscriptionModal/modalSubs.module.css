@@ -13,7 +13,6 @@
 
 .modal_img {
   width: 100%;
-  border-radius: 15px 15px 0px 0px;
 }
 
 .modal_container {
@@ -31,14 +30,14 @@
 }
 .modal_title_cont::after {
   content: "";
-  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--contentTransparentRGB-d-l) 95%);
+  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--contentTransparentRGB-d-l));
   position: absolute;
   height: 100%;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-  opacity: 0.5;
+  opacity: -0.5;
   /* filter: brightness(150%); */
 }
 
@@ -53,7 +52,7 @@
 
 .modal_body_cont::after {
   content: "";
-  background-image: linear-gradient(to top, var(--contentTransparentRGB), var(--contentTransparentRGB-d-l) 95%);
+  /* background-image: linear-gradient(to top, var(--contentTransparentRGB), var(--contentTransparentRGB-d-l) 95%); */
   position: absolute;
   height: 100%;
   top: 0px;
