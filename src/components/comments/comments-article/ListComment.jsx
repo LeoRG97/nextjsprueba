@@ -63,7 +63,7 @@ export const ListComment = ({ blogInfo }) => {
           data && data.map((page) => {
             return page.map((comment) => (
               <li key={comment._id}>
-                <ListItem comment={comment} type="comment" />
+                <ListItem mutateList={mutate} comment={comment} type="comment" />
               </li>
             ));
           })

@@ -10,7 +10,7 @@ import { useForm } from './useForm';
 import { AddComment } from './AddComment';
 import { addCommentReply, addValoracionComentario, addValoracionRespuesta } from '@/services/articles';
 
-export const ListItem = ({ comment }) => {
+export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
 
   const getKey = (pageIndex, previousPageData) => {
@@ -72,6 +72,7 @@ export const ListItem = ({ comment }) => {
         titulo,
       };
       await addCommentReply(comment._id, replyData);
+      mutate();
       resetForm();
     }
   };
@@ -79,6 +80,7 @@ export const ListItem = ({ comment }) => {
   const commentValoracion = async () => {
     try {
       const res = await addValoracionComentario(comment._id);
+      mutateList();
       mutate();
       return res;
     } catch (error) {
