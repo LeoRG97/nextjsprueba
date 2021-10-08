@@ -149,21 +149,23 @@ const InviteMemberForm = () => {
           {errorEmail.status && <span className={`text-sm ${styles.error}`}>{errorEmail.text}</span>}
         </label>
         <label className="d-block subtitle mb-2" htmlFor="company">Rol de usuario
-          <select
-            id="rol"
-            name="rol"
-            placeholder="Selecciona uno"
-            className="select"
-            value={rol}
-            onChange={(event) => validate('rol', event.target.value)}
-            required
-          >
-            <option value="">Selecciona uno</option>
-            <option value="admin">Administrador</option>
-            <option value="user-author">Colaborador</option>
-            <option value="user-reviewer">Curador</option>
-            <option value="user-premium">Premium</option>
-          </select>
+          <div className="select-arrow">
+            <select
+              id="rol"
+              name="rol"
+              placeholder="Selecciona uno"
+              className="select"
+              value={rol}
+              onChange={(event) => validate('rol', event.target.value)}
+              required
+            >
+              <option value="">Selecciona uno</option>
+              <option value="admin">Administrador</option>
+              <option value="user-author">Colaborador</option>
+              <option value="user-reviewer">Curador</option>
+              <option value="user-premium">Premium</option>
+            </select>
+          </div>
           {errorRol.status && <span className={`text-sm ${styles.error}`}>{errorRol.text}</span>}
         </label>
         <div className="row justify-content-end">
