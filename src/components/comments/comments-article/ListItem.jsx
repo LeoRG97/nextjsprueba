@@ -25,7 +25,7 @@ export const ListItem = ({ comment }) => {
   const { titulo } = values;
 
   const {
-    data, size, setSize,
+    data, size, setSize, mutate,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
   // console.log(`Respuestas de ${comment._id}`,data)
 
@@ -78,8 +78,9 @@ export const ListItem = ({ comment }) => {
 
   const commentValoracion = async () => {
     try {
-      return await addValoracionComentario(comment._id);
-      // console.log(rs);
+      const res = await addValoracionComentario(comment._id);
+      mutate();
+      return res;
     } catch (error) {
       return error;
       // console.error(error.message);
@@ -88,8 +89,9 @@ export const ListItem = ({ comment }) => {
 
   const replyValoracion = async (respuestaId) => {
     try {
-      return await addValoracionRespuesta(comment._id, respuestaId);
-      // console.log(rs);
+      const res = await addValoracionRespuesta(comment._id, respuestaId);
+      mutate();
+      return res;
     } catch (error) {
       // console.error(error.message);
       return error;
@@ -211,7 +213,7 @@ export const ListItem = ({ comment }) => {
                           <div className="d-flex my-2">
                             <small
                               className="subtitle text-link me-3"
-                              onClick={replyValoracion}
+                              onClick={() => replyValoracion(reply._id)}
                             >
                               Valorar
                             </small>

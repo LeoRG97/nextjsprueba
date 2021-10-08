@@ -2,7 +2,6 @@ import React from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import styles from '../comments.module.css';
-// import { useSWRConfig } from 'swr';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { ListItem } from './ListItem';
@@ -16,8 +15,7 @@ export const ListComment = ({ blogInfo }) => {
   });
   const { comentario } = values;
 
-  const session = useSession();
-  // const { mutate: globalMutate } = useSWRConfig();
+  const [session] = useSession();
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -25,7 +23,7 @@ export const ListComment = ({ blogInfo }) => {
   };
 
   const {
-    data, size, setSize,
+    data, size, setSize, mutate,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
@@ -34,12 +32,11 @@ export const ListComment = ({ blogInfo }) => {
     if (comentario !== '') {
       const commentData = {
         articulo_id: blogInfo,
-        usuario_id: session[0].user.id,
+        usuario_id: session.user.id,
         comentario,
       };
       await addComment(commentData);
-      // mutar objecto de comentarios
-      // console.log(rsp)
+      mutate();
       resetForm();
     }
   };
@@ -49,7 +46,7 @@ export const ListComment = ({ blogInfo }) => {
       <h3 className="title text-center py-2">Comentarios</h3>
       <ul>
         {
-          session[0]?.user && (
+          session?.user && (
             <AddComment
               values={values}
               handleInputChange={handleInputChange}
