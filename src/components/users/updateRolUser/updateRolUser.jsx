@@ -98,10 +98,10 @@ const UpdateRolUserModal = ({
                     </Modal.Body>
 
                     <Modal.Footer className={`${styles.modal_rol_backC} ${styles.modal_rol_footer} `}>
-                      <button className="Btn-cancel" onClick={() => showModal()}>
-                        cancelar
+                      <button className="button button--theme-secondary" onClick={() => showModal()}>
+                        Cancelar
                       </button>
-                      <button className="Btn-add" onClick={updateRoleFunc}>Actualizar</button>
+                      <button className="button button--theme-primary" onClick={updateRoleFunc}>Actualizar</button>
                     </Modal.Footer>
                   </>
                 )
@@ -118,7 +118,7 @@ const UpdateRolUserModal = ({
                 <p className="text-md text--theme-secondary">El rol del usuario ha sido actualizado exitosamente y con ello, las acciones que puede realizar</p>
               </Modal.Body>
               <Modal.Footer className={`${styles.modal_rol_backC} ${styles.modal_rol_footer} `}>
-                <button className="Btn-add" onClick={() => showModal()}>Cerrar</button>
+                <button className="button button--theme-primary" onClick={() => showModal()}>Cerrar</button>
               </Modal.Footer>
             </>
           )
