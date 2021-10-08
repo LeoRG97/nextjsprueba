@@ -31,9 +31,9 @@ const UserCard = ({ user }) => {
         </div>
         <div className={styles.infoBottom}>
           {socialMedia && socialMedia.map((media) => (
-            <a key={media._id} href={media.link} className="text-link icon-md text--theme-secondary">
+            <a key={media._id} href={media.link} className="text-link icon-md text--theme-secondary me-2">
               {media.nombre === 'twitter' && 'X'}
-              {media.nombre === 'linkedin' && 'M'}
+              {media.nombre === 'linkedIn' && 'M'}
             </a>
           ))}
         </div>

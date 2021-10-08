@@ -34,14 +34,17 @@ const NavbarComponent = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchText.length >= 4) {
+    const minLength = router.pathname === '/experts' ? 3 : 4;
+    if (searchText.length >= minLength) {
       router.push({
-        pathname: '/trending-topics',
+        pathname: router.pathname === '/experts' ? '/experts' : '/trending-topics',
         query: { search: searchText },
       }, null, { shallow: true });
       setExpanded(false);
     }
   };
+
+  const inputPlaceholder = router.pathname === '/experts' ? 'Buscar expertos' : 'Buscar artículos';
 
   return (
     <div className={styles.navC}>
@@ -106,7 +109,7 @@ const NavbarComponent = () => {
                   <div className="input-container w-75">
                     <input
                       type="text"
-                      placeholder="Buscar..."
+                      placeholder={inputPlaceholder}
                       className="input"
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
@@ -212,7 +215,7 @@ const NavbarComponent = () => {
                     <div className="input-container w-100">
                       <input
                         type="text"
-                        placeholder="Buscar..."
+                        placeholder={inputPlaceholder}
                         className="input"
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
