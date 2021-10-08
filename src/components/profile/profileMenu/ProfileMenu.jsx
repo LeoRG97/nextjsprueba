@@ -17,6 +17,18 @@ const TabMenu = () => {
   const { data } = useSWR(
     [ApiRoutes.UserTotals, session.user.id],
     fetchItemById,
+    {
+      fallbackData: {
+        publicacones: 0,
+        borradores: 0,
+        herramientas: 0,
+        foros: 0,
+        invitaciones: 0,
+        biblioteca: 0,
+        valoraciones: 0,
+        notas: 0,
+      },
+    },
   );
 
   useEffect(() => {
@@ -60,7 +72,7 @@ const TabMenu = () => {
               className={`subtitle ${styles.item} ${query.setting === 'articles' && styles.active}`}
             >
               Publicaciones
-              <span className="ms-2 text-md text--theme-secondary">{data && data.publicacones ? data.publicacones : 0}</span>
+              <span className="ms-2 text-md text--theme-secondary">{data.publicacones}</span>
             </a>
           </Link>
           <Link href="/profile/drafts" passHref scroll={false}>
@@ -68,7 +80,7 @@ const TabMenu = () => {
               className={`subtitle ${styles.item} ${query.setting === 'drafts' && styles.active}`}
             >
               Borradores
-              <span className="ms-2 text-md text--theme-secondary">{data && data.borradores ? data.borradores : 0}</span>
+              <span className="ms-2 text-md text--theme-secondary">{data.borradores}</span>
             </a>
           </Link>
           {reviewerAccess(user.role) && (
@@ -78,7 +90,7 @@ const TabMenu = () => {
                   className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
                 >
                   Herramientas
-                  <span className="ms-2 text-md text--theme-secondary">{data && data.herramientas ? data.herramientas : 0}</span>
+                  <span className="ms-2 text-md text--theme-secondary">{data.herramientas}</span>
                 </a>
               </Link>
               <Link href="/profile/forums" passHref scroll={false}>
@@ -86,7 +98,7 @@ const TabMenu = () => {
                   className={`subtitle ${styles.item} ${query.setting === 'forums' && styles.active}`}
                 >
                   Foros
-                  <span className="ms-2 text-md text--theme-secondary">{data && data.foros ? data.foros : 0}</span>
+                  <span className="ms-2 text-md text--theme-secondary">{data.foros}</span>
                 </a>
               </Link>
             </>
@@ -97,7 +109,7 @@ const TabMenu = () => {
                 className={`subtitle ${styles.item} ${query.setting === 'members-and-invitations' && styles.active}`}
               >
                 Miembros e invitaciones
-                <span className="ms-2 text-md text--theme-secondary">{data && data.invitaciones ? data.invitaciones : 0}</span>
+                <span className="ms-2 text-md text--theme-secondary">{data.invitaciones}</span>
               </a>
             </Link>
           )}
@@ -108,7 +120,7 @@ const TabMenu = () => {
           className={`subtitle ${styles.item} ${query.setting === 'library' && styles.active}`}
         >
           Biblioteca
-          <span className="ms-2 text-md text--theme-secondary">{data && data.biblioteca ? data.biblioteca : 0}</span>
+          <span className="ms-2 text-md text--theme-secondary">{data.biblioteca}</span>
         </a>
       </Link>
       <Link href="/profile/ratings" passHref scroll={false}>
@@ -116,7 +128,15 @@ const TabMenu = () => {
           className={`subtitle ${styles.item} ${query.setting === 'ratings' && styles.active}`}
         >
           Valoraciones
-          <span className="ms-2 text-md text--theme-secondary">{data && data.valoraciones ? data.valoraciones : 0}</span>
+          <span className="ms-2 text-md text--theme-secondary">{data.valoraciones}</span>
+        </a>
+      </Link>
+      <Link href="/profile/notes" passHref scroll={false}>
+        <a
+          className={`subtitle ${styles.item} ${query.setting === 'notes' && styles.active}`}
+        >
+          Notas
+          <span className="ms-2 text-md text--theme-secondary">{data.notas}</span>
         </a>
       </Link>
       <Link href="/profile/about-me" passHref scroll={false}>

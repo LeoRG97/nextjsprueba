@@ -121,21 +121,28 @@ const NavbarComponent = () => {
                 loading ? (
                   <LoadingIndicator />
                 ) : (
-                  <div className={styles.divNavItemStyle}>
-                    <Link href="/" passHref>
-                      <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
-                        <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
-                      </button>
-                    </Link>
+                  <>
                     {
                       session ? (
-                        <UserNavbarComponent
-                          picture={data && data.picture}
-                          name={data && data.name}
-                          apellidos={data && data.apellidos}
-                        />
+                        <div className={styles.divNavItemStyle}>
+                          <Link href="/" passHref>
+                            <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
+                              <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                            </button>
+                          </Link>
+                          <UserNavbarComponent
+                            picture={data && data.picture}
+                            name={data && data.name}
+                            apellidos={data && data.apellidos}
+                          />
+                        </div>
                       ) : (
-                        <>
+                        <div className={styles.divNavItemStyle}>
+                          <Link href="/" passHref>
+                            <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
+                              <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                            </button>
+                          </Link>
                           <Link href="/login" passHref>
                             <Nav.Link className="text-md text--theme-light">Iniciar sesión</Nav.Link>
                           </Link>
@@ -144,10 +151,10 @@ const NavbarComponent = () => {
                               Registrarse
                             </button>
                           </Link>
-                        </>
+                        </div>
                       )
                     }
-                  </div>
+                  </>
                 )
               }
             </Nav>

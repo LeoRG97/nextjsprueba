@@ -1,0 +1,45 @@
+.button {
+  background-color: var(--colorItemBg) !important;
+  margin: 0 !important;
+  border-radius: 0;
+  width: max-content;
+}
+
+.button > button {
+  border: 0px solid var(--colorItemBorder);
+  border-radius: 0px;
+  width: 46px;
+  height: 40px;
+  padding: 0;
+  position: relative;
+  font-family: Icons;
+  font-size: var(--icon-size-sm);
+  color: var(--colorSecondary) !important;
+  justify-content: end !important;
+  background-color: transparent !important;
+}
+
+.button > button::after {
+  display: none !important;
+}
+
+.button > div {
+  opacity: 1 !important;
+  padding: 0;
+  background-color: var(--colorItemBg);
+  border-radius: 0;
+  min-width: 8rem;
+}
+
+.options {
+  z-index: 5;
+  position: absolute;
+  left: 0 !important;
+}
+
+@media screen and (max-width: 991.98px) {
+  .options {
+    left: unset;
+    right: 0;
+  }
+}

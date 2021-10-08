@@ -3,11 +3,11 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 import React, { useState, useRef, Fragment } from 'react';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { DropdownButton } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import styles from './profileMembersAndInvitations.module.css';
 
-const TooltipsMembers = ({ options, data, opacityCss }) => {
+const TooltipsMembers = ({ options, data }) => {
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(this);
   const ref = useRef(null);
@@ -19,7 +19,7 @@ const TooltipsMembers = ({ options, data, opacityCss }) => {
 
   return (
     <Fragment>
-      <div className={`btn-group ${styles.button_dropdown_content}`} style={{ opacity: opacityCss }}>
+      <div className="btn-group">
         <DropdownButton
           ref={ref}
           title="..."
@@ -31,25 +31,27 @@ const TooltipsMembers = ({ options, data, opacityCss }) => {
           placement="bottom"
           rootclose="true"
         >
-          {
-            options && data && options.map((index, i) => {
-              const objData = {
-                data,
-              };
-              return (
-                <Dropdown.Item
-                  className={styles.item_dropdown}
-                  key={index.option}
-                  onClick={() => (options[i].event
-                    ? options[i].eventName(objData.data._id, objData.data.invitado_id)
-                    : null)}
-                >
-                  <span className="icon">{options[i].iconType}</span>
-                  <span className={styles.item_dropdown_text}>{options[i].option}</span>
-                </Dropdown.Item>
-              );
-            })
-          }
+          <div className="w-100">
+            {
+              options && data && options.map((index, i) => {
+                const objData = {
+                  data,
+                };
+                return (
+                  <div
+                    key={index.option}
+                    onClick={() => (options[i].event
+                      ? options[i].eventName(objData.data._id, objData.data.invitado_id)
+                      : null)}
+                    className="drop-item"
+                  >
+                    <span className="drop-item__icon">{options[i].iconType}</span>
+                    <span className="drop-item__content">{options[i].option}</span>
+                  </div>
+                );
+              })
+            }
+          </div>
         </DropdownButton>
       </div>
     </Fragment>

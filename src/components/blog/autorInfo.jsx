@@ -34,31 +34,35 @@ const AutorComponent = ({
 
   return (
     <Container className="content-n-p content-blog-autor">
-      <Row>
-        <Col xl="6" lg="6" sm="12" className="col-12">
+      <Row className="m-0">
+        <Col className="col-12" xl="6" lg="6">
           <Row>
-            <Col className="col-2 ">
-              <Image height="45" width="45" objectFit="contain" src={autor.picture} className={styles.author_pict} />
-            </Col>
-            <Col className="col content-n-p ">
+            <Image
+              width="45"
+              height="45"
+              layout="fixed"
+              src={autor.picture}
+              className={styles.author_pict}
+            />
+            <Col>
               <h3 className="text-md">{autor.autor}</h3>
               <label className="text-sm">{converDate(dateBlog)}</label>
             </Col>
           </Row>
         </Col>
-        <Col xl="6" lg="6" sm="12" className="col-12">
-          <div className="content-right">
-            <button className="Btn-rounded d-i" onClick={shareArt}>T</button>
+        <Col xl="6" lg="6" sm="12" className="col-12 p-0">
+          <div className={styles.buttonsContainer}>
+            <button className="icon-button icon-button--secondary m-2" onClick={shareArt}>T</button>
             {
               (cssSaved !== '') ? (
-                <button className={`Btn-rounded d-i ${cssSaved}`} title="Guardar" onClick={quitSaved}>U</button>
+                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={quitSaved}>U</button>
               ) : (
-                <button className={`Btn-rounded d-i ${cssSaved}`} title="Guardar" onClick={saveArt}>U</button>
+                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={saveArt}>U</button>
               )
             }
             <button
               onClick={() => (!liked && onLike())}
-              className={`Btn-like ${styles.btn_top} ${liked && 'Btn-like__active'}`}
+              className={`Btn-like m-2 ${styles.btn_top} ${liked && 'Btn-like__active'}`}
             >
               <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
             </button>

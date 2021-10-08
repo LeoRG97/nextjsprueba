@@ -6,11 +6,11 @@ import { LoginForm, LoginHeader } from '@/components';
 
 const LoginPage = () => {
   return (
-    <div className="main-bg">
+    <div className="main-auth">
       <Head>
         <title>Iniciar sesión</title>
       </Head>
-      <LoginHeader />
+      <LoginHeader mainBackg="main-tranps" />
       <div className="main-container centered-content">
         <LoginForm />
       </div>

@@ -116,7 +116,7 @@ const TableMember = ({ data, deleteMember, mutate }) => {
         'Julio', 'Augosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
       ];
 
-      const date = `${monthNames[dateCreated.getUTCMonth()]} ${dateCreated.getUTCDay()}, ${dateCreated.getUTCFullYear()}`;
+      const date = `${monthNames[dateCreated.getUTCMonth()]} ${dateCreated.getUTCDate()}, ${dateCreated.getUTCFullYear()}`;
       return (<>{date}</>);
     },
   }, {

@@ -3,7 +3,7 @@
 }
 
 .content_error {
-  background-image: url('/images/think-tools/Fondo-textura.png');
+  background-image: url('/images/textures/TexturaFondo.png');
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: top;
@@ -16,7 +16,7 @@
 
 .content_error::after {
   content: "";
-  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 45%);
+  background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 100%);
   position: absolute;
   height: 100%;
   top: 0px;
@@ -24,7 +24,7 @@
   bottom: 0px;
   left: 0px;
   filter: brightness(100%);
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .container_elements {

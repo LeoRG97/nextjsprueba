@@ -125,3 +125,8 @@ export const fetchTools = async () => {
   const res = await axios().get('herramientas');
   return res.data;
 };
+
+export const deleteToolService = async (id) => {
+  const res = await axios().delete(`herramientas/${id}`);
+  return res;
+};

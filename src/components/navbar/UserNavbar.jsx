@@ -3,11 +3,11 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import { NavDropdown } from 'react-bootstrap';
+import { Nav, NavDropdown } from 'react-bootstrap';
 import styles from './navbar.module.css';
 
 const UserNavbarComponent = ({
-  picture, name, apellidos,
+  picture, name,
 }) => {
   const router = useRouter();
   const [show, setShow] = useState(false);
@@ -17,13 +17,17 @@ const UserNavbarComponent = ({
   const hideDropdown = () => {
     setShow(false);
   };
+  const firstName = name.split(' ');
+
+  const firstNameResult = firstName[0];
 
   const navDropdownTitle = (
     <div className="row align-items-center">
-      <div className={`${styles.navDropDownImage} col`}>
-        <Image height="45" width="45" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
+      <div className={`${styles.navDropDownImage} col-1`}>
+        <Image height="45" width="45" objectFit="cover" objectPosition="center center" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
       </div>
-      <div className="col text-md">{`${name} ${apellidos}`}</div>
+      <div className={`${styles.navDropDownName} col-10 text-md`}>{`${firstNameResult}`}</div>
+      <span className={`${styles.navDropDownIcon} col-1 icon`}>{1}</span>
     </div>
   );
   const logOut = async () => {
@@ -39,7 +43,7 @@ const UserNavbarComponent = ({
   };
 
   return (
-    <>
+    <Nav>
       <NavDropdown
         className={styles.navDropDown}
         title={navDropdownTitle}
@@ -48,24 +52,22 @@ const UserNavbarComponent = ({
         onMouseEnter={showDropdown}
         onMouseLeave={hideDropdown}
       >
-        <NavDropdown.Item onClick={navigateToProfile}>Perfil</NavDropdown.Item>
-        <NavDropdown.Item onClick={navigateToSettings}>Ajustes</NavDropdown.Item>
-        <NavDropdown.Item onClick={() => logOut()}>Cerrar sesión</NavDropdown.Item>
+        <NavDropdown.Item className="drop-item" onClick={navigateToProfile}>Perfil</NavDropdown.Item>
+        <NavDropdown.Item className="drop-item" onClick={navigateToSettings}>Ajustes</NavDropdown.Item>
+        <NavDropdown.Item className="drop-item" onClick={() => logOut()}>Cerrar sesión</NavDropdown.Item>
       </NavDropdown>
-    </>
+    </Nav>
   );
 };
 
 UserNavbarComponent.propTypes = {
   picture: PropTypes.string,
   name: PropTypes.string,
-  apellidos: PropTypes.string,
 };
 
 UserNavbarComponent.defaultProps = {
   name: '',
   picture: '',
-  apellidos: '',
 };
 
 export default UserNavbarComponent;

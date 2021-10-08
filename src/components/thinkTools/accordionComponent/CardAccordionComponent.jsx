@@ -4,7 +4,9 @@ import ContextAwareToggle from './ContextAwareToggle';
 import styles from './accordion.module.css';
 import AccordionCollapse from './AccordionCollapse';
 
-const CardAccordionComponent = ({ data, number, isEditable }) => {
+const CardAccordionComponent = ({
+  data, number, isEditable, mutate,
+}) => {
   return (
     <Card className={styles.card_container}>
       <Card.Header className={styles.card_title}>
@@ -31,6 +33,7 @@ const CardAccordionComponent = ({ data, number, isEditable }) => {
                   key={herramienta._id}
                   herramienta={herramienta}
                   isEditable={isEditable}
+                  mutate={mutate}
                 />
               );
             })

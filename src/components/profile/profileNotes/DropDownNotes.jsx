@@ -5,9 +5,9 @@
 import React, { useState, useRef, Fragment } from 'react';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import styles from './accordion.module.css';
+import styles from './notes.module.css';
 
-const DropDownOptions = ({ options, data }) => {
+const DropDownNotes = ({ options, data }) => {
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(this);
   const ref = useRef(null);
@@ -24,8 +24,8 @@ const DropDownOptions = ({ options, data }) => {
           ref={ref}
           title="0"
           onClick={handleOptionsClick}
-          className={styles.button_dropdown}
-          align="start"
+          className={`text--theme-secondary ${styles.button_dropdown}`}
+          align={{ sm: 'start' }}
           target={target}
           show={show}
           placement="bottom"
@@ -56,9 +56,9 @@ const DropDownOptions = ({ options, data }) => {
   );
 };
 
-DropDownOptions.propTypes = {
+DropDownNotes.propTypes = {
   options: PropTypes.array,
   data: PropTypes.object,
 };
 
-export default DropDownOptions;
+export default DropDownNotes;

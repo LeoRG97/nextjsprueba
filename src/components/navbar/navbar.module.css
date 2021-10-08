@@ -51,7 +51,7 @@
 }
 
 .divNavItemStyle a {
-  color: #fff !important;
+  color: var(--text-color-light) !important;
 }
 
 .divNavItemStyle:first-child {
@@ -69,25 +69,25 @@
 .navInputStyle {
   border-radius: 10px;
   border: none;
-  background-color: #232739;
   height: 38px;
 }
 
 .navInputStyle:active,
 .navInputStyle:focus {
-  background-color: #232739;
-  color: #fff;
+  color: var(--text-color-light);
   border: none;
   font-size: 12px;
 }
 
 .navInputStyle::placeholder {
-  color: #fff;
+  color: var(--text-color-light);
   font-size: 14px;
 }
 
 .navDropDown {
   border: none;
+  justify-content: flex-end;
+  margin-right: 0 !important;
 }
 
 .navDropDownItems {
@@ -97,6 +97,7 @@
 .navDropDownImage > div > img {
   border-radius: 100%;
   padding-right: 0 !important;
+  background-color: transparent;
 }
 
 .navDropDownImage {
@@ -150,6 +151,20 @@
   height: 93.5vh;
 }
 
+.navDropDownName {
+  padding-left: 5px;
+  padding-right: 2px;
+  width: auto !important;
+}
+
+
+.navDropDownIcon {
+  padding: 0 0 0 0;
+  width: auto !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
 .containerFluid {
   flex-wrap: initial !important;
 }
@@ -157,12 +172,6 @@
 @media (max-width: 1350px) {
   .navDropDownImage {
     padding-left: 0.2rem !important;
-  }
-}
-
-@media (max-width: 1300px) {
-  .navDropDownImage {
-    width: 8rem !important;
   }
 }
 
@@ -178,22 +187,21 @@
   }
 }
 
-@media (max-width: 1150px) {
-  .navDropDownImage {
-    width: 10rem !important;
-  }
-}
-
-@media (max-width: 1100px) {
-  .navDropDownImage {
-    width: 12.5rem !important;
-  }
-}
-
-@media (max-width: 991px) {
-  .navDropDownImage {
+@media (max-width: 1210px) {
+  .navDropDownName {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
     width: auto !important;
   }
+
+  .divNavItemStyle:last-child {
+    justify-content: space-evenly;
+  }
+
+}
+
+
+@media (max-width: 991px) {
 
   .divNavItemStyle {
     width: 100%;

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
@@ -25,10 +25,6 @@ const ProfileArticles = ({ estado }) => {
   const [loadModal, setLoadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
   const [modalError, setModalError] = useState(false);
-
-  useEffect(() => {
-
-  }, [router]);
 
   const [session] = useSession();
 
@@ -107,24 +103,24 @@ const ProfileArticles = ({ estado }) => {
                 ]}
               />
             </div>
-            <div className="select-filter">
-              <div className="dropdown BTN-drop align-right">
-                <div className="dropdown-select BTN">
-                  <label className="button button--theme-primary">
-                    Crear <span className="icon text--theme-light">1</span>
-                  </label>
+            <div className={`select-filter ${styles.hideMobile}`}>
+              <div
+                className={styles.optionsContainer}
+              >
+                <button className="button button--theme-primary">
+                  Crear <span className="button__icon-right text--theme-light">1</span>
+                </button>
+                <div className={styles.list_content}>
+                  <div className="drop-item" onClick={() => navigateToEditor('blog')}>
+                    <span className="drop-item__content">Blog</span>
+                  </div>
+                  <div className="drop-item" onClick={() => navigateToEditor('video')}>
+                    <span className="drop-item__content">Video</span>
+                  </div>
+                  <div className="drop-item" onClick={() => navigateToEditor('podcast')}>
+                    <span className="drop-item__content">Podcast</span>
+                  </div>
                 </div>
-                <ul className={`select-dropdown ${styles.list_content}`}>
-                  <li className="text-sm" id="h1" onClick={() => navigateToEditor('blog')}>
-                    Blog
-                  </li>
-                  <li className="text-sm" id="h3" onClick={() => navigateToEditor('video')}>
-                    Video
-                  </li>
-                  <li className="text-sm" id="p" onClick={() => navigateToEditor('podcast')}>
-                    Podcast
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

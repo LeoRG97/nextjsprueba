@@ -6,11 +6,11 @@ import withoutAuth from '@/helpers/withoutAuth';
 
 const CreateAccount = ({ preferences }) => {
   return (
-    <div className="main-bg">
+    <div className="main-auth">
       <Head>
         <title>Crear cuenta</title>
       </Head>
-      <LoginHeader />
+      <LoginHeader mainBackg="main-tranps" />
       <div className="main-container centered-content">
         <CreateAccountForm preferences={preferences.data} />
       </div>

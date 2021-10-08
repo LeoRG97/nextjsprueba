@@ -24,5 +24,6 @@ module.exports = {
     ArticlesComments: 'comentarios/articulo',
     ArticleReplies: 'comentarios/respuesta',
     Forums: 'foros/',
+    UserNotes: 'notas/usuario',
   },
 };

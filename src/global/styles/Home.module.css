@@ -30,7 +30,7 @@
   background-image: linear-gradient(
     to bottom,
     var(--contentTransparentRGB),
-    var(--colorItemBgRGB) 95%
+    var(--colorItemBg) 100%
   );
   position: absolute;
   height: 100%;
@@ -98,11 +98,11 @@
 }
 
 .number_option.non {
-  filter: brightness(50%);
+  color: var(--text-color-secondary);
 }
 
 .number_option.active {
-  filter: brightness(120%);
+  color: var(--text-color-light);
 }
 
 .iconOutline {

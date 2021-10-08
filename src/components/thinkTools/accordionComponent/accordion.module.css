@@ -17,8 +17,8 @@
 }
 
 .icon_container {
-  border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border: 1px solid var(--colorItemBorder); */
+  /* border-radius: 50%; */
   width: 3.5rem;
   height: 3.5rem;
   display: flex;
@@ -54,7 +54,7 @@
 
 .flag {
   border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border-radius: 50%; */
   min-width: 2.5rem;
   height: 2.5rem;
   background-color: transparent;
@@ -62,10 +62,14 @@
 
 .flag_selected {
   border: 1px solid var(--colorItemBorder);
-  border-radius: 50%;
+  /* border-radius: 50%; */
   min-width: 2.5rem;
   height: 2.5rem;
   background-color: var(--colorBackgroundDarkSec);
+}
+
+.flag:hover , .flag_selected:hover {
+  filter: brightness(150%);
 }
 
 .icon_flag {
@@ -108,6 +112,7 @@
   color: var(--colorSecondary) !important;
   justify-content: end !important;
   background-color: transparent !important;
+  z-index: 5;
 }
 
 .button_dropdown > button::after {
@@ -157,6 +162,21 @@
 
 .link_tool {
   cursor: pointer;
+}
+
+.content_tool {
+  background-color: var(--colorPrimaryDark);
+  border-radius: 10px;
+}
+
+.content_tool:hover {
+  filter: brightness(110%);
+  position: relative;
+  z-index: 10;
+}
+
+.content_tool:hover .button_dropdown {
+  filter: brightness(95%);
 }
 
 @media screen and (max-width: 575.98px) {

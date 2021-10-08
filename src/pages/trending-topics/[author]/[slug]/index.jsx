@@ -86,7 +86,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
 
       const res = await searchMySaveArt(params, session.accessToken);
       if (res.ok) {
-        setSaved('Btn-rounded__active');
+        setSaved('button__active');
         setIdSaved(res.data[0]._id);
       } else {
         setSaved('');
@@ -148,7 +148,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
       };
       const res = await postSaveThisArt(params, session.accessToken);
       if (res.ok) {
-        setSaved('Btn-rounded__active');
+        setSaved('button__active');
         setIdSaved(res.data._id);
       }
     }
@@ -218,9 +218,9 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                         (!isOnView) ? (
                           <div className="content-btns">
                             <label className="text-md">Ver en</label>
-                            <button className="Btn-square">P</button>
-                            <button className="Btn-square">S</button>
-                            <button className="Btn-square">N</button>
+                            <button className="icon-button icon-button--secondary m-2">P</button>
+                            <button className="icon-button icon-button--secondary m-2">S</button>
+                            <button className="icon-button icon-button--secondary m-2">N</button>
                           </div>
                         ) : (<></>)
                       }
@@ -246,18 +246,18 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                           <div className="content-btns">
                             <button
                               onClick={() => !isLiked && handleRateArticle()}
-                              className={`Btn-rounded ${isLiked && 'Btn-rounded__active'}`}
+                              className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
                             >
                               c
                             </button>
                             {
                               (cssSaved !== '') ? (
-                                <button className={`Btn-rounded ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
+                                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
                               ) : (
-                                <button className="Btn-rounded" title="Guardar" onClick={saveThisArt}>U</button>
+                                <button className="icon-button icon-button--secondary m-2" title="Guardar" onClick={saveThisArt}>U</button>
                               )
                             }
-                            <button className="Btn-rounded" onClick={() => setModalShare(true)}>T</button>
+                            <button className="icon-button icon-button--secondary m-2" onClick={() => setModalShare(true)}>T</button>
                           </div>
                         ) : (<></>)
                       }

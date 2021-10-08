@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
@@ -12,23 +11,19 @@ const AboutMeComponent = () => {
     switch (socialType.nombre) {
       case 'twitter':
         return (
-          <Link href={socialType.link} passHref>
-            <a>
-              <li className="text-sm icon">
-                X
-              </li>
-            </a>
-          </Link>
+          <a href={socialType.link} target="_blank" rel="noreferrer" className={styles.socialLink}>
+            <li className="text-sm icon-md">
+              X
+            </li>
+          </a>
         );
-      case 'linkedin':
+      case 'linkedIn':
         return (
-          <Link href={socialType.link} passHref>
-            <a>
-              <li className="text-sm icon">
-                M
-              </li>
-            </a>
-          </Link>
+          <a href={socialType.link} target="_blank" rel="noreferrer" className={styles.socialLink}>
+            <li className="text-sm icon-md">
+              M
+            </li>
+          </a>
         );
       default:
         return <></>;
@@ -79,7 +74,7 @@ const AboutMeComponent = () => {
                   {
                     userData.preferences.map((item) => (
                       <Fragment key={generateKey()}>
-                        <li className="text-sm text--theme-light">{item.nombre}</li>
+                        <li className={`text-sm text--theme-light ${styles.listItem}`}>{item.nombre}</li>
                       </Fragment>
                     ))
                   }

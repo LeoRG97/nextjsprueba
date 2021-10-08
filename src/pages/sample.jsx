@@ -3,16 +3,18 @@ import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
 import { useState } from 'react';
 import {
-  Footer, LoadingIndicator, Switch, SubscriptionModal,
+  Footer, LoadingIndicator, Switch, SubscriptionModal, CourseDetailComponent,
 } from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchData } from '@/services/swr';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
+import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 
 export default function Home() {
   const { data } = useSWR('preferencias', fetchData);
   const [checked, setChecked] = useState(false);
   const [checkedInverted, setCheckedInverted] = useState(false);
+
   return (
     <div className="main-container main-bg">
       <Head>
@@ -149,18 +151,20 @@ export default function Home() {
         <hr className="bg-light" />
         <h6 className="subtitle">Select</h6>
         <div className="col-12 col-md-6">
-          <select
-            id="rol"
-            name="rol"
-            placeholder="Selecciona uno"
-            className="select"
-          >
-            <option value="">Selecciona uno</option>
-            <option value="admin">Administrador</option>
-            <option value="user-author">Colaborador</option>
-            <option value="user-reviewer">Curador</option>
-            <option value="user-premium">Premium</option>
-          </select>
+          <div className="select-arrow">
+            <select
+              id="rol"
+              name="rol"
+              placeholder="Selecciona uno"
+              className="select"
+            >
+              <option value="">Selecciona uno</option>
+              <option value="admin">Administrador</option>
+              <option value="user-author">Colaborador</option>
+              <option value="user-reviewer">Curador</option>
+              <option value="user-premium">Premium</option>
+            </select>
+          </div>
         </div>
 
         <hr className="bg-light" />
@@ -171,12 +175,44 @@ export default function Home() {
             <CategorySelector
               data={data.data}
               placeholder="Selecciona las categorías"
-              addCategory={() => {}}
-              deleteCategory={() => {}}
+              addCategory={() => { }}
+              deleteCategory={() => { }}
             />
           )}
         </div>
 
+        <hr className="bg-light" />
+
+        <h6 className="subtitle">Elementos de un dropdown</h6>
+        {/* Clases para los items contenidos en un dropdown cualquiera */}
+        <div className="w-25">
+          <div className="drop-item">
+            <span className="drop-item__content">Normal</span>
+          </div>
+          <div className="drop-item">
+            <span className="drop-item__icon">K</span>
+            <span className="drop-item__content">Con icono</span>
+          </div>
+        </div>
+
+        <hr className="bg-light" />
+
+        <h6 className="subtitle">Dropdown de opciones (para artículos)</h6>
+
+        <div className="position-relative mb-5">
+          <OptionDropdown
+            options={[
+              {
+                option: 'Modificar',
+                event: false,
+              },
+              {
+                option: 'Eliminar',
+                event: false,
+              },
+            ]}
+          />
+        </div>
         <hr className="bg-light" />
 
         <h6 className="subtitle">Indicador de proceso</h6>
@@ -208,6 +244,7 @@ export default function Home() {
           </Container>
         </div>
         <SubscriptionModal />
+        <CourseDetailComponent />
       </main>
 
       <Footer />
