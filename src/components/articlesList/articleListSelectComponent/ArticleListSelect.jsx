@@ -29,12 +29,27 @@ const ArticleListSelectComponent = (props) => {
     }
   }, [currentValue, items]);
 
+  const isActive = (item) => {
+    if (!item.value && !currentValue) {
+      return true;
+    } if (item.value === currentValue) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <div className={`select-posts ${styles.selectContainer}`}>
       <DropdownButton className="text-md" id={`dropdown-basic-button-${selectN}`} title={btnLabel}>
         {items.map((item) => (
-          <Dropdown.Item key={item.value} className="text-sm drop-item" onClick={() => filtroS(item)}>
-            <div className="drop-item__content">  {item.label} </div>
+          <Dropdown.Item
+            key={item.value}
+            className="text-sm drop-item"
+            onClick={() => filtroS(item)}
+          >
+            <div className={`drop-item__content ${isActive(item) && 'drop-item__content--active'}`}>
+              {item.label}
+            </div>
           </Dropdown.Item>
         ))}
       </DropdownButton>

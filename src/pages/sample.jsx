@@ -79,12 +79,31 @@ export default function Home() {
           Warning
         </button>
 
+        <br />
+        <br />
+
         <button className="button button--theme-primary me-2">
-          <span className="button__icon-left text--theme-light">I</span>{' '}Left icon
+          <span className="button__icon-left">I</span>{' '}Left icon
         </button>
 
         <button className="button button--theme-primary me-2">
-          Right icon{' '}<span className="button__icon-right text--theme-light">I</span>
+          Right icon{' '}<span className="button__icon-right">I</span>
+        </button>
+
+        <button className="button button--theme-secondary me-2">
+          <span className="button__icon-left">I</span>{' '}Secondary
+        </button>
+
+        <button className="button button--theme-success me-2">
+          <span className="button__icon-left">I</span>{' '}Success
+        </button>
+
+        <button className="button button--theme-light me-2">
+          <span className="button__icon-left">I</span>{' '}Light
+        </button>
+
+        <button className="button button--theme-warning me-2">
+          <span className="button__icon-left">I</span>{' '}Warning
         </button>
 
         <hr className="bg-light" />
@@ -175,8 +194,8 @@ export default function Home() {
             <CategorySelector
               data={data.data}
               placeholder="Selecciona las categorías"
-              addCategory={() => { }}
-              deleteCategory={() => { }}
+              addCategory={() => {}}
+              deleteCategory={() => {}}
             />
           )}
         </div>

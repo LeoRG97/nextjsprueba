@@ -36,20 +36,20 @@ const CategorySelector = React.memo(({
     <>
       <div className={`${styles.selectMultiple} mb-2 ${open && styles.open}`}>
         <div>
-          <span onClick={() => setOpen(!open)}>
+          <span onClick={() => setOpen(!open)} className="text-sm">
             {selectedItems.length === 0 && placeholder}
           </span>
           <div className={styles.arrow} onClick={() => setOpen(!open)} />
           {selectedItems.map((item) => (
             <a key={item._id} className={`${styles.notShown} ${styles.shown}`}>
-              <em>{item.nombre}</em>
+              <em className="text-sm">{item.nombre}</em>
               <i onClick={() => handleRemove(item)} />
             </a>
           ))}
         </div>
         <ul>
           {unselectedItems.map((item) => (
-            <li key={item._id} className="" onClick={() => handleAdd(item)}>{item.nombre}</li>
+            <li key={item._id} className="text-sm" onClick={() => handleAdd(item)}>{item.nombre}</li>
           ))}
         </ul>
       </div>
