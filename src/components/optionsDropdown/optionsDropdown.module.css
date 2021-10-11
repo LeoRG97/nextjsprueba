@@ -5,6 +5,18 @@
   width: max-content;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .button > button:hover {
+    color: var(--text-color-light) !important;
+    background-color: var(--colorPrimaryHover) !important;
+  }
+}
+
+.button > button:active {
+  background-color: var(--colorItemBg) !important;
+  color: var(--text-color-light) !important;
+}
+
 .button > button {
   border: 0px solid var(--colorItemBorder);
   border-radius: 0px;
@@ -17,6 +29,7 @@
   color: var(--colorSecondary) !important;
   justify-content: end !important;
   background-color: transparent !important;
+  transition-property: none !important;
 }
 
 .button > button::after {

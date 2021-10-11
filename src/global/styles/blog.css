@@ -141,8 +141,18 @@
   transition-property: width, border, color, background-color;
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .Btn-like:hover {
+    background-color: var(--colorPrimaryHover);
+  }
+}
+
 .Btn-like:active {
-  filter: brightness(0.8);
+  background-color: var(--colorPrimaryActive);
+}
+
+.Btn-like:active .icon-btn {
+  color: var(--text-color-highlight) !important;
 }
 
 .Btn-like__active {
@@ -270,6 +280,7 @@
   font-family: Icons;
   font-style: normal;
   margin-right: 0.5rem;
+  transition: 0.2s;
 }
 
 .full-content {
