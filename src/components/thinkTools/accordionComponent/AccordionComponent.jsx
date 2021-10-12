@@ -4,7 +4,9 @@ import { Accordion } from 'react-bootstrap';
 import CardAccordionComponent from './CardAccordionComponent';
 import styles from './accordion.module.css';
 
-const AccordionComponent = ({ accordionData, isEditable, mutate }) => {
+const AccordionComponent = ({
+  accordionData, isEditable, mutate, isModalClose,
+}) => {
   return (
     <div>
       <div className="row justify-content-center">
@@ -22,6 +24,7 @@ const AccordionComponent = ({ accordionData, isEditable, mutate }) => {
                           data={card}
                           isEditable={isEditable}
                           mutate={mutate}
+                          isModalClose={isModalClose}
                         />
                       );
                     })
