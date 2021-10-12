@@ -8,6 +8,7 @@ import { ListItem } from './ListItem';
 import { addComment } from '@/services/articles';
 import { useForm } from './useForm';
 import { AddComment } from './AddComment';
+import { LoadingIndicator } from '@/components';
 
 export const ListComment = ({ blogInfo }) => {
   const [values, handleInputChange, resetForm] = useForm({
@@ -23,7 +24,7 @@ export const ListComment = ({ blogInfo }) => {
   };
 
   const {
-    data, size, setSize, mutate,
+    data, size, setSize, mutate, isValidating,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
@@ -72,12 +73,17 @@ export const ListComment = ({ blogInfo }) => {
       <div className="d-flex justify-content-center">
         <>
           {!isEmpty && (
-            <button
-              className="button button--theme-secondary"
-              onClick={() => setSize(size + 1)}
-            >
-              Ver más comentarios
-            </button>
+            isValidating ? (
+              <LoadingIndicator />
+            )
+              : (
+                <button
+                  className="button button--theme-secondary"
+                  onClick={() => setSize(size + 1)}
+                >
+                  Ver más comentarios
+                </button>
+              )
           )}
         </>
       </div>

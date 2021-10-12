@@ -3,7 +3,7 @@
   position: relative;
 }
 
-.liFormat{
+.liFormat {
   list-style-type: none;
 }
 
@@ -42,3 +42,16 @@
   position: absolute;
   right: 0;
 }
+
+.DropDown > div {
+  border: none !important;
+}
+
+/* .DropDown>div>button {
+  border: none !important;
+} */
+/* .DropDown > div > button:focus,
+.DropDown > div > button:active {
+  outline: none !important;
+  box-shadow: none !important;
+} */

@@ -17,9 +17,14 @@ export const AddComment = React.memo(({
     }
   }, []);
 
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    handleSubmit();
+  };
+
   return (
     <li className={styles.liFormat}>
-      <div className="d-flex justify-content-center align-items-center">
+      <form onSubmit={handleSubmitForm} className="d-flex justify-content-center align-items-center">
         <div className="col-lg-1 d-flex justify-content-center align-items-center">
           <Image
             height="45"
@@ -43,14 +48,15 @@ export const AddComment = React.memo(({
         </div>
         <div className="col-lg-1 d-flex justify-content-center align-items-center">
           <button
+            type="submit"
             disabled={values[fieldName].length === 0}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
             className="icon-button icon-button--primary py-1 icon"
             title="Guardar"
           >n
           </button>
         </div>
-      </div>
+      </form>
     </li>
   );
 });

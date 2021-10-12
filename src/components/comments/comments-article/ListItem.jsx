@@ -8,7 +8,13 @@ import { ApiRoutes } from '@/global/constants';
 import styles from '../comments.module.css';
 import { useForm } from './useForm';
 import { AddComment } from './AddComment';
-import { addCommentReply, addValoracionComentario, addValoracionRespuesta } from '@/services/articles';
+import {
+  addCommentReply, addValoracionComentario,
+  addValoracionRespuesta,
+  deleteComentario, deleteRespuesta,
+} from '@/services/articles';
+import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
+import { LoadingIndicator } from '@/components';
 
 export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
@@ -25,8 +31,8 @@ export const ListItem = ({ comment, mutateList }) => {
   const { titulo } = values;
 
   const {
-    data, size, setSize, mutate,
-  } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+    data, size, setSize, mutate, isValidating,
+  } = useSWRInfinite(getKey, fetchData);
   // console.log(`Respuestas de ${comment._id}`,data)
 
   const converDate = (date) => {
@@ -73,6 +79,7 @@ export const ListItem = ({ comment, mutateList }) => {
       };
       await addCommentReply(comment._id, replyData);
       mutate();
+      mutateList();
       resetForm();
     }
   };
@@ -99,6 +106,19 @@ export const ListItem = ({ comment, mutateList }) => {
       return error;
     }
   };
+
+  const onDeleteComment = async () => {
+    await deleteComentario(comment._id);
+    mutate();
+    mutateList();
+  };
+
+  const onDeleteReply = async (replyId) => {
+    await deleteRespuesta(comment._id, replyId);
+    mutate();
+    mutateList();
+  };
+
   return (
     <div className={`${styles.mainLevel} py-1`}>
       <div className="row py-4">
@@ -132,7 +152,7 @@ export const ListItem = ({ comment, mutateList }) => {
             </div>
           </div>
 
-          <div className="d-flex my-2">
+          <div className="d-flex my-2 align-items-center">
             <small
               className="subtitle text-link me-3"
               onClick={commentValoracion}
@@ -145,9 +165,22 @@ export const ListItem = ({ comment, mutateList }) => {
             >
               Responder
             </small>
-            <small className="icon">
-              0
-            </small>
+            <div className={`position-relative ${styles.DropDown}`}>
+              <OptionDropdown
+                options={[
+                  {
+                    option: 'Modificar',
+                    event: true,
+                    eventName: (() => { }),
+                  },
+                  {
+                    option: 'Eliminar',
+                    event: true,
+                    eventName: (() => onDeleteComment()),
+                  },
+                ]}
+              />
+            </div>
             <div className="d-flex align-items-center position-absolute end-0">
               <small className={`icon ${comment.liked && 'text--theme-highlight'}`}>c</small>
               <small className="text--theme-highlight">{comment.likes}</small>
@@ -212,16 +245,29 @@ export const ListItem = ({ comment, mutateList }) => {
                             </div>
                           </div>
 
-                          <div className="d-flex my-2">
+                          <div className="d-flex my-2 align-items-center">
                             <small
                               className="subtitle text-link me-3"
                               onClick={() => replyValoracion(reply._id)}
                             >
                               Valorar
                             </small>
-                            <small className="icon">
-                              0
-                            </small>
+                            <div className={`position-relative ${styles.DropDown}`}>
+                              <OptionDropdown
+                                options={[
+                                  {
+                                    option: 'Modificar',
+                                    event: true,
+                                    eventName: (() => { }),
+                                  },
+                                  {
+                                    option: 'Eliminar',
+                                    event: true,
+                                    eventName: (() => onDeleteReply(reply._id)),
+                                  },
+                                ]}
+                              />
+                            </div>
                             <div className="d-flex align-items-center position-absolute end-0">
                               <small className={`icon ${reply.liked && 'text--theme-highlight'}`}>c</small>
                               <small className="text--theme-highlight">{reply.likes}</small>
@@ -237,12 +283,17 @@ export const ListItem = ({ comment, mutateList }) => {
             <div className="d-flex justify-content-center">
               <>
                 {!isEmpty && (
-                  <button
-                    className="button button--theme-secondary"
-                    onClick={() => setSize(size + 1)}
-                  >
-                    Ver más respuestas
-                  </button>
+                  isValidating ? (
+                    <LoadingIndicator />
+                  )
+                    : (
+                      <a
+                        className="subtitle text-link me-3"
+                        onClick={() => setSize(size + 1)}
+                      >
+                        Ver más respuestas
+                      </a>
+                    )
                 )}
               </>
             </div>

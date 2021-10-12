@@ -401,3 +401,26 @@ export const addValoracionRespuesta = async (comentarioId, respuestaId) => {
     return error;
   }
 };
+
+export const deleteComentario = async (comentarioId) => {
+  try {
+    const dataRes = await axios().delete(
+      `/comentarios/${comentarioId}`,
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteRespuesta = async (comentarioId, respuestaId) => {
+  try {
+    const dataRes = await axios().delete(
+      `/comentarios/respuesta/${comentarioId}`, { data: { respuestaId } },
+    );
+    return dataRes;
+  } catch (error) {
+    console.error(error);
+    return error;
+  }
+};
