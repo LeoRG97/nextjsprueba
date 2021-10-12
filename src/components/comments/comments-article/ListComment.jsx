@@ -20,7 +20,7 @@ export const ListComment = ({ blogInfo }) => {
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.ArticlesComments}/${blogInfo}?&pageNum=${pageIndex + 1}&pageSize=2&sort=desc`; // API endpoint
+    return `${ApiRoutes.ArticlesComments}/${blogInfo}?&pageNum=${pageIndex + 1}&pageSize=3&sort=desc`; // API endpoint
   };
 
   const {
