@@ -15,9 +15,13 @@ import {
 } from '@/services/articles';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { LoadingIndicator } from '@/components';
+import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 
 export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
+  const [showDeleteComment, setShowDeleteComment] = useState(false);
+  const [showDeleteReply, setShowDeleteReply] = useState(false);
+  const [replyDelete, setReplyDelete] = useState(null);
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -111,13 +115,21 @@ export const ListItem = ({ comment, mutateList }) => {
     await deleteComentario(comment._id);
     mutate();
     mutateList();
+    setShowDeleteComment(false);
   };
 
   const onDeleteReply = async (replyId) => {
-    await deleteRespuesta(comment._id, replyId);
+    setShowDeleteReply(true);
+    setReplyDelete(replyId);
+  };
+
+  const handleDeleteReply = async () => {
+    await deleteRespuesta(comment._id, replyDelete);
     mutate();
     mutateList();
-  };
+    setReplyDelete(null);
+    setShowDeleteReply(false);
+  }
 
   return (
     <div className={`${styles.mainLevel} py-1`}>
@@ -154,33 +166,43 @@ export const ListItem = ({ comment, mutateList }) => {
 
           <div className="d-flex my-2 align-items-center">
             <small
-              className="subtitle text-link me-3"
+              className={`${styles.pointer} subtitle text-link me-3`}
               onClick={commentValoracion}
             >
               Valorar
             </small>
             <small
               onClick={() => handleReply(comment._id)}
-              className="subtitle text-link me-3"
+              className={`${styles.pointer} subtitle text-link me-3`}
             >
               Responder
             </small>
-            <div className={`position-relative ${styles.DropDown}`}>
-              <OptionDropdown
-                options={[
-                  {
-                    option: 'Modificar',
-                    event: true,
-                    eventName: (() => { }),
-                  },
-                  {
-                    option: 'Eliminar',
-                    event: true,
-                    eventName: (() => onDeleteComment()),
-                  },
-                ]}
-              />
-            </div>
+            {
+
+              session[0]?.user.role === 'admin'
+                || session[0]?.user.role === 'user-reviewer'
+                || comment.usuario_id._id === session[0]?.user.id ? (
+                  <div className={`position-relative ${styles.DropDown}`}>
+                    <OptionDropdown
+                      options={[
+                        {
+                          option: 'Modificar',
+                          event: true,
+                          eventName: (() => { }),
+                        },
+                        {
+                          option: 'Eliminar',
+                          event: true,
+                          eventName: (() => setShowDeleteComment(true)),
+                        },
+                      ]}
+                    />
+                  </div>
+                )
+                : (
+                  <></>
+                )
+            }
             <div className="d-flex align-items-center position-absolute end-0">
               <small className={`icon ${comment.liked && 'text--theme-highlight'}`}>c</small>
               <small className="text--theme-highlight">{comment.likes}</small>
@@ -247,27 +269,38 @@ export const ListItem = ({ comment, mutateList }) => {
 
                           <div className="d-flex my-2 align-items-center">
                             <small
-                              className="subtitle text-link me-3"
+                              className={`${styles.pointer} subtitle text-link me-3`}
                               onClick={() => replyValoracion(reply._id)}
                             >
                               Valorar
                             </small>
-                            <div className={`position-relative ${styles.DropDown}`}>
-                              <OptionDropdown
-                                options={[
-                                  {
-                                    option: 'Modificar',
-                                    event: true,
-                                    eventName: (() => { }),
-                                  },
-                                  {
-                                    option: 'Eliminar',
-                                    event: true,
-                                    eventName: (() => onDeleteReply(reply._id)),
-                                  },
-                                ]}
-                              />
-                            </div>
+                            {
+
+                              session[0]?.user.role === 'admin'
+                                || session[0]?.user.role === 'user-reviewer'
+                                || reply.usuario_id._id === session[0]?.user.id ? (
+                                  <div className={`position-relative ${styles.DropDown}`}>
+                                    <OptionDropdown
+                                      options={[
+                                        {
+                                          option: 'Modificar',
+                                          event: true,
+                                          eventName: (() => { }),
+                                        },
+                                        {
+                                          option: 'Eliminar',
+                                          event: true,
+                                          eventName: (() => onDeleteReply(reply._id)),
+                                        },
+                                      ]}
+                                    />
+                                  </div>
+                                )
+                                : (
+                                  <></>
+                                )
+
+                            }
                             <div className="d-flex align-items-center position-absolute end-0">
                               <small className={`icon ${reply.liked && 'text--theme-highlight'}`}>c</small>
                               <small className="text--theme-highlight">{reply.likes}</small>
@@ -300,6 +333,24 @@ export const ListItem = ({ comment, mutateList }) => {
           </>
         )
       }
+      <DeleteModal
+        show={showDeleteComment}
+        onClose={() => setShowDeleteComment(false)}
+        functionDelete={() => onDeleteComment()}
+        btnConfirm="Confirmar"
+        btnCancel="Cancelar"
+        textHeader="Alerta"
+        textBody="¿Estás seguro de eliminar el comentario?"
+      />
+      <DeleteModal
+        show={showDeleteReply}
+        onClose={() => setShowDeleteReply(false)}
+        functionDelete={() => handleDeleteReply()}
+        btnConfirm="Confirmar"
+        btnCancel="Cancelar"
+        textHeader="Alerta"
+        textBody="¿Estás seguro de eliminar la respuesta?"
+      />
     </div>
   );
 };

@@ -11,6 +11,10 @@
   display: none;
 }
 
+.pointer:hover {
+  cursor: pointer !important;
+}
+
 /* //lines */
 .commentList::before {
   content: "";
