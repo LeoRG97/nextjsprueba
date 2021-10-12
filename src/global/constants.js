@@ -21,6 +21,8 @@ module.exports = {
     ArticlesUserPreference: 'articulos/preferencias/usuario',
     Invitation: 'invitaciones',
     ArticlesUserAuthor: 'articulos/autor',
+    ArticlesComments: 'comentarios/articulo',
+    ArticleReplies: 'comentarios/respuesta',
     Forums: 'foros/',
     UserNotes: 'notas/usuario',
   },

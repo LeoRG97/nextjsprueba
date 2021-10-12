@@ -3,6 +3,7 @@ import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
 import { AutorComponent } from '@/components';
+import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
 import { addNotesService } from '@/services/notes';
 import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
@@ -170,6 +171,11 @@ const BlogComponent = ({
             saveArt={saveArt}
             shareArt={shareArt}
           />
+
+          <ListComment
+            blogInfo={blogInfo._id}
+          />
+
         </div>
         <ModalNuevaNota
           show={selected}
