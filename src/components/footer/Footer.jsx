@@ -9,65 +9,27 @@ const Footer = () => {
     <footer className={styles.footer}>
       <Container className={styles.footer_container}>
         <Row className={styles.footer_container_row}>
-          <Col sm="12" lg="12">
+          <Col xs="12" lg="3">
             <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
           </Col>
-          <Col xs="12" sm="auto" lg="auto">
-            <Row className={styles.footer_container_row_links}>
-              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
-                <p className="subtitle">Acerca de</p>
-                <Link href="/#">
-                  <a>Perfil de la empresa</a>
-                </Link>
-                <Link href="/#">
-                  <a>Filosofía</a>
-                </Link>
-                <Link href="/#">
-                  <a>Sobre la plataforma</a>
-                </Link>
-                <Link href="/#">
-                  <a>Propósito</a>
-                </Link>
-                <Link href="/#">
-                  <a>Impacto geográfico</a>
-                </Link>
-                <Link href="/#">
-                  <a>Aliados</a>
+          <Col xs="12" lg="9">
+            <Row>
+              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
+                <Link href="/nosotros" passHref>
+                  <a className="text-regular">Acerca de</a>
                 </Link>
               </Col>
-              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
-                <p className="subtitle">Trending topics</p>
-                <Link href="/#">
-                  <a>Sección número 1</a>
+              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
+                <Link href="/trending-topics" passHref>
+                  <a className="text-regular">Trending topics</a>
                 </Link>
-                <Link href="/#">
-                  <a>Sección número 2</a>
-                </Link>
-                <Link href="/#">
-                  <a>Sección número 3</a>
-                </Link>
-                <Link href="/#">
-                  <a>Sección número 4</a>
-                </Link>
-                <p> </p>
               </Col>
-              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
-                <p className="subtitle">Think tools</p>
-                <Link href="/#">
-                  <a>Sección número 1</a>
+              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
+                <Link href="/think-tools" passHref>
+                  <a className="text-regular">Think tools</a>
                 </Link>
-                <Link href="/#">
-                  <a>Sección número 2</a>
-                </Link>
-                <Link href="/#">
-                  <a>Sección número 3</a>
-                </Link>
-                <Link href="/#">
-                  <a>Sección número 4</a>
-                </Link>
-                <p> </p>
               </Col>
-              <Col xs="12" sm="6" lg="auto" className={`${styles.footer_content} col-6`}>
+              <Col xs="12" sm="12" lg="3" className={`${styles.footer_content}`}>
                 <p className="subtitle">Ayuda</p>
                 <Link href="/#">
                   <a>Soporte técnico</a>
@@ -86,9 +48,9 @@ const Footer = () => {
         </Row>
         <Row className={styles.footer_container_row_copyright}>
           <Col sm="12" md="6">
-            <Link href="/#">
-              <a>© Copyright NTT DATA Corporation</a>
-            </Link>
+            <p className="text-sm text--theme-light">
+              © Copyright NTT Data Europa & Americas
+            </p>
           </Col>
           <Col sm="12" md="6" className={styles.foote_mob_top}>
             <Link href="/#">
