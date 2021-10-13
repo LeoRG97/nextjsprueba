@@ -2,7 +2,7 @@
 import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
-import { AutorComponent } from '@/components';
+import { AutorComponent, TooltipContainer } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
 import { addNotesService } from '@/services/notes';
@@ -145,9 +145,15 @@ const BlogComponent = ({
           </div>
           <div className="content-btns-last">
             <label className="text-md">Ver en</label>
-            <button className="icon-button icon-button--secondary m-2">P</button>
-            <button className="icon-button icon-button--secondary m-2">S</button>
-            <button className="icon-button icon-button--secondary m-2">N</button>
+            <TooltipContainer placement="bottom" tooltipText="Reporte">
+              <button className="icon-button icon-button--secondary m-2">P</button>
+            </TooltipContainer>
+            <TooltipContainer placement="bottom" tooltipText="Infografía">
+              <button className="icon-button icon-button--secondary m-2">S</button>
+            </TooltipContainer>
+            <TooltipContainer placement="bottom" tooltipText="Vídeo">
+              <button className="icon-button icon-button--secondary m-2">N</button>
+            </TooltipContainer>
           </div>
           {
             selectMenu && (
