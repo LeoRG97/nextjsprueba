@@ -5,18 +5,19 @@ import { useRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
 import { ApiRoutes } from '@/global/constants';
-import { DeleteModal, SubscriptionModal, SuccessIndicatorModal } from '@/components';
+import { DeleteModal, SuccessIndicatorModal } from '@/components';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import styles from './accordion.module.css';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { deleteToolService } from '@/services/tools';
 
-const AccordionCollapse = ({ herramienta, isEditable, mutate }) => {
+const AccordionCollapse = ({
+  herramienta, isEditable, mutate, isModalClose,
+}) => {
   const router = useRouter();
   const [hover, setHover] = useState(false);
   const [session] = useSession();
-  const [show, setModal] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalSucces, setModalSucces] = useState(false);
@@ -73,7 +74,12 @@ const AccordionCollapse = ({ herramienta, isEditable, mutate }) => {
                 </a>
               </Link>
             ) : (
-              <div onClick={() => setModal(true)} className={styles.link_tool}>
+              <div
+                onClick={() => {
+                  isModalClose();
+                }}
+                className={styles.link_tool}
+              >
                 <div className="text-md">{herramienta.objetivo}</div>
                 <div className="text--theme-secondary text-md">{herramienta.nombre}</div>
               </div>
@@ -98,7 +104,6 @@ const AccordionCollapse = ({ herramienta, isEditable, mutate }) => {
             </div>
           )}
         </div>
-        <SubscriptionModal show={show} setModal={setModal} />
         <DeleteModal
           show={modalDelete}
           onClose={() => setModalDelete(false)}

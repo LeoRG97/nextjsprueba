@@ -2,13 +2,19 @@ import { useState } from 'react';
 import Head from 'next/head';
 // import { useSession } from 'next-auth/client';
 import { Modal } from 'react-bootstrap';
-import { Layout, AccordionComponent } from '@/components';
+import { Layout, AccordionComponent, SubscriptionModal } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 import { fetchTools, fetchToolsCategories } from '@/services/tools';
 
 export default function ThinkTools({ toolsData }) {
   const [onShowTools, setOnShowTools] = useState(false);
+  const [show, setModal] = useState(false);
   // const [session] = useSession();
+
+  const userNotSession = () => {
+    setOnShowTools(false);
+    setModal(true);
+  };
 
   return (
     <Layout>
@@ -54,10 +60,12 @@ export default function ThinkTools({ toolsData }) {
               <div className={styles.accordion}>
                 <AccordionComponent
                   accordionData={toolsData}
+                  isModalClose={() => userNotSession()}
                 />
               </div>
             </div>
           </Modal>
+          <SubscriptionModal show={show} setModal={setModal} />
           {/* ) : (<></>) */}
         </div>
       </main>
