@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 import {
-  Footer, Layout, BlogComponent, CarouselPrefArt,
+  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer,
 } from '@/components';
 import {
   getArticleBySlug,
@@ -218,9 +218,15 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                         (!isOnView) ? (
                           <div className="content-btns">
                             <label className="text-md">Ver en</label>
-                            <button className="icon-button icon-button--secondary m-2">P</button>
-                            <button className="icon-button icon-button--secondary m-2">S</button>
-                            <button className="icon-button icon-button--secondary m-2">N</button>
+                            <TooltipContainer placement="right" tooltipText="Reporte">
+                              <button className="icon-button icon-button--secondary m-2">P</button>
+                            </TooltipContainer>
+                            <TooltipContainer placement="right" tooltipText="Infografía">
+                              <button className="icon-button icon-button--secondary m-2">S</button>
+                            </TooltipContainer>
+                            <TooltipContainer placement="right" tooltipText="Vídeo">
+                              <button className="icon-button icon-button--secondary m-2">N</button>
+                            </TooltipContainer>
                           </div>
                         ) : (<></>)
                       }
@@ -244,20 +250,28 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                       {
                         (!isOnView) ? (
                           <div className="content-btns">
-                            <button
-                              onClick={() => !isLiked && handleRateArticle()}
-                              className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
-                            >
-                              c
-                            </button>
+                            <TooltipContainer placement="left" tooltipText="Valorar">
+                              <button
+                                onClick={() => !isLiked && handleRateArticle()}
+                                className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
+                              >
+                                c
+                              </button>
+                            </TooltipContainer>
                             {
                               (cssSaved !== '') ? (
-                                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={quitSaveThisArt}>U</button>
+                                <TooltipContainer placement="left" tooltipText="Guardar">
+                                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={quitSaveThisArt}>U</button>
+                                </TooltipContainer>
                               ) : (
-                                <button className="icon-button icon-button--secondary m-2" title="Guardar" onClick={saveThisArt}>U</button>
+                                <TooltipContainer placement="left" tooltipText="Guardar">
+                                  <button className="icon-button icon-button--secondary m-2" onClick={saveThisArt}>U</button>
+                                </TooltipContainer>
                               )
                             }
-                            <button className="icon-button icon-button--secondary m-2" onClick={() => setModalShare(true)}>T</button>
+                            <TooltipContainer placement="left" tooltipText="Compartir">
+                              <button className="icon-button icon-button--secondary m-2" onClick={() => setModalShare(true)}>T</button>
+                            </TooltipContainer>
                           </div>
                         ) : (<></>)
                       }

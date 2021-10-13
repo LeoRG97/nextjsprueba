@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import styles from './blog.module.css';
+import { TooltipContainer } from '@/components';
 
 const AutorComponent = ({
   autor, dateBlog, onLike, liked, likes, cssSaved, quitSaved, saveArt, shareArt,
@@ -52,20 +53,28 @@ const AutorComponent = ({
         </Col>
         <Col xl="6" lg="6" sm="12" className="col-12 p-0">
           <div className={styles.buttonsContainer}>
-            <button className="icon-button icon-button--secondary m-2" onClick={shareArt}>T</button>
+            <TooltipContainer placement="top" tooltipText="Compartir">
+              <button className="icon-button icon-button--secondary m-2" onClick={shareArt}>T</button>
+            </TooltipContainer>
             {
               (cssSaved !== '') ? (
-                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={quitSaved}>U</button>
+                <TooltipContainer placement="top" tooltipText="Guardar">
+                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={quitSaved}>U</button>
+                </TooltipContainer>
               ) : (
-                <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} title="Guardar" onClick={saveArt}>U</button>
+                <TooltipContainer placement="top" tooltipText="Guardar">
+                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={saveArt}>U</button>
+                </TooltipContainer>
               )
             }
-            <button
-              onClick={() => (!liked && onLike())}
-              className={`Btn-like m-2 ${styles.btn_top} ${liked && 'Btn-like__active'}`}
-            >
-              <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
-            </button>
+            <TooltipContainer placement="top" tooltipText="Valorar">
+              <button
+                onClick={() => (!liked && onLike())}
+                className={`Btn-like m-2 ${styles.btn_top} ${liked && 'Btn-like__active'}`}
+              >
+                <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
+              </button>
+            </TooltipContainer>
           </div>
         </Col>
       </Row>
