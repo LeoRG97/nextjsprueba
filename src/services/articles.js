@@ -384,3 +384,14 @@ export const updateComentario = async (comentarioId, nvoComentario) => {
     return error;
   }
 };
+
+export const updateRespuesta = async (comentarioId, titulo, respuestaId) => {
+  try {
+    const dataRes = await axios().put(
+      `/comentarios/respuesta/${comentarioId}`, { titulo, respuestaId },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
