@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import useSWR, { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/client';
-import ImagePicker from '@/components/imagePicker/ImagePicker';
+import ImagePicker from '@/components/formComponents/imagePicker/ImagePicker';
 import styles from './forumEditor.module.css';
 import { saveForum, updateForum } from '@/services/forums';
 import { ApiRoutes } from '@/global/constants';

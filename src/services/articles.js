@@ -119,37 +119,6 @@ export const saveArticle = async (article, details, option, userId) => {
     // guardar la información del artículo en la API
     const dataRes = await axios().post('/articulos', { ...articleData });
 
-    // if (details.reporte) {
-    //   // subir reporte a S3
-    //   reportUrl = await saveFile(details.reporte, `${userId}/resources`);
-
-    //   const reportData = {
-    //     nombre: details.reporte.name,
-    //     articulo_id: dataRes._id,
-    //     tipo: details.reporte.type,
-    //     ruta: reportUrl,
-    //     key: reportUrl,
-    //   };
-
-    //   const reportRes = await axios().post('/recursos', { ...reportData });
-    //   console.log('REPORTE', reportRes);
-    // }
-
-    // if (details.infografia) {
-    //   // subir infografía a S3
-    //   infographicUrl = await saveFile(details.infografia, `${userId}/resources`);
-
-    //   const infographicData = {
-    //     nombre: details.infografia.name,
-    //     articulo_id: dataRes._id,
-    //     tipo: details.infografia.type,
-    //     ruta: infographicUrl,
-    //     key: infographicUrl,
-    //   };
-    //   const infographicRes = await axios().post('/recursos', { ...infographicData });
-    //   console.log('INFOGRAFIA', infographicRes);
-    // }
-
     return dataRes;
   } catch (err) {
     throw Promise.reject(err);
@@ -196,40 +165,20 @@ export const updateArticle = async (article, details, userId, initialData) => {
 
     // guardar la información del artículo en la API
     const response = await axios().put(`/articulos/${initialData._id}`, { ...articleData });
-
-    // if (details.reporte) {
-    //   // subir reporte a S3
-    //   reportUrl = await saveFile(details.reporte, `${userId}/resources`);
-
-    //   const reportData = {
-    //     nombre: details.reporte.name,
-    //     articulo_id: dataRes._id,
-    //     tipo: details.reporte.type,
-    //     ruta: reportUrl,
-    //     key: reportUrl,
-    //   };
-
-    //   const reportRes = await axios().post('/recursos', { ...reportData });
-    //   console.log('REPORTE', reportRes);
-    // }
-
-    // if (details.infografia) {
-    //   // subir infografía a S3
-    //   infographicUrl = await saveFile(details.infografia, `${userId}/resources`);
-
-    //   const infographicData = {
-    //     nombre: details.infografia.name,
-    //     articulo_id: dataRes._id,
-    //     tipo: details.infografia.type,
-    //     ruta: infographicUrl,
-    //     key: infographicUrl,
-    //   };
-    //   const infographicRes = await axios().post('/recursos', { ...infographicData });
-    //   console.log('INFOGRAFIA', infographicRes);
-    // }
     return response;
   } catch (err) {
     throw Promise.reject(err);
+  }
+};
+
+export const updateArticleResources = async (data, articleId) => {
+  try {
+    const response = await axios().put(`articulos/${articleId}`, {
+      recursos: data,
+    });
+    return response;
+  } catch (err) {
+    return err;
   }
 };
 

@@ -1,5 +1,5 @@
 export const detailsValidation = ({
-  titulo, descripcion, portada, categorias, videoUrl, reporte, infografia,
+  titulo, descripcion, portada, categorias, reporte, infografia,
   rutaPortada,
 }) => {
   const errors = {
@@ -20,10 +20,6 @@ export const detailsValidation = ({
   }
   if (categorias.length === 0) {
     errors.categorias = 'Selecciona al menos una categoría';
-    errors.isValid = false;
-  }
-  if (videoUrl && !videoUrl.match('https://.*')) {
-    errors.videoUrl = 'No es una URL válida';
     errors.isValid = false;
   }
   if (reporte && (reporte.type !== 'image/jpeg' && reporte.type !== 'image/png' && reporte.type !== 'application/pdf')) {

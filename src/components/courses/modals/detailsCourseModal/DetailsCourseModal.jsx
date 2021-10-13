@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
 import styles from './detailsCourseModal.module.css';
 import { Switch } from '@/components';
-import ImagePicker from '@/components/imagePicker/ImagePicker';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { getPreferencesService } from '@/services/preferences';
+import ImagePicker from '@/components/formComponents/imagePicker/ImagePicker';
 
 const ModalDetailsCourse = ({ show, onClose }) => {
   const [preferences, setPreferences] = useState([]);
@@ -32,7 +32,9 @@ const ModalDetailsCourse = ({ show, onClose }) => {
             <Col md={6}>
               <h3 className="title">Detalles del curso</h3>
               <span className="d-block subtitle">Imagen de portada</span>
-              <ImagePicker />
+              <div className={styles.imageInput}>
+                <ImagePicker />
+              </div>
               <label className="d-block subtitle" htmlFor="title">Título del curso
                 <input
                   type="text"

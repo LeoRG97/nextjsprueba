@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './detailsModal.module.css';
 import { getPreferencesService } from '@/services/preferences';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
-import ImagePicker from '../../../imagePicker/ImagePicker';
-// import FileInput from './fileInput/FileInput';
+import ImagePicker from '../../../formComponents/imagePicker/ImagePicker';
 import Switch from '@/components/switch/Switch';
 import { detailsValidation } from './detailsModalValidation';
 
@@ -64,14 +63,6 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
     setFormData({ ...formData, categorias: newCategories });
   };
 
-  // const handleReportChange = (file) => {
-  //   setFormData({ ...formData, reporte: file });
-  // };
-
-  // const handleInfographicChange = (file) => {
-  //   setFormData({ ...formData, infografia: file });
-  // };
-
   useEffect(() => {
     if (submitted) {
       const errorObj = detailsValidation(formData);
@@ -115,11 +106,13 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
             <Col md={6}>
               <h3 className="title">Detalles de la publicación</h3>
               <span className="d-block subtitle">Imagen de portada</span>
-              <ImagePicker
-                image={portada}
-                setImage={handleCoverChange}
-                prevUrl={rutaPortada}
-              />
+              <div className={styles.imageInput}>
+                <ImagePicker
+                  image={portada}
+                  setImage={handleCoverChange}
+                  prevUrl={rutaPortada}
+                />
+              </div>
               <span className="text-sm text--theme-error">{errors.portada}</span>
               <label className="d-block subtitle" htmlFor="title">Título de la publicación
                 <input
@@ -133,19 +126,6 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
                 />
               </label>
               <span className="text-sm text--theme-error">{errors.titulo}</span>
-              <label className="d-block subtitle" htmlFor="description">Descripción
-                <textarea
-                  type="text"
-                  name="descripcion"
-                  id="description"
-                  className={`input ${styles.descriptionInput}`}
-                  placeholder="Hasta 250 caracteres"
-                  value={descripcion}
-                  onChange={handleChange}
-                  maxLength="250"
-                />
-              </label>
-              <span className="text-sm text--theme-error">{errors.descripcion}</span>
             </Col>
             <Col md={6}>
               <div className={styles.visibilitySection}>
@@ -176,39 +156,19 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
                 />
                 <span className="text-sm text--theme-error">{errors.categorias}</span>
               </div>
-              <div>
-                {/* <h3 className="title mb-3">Opciones de visualización</h3>
-                <Row className="mb-2">
-                  <Col md={6}>
-                    <span className="subtitle">Reporte</span>
-                    <FileInput
-                      id="report"
-                      file={reporte}
-                      setFile={handleReportChange}
-                    />
-                    <span className="text-sm text--theme-error">{errors.reporte}</span>
-                  </Col>
-                  <Col md={6}>
-                    <span className="subtitle">Infografía</span>
-                    <FileInput
-                      id="infographic"
-                      file={infografia}
-                      setFile={handleInfographicChange}
-                    />
-                  </Col>
-                </Row> */}
-                {/* <label className="subtitle" htmlFor="videoUrl">Video</label>
-                <input
-                  type="url"
-                  name="videoUrl"
-                  id="videoUrl"
-                  className="input"
-                  placeholder="URL"
-                  value={videoUrl}
+              <label className="d-block subtitle" htmlFor="description">Descripción
+                <textarea
+                  type="text"
+                  name="descripcion"
+                  id="description"
+                  className={`input ${styles.descriptionInput}`}
+                  placeholder="Hasta 250 caracteres"
+                  value={descripcion}
                   onChange={handleChange}
-                /> */}
-                <span className="text-sm text--theme-error">{errors.videoUrl}</span>
-              </div>
+                  maxLength="250"
+                />
+              </label>
+              <span className="text-sm text--theme-error">{errors.descripcion}</span>
             </Col>
           </Row>
 

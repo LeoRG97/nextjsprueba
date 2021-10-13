@@ -146,11 +146,11 @@ const ToolEditorComponent = ({
         </TooltipContainer>
 
         <TooltipContainer tooltipText="Vista previa" placement="left">
-          <div className={`icon-button ${styles.optionsItem}`}>C</div>
+          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
         </TooltipContainer>
 
         <TooltipContainer tooltipText="Detalles" placement="left">
-          <div className={`icon-button ${styles.optionsItem}`}>J</div>
+          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
         </TooltipContainer>
 
       </div>

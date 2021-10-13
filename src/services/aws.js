@@ -25,7 +25,7 @@ export const upload = async (path, file, name) => {
 
 export const remove = async (urlFile) => {
   try {
-    const res = await axios().delete(`${BASE_URL}aws/remove`,
+    const res = await axios().delete('aws/remove',
       {
         headers: {
           Accept: 'application/json',
