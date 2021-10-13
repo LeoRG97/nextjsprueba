@@ -45,3 +45,4 @@ export { default as ForumsComponent } from './forum/forumsComponent';
 export { default as ToolsContent } from './thinkTools/toolsContent';
 export { default as CourseDetailComponent } from './courses/coursesComponent/courseDetail';
 export { default as TooltipContainer } from './articleManager/editorComponents/tooltipContainer/TooltipContainer';
+export { default as FileInput } from './formComponents/fileInput/FileInput';

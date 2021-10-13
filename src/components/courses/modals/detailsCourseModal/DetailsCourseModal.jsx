@@ -2,13 +2,18 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
 import styles from './detailsCourseModal.module.css';
-import { Switch } from '@/components';
+import { FileInput, Switch } from '@/components';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { getPreferencesService } from '@/services/preferences';
 import ImagePicker from '@/components/formComponents/imagePicker/ImagePicker';
 
 const ModalDetailsCourse = ({ show, onClose }) => {
   const [preferences, setPreferences] = useState([]);
+
+  const onSave = (fileData, inputId) => {
+    // eslint-disable-next-line no-console
+    console.log(fileData, inputId);
+  };
 
   useEffect(() => {
     getPreferencesService().then((res) => {
@@ -84,16 +89,14 @@ const ModalDetailsCourse = ({ show, onClose }) => {
                 />
               </div>
               <label className="d-block subtitle" htmlFor="title">Certificado
-                <div className=" input-container">
-                  <input
-                    type="text"
-                    name="url"
-                    id="url"
-                    className="input"
-                    placeholder="Añadir archivo del certificado"
-                  />
-                  <span className="icon input__icon">Ñ</span>
-                </div>
+                <FileInput
+                  onSave={onSave}
+                  type="text"
+                  name="url"
+                  id="url"
+                  className="input"
+                  placeholder="Añadir archivo del certificado"
+                />
               </label>
               <label className="d-block subtitle" htmlFor="title">Objetivo del curso
                 <input
