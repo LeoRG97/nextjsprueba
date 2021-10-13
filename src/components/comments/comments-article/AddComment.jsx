@@ -42,7 +42,7 @@ export const AddComment = React.memo(({
             required
             onChange={handleInputChange}
             value={values[fieldName]}
-            placeholder="Escribe un comentario..."
+            placeholder={`Escribe un ${fieldName}`}
             className="input"
           />
         </div>
