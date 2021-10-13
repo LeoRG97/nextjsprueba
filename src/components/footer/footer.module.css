@@ -48,12 +48,13 @@
 .img_NTT {
   width: 100%;
   max-width: 128px;
-  margin-left: -0.9rem;
+  margin-left: -1rem;
 }
 
 .footer_container {
   background-color: var(--colorPrimary);
   max-width: 1199px;
+  min-height: 460px;
   border-radius: 20px 20px 0 0;
   z-index: 1;
 }
@@ -63,13 +64,12 @@
   margin-right: 100px;
   margin-top: 100px;
   position: relative;
-  display: flow-root;
 }
 
 .footer_container_row_copyright {
   margin-left: 100px;
   margin-right: 100px;
-  margin-top: 70px;
+  margin-top: 100px;
   margin-bottom: 30px;
 }
 
@@ -88,7 +88,6 @@
   cursor: pointer;
   color: var(--text-color-light);
   font-size: var(--font-size-md);
-  font-family: var(--font-regular);
   min-height: 36px;
 }
 
@@ -110,6 +109,17 @@
   .footer_container_row_links {
     margin: auto;
     margin-top: 50px;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .img_NTT {
+    margin-bottom: 2rem;
+    margin-left: -1.5rem;
+  }
+  .footer_content {
+    margin-bottom: 2rem;
+    padding-left: 0;
   }
 }
 
@@ -137,9 +147,5 @@
 
   .foote_mob_top {
     margin-top: 25px;
-  }
-  .footer_content {
-    margin-bottom: 2rem;
-    padding-left: 0;
   }
 }
