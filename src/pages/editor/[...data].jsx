@@ -56,7 +56,7 @@ const BlogEditorPage = () => {
       <EditorComponent
         initialData={article._id ? article : null}
         initialContent={articleContent.html ? articleContent : null}
-        setInitialData={(obj) => setArticle(obj)}
+        setInitialData={(obj) => setArticle({ ...article, ...obj })}
         option={getOption()}
       />
     );

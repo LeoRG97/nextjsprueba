@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useSession } from 'next-auth/client';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useRouter } from 'next/router';
-import { saveArticle, updateArticle } from '@/services/articles';
+import { saveArticle, updateArticle, updateArticleResources } from '@/services/articles';
 import { EditorContext } from '@/helpers/contexts/editorContext';
 import { upload, remove } from '@/services/aws';
 import styles from './editor.module.css';
@@ -18,6 +18,8 @@ import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
 import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
+import ResourcesModal from './modals/articleResourcesModal/ArticleResourcesModal';
+import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 
 const EditorComponent = ({
   option, initialData, setInitialData, initialContent,
@@ -27,6 +29,7 @@ const EditorComponent = ({
   const { formData, setFormData } = useContext(EditorContext);
   const [modalShow, setModalShow] = useState(false);
   const [showPublish, setShowPublish] = useState(false);
+  const [showResourcesModal, setShowResourcesModal] = useState(false);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [arrayItemsEditor, setItems] = useState({});
   const [addedVideo, setContentVideo] = useState(false);
@@ -38,6 +41,11 @@ const EditorComponent = ({
   const [activeOption, setActiveCont] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [successData, setSuccessData] = useState({
+    show: false,
+    title: '',
+    message: '',
+  });
+  const [errorData, setErrorData] = useState({
     show: false,
     title: '',
     message: '',
@@ -406,6 +414,25 @@ const EditorComponent = ({
     }
   };
 
+  const handleSubmitResources = async (resources) => {
+    setSubmitting(true);
+    const res = await updateArticleResources(resources, initialData._id);
+    if (res.ok) {
+      setSubmitting(false);
+      setSuccessData({
+        show: true,
+        title: 'Cambios guardados',
+        message: 'La publicación ha sido realizada exitosamente.',
+      });
+    } else {
+      setErrorData({
+        show: true,
+        title: 'Ha ocurrido un error',
+        message: 'Vuelva a intentarlo más tarde',
+      });
+    }
+  };
+
   return (
     <div className={styles.editor}>
       <ModalAudio
@@ -493,13 +520,24 @@ const EditorComponent = ({
             I
           </div>
         </TooltipContainer>
+        {initialData && initialData._id
+          && (
+            <TooltipContainer tooltipText="Opciones de visualización" placement="left">
+              <div
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                onClick={() => setShowResourcesModal(true)}
+              >
+                r
+              </div>
+            </TooltipContainer>
+          )}
 
         <TooltipContainer tooltipText="Vista previa" placement="left">
-          <div className={`icon-button ${styles.optionsItem}`}>C</div>
+          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
         </TooltipContainer>
 
         <TooltipContainer tooltipText="Detalles" placement="left">
-          <div className={`icon-button ${styles.optionsItem}`}>J</div>
+          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
         </TooltipContainer>
 
       </div>
@@ -507,6 +545,14 @@ const EditorComponent = ({
         show={showPublish}
         onClose={() => setShowPublish(false)}
         onPublish={handlePublish}
+      />
+      <ResourcesModal
+        show={showResourcesModal}
+        initialData={initialData && initialData.recursos}
+        onClose={() => setShowResourcesModal(false)}
+        articleId={initialData && initialData._id}
+        refreshInitialData={setInitialData}
+        onSubmit={handleSubmitResources}
       />
       <LoadingIndicatorModal
         show={submitting}
@@ -519,6 +565,12 @@ const EditorComponent = ({
         onClose={() => setSuccessData({ ...successData, show: false })}
         textHeader={successData.title}
         textBody={successData.message}
+      />
+      <ErrorIndicatorModal
+        show={errorData.show}
+        onClose={() => setErrorData({ ...errorData, show: false })}
+        textHeader={errorData.title}
+        textBody={errorData.message}
       />
     </div>
   );

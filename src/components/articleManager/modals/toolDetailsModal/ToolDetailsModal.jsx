@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
 import useSWR from 'swr';
 import styles from '../detailsModal/detailsModal.module.css';
-import ImagePicker from '../../../imagePicker/ImagePicker';
+import ImagePicker from '../../../formComponents/imagePicker/ImagePicker';
 import Switch from '@/components/switch/Switch';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import { toolValidation } from './toolValidation';
@@ -85,11 +85,13 @@ const ToolDetailsModal = ({ show, onClose, onPublish }) => {
             <Col md={6}>
               <h3 className="title">Detalles de la publicación</h3>
               <h6 className="d-block subtitle">Imagen de portada</h6>
-              <ImagePicker
-                image={portada}
-                setImage={handleCoverChange}
-                prevUrl={url_imagen}
-              />
+              <div className={styles.imageInput}>
+                <ImagePicker
+                  image={portada}
+                  setImage={handleCoverChange}
+                  prevUrl={url_imagen}
+                />
+              </div>
               <span className="text-sm text--theme-error">{errors.portada}</span>
               <label className="d-block subtitle" htmlFor="name">Nombre
                 <input

@@ -1,27 +1,30 @@
 import React, { useRef } from 'react';
 
-const FileInput = ({ id, file, setFile }) => {
+const InputFile = ({
+  inputId, fileName, onSave, onDelete,
+}) => {
   const inputRef = useRef();
 
   const handleIconClick = () => {
-    if (!file) {
-      return inputRef.current.click();
+    if (!fileName) {
+      inputRef.current.click();
+    } else {
+      onDelete(inputId);
     }
-    return setFile('');
   };
 
   const handleFile = (e) => {
     const fileData = e.target.files[0];
-    setFile(fileData);
+    onSave(fileData, inputId);
   };
 
   return (
     <div className="input-container">
-      <label className="subtitle input" htmlFor={id}>
-        {file ? file.name : 'Añadir archivo'}
+      <label className="subtitle input" htmlFor={inputId}>
+        {fileName || 'Añadir archivo'}
         <input
           ref={inputRef}
-          id={id}
+          id={inputId}
           type="file"
           className="input--hidden"
           placeholder="Añadir archivo"
@@ -29,9 +32,9 @@ const FileInput = ({ id, file, setFile }) => {
           accept="image/jpeg,image/png,application/pdf"
         />
       </label>
-      <span className="input__icon icon" onClick={handleIconClick}>{file ? 'O' : 'Ñ'}</span>
+      <span className="input__icon icon" onClick={handleIconClick}>{fileName ? 'O' : 'Ñ'}</span>
     </div>
   );
 };
 
-export default FileInput;
+export default InputFile;
