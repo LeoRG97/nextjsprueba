@@ -11,7 +11,7 @@ import { AddComment } from './AddComment';
 import {
   addCommentReply, addValoracionComentario,
   addValoracionRespuesta,
-  deleteComentario, deleteRespuesta,
+  deleteComentario, deleteRespuesta, updateComentario,
 } from '@/services/articles';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { LoadingIndicator } from '@/components';
@@ -22,6 +22,7 @@ export const ListItem = ({ comment, mutateList }) => {
   const [showDeleteComment, setShowDeleteComment] = useState(false);
   const [showDeleteReply, setShowDeleteReply] = useState(false);
   const [replyDelete, setReplyDelete] = useState(null);
+  const [onUpdateComment, setOnUpdateComment] = useState(false);
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -29,10 +30,17 @@ export const ListItem = ({ comment, mutateList }) => {
   };
   const session = useSession();
 
-  const [values, handleInputChange, resetForm] = useForm({
+  const { values, handleInputChange, resetForm } = useForm({
     titulo: '',
   });
   const { titulo } = values;
+
+  const {
+    values: comentUpd,
+    handleInputChange: handleUpdate,
+  } = useForm({
+    nvoComentario: comment.comentario,
+  });
 
   const {
     data, size, setSize, mutate, isValidating,
@@ -85,6 +93,7 @@ export const ListItem = ({ comment, mutateList }) => {
       mutate();
       mutateList();
       resetForm();
+      setSelectComment(false);
     }
   };
 
@@ -129,11 +138,22 @@ export const ListItem = ({ comment, mutateList }) => {
     mutateList();
     setReplyDelete(null);
     setShowDeleteReply(false);
-  }
+  };
+
+  const handleSubmitUpdateComment = async (e) => {
+    e.preventDefault();
+    await updateComentario(comment._id, comentUpd.nvoComentario);
+    setOnUpdateComment(false);
+    mutateList();
+  };
+
+  const onCancelUpdate = () => {
+    setOnUpdateComment(false);
+  };
 
   return (
     <div className={`${styles.mainLevel} py-1`}>
-      <div className="row py-4">
+      <div className="row py-2">
         <div className="col-lg-1 col-md-2 col-sm-12">
           <Image
             height="45"
@@ -152,6 +172,12 @@ export const ListItem = ({ comment, mutateList }) => {
                   ? comment.usuario_id.name : ''
               }
             </small>
+            <small className="subtitle ms-1">
+              {
+                comment.usuario_id?.apellidos
+                  ? comment.usuario_id.apellidos : ''
+              }
+            </small>
 
             <small className={`${styles.positionDate} text-sm`}>
               {converDate(comment.updatedAt)} | {getHour(comment.updatedAt)}
@@ -159,49 +185,96 @@ export const ListItem = ({ comment, mutateList }) => {
           </div>
 
           <div className="text-md theme-secondary">
-            <div>
-              {comment.comentario}
-            </div>
+            {
+              onUpdateComment ? (
+                <form onSubmit={handleSubmitUpdateComment} className="d-flex align-items-center">
+                  <input
+                    className="input"
+                    value={comentUpd.nvoComentario}
+                    onChange={handleUpdate}
+                    name="nvoComentario"
+                  />
+                  <button
+                    type="submit"
+                    disabled={comentUpd.nvoComentario.length === 0}
+                    // onClick={handleSubmit}
+                    className="icon-button icon-button--primary py-1 icon ms-4"
+                    title="Guardar"
+                  >n
+                  </button>
+                </form>
+              ) : (
+                <div>
+                  {comment.comentario}
+                </div>
+              )
+            }
           </div>
 
           <div className="d-flex my-2 align-items-center">
-            <small
-              className={`${styles.pointer} subtitle text-link me-3`}
-              onClick={commentValoracion}
-            >
-              Valorar
-            </small>
-            <small
-              onClick={() => handleReply(comment._id)}
-              className={`${styles.pointer} subtitle text-link me-3`}
-            >
-              Responder
-            </small>
             {
+              onUpdateComment ? (
+                <>
+                  <small
+                    className={`${styles.pointer} subtitle text-link me-3`}
+                    onClick={onCancelUpdate}
+                  >
+                    Cancelar edición
+                  </small>
+                </>
+              )
+                : (
+                  <>
+                    <small
+                      className={`${styles.pointer} subtitle text-link me-3`}
+                      onClick={commentValoracion}
+                    >
+                      Valorar
+                    </small>
+                    <small
+                      onClick={() => handleReply(comment._id)}
+                      className={`${styles.pointer} subtitle text-link me-3`}
+                    >
+                      Responder
+                    </small>
 
-              session[0]?.user.role === 'admin'
+                  </>
+                )
+            }
+
+            {
+              !onUpdateComment
+              && (session[0]?.user.role === 'admin'
                 || session[0]?.user.role === 'user-reviewer'
                 || comment.usuario_id._id === session[0]?.user.id ? (
                   <div className={`position-relative ${styles.DropDown}`}>
                     <OptionDropdown
-                      options={[
-                        {
-                          option: 'Modificar',
-                          event: true,
-                          eventName: (() => { }),
-                        },
-                        {
-                          option: 'Eliminar',
-                          event: true,
-                          eventName: (() => setShowDeleteComment(true)),
-                        },
-                      ]}
+                      options={
+                        comment.usuario_id._id === session[0]?.user.id
+                          ? [{
+                            option: 'Modificar',
+                            event: true,
+                            eventName: (() => setOnUpdateComment(true)),
+                          },
+                          {
+                            option: 'Eliminar',
+                            event: true,
+                            eventName: (() => setShowDeleteComment(true)),
+                          },
+                          ] : [
+                            {
+                              option: 'Eliminar',
+                              event: true,
+                              eventName: (() => setShowDeleteComment(true)),
+                            },
+                          ]
+                      }
                     />
                   </div>
                 )
                 : (
                   <></>
-                )
+                ))
             }
             <div className="d-flex align-items-center position-absolute end-0">
               <small className={`icon ${comment.liked && 'text--theme-highlight'}`}>c</small>
@@ -228,7 +301,7 @@ export const ListItem = ({ comment, mutateList }) => {
           </ul>
         )}
       {
-        comment.respuesta > 0 && (
+        comment.respuesta > 0 ? (
           <>
             <ul className={`${styles.commentList}`}>
               {
@@ -236,7 +309,7 @@ export const ListItem = ({ comment, mutateList }) => {
                   return page.map((reply) => (
                     <li key={reply._id}>
 
-                      <div className="row py-4">
+                      <div className="row py-2">
                         <div className="col-lg-1 col-md-2 col-sm-12">
                           <Image
                             height="45"
@@ -255,6 +328,12 @@ export const ListItem = ({ comment, mutateList }) => {
                                   ? reply.usuario_id.name : ''
                               }
                             </small>
+                            <small className="subtitle ms-2">
+                              {
+                                reply.usuario_id?.apellidos
+                                  ? reply.usuario_id.apellidos : ''
+                              }
+                            </small>
 
                             <small className={`${styles.positionDate} text-sm`}>
                               {converDate(reply.createdAt)} | {getHour(reply.createdAt)}
@@ -263,7 +342,11 @@ export const ListItem = ({ comment, mutateList }) => {
 
                           <div className="text-md theme-secondary">
                             <div>
-                              {reply.titulo}
+
+                              {
+                                reply.titulo
+                              }
+
                             </div>
                           </div>
 
@@ -321,7 +404,7 @@ export const ListItem = ({ comment, mutateList }) => {
                   )
                     : (
                       <a
-                        className="subtitle text-link me-3"
+                        className={`${styles.pointer} subtitle text-link me-3`}
                         onClick={() => setSize(size + 1)}
                       >
                         Ver más respuestas
@@ -331,7 +414,7 @@ export const ListItem = ({ comment, mutateList }) => {
               </>
             </div>
           </>
-        )
+        ) : (<></>)
       }
       <DeleteModal
         show={showDeleteComment}

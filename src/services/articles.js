@@ -424,3 +424,14 @@ export const deleteRespuesta = async (comentarioId, respuestaId) => {
     return error;
   }
 };
+
+export const updateComentario = async (comentarioId, nvoComentario) => {
+  try {
+    const dataRes = await axios().put(
+      `/comentarios/${comentarioId}`, { comentario: nvoComentario },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};

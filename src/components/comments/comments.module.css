@@ -18,11 +18,11 @@
 /* //lines */
 .commentList::before {
   content: "";
-  width: 2px;
+  width: 1px;
   height: 100%;
   background: var(--colorPrimaryTransp);
   position: absolute;
-  left: 6%;
+  left: 50px;
   top: 0;
 }
 .mainLevel::after {

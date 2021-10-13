@@ -11,7 +11,7 @@ import { AddComment } from './AddComment';
 import { LoadingIndicator } from '@/components';
 
 export const ListComment = ({ blogInfo }) => {
-  const [values, handleInputChange, resetForm] = useForm({
+  const { values, handleInputChange, resetForm } = useForm({
     comentario: '',
   });
   const { comentario } = values;
