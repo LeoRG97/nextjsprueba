@@ -16,6 +16,8 @@ import {
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { LoadingIndicator } from '@/components';
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
+import convertDate from './convertDate';
+import { ListItemReply } from './ListItemReply';
 
 export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
@@ -26,7 +28,10 @@ export const ListItem = ({ comment, mutateList }) => {
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.ArticleReplies}/${comment._id}?&pageNum=${pageIndex + 1}&pageSize=1`; // API endpoint
+    if (comment.respuesta > 0) {
+      return `${ApiRoutes.ArticleReplies}/${comment._id}?&pageNum=${pageIndex + 1}&pageSize=1`; // API endpoint
+    }
+    return null;
   };
   const session = useSession();
 
@@ -46,30 +51,6 @@ export const ListItem = ({ comment, mutateList }) => {
     data, size, setSize, mutate, isValidating,
   } = useSWRInfinite(getKey, fetchData);
   // console.log(`Respuestas de ${comment._id}`,data)
-
-  const converDate = (date) => {
-    const dateFormat = new Date(date);
-
-    let formattedDate = Intl.DateTimeFormat('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: '2-digit',
-    }).format(dateFormat);
-    formattedDate = formattedDate.toString();
-    formattedDate = formattedDate.replace('January', 'Enero');
-    formattedDate = formattedDate.replace('February', 'Febrero');
-    formattedDate = formattedDate.replace('March', 'Marzo');
-    formattedDate = formattedDate.replace('April', 'Abril');
-    formattedDate = formattedDate.replace('May', 'Mayo');
-    formattedDate = formattedDate.replace('June', 'Junio');
-    formattedDate = formattedDate.replace('July', 'Julio');
-    formattedDate = formattedDate.replace('August', 'Agosto');
-    formattedDate = formattedDate.replace('September', 'Septiembre');
-    formattedDate = formattedDate.replace('October', 'Octubre');
-    formattedDate = formattedDate.replace('November', 'Noviembre');
-    formattedDate = formattedDate.replace('December', 'Diciembre');
-    return formattedDate;
-  };
 
   const addZero = (index) => (index < 10 ? `0${index}` : index);
 
@@ -180,7 +161,7 @@ export const ListItem = ({ comment, mutateList }) => {
             </small>
 
             <small className={`${styles.positionDate} text-sm`}>
-              {converDate(comment.updatedAt)} | {getHour(comment.updatedAt)}
+              {convertDate(comment.updatedAt)} | {getHour(comment.updatedAt)}
             </small>
           </div>
 
@@ -307,91 +288,15 @@ export const ListItem = ({ comment, mutateList }) => {
               {
                 data && data.map((page) => {
                   return page.map((reply) => (
-                    <li key={reply._id}>
-
-                      <div className="row py-2">
-                        <div className="col-lg-1 col-md-2 col-sm-12">
-                          <Image
-                            height="45"
-                            width="45"
-                            objectFit="contain"
-                            src={reply.usuario_id.picture === 'string' || !reply.usuario_id.picture ? '/images/profile/no-profile-img.png' : reply.usuario_id.picture}
-                            className={styles.author_pict}
-                          />
-                        </div>
-
-                        <div className="col-lg-11 col-md-10 col-sm-12">
-                          <div className="d-flex bd-highlight mb-2">
-                            <small className="subtitle">
-                              {
-                                reply.usuario_id.name
-                                  ? reply.usuario_id.name : ''
-                              }
-                            </small>
-                            <small className="subtitle ms-2">
-                              {
-                                reply.usuario_id?.apellidos
-                                  ? reply.usuario_id.apellidos : ''
-                              }
-                            </small>
-
-                            <small className={`${styles.positionDate} text-sm`}>
-                              {converDate(reply.createdAt)} | {getHour(reply.createdAt)}
-                            </small>
-                          </div>
-
-                          <div className="text-md theme-secondary">
-                            <div>
-
-                              {
-                                reply.titulo
-                              }
-
-                            </div>
-                          </div>
-
-                          <div className="d-flex my-2 align-items-center">
-                            <small
-                              className={`${styles.pointer} subtitle text-link me-3`}
-                              onClick={() => replyValoracion(reply._id)}
-                            >
-                              Valorar
-                            </small>
-                            {
-
-                              session[0]?.user.role === 'admin'
-                                || session[0]?.user.role === 'user-reviewer'
-                                || reply.usuario_id._id === session[0]?.user.id ? (
-                                  <div className={`position-relative ${styles.DropDown}`}>
-                                    <OptionDropdown
-                                      options={[
-                                        {
-                                          option: 'Modificar',
-                                          event: true,
-                                          eventName: (() => { }),
-                                        },
-                                        {
-                                          option: 'Eliminar',
-                                          event: true,
-                                          eventName: (() => onDeleteReply(reply._id)),
-                                        },
-                                      ]}
-                                    />
-                                  </div>
-                                )
-                                : (
-                                  <></>
-                                )
-
-                            }
-                            <div className="d-flex align-items-center position-absolute end-0">
-                              <small className={`icon ${reply.liked && 'text--theme-highlight'}`}>c</small>
-                              <small className="text--theme-highlight">{reply.likes}</small>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
+                    <ListItemReply
+                      key={reply._id}
+                      reply={reply}
+                      commentId={comment._id}
+                      session={session}
+                      onDeleteReply={onDeleteReply}
+                      replyValoracion={replyValoracion}
+                      eventMutate={mutate}
+                    />
                   ));
                 })
               }
