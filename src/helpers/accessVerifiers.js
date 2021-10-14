@@ -12,9 +12,17 @@ export const authorAccess = (role) => {
   return (role === Roles.Admin || role === Roles.Reviewer || role === Roles.Author);
 };
 
+export const premiumUserAccess = (role) => {
+  return (role === Roles.Admin
+    || role === Roles.Reviewer
+    || role === Roles.Author
+    || role === Roles.Premium);
+};
+
 export const userAccess = (role) => {
   return (role === Roles.Admin
     || role === Roles.Reviewer
     || role === Roles.Author
+    || role === Roles.Premium
     || role === Roles.User);
 };

@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
 import { Roles } from '@/global/constants';
 
-const defaultRoles = [Roles.Admin, Roles.Author, Roles.Reviewer, Roles.User];
+const defaultRoles = [Roles.Admin, Roles.Author, Roles.Reviewer, Roles.Premium, Roles.User];
 
 const withAuth = (WrappedComponent, roles = defaultRoles) => (props) => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const withAuth = (WrappedComponent, roles = defaultRoles) => (props) => {
 
   if (!roles.find((role) => session.user.role === role)) {
     // si el usuario no tiene el rol requerido para acceder, no se le concederá el acceso
-    router.back();
+    router.push('/');
     return null;
   }
 
