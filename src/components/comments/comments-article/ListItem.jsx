@@ -14,7 +14,7 @@ import {
   deleteComentario, deleteRespuesta, updateComentario,
 } from '@/services/articles';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
-import { LoadingIndicator } from '@/components';
+import { LoadingIndicator, SubscriptionModal } from '@/components';
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 import convertDate from './convertDate';
 import { ListItemReply } from './ListItemReply';
@@ -25,6 +25,7 @@ export const ListItem = ({ comment, mutateList }) => {
   const [showDeleteReply, setShowDeleteReply] = useState(false);
   const [replyDelete, setReplyDelete] = useState(null);
   const [onUpdateComment, setOnUpdateComment] = useState(false);
+  const [modalJoin, setModalJoin] = useState(false);
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -205,21 +206,24 @@ export const ListItem = ({ comment, mutateList }) => {
                 </>
               )
                 : (
-                  <>
-                    <small
-                      className={`${styles.pointer} subtitle text-link me-3`}
-                      onClick={commentValoracion}
-                    >
-                      Valorar
-                    </small>
-                    <small
-                      onClick={() => handleReply(comment._id)}
-                      className={`${styles.pointer} subtitle text-link me-3`}
-                    >
-                      Responder
-                    </small>
+                  session[0]?.user
+                  && (
+                    <>
+                      <small
+                        className={`${styles.pointer} subtitle text-link me-3`}
+                        onClick={commentValoracion}
+                      >
+                        Valorar
+                      </small>
+                      <small
+                        onClick={() => handleReply(comment._id)}
+                        className={`${styles.pointer} subtitle text-link me-3`}
+                      >
+                        Responder
+                      </small>
 
-                  </>
+                    </>
+                  )
                 )
             }
 
@@ -310,7 +314,12 @@ export const ListItem = ({ comment, mutateList }) => {
                     : (
                       <a
                         className={`${styles.pointer} subtitle text-link me-3`}
-                        onClick={() => setSize(size + 1)}
+                        onClick={() => {
+                          /* eslint-disable no-unused-expressions */
+                          session[0]?.user
+                            ? setSize(size + 1)
+                            : setModalJoin(true);
+                        }}
                       >
                         Ver más respuestas
                       </a>
@@ -339,6 +348,7 @@ export const ListItem = ({ comment, mutateList }) => {
         textHeader="Alerta"
         textBody="¿Estás seguro de eliminar la respuesta?"
       />
+      <SubscriptionModal show={modalJoin} setModal={setModalJoin} />
     </div>
   );
 };

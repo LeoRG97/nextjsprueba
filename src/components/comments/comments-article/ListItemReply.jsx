@@ -103,12 +103,15 @@ export const ListItemReply = ({
                   Cancelar edición
                 </small>
               ) : (
-                <small
-                  className={`${styles.pointer} subtitle text-link me-3`}
-                  onClick={() => replyValoracion(reply._id)}
-                >
-                  Valorar
-                </small>
+                session[0]?.user
+                && (
+                  <small
+                    className={`${styles.pointer} subtitle text-link me-3`}
+                    onClick={() => replyValoracion(reply._id)}
+                  >
+                    Valorar
+                  </small>
+                )
               )
 
             }
