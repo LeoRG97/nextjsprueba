@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import styles from '../comments.module.css';
@@ -8,12 +8,13 @@ import { ListItem } from './ListItem';
 import { addComment } from '@/services/articles';
 import { useForm } from './useForm';
 import { AddComment } from './AddComment';
-import { LoadingIndicator } from '@/components';
+import { LoadingIndicator, SubscriptionModal } from '@/components';
 
 export const ListComment = ({ blogInfo }) => {
   const { values, handleInputChange, resetForm } = useForm({
     comentario: '',
   });
+  const [modalJoin, setModalJoin] = useState(false);
   const { comentario } = values;
 
   const [session] = useSession();
@@ -79,7 +80,11 @@ export const ListComment = ({ blogInfo }) => {
               : (
                 <button
                   className="button button--theme-secondary"
-                  onClick={() => setSize(size + 1)}
+                  onClick={() => {
+                    /* eslint-disable no-unused-expressions */
+                    session?.user
+                      ? setSize(size + 1) : setModalJoin(true);
+                  }}
                 >
                   Ver más comentarios
                 </button>
@@ -87,6 +92,8 @@ export const ListComment = ({ blogInfo }) => {
           )}
         </>
       </div>
+      <SubscriptionModal show={modalJoin} setModal={setModalJoin} />
+
     </div>
   );
 };
