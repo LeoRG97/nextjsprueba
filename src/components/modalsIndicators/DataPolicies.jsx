@@ -26,6 +26,9 @@ const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
       && checkM.check3 === true
     ) {
       acceptDP();
+      setCheckM({ check1: false });
+      setCheckM({ check2: false });
+      setCheckM({ check3: false });
     }
   };
 
