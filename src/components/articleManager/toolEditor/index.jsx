@@ -11,7 +11,8 @@ import DescriptionSection from './DescriptionSection';
 import ToolDetailsModal from '../modals/toolDetailsModal/ToolDetailsModal';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
-import { saveTool, updateTool } from '@/services/tools';
+import { saveTool, updateTool, updateToolFile } from '@/services/tools';
+import ModalZip from './ModalZip';
 
 const ToolEditorComponent = ({
   initialData,
@@ -42,6 +43,7 @@ const ToolEditorComponent = ({
     title: '',
     message: '',
   });
+  const [attachmentZip, setAttachmentZip] = useState(false);
 
   useEffect(() => {
     if (initialData && initialData._id) {
@@ -118,6 +120,26 @@ const ToolEditorComponent = ({
     }
   };
 
+  const handleSubmitResources = async (resources) => {
+    setSubmitting(true);
+    const res = await updateToolFile(resources, initialData._id);
+    if (res.ok) {
+      setSubmitting(false);
+      setSuccessData({
+        show: true,
+        title: 'Cambios guardados',
+        message: 'Los recursos han sido actualizados exitosamente.',
+      });
+    } else {
+      setSubmitting(false);
+      setErrorData({
+        show: true,
+        title: 'Ha ocurrido un error',
+        message: 'Vuelva a intentarlo más tarde',
+      });
+    }
+  };
+
   return (
     <div className={styles.editor}>
       <div className={styles.editorContent} align="center">
@@ -144,6 +166,13 @@ const ToolEditorComponent = ({
             H
           </div>
         </TooltipContainer>
+
+        {initialData._id
+          && (
+            <TooltipContainer tooltipText="Archivo de descarga" placement="left">
+              <div onClick={() => setAttachmentZip(true)} className={`icon-button icon-button--secondary ${styles.optionsItem}`}>r</div>
+            </TooltipContainer>
+          )}
 
         <TooltipContainer tooltipText="Vista previa" placement="left">
           <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
@@ -176,6 +205,12 @@ const ToolEditorComponent = ({
         onClose={() => setErrorData({ ...errorData, show: false })}
         textHeader={errorData.title}
         textBody={errorData.message}
+      />
+      <ModalZip
+        initialData={initialData && initialData.recursos}
+        show={attachmentZip}
+        onClose={() => setAttachmentZip(false)}
+        onSubmit={handleSubmitResources}
       />
     </div>
   );

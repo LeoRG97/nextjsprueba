@@ -70,3 +70,9 @@
     right: 3vw;
   }
 }
+
+.modalContainer {
+  background-color: var(--colorItemBg);
+  padding: 2.5rem;
+  border-radius: 10px;
+}
