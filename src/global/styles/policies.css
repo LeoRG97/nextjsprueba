@@ -1,0 +1,65 @@
+.policies-container {
+  background: url(/images/resourses/TexturaFondo.png), var(--colorPrimaryDark);
+  background-position: center top;
+  background-repeat: no-repeat;
+  height: auto;
+  display: flex;
+  align-items: center;
+  padding-bottom: 40px;
+  text-align: justify;
+}
+
+.policies-nav{
+  /* top: 15%; */
+  margin-top: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.policies-nav div{
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.policies-title-white{
+  color: var(--colorLight);
+}
+
+.policies-title{
+  color: var(--colorSecondary);
+  transition: 0.5s;
+}
+
+.policies-title:hover{
+  color: var(--colorLight);
+}
+
+.policies-title-m {
+  margin-top: 150px;
+  margin-bottom: 10%;
+}
+
+.policies-subtitle-m{
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+@media (max-width: 999px){
+  .policies-nav{
+    display: grid;
+    text-align: center;
+    margin-right: 15px;
+  }
+
+  .policies-nav div{
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 15px;
+  }
+
+  .policies-title-m {
+    margin-top: 80px;
+  }
+}

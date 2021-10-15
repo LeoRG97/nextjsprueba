@@ -369,7 +369,7 @@ export const deleteRespuesta = async (comentarioId, respuestaId) => {
     );
     return dataRes;
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return error;
   }
 };
