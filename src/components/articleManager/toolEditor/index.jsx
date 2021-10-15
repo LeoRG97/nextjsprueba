@@ -123,15 +123,15 @@ const ToolEditorComponent = ({
   const handleSubmitResources = async (resources) => {
     setSubmitting(true);
     const res = await updateToolFile(resources, initialData._id);
+    setSubmitting(false);
     if (res.ok) {
-      setSubmitting(false);
       setSuccessData({
         show: true,
         title: 'Cambios guardados',
         message: 'Los recursos han sido actualizados exitosamente.',
       });
+      setInitialData({ recursos: resources });
     } else {
-      setSubmitting(false);
       setErrorData({
         show: true,
         title: 'Ha ocurrido un error',

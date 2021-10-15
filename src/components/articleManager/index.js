@@ -417,13 +417,14 @@ const EditorComponent = ({
   const handleSubmitResources = async (resources) => {
     setSubmitting(true);
     const res = await updateArticleResources(resources, initialData._id);
+    setSubmitting(false);
     if (res.ok) {
-      setSubmitting(false);
       setSuccessData({
         show: true,
         title: 'Cambios guardados',
         message: 'La publicación ha sido realizada exitosamente.',
       });
+      setInitialData({ recursos: resources });
     } else {
       setErrorData({
         show: true,
@@ -551,7 +552,6 @@ const EditorComponent = ({
         initialData={initialData && initialData.recursos}
         onClose={() => setShowResourcesModal(false)}
         articleId={initialData && initialData._id}
-        refreshInitialData={setInitialData}
         onSubmit={handleSubmitResources}
       />
       <LoadingIndicatorModal
