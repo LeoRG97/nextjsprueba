@@ -10,11 +10,13 @@ import styles from './createAccountForm.module.css';
 import { registerService } from '@/services/register';
 import CategorySelector from '../categorySelector/CategorySelector';
 import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
-import { SuccessIndicatorModal } from '..';
+import DataPoliciesModal from '../modalsIndicators/DataPolicies';
+import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 
 const CreateAccountForm = ({ preferences }) => {
   const [nextStep, setNextStep] = useState(false);
+  const [dataPoliciesM, acceptDataPoliciesM] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
   const [modalSucces, setModalSucces] = useState(false);
   const [modalError, setModalError] = useState(
@@ -531,8 +533,12 @@ const CreateAccountForm = ({ preferences }) => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const acceptPolicies = (e) => {
     e.preventDefault();
+    acceptDataPoliciesM(true);
+  };
+
+  const handleSubmit = async () => {
     const model = {
       email,
       password,
@@ -556,12 +562,13 @@ const CreateAccountForm = ({ preferences }) => {
     } else {
       setError('');
       setErrorStatus(false);
-      setModalLoading(true);
       setModalSucces(false);
       setModalError({
         status: false,
         text: '',
       });
+      acceptDataPoliciesM(false);
+      setModalLoading(true);
       const res = await registerService(model);
       if (res.token) {
         setModalLoading(false);
@@ -885,7 +892,7 @@ const CreateAccountForm = ({ preferences }) => {
                 Recuerda que siempre podrás modificarlas o añadir más ingresando a la opción
                 Editar perfil.
               </span>
-              <form onSubmit={handleSubmit} className="mb-2">
+              <form onSubmit={acceptPolicies} className="mb-2">
                 <span className="d-block subtitle mb-2">Me interesa el contenido relacionado con</span>
                 {
                   preferences.length > 0 ? (
@@ -919,6 +926,11 @@ const CreateAccountForm = ({ preferences }) => {
           </div>
         )
       }
+      <DataPoliciesModal
+        show={dataPoliciesM}
+        onClose={() => acceptDataPoliciesM(false)}
+        acceptDP={() => handleSubmit()}
+      />
       <LoadingIndicatorModal
         show={modalLoading}
         onClose={() => setModalLoading(false)}
