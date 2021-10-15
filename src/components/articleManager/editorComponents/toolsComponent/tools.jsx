@@ -25,20 +25,20 @@ const ToolsComponent = ({
                   </div>
                 </TooltipContainer>
                 <input type="hidden" name="option" />
-                <ul className="select-dropdown">
-                  <li className="text-sm" id="h1" onClick={() => addTextFunct('h1')}>
+                <div className="select-dropdown">
+                  <div className="drop-item text-sm" id="h1" onClick={() => addTextFunct('h1')}>
                     Cabecera
-                  </li>
-                  <li className="text-sm" id="h3" onClick={() => addTextFunct('h3')}>
+                  </div>
+                  <div className="drop-item text-sm" id="h3" onClick={() => addTextFunct('h3')}>
                     Subcabecera
-                  </li>
-                  <li className="text-sm" id="p" onClick={() => addTextFunct('p')}>
+                  </div>
+                  <div className="drop-item text-sm" id="p" onClick={() => addTextFunct('p')}>
                     Párrafo
-                  </li>
-                  <li className="text-sm" id="small" onClick={() => addTextFunct('small')}>
+                  </div>
+                  <div className="drop-item text-sm" id="small" onClick={() => addTextFunct('small')}>
                     Pie de texto
-                  </li>
-                </ul>
+                  </div>
+                </div>
               </div>
               <TooltipContainer placement="top" tooltipText="Imagen">
                 <span className={styles.tools_img_content}>
@@ -104,16 +104,16 @@ const ToolsComponent = ({
                   </TooltipContainer>
                   <input type="hidden" name="option" />
                   <ul className="select-dropdown">
-                    <li className="text-sm" id="h1" onClick={() => addTextFunct('h1')}>
+                    <li className="drop-item text-sm" id="h1" onClick={() => addTextFunct('h1')}>
                       Cabecera
                     </li>
-                    <li className="text-sm" id="h3" onClick={() => addTextFunct('h3')}>
+                    <li className="drop-item text-sm" id="h3" onClick={() => addTextFunct('h3')}>
                       Subcabecera
                     </li>
-                    <li className="text-sm" id="p" onClick={() => addTextFunct('p')}>
+                    <li className="drop-item text-sm" id="p" onClick={() => addTextFunct('p')}>
                       Párrafo
                     </li>
-                    <li className="text-sm" id="small" onClick={() => addTextFunct('small')}>
+                    <li className="drop-item text-sm" id="small" onClick={() => addTextFunct('small')}>
                       Pie de texto
                     </li>
                   </ul>
@@ -158,16 +158,16 @@ const ToolsComponent = ({
                   </TooltipContainer>
                   <input type="hidden" name="option" />
                   <ul className="select-dropdown">
-                    <li className="text-sm" id="h1" onClick={() => addTextFunct('h1')}>
+                    <li className="drop-item text-sm" id="h1" onClick={() => addTextFunct('h1')}>
                       Cabecera
                     </li>
-                    <li className="text-sm" id="h3" onClick={() => addTextFunct('h3')}>
+                    <li className="drop-item text-sm" id="h3" onClick={() => addTextFunct('h3')}>
                       Subcabecera
                     </li>
-                    <li className="text-sm" id="p" onClick={() => addTextFunct('p')}>
+                    <li className="drop-item text-sm" id="p" onClick={() => addTextFunct('p')}>
                       Párrafo
                     </li>
-                    <li className="text-sm" id="small" onClick={() => addTextFunct('small')}>
+                    <li className="drop-item text-sm" id="small" onClick={() => addTextFunct('small')}>
                       Pie de texto
                     </li>
                   </ul>

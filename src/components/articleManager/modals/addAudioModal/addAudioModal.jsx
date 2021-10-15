@@ -116,13 +116,13 @@ const ModalAudio = (props) => {
           <label className="text-sm">Puedes incrustar audios desde: Spotify o Tidal.</label>
         </Modal.Body>
         <Modal.Footer className={`${styles.modal_audio_backC} ${styles.modal_audio_footer} `}>
-          <button className="Btn-cancel" onClick={() => showModal()}>
-            cancelar
+          <button className="button button--theme-secondary" onClick={() => showModal()}>
+            Cancelar
           </button>
           {
             (updateEvent) ? (
-              <button className="Btn-add" onClick={callsUpdateFunctAudio} disabled={disable}>Actualizar</button>
-            ) : (<button className="Btn-add" onClick={callsFunctAudio} disabled={disable}>Incrustar</button>)
+              <button className="button button--theme-primary" onClick={callsUpdateFunctAudio} disabled={disable}>Actualizar</button>
+            ) : (<button className="button button--theme-primary" onClick={callsFunctAudio} disabled={disable}>Incrustar</button>)
           }
         </Modal.Footer>
       </Modal>

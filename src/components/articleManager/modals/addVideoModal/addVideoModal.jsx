@@ -123,13 +123,13 @@ const ModalVideo = (props) => {
           <label className="text-sm">Puedes incrustar videos desde: YouTube o Vimeo.</label>
         </Modal.Body>
         <Modal.Footer className={`${styles.modal_video_backC} ${styles.modal_video_footer} `}>
-          <button className="Btn-cancel" onClick={() => showModal()}>
-            cancelar
+          <button className="button button--theme-secondary" onClick={() => showModal()}>
+            Cancelar
           </button>
           {
             (updateEvent) ? (
-              <button className="Btn-add" onClick={callsUpdateFunctVideo} disabled={disable}>Actualizar</button>
-            ) : (<button className="Btn-add" onClick={callsFunctVideo} disabled={disable}>Incrustar</button>)
+              <button className="button button--theme-primary" onClick={callsUpdateFunctVideo} disabled={disable}>Actualizar</button>
+            ) : (<button className="button button--theme-primary" onClick={callsFunctVideo} disabled={disable}>Incrustar</button>)
           }
         </Modal.Footer>
       </Modal>

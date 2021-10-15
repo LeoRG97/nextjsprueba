@@ -7,7 +7,7 @@
 }
 
 .BLOG .title, .title-editor {
-  font-family: var(--font-medium);
+  font-family: var(--font-bold);
   font-size: var(--font-size-lg);
   color: var(--text-color-light);
 }
