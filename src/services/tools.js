@@ -130,3 +130,14 @@ export const deleteToolService = async (id) => {
   const res = await axios().delete(`herramientas/${id}`);
   return res;
 };
+
+export const updateToolFile = async (recursos, toolId) => {
+  try {
+    const dataRes = await axios().put(
+      `/herramientas/${toolId}`, { recursos },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};

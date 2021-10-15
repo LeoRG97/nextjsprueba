@@ -29,7 +29,7 @@ const InputFile = ({
           className="input--hidden"
           placeholder="Añadir archivo"
           onChange={handleFile}
-          accept="image/jpeg,image/png,application/pdf"
+          accept="image/jpeg,image/png,application/pdf,application/zip"
         />
       </label>
       <span className="input__icon icon" onClick={handleIconClick}>{fileName ? 'O' : 'Ñ'}</span>
