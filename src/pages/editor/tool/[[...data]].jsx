@@ -46,7 +46,7 @@ const ToolEditor = () => {
     return (
       <ToolEditorComponent
         initialData={tool}
-        setInitialData={setTool}
+        setInitialData={(newData) => setTool({ ...tool, ...newData })}
         initialContent={toolContent}
         setInitialContent={setToolContent}
       />
