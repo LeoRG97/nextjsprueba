@@ -1,21 +1,21 @@
 .editor {
-  background-color: #0F1C50;
+  background-color: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .editorContent {
+  background-color: var(--blackEditor);
   position: relative;
   display: grid;
   min-height: 100vh;
-  background-color: #031046;
   width: 76%;
   padding-top: 60px;
   margin-top: 8%;
   margin-bottom: 8%;
-  padding-bottom: 7%;
-  border-radius: 25px;
+  padding-bottom: 12%;
+  border-radius: 0px;
   overflow: hidden;
 }
 

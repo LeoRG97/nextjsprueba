@@ -20,6 +20,7 @@
   /* MAIN COLORS */
   --blue: #6785C1;
   --black: #0F1C50;
+  --blackEditor: #031046;
   --blackRGB-20: rgb(35 39 57);
   /* --grayca: #757e94; */
   --white: #ffffff;
@@ -1614,7 +1615,6 @@ html {
   text-align: left;
   padding: 0;
   margin-top: 10px;
-  border-radius: 10px;
   border: 1px solid var(--backgroung-color-low-dark);
   overflow: hidden;
   min-height: 0;
@@ -1625,7 +1625,6 @@ html {
 
 .dropdown:hover .select-dropdown {
   opacity: 1;
-  max-height: 124px;
 }
 
 .dropdown .dropdown-select > i {
@@ -1654,12 +1653,12 @@ html {
 }
 
 .select-dropdown > li:hover:first-child {
-  border-radius: 8px 8px 0px 0px;
+  border-radius: 0px 0px 0px 0px;
 }
 
 .select-dropdown > li:hover:last-child {
   border-bottom: 1px solid var(--backgroung-color-low-dark);
-  border-radius: 0px 0px 8px 8px;
+  border-radius: 0px 0px 0px 0px;
   color: var(--text-color-light) !important;
 }
 

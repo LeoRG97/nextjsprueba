@@ -29,6 +29,10 @@
   font-size: var(--font-size-sm);
 }
 
+.select-dropdown{
+  border-radius: 0 !important;
+}
+
 .tools_media {
   cursor: pointer;
   width: 46px;
