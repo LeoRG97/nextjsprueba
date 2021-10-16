@@ -5,11 +5,14 @@ import { BUCKET_URL } from '@/global/constants';
 import styles from './articlesList.module.css';
 // import Link from 'next/link';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
+import { DeleteModal } from '@/components';
 
 const ArticlesDetailComponent = ({
   article, classContent, isAdmin = false, onDelete,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
+  const [optionsModal, setOptionsModal] = useState({});
   const getTypeIcon = (type) => {
     switch (type) {
       case 'Video': return 'F';
@@ -28,6 +31,22 @@ const ArticlesDetailComponent = ({
     router.push(`/editor/${article.tipo.toLowerCase()}/${article._id}`);
   };
 
+  const deleteArticleFunc = (id) => {
+    setOptionsModal({
+      fncConfirm: id,
+      cancel: 'Cancelar',
+      confirm: 'Eliminar articulo',
+      textHeader: 'Alerta',
+      textBody: 'Estás apunto de eliminar este articulo ¿Seguro que deseas continuar?',
+    });
+    setModalDelete(true);
+  };
+
+  const onThisDelete = () => {
+    setModalDelete(false);
+    onDelete(optionsModal.fncConfirm);
+  };
+
   const [options] = useState([
     {
       option: 'Modificar',
@@ -39,7 +58,7 @@ const ArticlesDetailComponent = ({
     {
       option: 'Eliminar',
       event: true,
-      eventName: () => onDelete(article._id),
+      eventName: () => deleteArticleFunc(article._id),
       data: true,
       iconType: 'L',
     },
@@ -116,6 +135,15 @@ const ArticlesDetailComponent = ({
             )
           }
         </div>
+        <DeleteModal
+          show={modalDelete}
+          onClose={() => setModalDelete(false)}
+          functionDelete={() => onThisDelete()}
+          btnConfirm={optionsModal.confirm}
+          btnCancel={optionsModal.cancel}
+          textHeader={optionsModal.textHeader}
+          textBody={optionsModal.textBody}
+        />
       </>
     ) : (<></>)
   );
