@@ -46,7 +46,6 @@ const TrendingPage = ({
 export async function getServerSideProps({ query, req }) {
   const { data: preferences } = await getPreferencesService();
   const session = await getSession({ req });
-
   let results;
 
   if (query.search) {

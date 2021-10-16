@@ -12,16 +12,24 @@ const UserPreferencesPosts = ({ initialData }) => {
   const [articles, setArticles] = useState(initialData);
   const [pageNum, setPageNum] = useState(1);
 
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
     fetchPaginatedDataWithAuthToken,
   );
+
+  const onFilter = (filteredArticles) => {
+    mutate([...data]);
+    setArticles(filteredArticles);
+  };
 
   useEffect(() => {
     if (data && pageNum === 1) {
       setArticles(data);
     } else if (data && pageNum > 1) {
-      setArticles([...articles, ...data]);
+      const array = articles.concat(data);
+      const set = new Set(array.map(JSON.stringify));
+      const arrSinDuplicaciones = Array.from(set).map(JSON.parse);
+      setArticles(arrSinDuplicaciones);
     }
   }, [data]);
 
@@ -84,6 +92,8 @@ const UserPreferencesPosts = ({ initialData }) => {
       {(articles) ? (
         <ArticlesListComponent
           articles={articles}
+          showOptions
+          onFilter={onFilter}
         />
       ) : <></>}
       <div className="d-flex justify-content-center">

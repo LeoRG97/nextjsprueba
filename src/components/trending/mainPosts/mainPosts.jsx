@@ -15,16 +15,24 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
   const [articles, setArticles] = useState(initialData.data);
   const [pageNum, setPageNum] = useState(1);
 
-  const { data } = useSWR(
+  const { data, mutate } = useSWR(
     [ApiRoutes.Articles, router.query, pageNum],
     fetchPaginatedData,
   );
+
+  const onFilter = (filteredArticles) => {
+    mutate({ ...data });
+    setArticles(filteredArticles);
+  };
 
   useEffect(() => {
     if (data && pageNum === 1) {
       setArticles(data.data);
     } else if (data && pageNum > 1) {
-      setArticles([...articles, ...data.data]);
+      const array = articles.concat(data.data);
+      const set = new Set(array.map(JSON.stringify));
+      const arrSinDuplicaciones = Array.from(set).map(JSON.parse);
+      setArticles(arrSinDuplicaciones);
     }
   }, [data]);
 
@@ -96,6 +104,8 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
       {(articles) ? (
         <ArticlesListComponent
           articles={articles}
+          showOptions
+          onFilter={onFilter}
         />
       ) : <></>}
       <div className="d-flex justify-content-center">
@@ -117,14 +127,22 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
         ) : (
           <>
             {!data && <LoadingIndicator />}
-            {data && data.data.length > 0 && (
-              <button
-                className="button button--theme-secondary"
-                onClick={() => setPageNum(pageNum + 1)}
-              >
-                Ver más publicaciones
-              </button>
-            )}
+            {
+              data && data.data ? (
+                <>
+                  {
+                    data.data.length > 0 && (
+                      <button
+                        className="button button--theme-secondary"
+                        onClick={() => setPageNum(pageNum + 1)}
+                      >
+                        Ver más publicaciones
+                      </button>
+                    )
+                  }
+                </>
+              ) : (<></>)
+            }
           </>
         )}
       </div>
