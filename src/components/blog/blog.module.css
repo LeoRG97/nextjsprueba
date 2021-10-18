@@ -19,9 +19,46 @@
   justify-content: flex-end;
 }
 
+.cover {
+  width: 100%;
+  height: 30rem;
+  object-fit: cover;
+}
+
+.cover_gradient {
+  position: relative;
+  margin-bottom: 3.75rem;
+}
+
+.cover_gradient::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to top,
+    var(--colorPrimaryDark),
+    var(--contentTransparentRGB)
+  );
+}
+
+@media (max-width: 1399.98px) {
+  .cover {
+    height: 22.5rem;
+  }
+}
+
 @media (max-width: 991.92px) {
   .buttonsContainer {
     justify-content: flex-start;
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .cover {
+    height: 15rem;
   }
 }

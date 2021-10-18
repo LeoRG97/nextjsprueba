@@ -9,6 +9,8 @@ import { addNotesService } from '@/services/notes';
 import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
+import { BUCKET_URL } from '@/global/constants';
+import styles from './blog.module.css';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
@@ -133,6 +135,15 @@ const BlogComponent = ({
             saveArt={saveArt}
             shareArt={shareArt}
           />
+          {blogInfo.portada.ruta_imagen && (
+            <div className={styles.cover_gradient}>
+              <img
+                src={`${BUCKET_URL}${blogInfo.portada.ruta_imagen}`}
+                alt={blogInfo.portada.titulo}
+                className={styles.cover}
+              />
+            </div>
+          )}
           <div className="article-content" onClick={() => onSelecta()}>
             {
               (htmlCode.length !== 0) ? (
