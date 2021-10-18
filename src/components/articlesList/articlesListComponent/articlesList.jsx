@@ -14,6 +14,7 @@ const ArticlesListComponent = ({ articles, onFilter, showOptions = false }) => {
   const [session] = useSession();
 
   const onDelete = async (id) => {
+    setLoadModal(true);
     try {
       const rs = await deleteArticle(id);
       if (rs.ok) {
