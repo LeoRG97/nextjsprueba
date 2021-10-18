@@ -2,7 +2,7 @@
 import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
-import { AutorComponent, TooltipContainer } from '@/components';
+import { AutorComponent } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
 import { addNotesService } from '@/services/notes';
@@ -12,6 +12,7 @@ import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
+  renderResource,
 }) => {
   const [textSelected, setTextSelected] = useState('');
   const [selected, setSelected] = useState(false);
@@ -114,6 +115,7 @@ const BlogComponent = ({
       </div>
     );
   };
+
   return (
     <>
       <Container>
@@ -143,18 +145,12 @@ const BlogComponent = ({
                 })) : (<></>)
             }
           </div>
-          <div className="content-btns-last">
-            <label className="text-md">Ver en</label>
-            <TooltipContainer placement="bottom" tooltipText="Reporte">
-              <button className="icon-button icon-button--secondary m-2">P</button>
-            </TooltipContainer>
-            <TooltipContainer placement="bottom" tooltipText="Infografía">
-              <button className="icon-button icon-button--secondary m-2">S</button>
-            </TooltipContainer>
-            <TooltipContainer placement="bottom" tooltipText="Vídeo">
-              <button className="icon-button icon-button--secondary m-2">N</button>
-            </TooltipContainer>
-          </div>
+          {blogInfo.recursos && blogInfo.recursos.length > 0 && (
+            <div className="content-btns-last">
+              <label className="text-md">Ver en</label>
+              {blogInfo.recursos.map((recurso) => renderResource(recurso, 'bottom'))}
+            </div>
+          )}
           {
             selectMenu && (
               <Overlay target={target.current} show={selectMenu} placement="top">

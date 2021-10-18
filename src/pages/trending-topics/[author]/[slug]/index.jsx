@@ -17,7 +17,7 @@ import {
   checkIfLikedThisArt,
   fetchArticlesSSR,
 } from '@/services/articles';
-import { BASE_URL_PROYECT } from '@/global/constants';
+import { BASE_URL_PROYECT, BUCKET_URL } from '@/global/constants';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import HeadArticle from '@/components/blog/HeadArticle';
@@ -196,6 +196,54 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
     );
   }
 
+  const redirectToResource = (url) => {
+    window.open(url, '_blank');
+  };
+
+  const renderResource = (resource, placement) => {
+    switch (resource.tipo) {
+      case 'reporte': {
+        return (
+          <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Reporte">
+            <button
+              className="icon-button icon-button--secondary m-2"
+              onClick={() => redirectToResource(`${BUCKET_URL}${resource.ruta}`)}
+            >
+              P
+            </button>
+          </TooltipContainer>
+        );
+      }
+      case 'infografia': {
+        return (
+          <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Infografía">
+            <button
+              className="icon-button icon-button--secondary m-2"
+              onClick={() => redirectToResource(`${BUCKET_URL}${resource.ruta}`)}
+            >
+              S
+            </button>
+          </TooltipContainer>
+        );
+      }
+      case 'video': {
+        return (
+          <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Vídeo">
+            <button
+              className="icon-button icon-button--secondary m-2"
+              onClick={() => redirectToResource(`${resource.ruta}`)}
+            >
+              N
+            </button>
+          </TooltipContainer>
+        );
+      }
+      default: {
+        return '';
+      }
+    }
+  };
+
   return (
     <Layout>
       <HeadArticle
@@ -215,18 +263,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                   <Col xl="3" lg="3" sm="2" className="col-1">
                     <div className="content-fixed left">
                       {
-                        (!isOnView) ? (
+                        (!isOnView && artInfo.recursos && artInfo.recursos.length > 0) ? (
                           <div className="content-btns">
                             <label className="text-md">Ver en</label>
-                            <TooltipContainer placement="right" tooltipText="Reporte">
-                              <button className="icon-button icon-button--secondary m-2">P</button>
-                            </TooltipContainer>
-                            <TooltipContainer placement="right" tooltipText="Infografía">
-                              <button className="icon-button icon-button--secondary m-2">S</button>
-                            </TooltipContainer>
-                            <TooltipContainer placement="right" tooltipText="Vídeo">
-                              <button className="icon-button icon-button--secondary m-2">N</button>
-                            </TooltipContainer>
+                            {artInfo.recursos.map((recurso) => renderResource(recurso, 'right'))}
                           </div>
                         ) : (<></>)
                       }
@@ -243,6 +283,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                       quitSaved={quitSaveThisArt}
                       saveArt={saveThisArt}
                       shareArt={() => setModalShare(true)}
+                      renderResource={renderResource}
                     />
                   </Col>
                   <Col xl="3" lg="3" sm="2" className="col-1">
