@@ -18,6 +18,14 @@ const TrendingBannerComponent = ({ loggedIn }) => {
     }
   };
 
+  const handleSwitchNavUser = () => {
+    router.push('/trending-topics?user=true', undefined, { shallow: false });
+  };
+
+  const handleSwitchNavNotUser = () => {
+    router.push('/trending-topics', undefined, { shallow: false });
+  };
+
   const getTitle = () => {
     if (query.search) {
       return null;
@@ -52,13 +60,13 @@ const TrendingBannerComponent = ({ loggedIn }) => {
       <div className={styles.centeredTitle}>
         {loggedIn && !query.search && (
           <div className={`${styles.pageSwitch} ${styles.topPadding}`}>
-            <small className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
+            <small onClick={handleSwitchNavUser} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
             <Switch
               checked={!query.user}
               onChange={handleSwitchNav}
               inverted
             />
-            <small className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
+            <small onClick={handleSwitchNavNotUser} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
           </div>
         )}
         {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
