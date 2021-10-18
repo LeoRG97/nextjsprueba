@@ -1,10 +1,14 @@
 /* eslint-disable react/no-danger */
 import { Container, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './tools.module.css';
+import TooltipContainer from '../articleManager/editorComponents/tooltipContainer/TooltipContainer';
 
 const ToolsContent = ({ toolsInfo, toolsCode }) => {
+  const [viewButton, setViewButton] = useState(true);
+
   const setImage = (url) => {
     let stylleImg = null;
     if (url.includes(BUCKET_URL)) {
@@ -14,6 +18,27 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
     }
     return stylleImg;
   };
+
+  const checkscroll = () => {
+    const elm = document.querySelector('footer');
+    if (elm) {
+      const domRect = elm.getBoundingClientRect();
+      if (domRect) {
+        if (domRect.top < 450) {
+          setViewButton(false);
+        } else {
+          setViewButton(true);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', checkscroll);
+    return () => {
+      window.removeEventListener('scroll', checkscroll);
+    };
+  }, []);
 
   return (
     <div className="texture-top">
@@ -45,13 +70,19 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
               </div>
               <Row className={styles.content_inspired}>
                 <Col className="col-6">
-                  <p className="text-md">Inspirado en:</p>
-                  <p className="text-sm ">{toolsInfo.creditos}</p>
+                  {toolsInfo.creditos && (
+                    <>
+                      <p className="text-md">Inspirado en:</p>
+                      <p className="text-sm ">{toolsInfo.creditos}</p>
+                    </>
+                  )}
                 </Col>
                 <Col className={`col-6 ${styles.right}`}>
-                  <a href="https://google.com">
-                    <button className="button button--theme-primary">Descargar</button>
-                  </a>
+                  {toolsInfo.recursos && toolsInfo.recursos.length > 0 && (
+                    <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
+                      <button className="button button--theme-primary">Descargar</button>
+                    </a>
+                  )}
                 </Col>
               </Row>
               <Row className={styles.content_info_tool}>
@@ -84,7 +115,22 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
               </Row>
 
             </Col>
-            <Col lg="2" className="col-1"> </Col>
+            <Col lg="2" className="col-1">
+              <div className={`content-fixed rigth ${styles.floatingContent}`}>
+                {viewButton && toolsInfo.recursos.length > 0 && (
+                  <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
+                    <TooltipContainer placement="left" tooltipText="Descargar">
+                      <button
+                        onClick={() => {}}
+                        className="icon-button icon-button--primary m-2"
+                      >
+                        i
+                      </button>
+                    </TooltipContainer>
+                  </a>
+                )}
+              </div>
+            </Col>
           </Row>
         </Container>
       </Container>

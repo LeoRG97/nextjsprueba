@@ -6,6 +6,13 @@
   padding-top: 0;
 }
 
+.floatingContent {
+  width: inherit;
+  margin-top: 7.5rem;
+  display: flex;
+  justify-content: center;
+}
+
 .content_back_img {
   background-image: url(/images/resourses/TexturaFondo.png);
   background-repeat: no-repeat;
@@ -44,6 +51,7 @@
 
 .content_inspired {
   margin-top: 50px;
+  margin-bottom: 2rem;
 }
 
 .content_inspired .right {
