@@ -2,18 +2,20 @@ import { useState } from 'react';
 import Head from 'next/head';
 // import { useSession } from 'next-auth/client';
 import { Modal } from 'react-bootstrap';
-import { Layout, AccordionComponent, SubscriptionModal } from '@/components';
+import { useDispatch } from 'react-redux';
+import { Layout, AccordionComponent } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 import { fetchTools, fetchToolsCategories } from '@/services/tools';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 export default function ThinkTools({ toolsData }) {
   const [onShowTools, setOnShowTools] = useState(false);
-  const [show, setModal] = useState(false);
-  // const [session] = useSession();
+  const dispatch = useDispatch();
 
   const userNotSession = () => {
     setOnShowTools(false);
-    setModal(true);
+    // setModal(true);
+    dispatch(showSubscribeAlert());
   };
 
   return (
@@ -65,7 +67,6 @@ export default function ThinkTools({ toolsData }) {
               </div>
             </div>
           </Modal>
-          <SubscriptionModal show={show} setModal={setModal} />
           {/* ) : (<></>) */}
         </div>
       </main>

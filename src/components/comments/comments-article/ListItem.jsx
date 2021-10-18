@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
+import { useDispatch } from 'react-redux';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 
@@ -14,18 +15,19 @@ import {
   deleteComentario, deleteRespuesta, updateComentario,
 } from '@/services/articles';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
-import { LoadingIndicator, SubscriptionModal } from '@/components';
+import { LoadingIndicator } from '@/components';
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 import convertDate from './convertDate';
 import { ListItemReply } from './ListItemReply';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 export const ListItem = ({ comment, mutateList }) => {
+  const dispatch = useDispatch();
   const [selectComment, setSelectComment] = useState(false);
   const [showDeleteComment, setShowDeleteComment] = useState(false);
   const [showDeleteReply, setShowDeleteReply] = useState(false);
   const [replyDelete, setReplyDelete] = useState(null);
   const [onUpdateComment, setOnUpdateComment] = useState(false);
-  const [modalJoin, setModalJoin] = useState(false);
 
   const getKey = (pageIndex, previousPageData) => {
     if (previousPageData && !previousPageData.length) return null; // reached the end
@@ -318,7 +320,7 @@ export const ListItem = ({ comment, mutateList }) => {
                           /* eslint-disable no-unused-expressions */
                           session[0]?.user
                             ? setSize(size + 1)
-                            : setModalJoin(true);
+                            : dispatch(showSubscribeAlert());
                         }}
                       >
                         Ver más respuestas
@@ -348,7 +350,6 @@ export const ListItem = ({ comment, mutateList }) => {
         textHeader="Alerta"
         textBody="¿Estás seguro de eliminar la respuesta?"
       />
-      <SubscriptionModal show={modalJoin} setModal={setModalJoin} />
     </div>
   );
 };
