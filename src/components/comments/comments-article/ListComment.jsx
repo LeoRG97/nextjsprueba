@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
+import { useDispatch } from 'react-redux';
 import styles from '../comments.module.css';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
@@ -8,13 +9,14 @@ import { ListItem } from './ListItem';
 import { addComment } from '@/services/articles';
 import { useForm } from './useForm';
 import { AddComment } from './AddComment';
-import { LoadingIndicator, SubscriptionModal } from '@/components';
+import { LoadingIndicator } from '@/components';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 export const ListComment = ({ blogInfo }) => {
+  const dispatch = useDispatch();
   const { values, handleInputChange, resetForm } = useForm({
     comentario: '',
   });
-  const [modalJoin, setModalJoin] = useState(false);
   const { comentario } = values;
 
   const [session] = useSession();
@@ -83,7 +85,7 @@ export const ListComment = ({ blogInfo }) => {
                   onClick={() => {
                     /* eslint-disable no-unused-expressions */
                     session?.user
-                      ? setSize(size + 1) : setModalJoin(true);
+                      ? setSize(size + 1) : dispatch(showSubscribeAlert());
                   }}
                 >
                   Ver más comentarios
@@ -92,7 +94,6 @@ export const ListComment = ({ blogInfo }) => {
           )}
         </>
       </div>
-      <SubscriptionModal show={modalJoin} setModal={setModalJoin} />
 
     </div>
   );

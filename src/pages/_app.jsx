@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 import { wrapper } from '../store';
+import { ModalContainer } from '@/components';
 
 function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }) {
         <title>NTT Data</title>
       </Head>
       <Component {...pageProps} />
+      <ModalContainer />
       <Script
         src="https://code.jquery.com/jquery-3.5.0.js"
         id="jQuery"
