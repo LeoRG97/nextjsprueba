@@ -41,7 +41,13 @@ const ForumModal = ({ show, onClose, idEdit }) => {
   } = formData;
 
   const handleClose = () => {
-    setFormData({});
+    setFormData({
+      archivo: '',
+      imagen: '',
+      titulo: '',
+      url: '',
+      descripcion: '',
+    });
     onClose();
   };
 
@@ -69,7 +75,13 @@ const ForumModal = ({ show, onClose, idEdit }) => {
       });
     } else {
       setSubmitted(false);
-      setFormData({});
+      setFormData({
+        archivo: '',
+        imagen: '',
+        titulo: '',
+        url: '',
+        descripcion: '',
+      });
     }
   }, [idEdit]);
 
@@ -95,7 +107,13 @@ const ForumModal = ({ show, onClose, idEdit }) => {
         }, false);
         mutate([ApiRoutes.UserTotals, session.user.id]);
         setSubmitted(false);
-        setFormData({});
+        setFormData({
+          archivo: '',
+          imagen: '',
+          titulo: '',
+          url: '',
+          descripcion: '',
+        });
       } else {
         setShowError(true);
       }

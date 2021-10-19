@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-import useSWR, { useSWRConfig } from 'swr';
+import { useSWRConfig } from 'swr';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useSession } from 'next-auth/client';
-import { fetchData } from '@/services/swr';
+import { useDispatch } from 'react-redux';
 import { BUCKET_URL, ApiRoutes } from '@/global/constants';
 import styles from './forums.module.css';
 import ForumModal from './forumEditor/ForumEditor';
@@ -13,9 +13,10 @@ import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import OptionDropdown from '../optionsDropdown/OptionsDropdown';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 const ForumsComponent = ({
-  showOptions, showSubs,
+  showOptions, showSubs, data,
 }) => {
   const [session] = useSession();
   const [showOptionsForum, setShowOptionsForum] = useState({
@@ -29,13 +30,10 @@ const ForumsComponent = ({
   const [showError, setShowError] = useState(false);
   const [idEdit, setIdEdit] = useState('');
   const { mutate } = useSWRConfig();
-  const { data } = useSWR(
-    ApiRoutes.Forums,
-    fetchData,
-  );
+  const dispatch = useDispatch();
 
-  const subscribeForum = async (idForum) => {
-    return idForum;
+  const handleModal = async () => {
+    dispatch(showSubscribeAlert());
   };
 
   const closeModal = () => {
@@ -66,7 +64,7 @@ const ForumsComponent = ({
     if (res.ok) {
       mutate(ApiRoutes.Forums, {
         ...data,
-        data: data.data.filter((item) => item._id !== idEdit),
+        data: data.filter((item) => item._id !== idEdit),
       }, false);
       mutate([ApiRoutes.UserTotals, session.user.id]);
       setIdEdit('');
@@ -110,7 +108,7 @@ const ForumsComponent = ({
         )
       }
       {
-        data && data.data && data.data.map((forum) => {
+        data && data.map((forum) => {
           return (
             <Row
               className={styles.forum_row}
@@ -134,32 +132,38 @@ const ForumsComponent = ({
                     {
                       showSubs && (
                         <div className={styles.forum_btn_cont}>
-                          <a href={forum.url} target="_blank" rel="noreferrer">
-                            <button className="button button--theme-primary" onClick={() => subscribeForum(forum._id)}>Unirme</button>
-                          </a>
+                          {
+                            !session ? (
+                              <button className="button button--theme-primary" onClick={handleModal}>Unirme</button>
+                            ) : (
+                              <a href={forum.url} target="_blank" rel="noreferrer">
+                                <button className="button button--theme-primary">Unirme</button>
+                              </a>
+                            )
+                          }
                         </div>
                       )
                     }
                     {
                       (showOptions && showOptionsForum && forum._id === showOptionsForum.idForum)
-                        && (
-                          <OptionDropdown
-                            options={[
-                              {
-                                option: 'Modificar',
-                                event: true,
-                                eventName: () => updateForumModal(forum._id),
-                                iconType: 'K',
-                              },
-                              {
-                                option: 'Eliminar',
-                                event: true,
-                                eventName: () => deleteForumModal(forum._id),
-                                iconType: 'L',
-                              },
-                            ]}
-                          />
-                        )
+                      && (
+                        <OptionDropdown
+                          options={[
+                            {
+                              option: 'Modificar',
+                              event: true,
+                              eventName: () => updateForumModal(forum._id),
+                              iconType: 'K',
+                            },
+                            {
+                              option: 'Eliminar',
+                              event: true,
+                              eventName: () => deleteForumModal(forum._id),
+                              iconType: 'L',
+                            },
+                          ]}
+                        />
+                      )
                     }
                   </div>
                 </div>
