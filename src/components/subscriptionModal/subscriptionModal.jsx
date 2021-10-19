@@ -4,15 +4,21 @@ import {
   Modal,
 } from 'react-bootstrap';
 import Link from 'next/link';
-
+import { useDispatch } from 'react-redux';
 import styles from './modalSubs.module.css';
+import { hideSubscribeAlert } from '@/reducers/alert';
 
 const SubscriptionModal = ({ show, setModal }) => {
+  const dispatch = useDispatch();
   // const [show, setModal] = useState(false);
 
   /* useEffect(() => {
 
   }, []); */
+
+  const handleCloseModal = () => {
+    dispatch(hideSubscribeAlert());
+  };
 
   return (
     <div>
@@ -35,7 +41,7 @@ const SubscriptionModal = ({ show, setModal }) => {
               <h1 className="title ">¡Únete a la comunidad!</h1>
               <p className="text-sm ">Regístrate para acceder a esta y muchas otras herramientas y funcionalidades.</p>
               <Link href="/create-account" className="button button--theme-primary me-2">
-                <a>
+                <a onClick={handleCloseModal}>
                   <button className="button button--theme-primary me-2">Crear una cuenta</button>
                 </a>
               </Link>
@@ -43,7 +49,11 @@ const SubscriptionModal = ({ show, setModal }) => {
           </Modal.Body>
           <Modal.Footer className={styles.modal_footer_cont}>
             <label className="text-md ">¿Ya eres miembro?</label>
-            <Link href="/login"><a><label className="text-link-dark ">Inicia sesión</label></a></Link>
+            <Link href="/login">
+              <a onClick={handleCloseModal}>
+                <label className="text-link-dark ">Inicia sesión</label>
+              </a>
+            </Link>
           </Modal.Footer>
         </Modal>
       </div>
