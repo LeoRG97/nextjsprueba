@@ -8,7 +8,7 @@ import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
 
 const ArticlesDetailComponent = ({
-  article, classContent, isAdmin = false, onDelete,
+  article, classContent, isAdmin = false, onDelete, estado,
 }) => {
   const [showOptions, setShowOptions] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
@@ -24,7 +24,9 @@ const ArticlesDetailComponent = ({
   const router = useRouter();
 
   const showArticle = () => {
-    router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
+    if (estado !== 'borrador') {
+      router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
+    }
   };
 
   const handleUpdate = () => {
@@ -69,7 +71,7 @@ const ArticlesDetailComponent = ({
       <>
         <div
           key={article._id}
-          className={`${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}
+          className={estado !== 'borrador' ? `${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}` : `${styles.cardContainerNotFocus} ${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}
           onMouseEnter={() => setShowOptions(true)}
           onMouseLeave={() => setShowOptions(false)}
         >
@@ -117,19 +119,31 @@ const ArticlesDetailComponent = ({
             ) : (<></>)
           }
           {
-            article.portada && article.portada.titulo && (
+            article.portada && article.portada.titulo ? (
               <>
                 <div onClick={showArticle} className={`title ${styles.cardMargin}`}>
                   {article.portada.titulo || 'Sin título'}
                 </div>
               </>
+            ) : (
+              <>
+                <div className={`title ${styles.cardMargin}`}>
+                  Sin título
+                </div>
+              </>
             )
           }
           {
-            article.portada && article.portada.descripcion && (
+            article.portada && article.portada.descripcion ? (
               <>
                 <div onClick={showArticle} className="text-sm text--theme-light">
                   {article.portada.descripcion || 'Sin descripción'}
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="text-sm text--theme-light">
+                  Sin descripción
                 </div>
               </>
             )
