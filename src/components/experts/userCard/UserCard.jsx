@@ -31,7 +31,13 @@ const UserCard = ({ user }) => {
         </div>
         <div className={styles.infoBottom}>
           {socialMedia && socialMedia.map((media) => (
-            <a key={media._id} href={media.link} className="text-link icon-md text--theme-secondary me-2">
+            <a
+              key={media._id}
+              href={media.link}
+              className="text-link icon-md text--theme-secondary me-2"
+              target="_blank"
+              rel="noreferrer"
+            >
               {media.nombre === 'twitter' && 'X'}
               {media.nombre === 'linkedIn' && 'M'}
             </a>
