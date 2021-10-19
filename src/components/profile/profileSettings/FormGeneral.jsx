@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { updateUserData, uploadImgProfile } from '@/services/profile';
-import { fetch as fetchProfile } from '@/reducers/profile';
+import { update as updateProfile } from '@/reducers/profile';
 import styles from './profileS.module.css';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
@@ -52,7 +52,7 @@ const FormGeneral = ({
     setModalSucces(false);
     const res = await updateUserData(id, userData);
     if (res._id) {
-      dispatch(fetchProfile());
+      dispatch(updateProfile(userData));
       setModalLoading(false);
       setModalSucces(true);
     }
@@ -191,14 +191,13 @@ const FormGeneral = ({
           <Form.Label className="text-md">Biografía</Form.Label>
           <textarea
             id="text-area"
-            className={styles.settingsTextare}
+            className={`input ${styles.settingsTextare}`}
             rows={3}
             placeholder="Biografía"
-            required
             name="biography"
             value={biography || ''}
             onChange={updateState}
-            maxLength="200"
+            maxLength="120"
           />
           <Form.Control.Feedback type="invalid">
             Introduce la biografía.

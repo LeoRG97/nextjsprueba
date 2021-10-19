@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/client';
 import { Container, Row, Col } from 'react-bootstrap';
-import { fetch as fetchProfile } from '@/reducers/profile';
+import { fetch as fetchProfile, update as updateProfile } from '@/reducers/profile';
 import { updatePassword, updateEmail } from '@/services/profile';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import styles from './mailPass.module.css';
+import styles from './profileS.module.css';
+import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const MailPasswdComponent = () => {
   const [formMail, setFormMail] = useState('');
@@ -17,10 +18,8 @@ const MailPasswdComponent = () => {
     errorOldPass: false,
     errorNewPass: false,
   });
-  const [okMail, setOkMail] = useState(false);
   const [errorMail, setErrorMail] = useState(false);
   const [okPasswd, setOkPass] = useState(false);
-  const [errorPasswd, setErrorPass] = useState(false);
 
   const {
     oldPass, newPass, errorOldPass, errorNewPass,
@@ -28,10 +27,15 @@ const MailPasswdComponent = () => {
 
   const [session] = useSession();
   const dispatch = useDispatch();
-  const { fetched } = useSelector((state) => state.profile);
+  const { fetched, data } = useSelector((state) => state.profile);
 
   const [loadModal, setLoadModal] = useState(false);
   const [successModal, setSuccessModal] = useState(false);
+  const [errorModal, setErrorModal] = useState({
+    show: false,
+    title: '',
+    message: '',
+  });
 
   const [loadingModal] = useState({
     title: 'Actualizando información...',
@@ -44,25 +48,23 @@ const MailPasswdComponent = () => {
   });
 
   const handleChangeMail = (e) => {
-    setOkMail(false);
     setErrorMail(false);
     setFormMail(e.target.value);
   };
 
   const handleChangePass = (e) => {
     setOkPass(false);
-    setErrorPass(false);
     setFormPass({ ...formPass, [e.target.name]: e.target.value });
   };
 
   const submitFormMail = (e) => {
     e.preventDefault();
     setLoadModal(true);
-    const data = {
+    const updateData = {
       idUser: session.user.id,
       email: formMail,
     };
-    updateEmail(data).then((resp) => {
+    updateEmail(updateData).then((resp) => {
       setLoadModal(false);
       if (resp.ok) {
         const setSuccess = {
@@ -71,11 +73,15 @@ const MailPasswdComponent = () => {
         };
         setSuccessModal(true);
         setSuccessInfo(setSuccess);
-        // setOkMail(true);
         setErrorMail(false);
+        dispatch(updateProfile({ email: formMail }));
       } else {
-        setOkMail(false);
         setErrorMail(true);
+        setErrorModal({
+          show: true,
+          title: 'Ha ocurrido un error',
+          message: 'Vuelva a intentarlo más tarde',
+        });
       }
     });
   };
@@ -84,25 +90,27 @@ const MailPasswdComponent = () => {
     e.preventDefault();
     setLoadModal(true);
     const idUser = session.user.id;
-    const data = {
+    const updateData = {
       oldPassword: oldPass,
       newPassword: newPass,
     };
-    updatePassword(idUser, data, session.accessToken).then((resp) => {
+    updatePassword(idUser, updateData, session.accessToken).then((resp) => {
       setLoadModal(false);
       if (resp.ok) {
         setFormPass({ ...formPass, oldPass: '', newPass: '' });
-        // setOkPass(true);
         const setSuccess = {
           title: 'Información actualizada',
           message: 'Su sontraseña ha sido actualizado correctamente.',
         };
         setSuccessModal(true);
         setSuccessInfo(setSuccess);
-        setErrorPass(false);
       } else {
         setOkPass(false);
-        setErrorPass(true);
+        setErrorModal({
+          show: true,
+          title: 'Ha ocurrido un error',
+          message: 'Verifique sus datos o intente más tarde',
+        });
       }
     });
   };
@@ -132,7 +140,7 @@ const MailPasswdComponent = () => {
       dispatch(fetchProfile());
     }
     if (session && formMail === '') {
-      setFormMail(session.user.email);
+      setFormMail(data.email);
     }
   }, [session]);
 
@@ -148,15 +156,6 @@ const MailPasswdComponent = () => {
         </Row>
         <Row>
           <Col>
-            <div>
-              {
-                (okMail) ? (
-                  <div className={styles.content_success}>
-                    <label>Dirección de correo electrónico actualizado</label>
-                  </div>
-                ) : (<></>)
-              }
-            </div>
             <form className={styles.full_form} onSubmit={submitFormMail}>
               <div>
                 <label className="text-md">Dirección de correo electrónico*</label>
@@ -227,13 +226,6 @@ const MailPasswdComponent = () => {
                 />
                 <span className="text-sm text--theme-error ">&nbsp;{(errorNewPass) ? ('Campo requerido') : (<></>)}</span>
               </div>
-              {
-                (errorPasswd) ? (
-                  <div className={styles.content_faild}>
-                    <label>Error, verifique sus datos ó intente más tarde.</label>
-                  </div>
-                ) : (<></>)
-              }
               <div> </div>
               <div>
                 <button type="submit" className="button button--theme-primary" onClick={validateFormPasswd}>Actualizar contraseña</button>
@@ -253,6 +245,12 @@ const MailPasswdComponent = () => {
         onClose={() => setSuccessModal(false)}
         textHeader={successInfo.title}
         textBody={successInfo.message}
+      />
+      <ErrorIndicatorModal
+        show={errorModal.show}
+        onClose={() => setErrorModal({ ...errorModal, show: false })}
+        textHeader={errorModal.title}
+        textBody={errorModal.message}
       />
     </>
   );

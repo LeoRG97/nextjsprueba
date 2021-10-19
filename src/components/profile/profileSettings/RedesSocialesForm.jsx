@@ -2,12 +2,17 @@
 /* eslint-disable import/extensions */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { updateUserProfile } from '@/services/user';
+import { useDispatch } from 'react-redux';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { SuccessIndicatorModal } from '@/components';
 import styles from './profileS.module.css';
+import {
+  update as updateProfile,
+} from '@/reducers/profile';
+import { updateUserProfile } from '@/services/user';
 
 const RedesSocialesForm = ({ data }) => {
+  const dispatch = useDispatch();
   let linkT = '';
   let linkL = '';
   data.socialMedia.forEach((social) => {
@@ -106,10 +111,12 @@ const RedesSocialesForm = ({ data }) => {
     const model = {
       socialMedia: socialMediaValues,
     };
+
     const res = await updateUserProfile(data._id, model);
     if (res.ok) {
       setModalLoading(false);
       setModalSucces(true);
+      dispatch(updateProfile(model));
     } else {
       setModalLoading(false);
       setModalSucces(false);

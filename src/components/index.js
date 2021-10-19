@@ -15,7 +15,7 @@ export { default as EditorComponent } from './articleManager';
 export { default as ToolEditorComponent } from './articleManager/toolEditor';
 export { default as ProfileHeader } from './profile/profileHeader/ProfileHeader';
 export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
-export { default as MailPasswdComponent } from './profile/mailPasswd/mailPasswdComponent';
+export { default as MailPasswdComponent } from './profile/profileSettings/mailPasswdComponent';
 export { default as AboutMeComponent } from './profile/aboutMe/aboutMe';
 export { default as TrendingBannerComponent } from './trending/trendingBanner/TrendingBanner';
 export { default as TrendingFilterComponent } from './trending/trendingFilter/TrendingFilter';
