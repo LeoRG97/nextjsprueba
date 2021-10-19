@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/no-danger */
 import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
+import { useSession } from 'next-auth/client';
 import { AutorComponent } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
@@ -16,6 +18,7 @@ const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
   renderResource,
 }) => {
+  const [session] = useSession();
   const [textSelected, setTextSelected] = useState('');
   const [selected, setSelected] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -164,13 +167,30 @@ const BlogComponent = ({
           )}
           {
             selectMenu && (
-              <Overlay target={target.current} show={selectMenu} placement="top">
-                {(props) => (
-                  <Tooltip onClick={onClickTooltip} id="overlay-example" className="tooltip-notas-menu" {...props} style={{ top, left }}>
-                    <span className="icon-md">ñ</span>
-                  </Tooltip>
-                )}
-              </Overlay>
+              <>
+                {
+                  session?.user
+                    ? (
+                      <Overlay target={target.current} show={selectMenu} placement="top">
+                        {(props) => (
+                          <Tooltip
+                            onClick={onClickTooltip}
+                            id="overlay-example"
+                            className="tooltip-notas-menu"
+                            {...props}
+                            style={{ top, left }}
+                          >
+                            <span className="icon-md">ñ</span>
+                          </Tooltip>
+                        )}
+                      </Overlay>
+                    )
+                    : (
+                      <>
+                      </>
+                    )
+                }
+              </>
             )
           }
           <AutorComponent

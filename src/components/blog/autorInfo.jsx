@@ -1,15 +1,18 @@
-/* eslint-disable react/no-danger */
-// import React, { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+/* eslint-disable no-unused-expressions */
 import Image from 'next/image';
 import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useSession } from 'next-auth/client';
+import { useDispatch } from 'react-redux';
 import styles from './blog.module.css';
 import { TooltipContainer } from '@/components';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 const AutorComponent = ({
   autor, dateBlog, onLike, liked, likes, cssSaved, quitSaved, saveArt, shareArt,
 }) => {
+  const [session] = useSession();
+  const dispatch = useDispatch();
   const converDate = (date) => {
     const dateFormat = new Date(date);
     let formattedDate = Intl.DateTimeFormat('en-US', {
@@ -59,17 +62,35 @@ const AutorComponent = ({
             {
               (cssSaved !== '') ? (
                 <TooltipContainer placement="top" tooltipText="Guardar">
-                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={quitSaved}>U</button>
+                  <button
+                    className={`icon-button icon-button--secondary m-2 ${cssSaved}`}
+                    onClick={() => {
+                      session?.user
+                        ? quitSaved() : dispatch(showSubscribeAlert());
+                    }}
+                  >
+                    U
+                  </button>
                 </TooltipContainer>
               ) : (
                 <TooltipContainer placement="top" tooltipText="Guardar">
-                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={saveArt}>U</button>
+                  <button
+                    className={`icon-button icon-button--secondary m-2 ${cssSaved}`}
+                    onClick={() => {
+                      session?.user
+                        ? saveArt() : dispatch(showSubscribeAlert());
+                    }}
+                  >U
+                  </button>
                 </TooltipContainer>
               )
             }
             <TooltipContainer placement="top" tooltipText="Valorar">
               <button
-                onClick={() => (!liked && onLike())}
+                onClick={() => {
+                  session?.user
+                    ? (!liked && onLike()) : dispatch(showSubscribeAlert());
+                }}
                 className={`Btn-like m-2 ${styles.btn_top} ${liked && 'Btn-like__active'}`}
               >
                 <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
