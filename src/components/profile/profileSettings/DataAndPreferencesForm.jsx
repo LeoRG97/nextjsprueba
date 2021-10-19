@@ -4,13 +4,16 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
+import { useDispatch } from 'react-redux';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { updateUserProfile } from '@/services/user';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import styles from './profileS.module.css';
+import { update as updateProfile } from '@/reducers/profile';
 
 const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
+  const dispatch = useDispatch();
   const dateBirthday = new Date(data.birthDay.replace(/-/g, '/').replace(/T.+/, ''));
   const [company, setCompany] = useState(companydta || '');
   const [errorCompany, setErrorCompany] = useState(
@@ -314,6 +317,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
         setModalLoading(false);
         setModalSucces(true);
         setStatus('success');
+        dispatch(updateProfile({ ...model, preferences: preferencesState }));
       } else {
         setModalLoading(false);
         setModalSucces(false);

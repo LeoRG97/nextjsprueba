@@ -67,9 +67,13 @@ const AboutMeComponent = () => {
                 </ul>
               </Col>
               <Col xl="8" lg="8" sm="8">
-                <p className="title">Biografía</p>
-                <p className="text-md">{userData.biography}</p>
-                <p className="title mt-4">Intereses</p>
+                {userData.biography && (
+                  <div className="mb-4">
+                    <p className="title">Biografía</p>
+                    <p className="text-md">{userData.biography}</p>
+                  </div>
+                )}
+                <p className="title">Intereses</p>
                 <ul className={styles.content_ul}>
                   {
                     userData.preferences.map((item) => (

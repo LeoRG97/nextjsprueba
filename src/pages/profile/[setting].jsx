@@ -27,6 +27,7 @@ const ProfileScreen = () => {
       <ProfileHeader
         picture={data && data.picture}
         name={data && data.name}
+        lastName={data && data.apellidos}
         country={data && data.country}
         state={data && data.state}
       />
