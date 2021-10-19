@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Footer, Layout, ProfileHeader, ProfileMenu, AboutMeComponent, ProfileArticles,
-  RatedArticles, ProfileSavedArts, ProfileTools, ForumsComponent,
+  RatedArticles, ProfileSavedArts, ProfileTools, ProfileForums,
 } from '@/components';
 
 import withAuth from '@/helpers/withAuth';
@@ -41,7 +41,7 @@ const ProfileScreen = () => {
         {query.setting === 'ratings' && <RatedArticles />}
         {query.setting === 'notes' && <ProfileNotes />}
         {query.setting === 'tools' && <ProfileTools />}
-        {query.setting === 'forums' && <ForumsComponent showOptions showSubs={false} />}
+        {query.setting === 'forums' && <ProfileForums />}
 
       </div>
       <Footer />
