@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-restricted-globals */
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 // import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
+import { useDispatch } from 'react-redux';
 import {
   Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer,
 } from '@/components';
@@ -22,11 +24,13 @@ import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import HeadArticle from '@/components/blog/HeadArticle';
 import SocialShareModal from '@/components/modalsIndicators/SocialShareModal';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 // página para ver un artículo en específico
 const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const { query } = useRouter();
   const [session] = useSession();
+  const dispatch = useDispatch();
   const router = useRouter();
   const [blog, setData] = useState({});
   const [autor, setAutor] = useState();
@@ -207,7 +211,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Reporte">
             <button
               className="icon-button icon-button--secondary m-2"
-              onClick={() => redirectToResource(`${BUCKET_URL}${resource.ruta}`)}
+              onClick={() => {
+                session?.user
+                  ? redirectToResource(`${BUCKET_URL}${resource.ruta}`) : dispatch(showSubscribeAlert());
+              }}
             >
               P
             </button>
@@ -219,7 +226,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Infografía">
             <button
               className="icon-button icon-button--secondary m-2"
-              onClick={() => redirectToResource(`${BUCKET_URL}${resource.ruta}`)}
+              onClick={() => {
+                session?.user
+                  ? redirectToResource(`${BUCKET_URL}${resource.ruta}`) : dispatch(showSubscribeAlert());
+              }}
             >
               S
             </button>
@@ -231,7 +241,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Vídeo">
             <button
               className="icon-button icon-button--secondary m-2"
-              onClick={() => redirectToResource(`${resource.ruta}`)}
+              onClick={() => {
+                session?.user
+                  ? redirectToResource(`${resource.ruta}`) : dispatch(showSubscribeAlert());
+              }}
             >
               N
             </button>
@@ -293,7 +306,11 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                           <div className="content-btns">
                             <TooltipContainer placement="left" tooltipText="Valorar">
                               <button
-                                onClick={() => !isLiked && handleRateArticle()}
+                                onClick={() => {
+                                  session?.user
+                                    ? !isLiked && handleRateArticle()
+                                    : dispatch(showSubscribeAlert());
+                                }}
                                 className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
                               >
                                 c
@@ -306,7 +323,14 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                                 </TooltipContainer>
                               ) : (
                                 <TooltipContainer placement="left" tooltipText="Guardar">
-                                  <button className="icon-button icon-button--secondary m-2" onClick={saveThisArt}>U</button>
+                                  <button
+                                    className="icon-button icon-button--secondary m-2"
+                                    onClick={() => {
+                                      session?.user
+                                        ? saveThisArt() : dispatch(showSubscribeAlert());
+                                    }}
+                                  >U
+                                  </button>
                                 </TooltipContainer>
                               )
                             }
