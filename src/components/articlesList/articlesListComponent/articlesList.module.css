@@ -38,6 +38,10 @@
   cursor: pointer;
 }
 
+.cardContainerNotFocus {
+  cursor: auto;
+}
+
 .cardMargin {
   margin-top: 20px;
   margin-bottom: 20px;

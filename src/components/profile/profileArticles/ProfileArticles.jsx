@@ -134,6 +134,7 @@ const ProfileArticles = ({ estado }) => {
               onUpdate={null}
               key={article._id}
               article={article}
+              estado={estado}
               isAdmin
             />
           ));
