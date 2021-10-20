@@ -1396,6 +1396,9 @@ html {
   border: 1px solid transparent;
   margin-left: 10px;
   margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
@@ -1406,6 +1409,14 @@ html {
 .Editor-content:hover .Editor-content-child,
 .Editor-content-child.active {
   border: 1px solid var(--colorLight);
+}
+
+@supports(object-fit: cover){
+  .Editor-content-child img{
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
 }
 
 .Editor-content button, .Editor-container  {
@@ -1516,15 +1527,11 @@ html {
   filter: brightness(100%) !important;
 }
 
-.image-editor {
-  max-width: 80%;
-  max-height: 70%;
-}
-
 .image-editor-self {
   padding-top: 1rem;
   padding-bottom: 1rem;
   align-self: center;
+  height: 350px;
 }
 
 .input-image-none {
@@ -1539,6 +1546,13 @@ html {
 
 .portapapeles {
   cursor: pointer;
+}
+
+@media (max-width: 999px){
+  .image-editor {
+    max-width: 80%;
+    max-height: 70%;
+  }
 }
 
 /* SELECTBOX ============================================================================ */

@@ -179,6 +179,10 @@
   filter: brightness(95%);
 }
 
+.toolTextContainer{
+  cursor: pointer;
+}
+
 @media screen and (max-width: 575.98px) {
   .icon_container {
     border: 1px solid var(--colorItemBorder);
