@@ -51,6 +51,13 @@
   border: none !important;
 }
 
+.liked {
+  color: var(--colorPrimary) !important;
+}
+
+.noLiked {
+  color: var(--colorPrimaryHover) !important;
+}
 /* .DropDown>div>button {
   border: none !important;
 } */

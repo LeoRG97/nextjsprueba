@@ -211,12 +211,21 @@ export const ListItem = ({ comment, mutateList }) => {
                   session[0]?.user
                   && (
                     <>
-                      <small
-                        className={`${styles.pointer} subtitle text-link me-3`}
-                        onClick={commentValoracion}
-                      >
-                        Valorar
-                      </small>
+                      {comment.liked ? (
+                        <small
+                          className={`${styles.pointer} subtitle text-link me-3`}
+                          onClick={commentValoracion}
+                        >
+                          Quitar valoración
+                        </small>
+                      ) : (
+                        <small
+                          className={`${styles.pointer} subtitle text-link me-3`}
+                          onClick={commentValoracion}
+                        >
+                          Valorar
+                        </small>
+                      )}
                       <small
                         onClick={() => handleReply(comment._id)}
                         className={`${styles.pointer} subtitle text-link me-3`}
@@ -264,7 +273,11 @@ export const ListItem = ({ comment, mutateList }) => {
                 ))
             }
             <div className="d-flex align-items-center position-absolute end-0">
-              <small className={`icon ${comment.liked && 'text--theme-highlight'}`}>c</small>
+              <small className={
+                comment.liked ? `icon ${styles.liked}` : `icon ${styles.noLiked}`
+              }
+              >c
+              </small>
               <small className="text--theme-highlight">{comment.likes}</small>
             </div>
           </div>
