@@ -1,8 +1,9 @@
 import { useSession } from 'next-auth/client';
 import React, { useState } from 'react';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSWRConfig } from 'swr';
+import { useDispatch, useSelector } from 'react-redux';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
 import { ApiRoutes } from '@/global/constants';
 import { DeleteModal, SuccessIndicatorModal } from '@/components';
@@ -11,6 +12,7 @@ import styles from './accordion.module.css';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { deleteToolService } from '@/services/tools';
+import { showPremiumAlert } from '@/reducers/alert';
 
 const AccordionCollapse = ({
   herramienta, isEditable, mutate, isModalClose,
@@ -22,6 +24,9 @@ const AccordionCollapse = ({
   const [modalLoading, setModalLoading] = useState(false);
   const [modalSucces, setModalSucces] = useState(false);
   const [modalError, setModalError] = useState(false);
+
+  const { data } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
 
   const { mutate: globalMutate } = useSWRConfig();
 
@@ -61,18 +66,34 @@ const AccordionCollapse = ({
     },
   ]);
 
+  const showTool = () => {
+    if (data.role) {
+      if (data.role !== 'user' && herramienta.premium === true) {
+        router.push(`/think-tools/${herramienta.slug}`);
+      } else if (data.role === 'user' && herramienta.premium === true) {
+        dispatch(showPremiumAlert());
+      } else if (herramienta.premium === false && data.role !== undefined) {
+        router.push(`/think-tools/${herramienta.slug}`);
+      }
+    } else if (herramienta.premium === true) {
+      dispatch(showPremiumAlert());
+    } else {
+      router.push(`/think-tools/${herramienta.slug}`);
+    }
+  };
+
   return (
     <div className={styles.content_tool}>
       <div className="row d-flex mb-2 justify-content-between align-items-center" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <div className="col-6 offset-2">
           {
             (session) ? (
-              <Link href={`/think-tools/${herramienta.slug}`} passHref>
+              <div onClick={() => showTool()} className={styles.toolTextContainer}>
                 <a>
                   <div className="text-md">{herramienta.objetivo}</div>
                   <div className="text--theme-secondary text-md">{herramienta.nombre}</div>
                 </a>
-              </Link>
+              </div>
             ) : (
               <div
                 onClick={() => {
