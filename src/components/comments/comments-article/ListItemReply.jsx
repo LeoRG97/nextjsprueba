@@ -105,12 +105,21 @@ export const ListItemReply = ({
               ) : (
                 session[0]?.user
                 && (
-                  <small
-                    className={`${styles.pointer} subtitle text-link me-3`}
-                    onClick={() => replyValoracion(reply._id)}
-                  >
-                    Valorar
-                  </small>
+                  reply.liked ? (
+                    <small
+                      className={`${styles.pointer} subtitle text-link me-3`}
+                      onClick={() => replyValoracion(reply._id)}
+                    >
+                      Quitar valoración
+                    </small>
+                  ) : (
+                    <small
+                      className={`${styles.pointer} subtitle text-link me-3`}
+                      onClick={() => replyValoracion(reply._id)}
+                    >
+                      Valorar
+                    </small>
+                  )
                 )
               )
 
@@ -152,7 +161,11 @@ export const ListItemReply = ({
             }
 
             <div className="d-flex align-items-center position-absolute end-0">
-              <small className={`icon ${reply.liked && 'text--theme-highlight'}`}>c</small>
+              <small className={
+                reply.liked ? `icon ${styles.liked}` : `icon ${styles.noLiked}`
+              }
+              >c
+              </small>
               <small className="text--theme-highlight">{reply.likes}</small>
             </div>
           </div>
