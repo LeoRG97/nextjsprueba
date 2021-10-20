@@ -4,4 +4,6 @@ export const {
   reducer: alert,
   showSubscribeAlert,
   hideSubscribeAlert,
+  showPremiumAlert,
+  hidePremiumAlert,
 } = Alert();
