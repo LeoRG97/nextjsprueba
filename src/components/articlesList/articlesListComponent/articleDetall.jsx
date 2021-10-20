@@ -1,11 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './articlesList.module.css';
 // import Link from 'next/link';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
+import { showPremiumAlert } from '@/reducers/alert';
 
 const ArticlesDetailComponent = ({
   article, classContent, isAdmin = false, onDelete, estado,
@@ -13,6 +15,8 @@ const ArticlesDetailComponent = ({
   const [showOptions, setShowOptions] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [optionsModal, setOptionsModal] = useState({});
+  const { data } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
   const getTypeIcon = (type) => {
     switch (type) {
       case 'Video': return 'F';
@@ -24,7 +28,17 @@ const ArticlesDetailComponent = ({
   const router = useRouter();
 
   const showArticle = () => {
-    if (estado !== 'borrador') {
+    if (data.role) {
+      if (data.role !== 'user' && article.premium === true && estado !== 'borrador') {
+        router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
+      } else if (data.role === 'user' && article.premium === true) {
+        dispatch(showPremiumAlert());
+      } else if (article.premium === false && data.role !== undefined && estado !== 'borrador') {
+        router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
+      }
+    } else if (article.premium === true) {
+      dispatch(showPremiumAlert());
+    } else {
       router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
     }
   };
