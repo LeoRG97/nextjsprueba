@@ -115,6 +115,19 @@
   width: 8rem;
 }
 
+.iconToggleMovil {
+  min-width: 5rem;
+  max-width: 5rem;
+}
+
+.iconToggleExpanded {
+  text-align: left !important;
+}
+
+.iconToggle {
+  text-align: left !important;
+}
+
 .iconToggleExpanded:active {
   transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
@@ -122,11 +135,19 @@
   -moz-transform: rotate(360deg);
 }
 
+.iconToggleExpanded:focus {
+  box-shadow: 0 0 0 0rem !important;
+}
+
 .iconToggle:active {
   transform: rotate(360deg);
   -webkit-transform: rotate(360deg);
   -o-transform: rotate(360deg);
   -moz-transform: rotate(360deg);
+}
+
+.iconToggle:focus {
+  box-shadow: 0 0 0 0rem !important;
 }
 
 .iconToggle > span {
@@ -141,7 +162,7 @@
 .iconToggleExpanded::after {
   font-family: Icons !important;
   font-size: var(--icon-size-sm) !important;
-  content: "O";
+  content: "O" !important;
   color: var(--colorSecondary);
   background-image: none !important;
   margin-right: 0.5rem;
@@ -208,11 +229,17 @@
     display: grid;
   }
 
+  .navDropDownImage > div  {
+    display: flex !important;
+  }
+
   .navDropDownImage > div > img {
-    max-width: 80% !important;
-    min-width: 80% !important;
-    min-height: 80% !important;
-    max-height: 80% !important;
+    max-width: 2.5rem !important;
+    min-width: 2.5rem !important;
+    min-height: 2.5rem !important;
+    max-height: 2.5rem !important;
+    position: relative !important;
+    object-position: center center;
     padding: 0% !important;
   }
 
@@ -251,4 +278,12 @@
     justify-content: center !important;
     margin-right: 0px !important;
   }
+}
+
+@media (max-width: 345px) {
+  .iconToggleMovil {
+    min-width: 3rem;
+    max-width: 3rem;
+  }
+
 }

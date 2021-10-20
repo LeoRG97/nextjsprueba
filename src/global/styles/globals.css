@@ -1922,3 +1922,9 @@ div[disabled] {
     padding: 0;
   }
 }
+
+@media (max-width: 345px) {
+  .navbar-brand {
+    white-space: break-spaces !important;
+  }
+}

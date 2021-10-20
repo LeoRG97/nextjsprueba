@@ -172,7 +172,7 @@ const NavbarComponent = () => {
         fixed="top"
       >
         <Container fluid className={expanded === 'expanded' ? styles.containerFluidExpanded : styles.containerFluid}>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" className={expanded === 'expanded' ? styles.iconToggleExpanded : styles.iconToggle} onClick={() => setExpanded(!expanded)} />
+          <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${expanded === 'expanded' || expanded ? styles.iconToggleExpanded : styles.iconToggle} ${styles.iconToggleMovil}`} onClick={() => setExpanded(!expanded)} />
           <Navbar.Brand>
             <Link href="/" passHref>
               <div className={styles.logo}>
@@ -189,11 +189,11 @@ const NavbarComponent = () => {
               loading ? (
                 <LoadingIndicator />
               ) : (
-                <div className={styles.divNavItemStyle}>
+                <div className={`${styles.divNavItemStyle} ${styles.iconToggleMovil}`}>
                   {
                     session ? (
                       <div className={`${styles.navDropDownImage} col-12`}>
-                        <Image height="35" width="35" objectFit="contain" src={data.picture === 'string' || !data.picture ? '/images/profile/no-profile-img.png' : data.picture} />
+                        <Image height="35" width="35" objectFit="cover" src={data.picture === 'string' || !data.picture ? '/images/profile/no-profile-img.png' : data.picture} />
                       </div>
                     ) : (
                       <>
