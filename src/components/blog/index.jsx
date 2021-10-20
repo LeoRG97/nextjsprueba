@@ -16,7 +16,7 @@ import styles from './blog.module.css';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
-  renderResource,
+  renderResource, rateTotal,
 }) => {
   const [session] = useSession();
   const [textSelected, setTextSelected] = useState('');
@@ -132,6 +132,7 @@ const BlogComponent = ({
             dateBlog={blogInfo.createdAt}
             onLike={onLike}
             liked={isLiked}
+            rateTotal={rateTotal}
             likes={blogInfo.likes}
             cssSaved={cssSaved}
             quitSaved={quitSaved}
