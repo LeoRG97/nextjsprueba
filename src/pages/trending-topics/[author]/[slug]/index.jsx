@@ -41,13 +41,17 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const [idSaved, setIdSaved] = useState('');
   const [isLiked, setLiked] = useState(false);
   const [modalShare, setModalShare] = useState(false);
+  const [rateTotal, setRateTotal] = useState(0);
 
   const currentUrl = `${BASE_URL_PROYECT}trending-topics/${query.author}/${query.slug}`;
   const handleRateArticle = async () => {
     if (session) {
       const res = await rateArticle(blog._id, session.user.id);
-      if (res.ok) {
+      if (res.message.toString() === 'liked') {
         setData((prev) => ({ ...prev, likes: blog.likes + 1, liked: true }));
+      }
+      if (res.message.toString() === 'unliked') {
+        setData((prev) => ({ ...prev, likes: blog.likes - 1, liked: false }));
       }
     }
   };
@@ -101,6 +105,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   const checkIfLikedThisArtFunc = async () => {
     if (session) {
       const liked = await checkIfLikedThisArt(blog._id, session.accessToken);
+      setRateTotal(liked.likes);
       if (liked.ok) {
         setLiked(true);
       } else {
@@ -292,6 +297,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                       autorInfo={autor}
                       onLike={handleRateArticle}
                       isLiked={isLiked}
+                      rateTotal={rateTotal}
                       cssSaved={cssSaved}
                       quitSaved={quitSaveThisArt}
                       saveArt={saveThisArt}
@@ -304,11 +310,11 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                       {
                         (!isOnView) ? (
                           <div className="content-btns">
-                            <TooltipContainer placement="left" tooltipText="Valorar">
+                            <TooltipContainer placement="left" tooltipText={!isLiked ? 'Valorar' : 'Quitar valoración'}>
                               <button
                                 onClick={() => {
                                   session?.user
-                                    ? !isLiked && handleRateArticle()
+                                    ? handleRateArticle()
                                     : dispatch(showSubscribeAlert());
                                 }}
                                 className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}

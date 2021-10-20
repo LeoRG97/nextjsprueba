@@ -9,7 +9,7 @@ import { TooltipContainer } from '@/components';
 import { showSubscribeAlert } from '@/reducers/alert';
 
 const AutorComponent = ({
-  autor, dateBlog, onLike, liked, likes, cssSaved, quitSaved, saveArt, shareArt,
+  autor, dateBlog, onLike, liked, cssSaved, quitSaved, saveArt, shareArt, rateTotal,
 }) => {
   const [session] = useSession();
   const dispatch = useDispatch();
@@ -85,15 +85,16 @@ const AutorComponent = ({
                 </TooltipContainer>
               )
             }
-            <TooltipContainer placement="top" tooltipText="Valorar">
+            <TooltipContainer placement="top" tooltipText={!liked ? 'Valorar' : 'Quitar valoración'}>
               <button
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
                   session?.user
-                    ? (!liked && onLike()) : dispatch(showSubscribeAlert());
+                    ? (onLike()) : dispatch(showSubscribeAlert());
                 }}
-                className={`Btn-like m-2 ${styles.btn_top} ${liked && 'Btn-like__active'}`}
+                className={`Btn-like m-2  ${liked && 'Btn-like__active'}`}
               >
-                <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : likes}
+                <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : rateTotal}
               </button>
             </TooltipContainer>
           </div>
