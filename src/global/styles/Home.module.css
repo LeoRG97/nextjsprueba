@@ -195,4 +195,15 @@
     justify-content: center;
     align-items: center;
   }
+  .marginNoArticles {
+    position: relative;
+    margin-top: 45% !important;
+  }
+}
+
+@media (max-width: 380px) { 
+  .marginNoArticles {
+    position: relative;
+    margin-top: 0% !important;
+  }
 }
