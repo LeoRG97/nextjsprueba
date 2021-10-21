@@ -47,7 +47,7 @@ const Footer = () => {
                   <a>Aviso legal</a>
                 </Link>
                 <div>
-                  <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto de ayuda</a>
+                  <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
                 </div>
                 <p> </p>
                 <p> </p>
