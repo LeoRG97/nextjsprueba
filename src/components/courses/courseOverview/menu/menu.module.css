@@ -1,0 +1,39 @@
+.tabBar {
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 3rem;
+  height: max-content;
+  position: relative;
+  white-space: nowrap;
+  overflow-x: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.tabBar::-webkit-scrollbar {
+  display: none;
+}
+
+.item {
+  color: var(--colorSecondary);
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 1.2rem;
+  margin-right: 1.2rem;
+  -webkit-user-drag: none;
+}
+
+.item:nth-child(1) {
+  margin-left: 0;
+}
+
+.item:hover {
+  color: var(--colorSecondary);
+  text-decoration: none;
+}
+
+.item.active {
+  color: var(--colorLight);
+}

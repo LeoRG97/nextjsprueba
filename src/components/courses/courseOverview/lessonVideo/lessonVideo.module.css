@@ -1,0 +1,55 @@
+.container {
+  width: 100%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25rem;
+}
+
+.video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 25rem;
+  background-color: var(--colorLightFaint);
+}
+
+.video iframe {
+  width: 100%;
+  min-height: 25rem;
+}
+
+@media (max-width: 767.98px) {
+  .video iframe {
+    min-height: 22rem;
+  }
+
+  .empty {
+    min-height: 22rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .video iframe {
+    min-height: 15rem;
+    height: 15rem;
+  }
+
+  .empty {
+    min-height: 15rem;
+  }
+}
