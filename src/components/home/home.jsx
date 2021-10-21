@@ -4,6 +4,7 @@ import Fade from 'react-reveal/Fade';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BUCKET_URL } from '@/global/constants';
 import styles from '@/global/styles/Home.module.css';
+import { NoArticles } from './NoArticles';
 
 const HomePage = ({ articulos }) => {
   const [optionSelect, setData] = useState(1);
@@ -22,7 +23,7 @@ const HomePage = ({ articulos }) => {
     if (urlImg !== '') {
       urlImg = `${BUCKET_URL}${urlImg}`;
     } else {
-      urlImg = '/images/imgpr2.jpg';
+      urlImg = '/images/home/Background-featured.jpeg';
     }
     setImg(urlImg);
   };
@@ -81,50 +82,61 @@ const HomePage = ({ articulos }) => {
             }
           </div>
           {
-            articulos.map((item, index) => {
-              const indx = index + 1;
-              return (
-                (indx === optionSelect) ? (
-                  <Row key={item._id}>
-                    <Fade opposite cascade when={showFade}>
-                      <div>
-                        <Row>
-                          <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
-                            <p className="title-xl">{item.portada.titulo}</p>
-                          </Col>
-                          <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
-                            <div>
-                              <Link href={`trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
-                                <a>
-                                  <button className="button button--theme-light">Ir a la publicación</button>
-                                </a>
-                              </Link>
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    </Fade>
-                  </Row>
-                ) : (null)
-              );
-            })
+            articulos.length > 0
+              ? articulos.map((item, index) => {
+                const indx = index + 1;
+                return (
+                  (indx === optionSelect) ? (
+                    <Row key={item._id}>
+                      <Fade opposite cascade when={showFade}>
+                        <div>
+                          <Row>
+                            <Col xs="6" lg="6" sm="12" className={`${styles.content_left} col-12`}>
+                              <p className="title-xl">{item.portada.titulo}</p>
+                            </Col>
+                            <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
+                              <div>
+                                <Link href={`trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
+                                  <a>
+                                    <button className="button button--theme-light">Ir a la publicación</button>
+                                  </a>
+                                </Link>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      </Fade>
+                    </Row>
+                  ) : (null)
+                );
+              })
+              : (
+                <NoArticles />
+              )
           }
-          <Row className="my-4">
-            <div className={`${styles.content_left} ${styles.margin_movil_y}`}>
-              <span className="icon-button icon-button--secondary me-3" onClick={handleBefore}>a</span>
-              <span className="icon-button icon-button--secondary" onClick={handleAfter}>b</span>
-            </div>
-          </Row>
-          <Row>
-            <div className={`${styles.content_centered} ${styles.content_more} `}>
-              <p className="title">Descubre más publicaciones</p>
-              <Link href="trending-topics/" passHref>
-                <a>
-                  <button className="button button--theme-secondary">Ver más</button>
-                </a>
-              </Link>
-            </div>
-          </Row>
+          {
+            articulos.length > 0 && (
+              <>
+                <Row className="my-4">
+                  <div className={`${styles.content_left} ${styles.margin_movil_y}`}>
+                    <span className="icon-button icon-button--secondary me-3" onClick={handleBefore}>a</span>
+                    <span className="icon-button icon-button--secondary" onClick={handleAfter}>b</span>
+                  </div>
+                </Row>
+                <Row>
+                  <div className={`${styles.content_centered} ${styles.content_more} `}>
+                    <p className="title">Descubre más publicaciones</p>
+                    <Link href="trending-topics/" passHref>
+                      <a>
+                        <button className="button button--theme-secondary">Ver más</button>
+                      </a>
+                    </Link>
+                  </div>
+                </Row>
+              </>
+            )
+          }
+
         </Container>
       </Container>
       <Container>
