@@ -41,6 +41,11 @@
   filter: brightness(100%);
 }
 
+.marginNoArticles {
+  position: relative;
+  margin-top: 35%;
+}
+
 .content_title_section {
   position: relative;
   margin-top: 18%;
