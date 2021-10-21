@@ -1,0 +1,10 @@
+.lessonIndex {
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.75rem;
+  height: 3.75rem;
+  background-color: var(--gray);
+  margin-right: 1rem;
+}

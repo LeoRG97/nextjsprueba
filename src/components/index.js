@@ -45,6 +45,7 @@ export { default as AccordionComponent } from './thinkTools/accordionComponent/A
 export { default as ErrorPageComp } from './errors/errorPage';
 export { default as ForumsComponent } from './forum/forumsComponent';
 export { default as ToolsContent } from './thinkTools/toolsContent';
+export { default as CourseOverview } from './courses/courseOverview';
 export { default as CourseDetailComponent } from './courses/coursesComponent/courseDetail';
 export { default as Cookies } from './policies/cookies';
 export { default as Privacy } from './policies/privacy';
