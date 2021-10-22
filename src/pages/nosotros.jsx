@@ -36,7 +36,7 @@ export default function Home() {
               </div>
             </Row>
             <video id="bgVideo" className={styles.content_title_video} controls preload="true" autoPlay loop muted>
-              <source src="/video/preview.mp4" type="video/mp4" />
+              <source src="/video/world-digital.mp4" />
             </video>
           </Container>
           <Container fluid>
