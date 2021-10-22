@@ -3,7 +3,7 @@ import Head from 'next/head';
 // import { useSession } from 'next-auth/client';
 import { Modal } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
-import { Layout, AccordionComponent } from '@/components';
+import { Layout, AccordionComponent, GlobalModals } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 import { fetchTools, fetchToolsCategories } from '@/services/tools';
 import { showSubscribeAlert } from '@/reducers/alert';
@@ -70,6 +70,7 @@ export default function ThinkTools({ toolsData }) {
           {/* ) : (<></>) */}
         </div>
       </main>
+      <GlobalModals />
     </Layout>
   );
 }

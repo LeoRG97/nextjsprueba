@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 import { useDispatch } from 'react-redux';
 import {
-  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer,
+  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer, GlobalModals,
 } from '@/components';
 import {
   getArticleBySlug,
@@ -365,13 +365,14 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
             )
           }
         </Container>
-        <SocialShareModal
-          show={modalShare}
-          onClose={() => setModalShare(false)}
-          currentUrl={currentUrl}
-          title={blog.portada ? blog.portada.titulo : ''}
-        />
       </main>
+      <SocialShareModal
+        show={modalShare}
+        onClose={() => setModalShare(false)}
+        currentUrl={currentUrl}
+        title={blog.portada ? blog.portada.titulo : ''}
+      />
+      <GlobalModals />
       <Footer />
     </Layout>
   );
