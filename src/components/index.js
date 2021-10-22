@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-export { default as ModalContainer } from './modalsIndicators/ModalContainer';
+export { default as GlobalModals } from './modalsIndicators/ModalContainer';
 export { default as Layout } from './layout/Layout';
 export { default as Footer } from './footer/Footer';
 export { default as NavbarComponent } from './navbar/Navbar';
