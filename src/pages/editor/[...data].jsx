@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import EditorContextProvider from '@/helpers/contexts/editorContext';
-import { EditorComponent, Layout, LoadingIndicator } from '@/components';
+import {
+  EditorComponent, Layout, LoadingIndicator,
+} from '@/components';
 import withAuth from '@/helpers/withAuth';
 import { Roles } from '@/global/constants';
 import { fetchArticleById, fetchArticleContent } from '@/services/articles';

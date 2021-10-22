@@ -20,6 +20,7 @@ import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ResourcesModal from './modals/articleResourcesModal/ArticleResourcesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
+import EditorPreviewComponent from './articlePreview';
 
 const EditorComponent = ({
   option, initialData, setInitialData, initialContent,
@@ -40,6 +41,7 @@ const EditorComponent = ({
   const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [preview, setPreview] = useState(false);
   const [successData, setSuccessData] = useState({
     show: false,
     title: '',
@@ -452,96 +454,117 @@ const EditorComponent = ({
         updateFunctionEvent={updateFunctionEventVideo}
         showModal={() => setModalShowVideo(false)}
       />
-      <div className={styles.editorContent} align="center">
-        <div>
-          <DragDropContext
-            onDragEnd={reorderList}
-          >
-            <Droppable droppableId="canvasDrop">
-              {(provided) => (
-                <div
-                  id="canvas"
-                  className={styles.canvas}
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {
-                    (arrayItemsEditor.html && arrayItemsEditor.html.length !== 0)
-                      ? (arrayItemsEditor.html.map((item, index) => {
-                        return (
-                          <div key={item.id}>
-                            <EditorOptionRender
-                              index={index}
-                              data={item}
-                              deleteComponentEditor={deleteComponentEditor}
-                              editComponentFunct={editComponentFunct}
-                              handleChangeImage={handleChangeImage}
-                              handleChange={handleChange}
-                              setActiveClass={setActiveClass}
-                              activeOption={activeOption}
-                            />
-                          </div>
-                        );
-                      })) : (' Estructura aquí el contenido de tu artículo')
-                  }
-                  {provided.placeholder}
-                </div>
-              )}
-
-            </Droppable>
-          </DragDropContext>
-          <ToolsComponent
-            option={option}
-            addedVideo={addedVideo}
-            addedAudio={addedAudio}
-            addTextFunct={addTextFunct}
-            setModalShowVideo={setModalShowVideo}
-            setModalShow={setModalShow}
-            addImage={addImage}
+      {
+        preview ? (
+          <EditorPreviewComponent
+            initialData={initialData}
+            initialContent={arrayItemsEditor}
+            preview={() => setPreview(!preview)}
           />
-        </div>
-      </div>
-      {/* EDITOR OPTIONS NAV */}
-      <div className={styles.optionsContainer}>
-
-        <TooltipContainer tooltipText="Publicar" placement="left">
-          <div
-            className={`icon-button icon-button--primary ${styles.optionsItem}`}
-            onClick={() => setShowPublish(true)}
-          >
-            H
-          </div>
-        </TooltipContainer>
-
-        <TooltipContainer tooltipText="Guardar borrador" placement="left">
-          <div
-            className={`icon-button icon-button--success ${styles.optionsItem}`}
-            onClick={() => handlePublish('borrador')}
-          >
-            I
-          </div>
-        </TooltipContainer>
-        {initialData && initialData._id
-          && (
-            <TooltipContainer tooltipText="Opciones de visualización" placement="left">
-              <div
-                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-                onClick={() => setShowResourcesModal(true)}
+        ) : (
+          <div className={styles.editorContent} align="center">
+            <div>
+              <DragDropContext
+                onDragEnd={reorderList}
               >
-                r
+                <Droppable droppableId="canvasDrop">
+                  {(provided) => (
+                    <div
+                      id="canvas"
+                      className={styles.canvas}
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {
+                        (arrayItemsEditor.html && arrayItemsEditor.html.length !== 0)
+                          ? (arrayItemsEditor.html.map((item, index) => {
+                            return (
+                              <div key={item.id}>
+                                <EditorOptionRender
+                                  index={index}
+                                  data={item}
+                                  deleteComponentEditor={deleteComponentEditor}
+                                  editComponentFunct={editComponentFunct}
+                                  handleChangeImage={handleChangeImage}
+                                  handleChange={handleChange}
+                                  setActiveClass={setActiveClass}
+                                  activeOption={activeOption}
+                                />
+                              </div>
+                            );
+                          })) : (' Estructura aquí el contenido de tu artículo')
+                      }
+                      {provided.placeholder}
+                    </div>
+                  )}
+
+                </Droppable>
+              </DragDropContext>
+              <ToolsComponent
+                option={option}
+                addedVideo={addedVideo}
+                addedAudio={addedAudio}
+                addTextFunct={addTextFunct}
+                setModalShowVideo={setModalShowVideo}
+                setModalShow={setModalShow}
+                addImage={addImage}
+              />
+            </div>
+          </div>
+        )
+      }
+      {/* EDITOR OPTIONS NAV */}
+      {
+        !preview && (
+          <div className={styles.optionsContainer}>
+
+            <TooltipContainer tooltipText="Publicar" placement="left">
+              <div
+                className={`icon-button icon-button--primary ${styles.optionsItem}`}
+                onClick={() => setShowPublish(true)}
+              >
+                H
               </div>
             </TooltipContainer>
-          )}
 
-        <TooltipContainer tooltipText="Vista previa" placement="left">
-          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
-        </TooltipContainer>
+            <TooltipContainer tooltipText="Guardar borrador" placement="left">
+              <div
+                className={`icon-button icon-button--success ${styles.optionsItem}`}
+                onClick={() => handlePublish('borrador')}
+              >
+                I
+              </div>
+            </TooltipContainer>
+            {initialData && initialData._id
+              && (
+                <TooltipContainer tooltipText="Opciones de visualización" placement="left">
+                  <div
+                    className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                    onClick={() => setShowResourcesModal(true)}
+                  >
+                    r
+                  </div>
+                </TooltipContainer>
+              )}
 
-        <TooltipContainer tooltipText="Detalles" placement="left">
-          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
-        </TooltipContainer>
-
-      </div>
+            <TooltipContainer tooltipText="Vista previa" placement="left">
+              <div
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                onClick={() => setPreview(!preview)}
+              >
+                C
+              </div>
+            </TooltipContainer>
+            {
+              /*
+              <TooltipContainer tooltipText="Detalles" placement="left">
+                <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
+              </TooltipContainer>
+              */
+            }
+          </div>
+        )
+      }
       <DetailsModal
         show={showPublish}
         onClose={() => setShowPublish(false)}
