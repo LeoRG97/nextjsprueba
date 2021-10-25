@@ -7,8 +7,8 @@ import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 
 import styles from '../comments.module.css';
-import { useForm } from './useForm';
-import { AddComment } from './AddComment';
+import { useForm } from '../hooks/useForm';
+import { AddComment } from '../AddComment';
 import {
   addCommentReply, addValoracionComentario,
   addValoracionRespuesta,
@@ -17,7 +17,7 @@ import {
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { LoadingIndicator } from '@/components';
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
-import convertDate from './convertDate';
+import convertDate from '../helpers/convertDate';
 import { ListItemReply } from './ListItemReply';
 import { showSubscribeAlert } from '@/reducers/alert';
 
