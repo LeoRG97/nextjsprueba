@@ -2,8 +2,8 @@ import { useState } from 'react';
 import Image from 'next/image';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import styles from '../comments.module.css';
-import convertDate from './convertDate';
-import { useForm } from './useForm';
+import convertDate from '../helpers/convertDate';
+import { useForm } from '../hooks/useForm';
 import { updateRespuesta } from '@/services/articles';
 
 export const ListItemReply = ({

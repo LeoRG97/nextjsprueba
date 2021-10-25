@@ -5,6 +5,7 @@ import Menu from './menu/Menu';
 import UnitList from './unitList/UnitList';
 import { coursesArray } from './data';
 import styles from './course.module.css';
+import { ListComment } from '@/components/comments/comments-course/ListComment';
 
 const CourseOverview = () => {
   const router = useRouter();
@@ -61,7 +62,7 @@ const CourseOverview = () => {
           lessons={course.lecciones}
         />
       )}
-      {tab === 'comments' && <h3 className="title">Comentarios</h3>}
+      {tab === 'comments' && <ListComment />}
       {tab === 'resources' && <h3 className="title">Recursos adicionales</h3>}
       {tab === 'certificate' && <h3 className="title">Certificado</h3>}
     </div>

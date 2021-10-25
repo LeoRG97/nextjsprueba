@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
-import styles from '../comments.module.css';
+import styles from './comments.module.css';
 import { fetch as fetchProfile } from '@/reducers/profile';
 
 export const AddComment = React.memo(({

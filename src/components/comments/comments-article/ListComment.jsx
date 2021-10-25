@@ -7,8 +7,8 @@ import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { ListItem } from './ListItem';
 import { addComment } from '@/services/articles';
-import { useForm } from './useForm';
-import { AddComment } from './AddComment';
+import { useForm } from '../hooks/useForm';
+import { AddComment } from '../AddComment';
 import { LoadingIndicator } from '@/components';
 import { showSubscribeAlert } from '@/reducers/alert';
 
