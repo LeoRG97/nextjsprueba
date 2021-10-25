@@ -1,0 +1,69 @@
+.editor {
+  background-color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.editorContent {
+  background-color: var(--blackEditor);
+  position: relative;
+  display: grid;
+  min-height: 100vh;
+  width: 76%;
+  padding-top: 60px;
+  margin-top: 8%;
+  margin-bottom: 8%;
+  padding-bottom: 12%;
+  border-radius: 0px;
+  overflow: hidden;
+  padding-right: 150px;
+  padding-left: 150px;
+}
+
+.optionsContainer {
+  position: absolute;
+  top: 0;
+  margin-top: 8%;
+  right: 7vw;
+  z-index: 0;
+  width: auto;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+
+.optionsItem:nth-child(n) {
+  margin-bottom: 12px;
+}
+
+.optionsItem:last-child {
+  margin-bottom: 0;
+}
+
+.addBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 6rem;
+  border: 1px dashed var(--colorPrimary);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.btnNew {
+  background-color: var(--contentTransparentRGB);
+  border: none;
+  padding: 0.5rem;
+}
+
+.btnNew:active {
+  color: var(--colorPrimary);
+}
+
+@media (max-width: 999px) {
+  .optionsContainer {
+    right: 3vw;
+  }
+}

@@ -47,6 +47,7 @@ export { default as ForumsComponent } from './forum/forumsComponent';
 export { default as ToolsContent } from './thinkTools/toolsContent';
 export { default as CourseOverview } from './courses/courseOverview';
 export { default as CourseDetailComponent } from './courses/coursesComponent/courseDetail';
+export { default as CourseEditor } from './courses/editor';
 export { default as Cookies } from './policies/cookies';
 export { default as Privacy } from './policies/privacy';
 export { default as Legal } from './policies/legal';
