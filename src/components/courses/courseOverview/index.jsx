@@ -20,8 +20,14 @@ const CourseOverview = () => {
   const currentLesson = course.lecciones
     && course.lecciones.find((lesson) => lesson._id === lessonIndex);
 
-  const isFirst = currentLesson && currentLesson.no_leccion === 1;
-  const isLast = currentLesson && currentLesson.no_leccion === course.lecciones.length;
+  // const isFirst = currentLesson && currentLesson.no_leccion === 1;
+  // const isLast = currentLesson && currentLesson.no_leccion === course.lecciones.length;
+  const isFirst = currentLesson
+    && course.lecciones.findIndex((item) => item._id === currentLesson._id) === 0;
+
+  const isLast = currentLesson
+    && course.lecciones.findIndex((item) => item._id === currentLesson._id)
+    === course.lecciones.length - 1;
 
   const getLessonByIndex = (index) => {
     const lessonObj = course.lecciones.find((obj) => obj.no_leccion === index);
