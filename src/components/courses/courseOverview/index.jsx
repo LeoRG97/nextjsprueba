@@ -62,7 +62,7 @@ const CourseOverview = () => {
           lessons={course.lecciones}
         />
       )}
-      {tab === 'comments' && <ListComment />}
+      {tab === 'comments' && <ListComment courseId="61780623f0307358ca494abf" />}
       {tab === 'resources' && <h3 className="title">Recursos adicionales</h3>}
       {tab === 'certificate' && <h3 className="title">Certificado</h3>}
     </div>

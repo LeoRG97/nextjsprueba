@@ -9,8 +9,9 @@ import { AddComment } from '../AddComment';
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 import convertDate from '../helpers/convertDate';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
+import { addValoracionComentario, deleteComentario, updateComentario } from '@/services/courses';
 
-export const ListItem = ({ comment }) => {
+export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
   const [showDeleteComment, setShowDeleteComment] = useState(false);
   const [showDeleteReply, setShowDeleteReply] = useState(false);
@@ -43,11 +44,22 @@ export const ListItem = ({ comment }) => {
   };
 
   const commentValoracion = async () => {
-
+    try {
+      const res = await addValoracionComentario(comment._id);
+      mutateList();
+      // mutate();
+      return res;
+    } catch (error) {
+      return error;
+      // console.error(error.message);
+    }
   };
 
   const onDeleteComment = async () => {
-
+    await deleteComentario(comment._id);
+    // mutate();
+    mutateList();
+    setShowDeleteComment(false);
   };
 
   const handleReply = () => {
@@ -58,8 +70,11 @@ export const ListItem = ({ comment }) => {
 
   };
 
-  const handleSubmitUpdateComment = async () => {
-
+  const handleSubmitUpdateComment = async (e) => {
+    e.preventDefault();
+    await updateComentario(comment._id, comentUpd.nvoComentario);
+    setOnUpdateComment(false);
+    mutateList();
   };
 
   const onCancelUpdate = () => {
