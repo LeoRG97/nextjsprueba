@@ -1,49 +1,48 @@
+import React from 'react';
 import { useSession } from 'next-auth/client';
+import useSWRInfinite from 'swr/infinite';
+import { useDispatch } from 'react-redux';
 import { AddComment } from '../AddComment';
+import { fetchData } from '@/services/swr';
 import { useForm } from '../hooks/useForm';
 import styles from '../comments.module.css';
 import { ListItem } from './ListItem';
+import { ApiRoutes } from '@/global/constants';
+import { addComment } from '@/services/courses';
+import { LoadingIndicator } from '@/components';
+import { showSubscribeAlert } from '@/reducers/alert';
 
-export const ListComment = () => {
+export const ListComment = React.memo(({ courseId }) => {
   const [session] = useSession();
+  const dispatch = useDispatch();
 
-  const { values, handleInputChange } = useForm({
+  const { values, handleInputChange, resetForm } = useForm({
     comentario: '',
   });
 
-  const handleSubmitComment = () => { };
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `${ApiRoutes.CoursesComments}/${courseId}?&pageNum=${pageIndex + 1}&pageSize=3&sort=desc`; // API endpoint
+  };
 
-  const page = [
-    {
-      _id: '615da8fe7903816a9f80d2cd',
-      likes: 0,
-      articulo_id: '6137b5ca47b5533b4d2b6d8b',
-      usuario_id: {
-        _id: '60ef2ef76439d86cf5a29983',
-        name: 'christian',
-        picture: 'https://ilovet-app.s3.us-east-2.amazonaws.com/60ef2ef76439d86cf5a29983/resources/512.png',
-      },
-      comentario: 'esta es una prueba de maquetación',
-      respuesta: 2,
-      createdAt: '2021-10-06T13:47:42.229Z',
-      updatedAt: '2021-10-11T14:35:13.687Z',
-    },
-    {
-      _id: '61644b36fec85a37ceb2455c',
-      likes: 0,
-      articulo_id: '6137b5ca47b5533b4d2b6d8b',
-      usuario_id: {
-        _id: '6115a16bddf0787fea132bc2',
-        name: 'Leonardo',
-        apellidos: 'Rodríguez',
-        picture: 'https://ilovet-app.s3.us-east-2.amazonaws.com/6115a16bddf0787fea132bc2/resources/auryn.png',
-      },
-      comentario: 'Solo es maquetación',
-      respuesta: 1,
-      createdAt: '2021-10-11T14:33:26.220Z',
-      updatedAt: '2021-10-11T14:33:36.143Z',
-    },
-  ];
+  const {
+    data, size, setSize, mutate, isValidating,
+  } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+
+  const isEmpty = data?.[size - 1]?.length === 0;
+
+  const handleSubmitComment = async () => {
+    if (values.comentario !== '') {
+      const commentData = {
+        curso_id: courseId,
+        usuario_id: session.user.id,
+        comentario: values.comentario,
+      };
+      await addComment(commentData);
+      mutate();
+      resetForm();
+    }
+  };
 
   return (
     <div className="content-n-p content-blog-autor">
@@ -63,13 +62,36 @@ export const ListComment = () => {
 
       <ul className={`${styles.commentList}`}>
         {
-          page.map((comment) => (
-            <li key={comment._id}>
-              <ListItem comment={comment} type="comment" />
-            </li>
-          ))
+          data && data.map((page) => {
+            return page.map((comment) => (
+              <li key={comment._id}>
+                <ListItem mutateList={mutate} comment={comment} type="comment" />
+              </li>
+            ));
+          })
         }
       </ul>
+      <div className="d-flex justify-content-center">
+        <>
+          {!isEmpty && (
+            isValidating ? (
+              <LoadingIndicator />
+            )
+              : (
+                <button
+                  className="button button--theme-secondary"
+                  onClick={() => {
+                    /* eslint-disable no-unused-expressions */
+                    session?.user
+                      ? setSize(size + 1) : dispatch(showSubscribeAlert());
+                  }}
+                >
+                  Ver más comentarios
+                </button>
+              )
+          )}
+        </>
+      </div>
     </div>
   );
-};
+});
