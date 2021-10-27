@@ -1,18 +1,69 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
 import styles from './detailsModal.module.css';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import ModalAddFileLesson from './ModalAddFile';
+import { validateLessonData } from './lessonValidation';
+import { CourseContext } from '@/helpers/contexts/CourseContext';
 
 const ModalDetailsLesson = ({ show, onClose }) => {
   const [modalFileLessonShow, setModalFileLessonShow] = useState(false);
-  const [typeFile, setTypeFile] = useState(false);
+  const [typeFile, setTypeFile] = useState('');
   const showFile = (type) => {
     setTypeFile(type);
     setModalFileLessonShow(true);
-    onClose();
   };
+
+  const { currentUnit, handleAddLesson } = useContext(CourseContext);
+
+  const [formData, setFormData] = useState({
+    nombre: '',
+    video: '',
+    descripcion: '',
+  });
+  const [errors, setErrors] = useState({ isValid: true });
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (submitted) {
+      const errorData = validateLessonData(formData);
+      setErrors(errorData);
+    }
+  }, [formData, submitted]);
+
+  const resetForm = () => {
+    setSubmitted(false);
+    setErrors({ isValid: true });
+    setFormData({
+      nombre: '',
+      video: '',
+      descripcion: '',
+    });
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [currentUnit]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    setSubmitted(true);
+    const errorData = validateLessonData(formData);
+    if (!errorData.isValid) {
+      setErrors(errorData);
+    } else {
+      handleAddLesson(formData, currentUnit);
+      onClose();
+      resetForm();
+    }
+  };
+
+  const { nombre, video, descripcion } = formData;
+
   return (
     <>
       <Modal
@@ -33,23 +84,29 @@ const ModalDetailsLesson = ({ show, onClose }) => {
                   <label className="d-block subtitle" htmlFor="title">Título de la lección
                     <input
                       type="text"
-                      name="title"
+                      name="nombre"
                       id="title"
                       className="input"
                       placeholder="Título"
+                      value={nombre}
+                      onChange={handleChange}
                     />
                   </label>
+                  <small className="text-sm text--theme-error">{errors.nombre}</small>
                 </Col>
                 <Col md={6}>
                   <label className="d-block subtitle" htmlFor="linkVideo">Video
                     <input
                       type="text"
-                      name="linkVideo"
+                      name="video"
                       id="linkVideo"
                       className="input"
                       placeholder="URL"
+                      value={video}
+                      onChange={handleChange}
                     />
                   </label>
+                  <small className="text-sm text--theme-error">{errors.video}</small>
                 </Col>
               </Row>
               <Row className="mt-2">
@@ -57,15 +114,18 @@ const ModalDetailsLesson = ({ show, onClose }) => {
                   <label className="d-block subtitle" htmlFor="description">Descripción
                     <textarea
                       type="text"
-                      name="description"
+                      name="descripcion"
                       id="description"
                       className={`${styles.textarea} input`}
                       placeholder="Hasta 1000 caracteres"
                       rows={3}
                       maxLength={1000}
                       required
+                      value={descripcion}
+                      onChange={handleChange}
                     />
                   </label>
+                  <small className="text-sm text--theme-error">{errors.descripcion}</small>
                 </Col>
               </Row>
             </Col>
@@ -103,7 +163,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
             Cancelar
           </button>
           <div>
-            <button className="button button--theme-primary">
+            <button className="button button--theme-primary" onClick={handleSubmit}>
               Crear lección
             </button>
           </div>

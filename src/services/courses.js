@@ -1,5 +1,32 @@
 import axios from './axios';
 
+export const saveCourse = async (data) => {
+  try {
+    const res = await axios().post('cursos', data);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateCourse = async (id, data) => {
+  try {
+    const res = await axios().put(`cursos/${id}`, data);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const fetchCourseById = async (id) => {
+  try {
+    const res = await axios().get(`cursos/${id}`);
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
 export const addComment = async (comentData) => {
   try {
     const dataRes = await axios().post('/comentarios-curso', {

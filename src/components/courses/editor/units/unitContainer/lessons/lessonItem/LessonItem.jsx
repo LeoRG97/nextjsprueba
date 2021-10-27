@@ -5,7 +5,7 @@ import styles from './lessonItem.module.css';
 // contenedor de una lección específica
 const LessonItem = React.memo(({ data, index }) => {
   return (
-    <Draggable draggableId={data.editorIndex} index={index}>
+    <Draggable draggableId={data._id} index={index}>
       {(provided) => (
         <div
           className={styles.container}
@@ -18,7 +18,7 @@ const LessonItem = React.memo(({ data, index }) => {
           <div className={styles.outline}>
             <span className="icon icon--theme-secondary me-2">F</span>
             <p className="text-sm text--theme-secondary m-0">
-              {data.titulo}
+              {data.nombre}
             </p>
           </div>
           <div className={styles.edit}>

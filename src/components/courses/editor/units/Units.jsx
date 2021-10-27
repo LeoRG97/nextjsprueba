@@ -6,11 +6,13 @@ import UnitContainer from './unitContainer/UnitContainer';
 import styles from './units.module.css';
 
 // contenedor para la lista de unidades
-const Units = React.memo(({ units, handleUnitName }) => {
-  const { handleAddUnit } = useContext(CourseContext);
+const Units = React.memo(({ units }) => {
+  const { handleAddUnit, handleSortUnits } = useContext(CourseContext);
   return (
     <div>
-      <DragDropContext>
+      <DragDropContext
+        onDragEnd={handleSortUnits}
+      >
         <Droppable droppableId="unitCanvas">
           {(provided) => (
             <div
@@ -20,10 +22,9 @@ const Units = React.memo(({ units, handleUnitName }) => {
               {units.map((unit, i) => {
                 return (
                   <UnitContainer
-                    key={unit.no_unidad}
+                    key={unit._id}
                     index={i}
                     data={unit}
-                    onChangeName={handleUnitName}
                   />
                 );
               })}
@@ -33,7 +34,12 @@ const Units = React.memo(({ units, handleUnitName }) => {
         </Droppable>
       </DragDropContext>
       <div className={styles.addBlock}>
-        <button className={`subtitle ${styles.btnNew}`} onClick={handleAddUnit}>Nueva unidad</button>
+        <button
+          className={`subtitle ${styles.btnNew}`}
+          onClick={handleAddUnit}
+        >
+          Nueva unidad
+        </button>
       </div>
     </div>
   );
