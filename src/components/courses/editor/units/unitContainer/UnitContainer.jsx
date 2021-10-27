@@ -9,11 +9,11 @@ const UnitContainer = React.memo(({ data, index }) => {
   const { handleUnitName } = useContext(CourseContext);
   const handleChange = (e) => {
     const { value } = e.target;
-    handleUnitName(data.no_unidad, value);
+    handleUnitName(data._id, value);
   };
 
   return (
-    <Draggable draggableId={data.editorIndex} index={index}>
+    <Draggable draggableId={data._id} index={index}>
       {(provided) => (
         <div
           {...provided.draggableProps}
@@ -25,13 +25,13 @@ const UnitContainer = React.memo(({ data, index }) => {
             </div>
             <div className={`d-flex align-items-center ${styles.titleContainer}`}>
               <div className={styles.unitIndex}>
-                <span className="text-regular text--theme-light">U{data.no_unidad}</span>
+                <span className="text-regular text--theme-light">U{data.numero}</span>
               </div>
               <input
                 type="text"
                 className={`input ${styles.titleInput}`}
                 placeholder="Ingresa el título de la unidad"
-                value={data.nombre}
+                value={data.titulo}
                 onChange={handleChange}
               />
             </div>
@@ -47,7 +47,7 @@ const UnitContainer = React.memo(({ data, index }) => {
               </div>
             </div>
           </div>
-          <Lessons lessons={data.lessons} unitNumber={data.no_unidad} />
+          <Lessons lessons={data.lessons} unitId={data._id} />
         </div>
       )}
     </Draggable>

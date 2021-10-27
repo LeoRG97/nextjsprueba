@@ -1,15 +1,54 @@
-import React from 'react';
-import { CourseEditor, Layout } from '@/components';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { CourseEditor, Layout, LoadingIndicator } from '@/components';
 import CourseContextProvider from '@/helpers/contexts/CourseContext';
+import withAuth from '@/helpers/withAuth';
+import { fetchCourseById } from '@/services/courses';
+import { Roles } from '@/global/constants';
 
 const CourseEditorPage = () => {
+  const router = useRouter();
+  const { data } = router.query;
+  const [initialData, setInitialData] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const getCourse = async (id) => {
+    const res = await fetchCourseById(id);
+    const course = res.data[0];
+    if (course) {
+      setInitialData(course);
+      setLoading(false);
+    } else {
+      setError('No se encontró el curso');
+    }
+  };
+
+  useEffect(() => {
+    if (data && data[0]) {
+      getCourse(data[0]);
+    }
+  }, []);
+
+  const showContent = () => {
+    if (loading) {
+      return <div className="centered-content mt-5 pt-5"><LoadingIndicator /></div>;
+    } if (error) {
+      return <h3 className="text-center title mt-5 pt-5">{error}</h3>;
+    }
+
+    return (
+      <CourseEditor initialData={initialData} />
+    );
+  };
+
   return (
-    <CourseContextProvider>
-      <Layout>
-        <CourseEditor />
-      </Layout>
-    </CourseContextProvider>
+    <Layout>
+      <CourseContextProvider>
+        {showContent()}
+      </CourseContextProvider>
+    </Layout>
   );
 };
 
-export default CourseEditorPage;
+export default withAuth(CourseEditorPage, [Roles.Admin, Roles.Author, Roles.Reviewer]);
