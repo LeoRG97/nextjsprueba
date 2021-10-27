@@ -53,7 +53,7 @@ const EditorComponent = ({
     message: '',
   });
 
-  const { data } = useSelector((state) => state.profile);
+  const { data: profile } = useSelector((state) => state.profile);
 
   useEffect(() => {
     if (initialData) {
@@ -155,7 +155,7 @@ const EditorComponent = ({
     const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
     if (event.target.files.length > 0) {
-      const path = `${data._id}/resources`;
+      const path = `${profile._id}/resources`;
       const image = event.target.files[0];
 
       const res = await upload(path, image);
@@ -257,7 +257,7 @@ const EditorComponent = ({
     event.preventDefault();
     const currentContent = content;
     if (event.target.files.length > 0 && currentContent !== '' && currentContent !== 'undefined') {
-      const path = `${data._id}/resources`;
+      const path = `${profile._id}/resources`;
       const image = event.target.files[0];
 
       const resDelete = await remove(currentContent);
@@ -387,8 +387,8 @@ const EditorComponent = ({
     try {
       if (!initialData) {
         // save article
-        const res = await saveArticle(file, details, option, session.user.id);
-        if (res._id) {
+        const { data } = await saveArticle(file, details, option, session.user.id);
+        if (data && data._id) {
           setSubmitting(false);
           setSuccessData({
             show: true,
@@ -396,8 +396,9 @@ const EditorComponent = ({
             message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
           });
           // shallow routing a la pantalla de edición
-          router.replace(`${router.asPath}/${res._id}`, undefined, { shallow: false });
-          setInitialData(res); // mantén la información original en el state del componente padre
+          router.replace(`${router.asPath}/${data._id}`, undefined, { shallow: false });
+          // mantén la información original en el state del componente padre
+          setInitialData(data);
         }
       } else {
         // update existing article
@@ -412,6 +413,12 @@ const EditorComponent = ({
         }
       }
     } catch (err) {
+      setSubmitting(false);
+      setErrorData({
+        show: true,
+        title: 'Ha ocurrido un error',
+        message: 'Vuelva a intentarlo más tarde',
+      });
       // catch error
     }
   };
@@ -432,6 +439,18 @@ const EditorComponent = ({
         show: true,
         title: 'Ha ocurrido un error',
         message: 'Vuelva a intentarlo más tarde',
+      });
+    }
+  };
+
+  const handleOpenResources = () => {
+    if (initialData && initialData._id) {
+      setShowResourcesModal(true);
+    } else {
+      setErrorData({
+        show: true,
+        title: 'Operación no permitida',
+        message: 'Para habilitar otras opciones de visualización de contenido, primero debes guardar o publicar tu artículo.',
       });
     }
   };
@@ -535,17 +554,15 @@ const EditorComponent = ({
                 I
               </div>
             </TooltipContainer>
-            {initialData && initialData._id
-              && (
-                <TooltipContainer tooltipText="Opciones de visualización" placement="left">
-                  <div
-                    className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-                    onClick={() => setShowResourcesModal(true)}
-                  >
-                    r
-                  </div>
-                </TooltipContainer>
-              )}
+
+            <TooltipContainer tooltipText="Opciones de visualización" placement="left">
+              <div
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                onClick={handleOpenResources}
+              >
+                r
+              </div>
+            </TooltipContainer>
 
             <TooltipContainer tooltipText="Vista previa" placement="left">
               <div
@@ -579,7 +596,7 @@ const EditorComponent = ({
       />
       <LoadingIndicatorModal
         show={submitting}
-        onClose={() => setSubmitting(false)}
+        onClose={() => {}}
         textHeader="Guardando cambios"
         textBody="Esta operación podría tardar unos minutos, por favor espere."
       />
