@@ -3,8 +3,8 @@ import { LoginHeader, ResetPasswordForm } from '@/components';
 
 const ResetPasswordPage = () => {
   return (
-    <div className="main-bg">
-      <LoginHeader />
+    <div className="main-auth">
+      <LoginHeader mainBackg="main-tranps" />
       <div className="main-container centered-content">
         <ResetPasswordForm />
       </div>

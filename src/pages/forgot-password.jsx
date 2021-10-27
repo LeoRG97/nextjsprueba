@@ -4,8 +4,8 @@ import withoutAuth from '@/helpers/withoutAuth';
 
 const ResetPassword = () => {
   return (
-    <div className="main-bg">
-      <LoginHeader />
+    <div className="main-auth">
+      <LoginHeader mainBackg="main-tranps" />
       <div className="main-container centered-content">
         <ForgotPasswordForm />
       </div>

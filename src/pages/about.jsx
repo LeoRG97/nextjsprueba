@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -87,9 +88,11 @@ export default function Home() {
                   <div className={styles.content_title_text}>
                     <small className="text-sm text--theme-light">Nuestro propósito</small>
                     <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
-                    <button className="button button--theme-light me-2">
-                      <span className="button__icon-left text--theme-light">F</span>Muéstrame cómo
-                    </button>
+                    <Link href="/think-tools" passHref>
+                      <button className="button button--theme-light me-2">
+                        <span className="button__icon-left text--theme-light">F</span>Muéstrame cómo
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </Row>

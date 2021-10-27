@@ -144,7 +144,7 @@ const HomePage = ({ articulos }) => {
           <div className={`${styles.content_centered} ${styles.content_margin}`}>
             <p className="text-md text--theme-secondary">Bienvenido al observatorio</p>
             <h2 className="title-xl">Hay más de una forma <br />en la que podemos ayudarte</h2>
-            <Link href="/nosotros" passHref>
+            <Link href="/about" passHref>
               <a>
                 <button className="button button--theme-secondary">Acerca de nosotros</button>
               </a>

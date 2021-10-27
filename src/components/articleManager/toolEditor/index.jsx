@@ -3,6 +3,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../editor.module.css';
+import { ToolPreview } from '@/components';
 import TooltipContainer from '../editorComponents/tooltipContainer/TooltipContainer';
 import LoadingIndicatorModal from '../../modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '../../modalsIndicators/SuccesModal';
@@ -44,6 +45,15 @@ const ToolEditorComponent = ({
     message: '',
   });
   const [attachmentZip, setAttachmentZip] = useState(false);
+  const [preview, setToolPreview] = useState(false);
+
+  const setPreview = () => {
+    if (preview === false) {
+      setToolPreview(true);
+    } else {
+      setToolPreview(false);
+    }
+  };
 
   useEffect(() => {
     if (initialData && initialData._id) {
@@ -84,7 +94,9 @@ const ToolEditorComponent = ({
     const jsonData = { definition, usage };
     setShowPublish(false);
     setSubmitting(true);
-    const blob = new Blob([JSON.stringify(jsonData)], { type: 'application/json' });
+    const blob = new Blob([JSON.stringify(jsonData)], {
+      type: 'application/json',
+    });
     const file = new File([blob], 'article.json', { type: 'application/json' });
     try {
       if (!initialData || !initialData._id) {
@@ -96,7 +108,9 @@ const ToolEditorComponent = ({
             title: 'Publicación finalizada',
             message: 'La herramienta ha sido publicada correctamente',
           });
-          router.replace(`${router.asPath}/${res.data._id}`, undefined, { shallow: true });
+          router.replace(`${router.asPath}/${res.data._id}`, undefined, {
+            shallow: true,
+          });
           setInitialData(res.data);
           setInitialContent(jsonData);
         }
@@ -141,77 +155,87 @@ const ToolEditorComponent = ({
   };
 
   return (
-    <div className={styles.editor}>
-      <div className={styles.editorContent} align="center">
-        <div>
-          <p className="subtitle text-center">Estructura aquí el contenido de tu herramienta</p>
-          <h1 className="title-xl text-center">¿Qué es?</h1>
-          <VideoSection
-            setValidateContent={setValidateDefinition}
+    <div>
+      {preview ? (
+        <ToolPreview preview={preview} setPreview={() => setPreview()} />
+      ) : (
+        <div className={styles.editor}>
+          <div className={styles.editorContent} align="center">
+            <div>
+              <p className="subtitle text-center">
+                Estructura aquí el contenido de tu herramienta
+              </p>
+              <h1 className="title-xl text-center">¿Qué es?</h1>
+              <VideoSection setValidateContent={setValidateDefinition} />
+              <h1 className="title-xl text-center">¿Cómo funciona?</h1>
+              <DescriptionSection setValidateContent={setValidateDescription} />
+            </div>
+          </div>
+          {/* EDITOR OPTIONS NAV */}
+          <div className={styles.optionsContainer}>
+            <TooltipContainer tooltipText="Publicar" placement="left">
+              <div
+                className={`icon-button icon-button--primary ${styles.optionsItem}`}
+                onClick={handleOpenModal}
+              >
+                H
+              </div>
+            </TooltipContainer>
+
+            {initialData._id && (
+              <TooltipContainer
+                tooltipText="Archivo de descarga"
+                placement="left"
+              >
+                <div
+                  onClick={() => setAttachmentZip(true)}
+                  className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                >
+                  r
+                </div>
+              </TooltipContainer>
+            )}
+
+            <TooltipContainer tooltipText="Vista previa" placement="left">
+              <div
+                onClick={() => setPreview()}
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+              >
+                C
+              </div>
+            </TooltipContainer>
+          </div>
+          <ToolDetailsModal
+            show={showPublish}
+            onClose={() => setShowPublish(false)}
+            onPublish={handlePublish}
           />
-          <h1 className="title-xl text-center">¿Cómo funciona?</h1>
-          <DescriptionSection
-            setValidateContent={setValidateDescription}
+          <LoadingIndicatorModal
+            show={submitting}
+            onClose={() => setSubmitting(false)}
+            textHeader="Guardando cambios"
+            textBody="Esta operación podría tardar unos minutos, por favor espere."
+          />
+          <SuccessIndicatorModal
+            show={successData.show}
+            onClose={() => setSuccessData({ ...successData, show: false })}
+            textHeader={successData.title}
+            textBody={successData.message}
+          />
+          <ErrorIndicatorModal
+            show={errorData.show}
+            onClose={() => setErrorData({ ...errorData, show: false })}
+            textHeader={errorData.title}
+            textBody={errorData.message}
+          />
+          <ModalZip
+            initialData={initialData && initialData.recursos}
+            show={attachmentZip}
+            onClose={() => setAttachmentZip(false)}
+            onSubmit={handleSubmitResources}
           />
         </div>
-      </div>
-      {/* EDITOR OPTIONS NAV */}
-      <div className={styles.optionsContainer}>
-
-        <TooltipContainer tooltipText="Publicar" placement="left">
-          <div
-            className={`icon-button icon-button--primary ${styles.optionsItem}`}
-            onClick={handleOpenModal}
-          >
-            H
-          </div>
-        </TooltipContainer>
-
-        {initialData._id
-          && (
-            <TooltipContainer tooltipText="Archivo de descarga" placement="left">
-              <div onClick={() => setAttachmentZip(true)} className={`icon-button icon-button--secondary ${styles.optionsItem}`}>r</div>
-            </TooltipContainer>
-          )}
-
-        <TooltipContainer tooltipText="Vista previa" placement="left">
-          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
-        </TooltipContainer>
-
-        <TooltipContainer tooltipText="Detalles" placement="left">
-          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
-        </TooltipContainer>
-
-      </div>
-      <ToolDetailsModal
-        show={showPublish}
-        onClose={() => setShowPublish(false)}
-        onPublish={handlePublish}
-      />
-      <LoadingIndicatorModal
-        show={submitting}
-        onClose={() => setSubmitting(false)}
-        textHeader="Guardando cambios"
-        textBody="Esta operación podría tardar unos minutos, por favor espere."
-      />
-      <SuccessIndicatorModal
-        show={successData.show}
-        onClose={() => setSuccessData({ ...successData, show: false })}
-        textHeader={successData.title}
-        textBody={successData.message}
-      />
-      <ErrorIndicatorModal
-        show={errorData.show}
-        onClose={() => setErrorData({ ...errorData, show: false })}
-        textHeader={errorData.title}
-        textBody={errorData.message}
-      />
-      <ModalZip
-        initialData={initialData && initialData.recursos}
-        show={attachmentZip}
-        onClose={() => setAttachmentZip(false)}
-        onSubmit={handleSubmitResources}
-      />
+      )}
     </div>
   );
 };

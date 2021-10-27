@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Layout, LoadingIndicator, ToolEditorComponent } from '@/components';
+import {
+  Layout,
+  LoadingIndicator,
+  ToolEditorComponent,
+  // ToolPreview,
+} from '@/components';
 import ToolContextProvider from '@/helpers/contexts/toolContext';
 import { fetchToolById, fetchToolContent } from '@/services/tools';
 import withAuth from '@/helpers/withAuth';
@@ -14,6 +19,15 @@ const ToolEditor = () => {
   const [toolContent, setToolContent] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(data && data[0]);
+  // const [preview, setToolPreview] = useState(false);
+
+  // const setPreview = () => {
+  //   if (preview === false) {
+  //     setToolPreview(true);
+  //   } else {
+  //     setToolPreview(false);
+  //   }
+  // };
 
   const getTool = async () => {
     try {
@@ -50,6 +64,7 @@ const ToolEditor = () => {
         initialContent={toolContent}
         setInitialContent={setToolContent}
       />
+
     );
   };
 
