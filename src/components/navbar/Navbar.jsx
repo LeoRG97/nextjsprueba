@@ -90,7 +90,7 @@ const NavbarComponent = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={styles.linksContainer}>
               <div className={styles.divNavItemStyle}>
-                <Link href="/nosotros" passHref>
+                <Link href="/about" passHref>
                   <Nav.Link className="text-md text--theme-light">Acerca de</Nav.Link>
                 </Link>
                 <Link href="/trending-topics" passHref>
@@ -128,8 +128,8 @@ const NavbarComponent = () => {
                     {
                       session ? (
                         <div className={styles.divNavItemStyle}>
-                          <Link href="/" passHref>
-                            <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
+                          <Link href="/think-tools" passHref>
+                            <button className="button button--theme-warning me-2 button_discover">
                               <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                             </button>
                           </Link>
@@ -141,8 +141,8 @@ const NavbarComponent = () => {
                         </div>
                       ) : (
                         <div className={styles.divNavItemStyle}>
-                          <Link href="/" passHref>
-                            <button className="button button--theme-warning me-2 button_discover" onClick={handleSearch}>
+                          <Link href="/think-tools" passHref>
+                            <button className="button button--theme-warning me-2 button_discover">
                               <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                             </button>
                           </Link>
@@ -229,12 +229,12 @@ const NavbarComponent = () => {
               </div>
 
               <div className={`${styles.divNavItemStyle} mt-4`}>
-                <Link href="/nosotros" passHref>
+                <Link href="/about" passHref>
                   <button className="button button--theme-warning">
                     <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                   </button>
                 </Link>
-                <Link href="/nosotros" passHref>
+                <Link href="/about" passHref>
                   <Nav.Link className="text-md text--theme-light mt-4">Acerca de</Nav.Link>
                 </Link>
                 <Link href="/trending-topics" passHref>

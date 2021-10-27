@@ -15,7 +15,7 @@ const Footer = () => {
           <Col xs="12" lg="9">
             <Row>
               <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
-                <Link href="/nosotros" passHref>
+                <Link href="/about" passHref>
                   <a className="text-regular">Acerca de</a>
                 </Link>
               </Col>
@@ -31,6 +31,9 @@ const Footer = () => {
               </Col>
               <Col xs="12" sm="12" lg="3" className={`${styles.footer_content}`}>
                 <p className="subtitle">Ayuda</p>
+                <Link href="/experts">
+                  <a>Nuestos expertos</a>
+                </Link>
                 <Link href="/#">
                   <a>Soporte técnico</a>
                 </Link>

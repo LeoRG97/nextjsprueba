@@ -21,11 +21,11 @@ const ConfirmationUserRegistered = () => {
   }
 
   return (
-    <div className="main-bg">
+    <div className="main-auth">
       <Head>
         <title>Confirmación usuario registrado</title>
       </Head>
-      <LoginHeader />
+      <LoginHeader mainBackg="main-tranps" />
       <div className="main-container centered-content">
         {
           query.email && query.role && query.invitacionId
