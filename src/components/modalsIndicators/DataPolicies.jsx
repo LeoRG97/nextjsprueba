@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import { Modal } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-// import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
+import Link from 'next/link';
 import styles from './modalsIndicator.module.css';
 
 const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
@@ -63,7 +62,7 @@ const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
               </p>
               <p className="text-sm">
                 <b>Información adicional: </b>consulte nuestra{' '}
-                <Link href="/policies"> politica de privacidad </Link>
+                <Link href="/policies/privacy" passHref><a target="_blank" rel="noopener noreferrer"> politica de privacidad </a></Link>
               </p>
               <div className="text-sm">
                 <input
@@ -114,12 +113,22 @@ const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
           >
             Cancelar
           </button>
-          <button
-            onClick={() => verificarCheck()}
-            className="button button button--theme-primary"
-          >
-            Crear cuenta
-          </button>
+          {
+            checkM.check1 === true && checkM.check2 === true && checkM.check3 === true ? (
+              <button
+                onClick={() => verificarCheck()}
+                className="button button button--theme-primary"
+              >Crear cuenta
+              </button>
+            ) : (
+              <button
+                disabled
+                onClick={() => verificarCheck()}
+                className="button button button--theme-primary"
+              >Crear cuenta
+              </button>
+            )
+          }
         </Modal.Footer>
       </Modal>
     </>

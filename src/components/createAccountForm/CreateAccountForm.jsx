@@ -17,6 +17,7 @@ import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 const CreateAccountForm = ({ preferences }) => {
   const [nextStep, setNextStep] = useState(false);
   const [dataPoliciesM, acceptDataPoliciesM] = useState(false);
+  const [modelData, setModelData] = useState({});
   const [modalLoading, setModalLoading] = useState(false);
   const [modalSucces, setModalSucces] = useState(false);
   const [modalError, setModalError] = useState(
@@ -533,12 +534,56 @@ const CreateAccountForm = ({ preferences }) => {
     }
   };
 
-  const acceptPolicies = (e) => {
-    e.preventDefault();
-    acceptDataPoliciesM(true);
+  const acceptPolicies = async () => {
+    acceptDataPoliciesM(false);
+    setModalLoading(true);
+    const res = await registerService(modelData);
+    if (res.token) {
+      setModalLoading(false);
+      setModalSucces(true);
+      setModalError({
+        status: false,
+        text: '',
+      });
+      withoutError();
+      const resSignIn = await signIn('credentials', {
+        email: modelData.email,
+        password: modelData.password,
+        redirect: false,
+      });
+
+      if (resSignIn?.error) {
+        setModalLoading(false);
+        setModalSucces(false);
+        setModalError({
+          status: true,
+          text: 'Dirección de correo electrónico y/o contraseña incorrectos.',
+        });
+        setError('');
+      }
+      if (resSignIn.url) {
+        if (dataInvite.invitation && (dataInvite.email === modelData.email)) {
+          router.push('/validate-invitation');
+        } else {
+          //
+          router.push('/trending-topics?user=true');
+        }
+      }
+    } else {
+      setModalLoading(false);
+      setModalSucces(false);
+      setNextStep(false);
+      setError('');
+      setErrorStatus(false);
+      setModalError({
+        status: true,
+        text: 'Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde, es posible que ya este registrado un usuario con el mismo correo',
+      });
+    }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const model = {
       email,
       password,
@@ -560,6 +605,7 @@ const CreateAccountForm = ({ preferences }) => {
       setError('Por favor, selecciona por lo menos 3 preferencias');
       setErrorStatus(true);
     } else {
+      setModelData(model);
       setError('');
       setErrorStatus(false);
       setModalSucces(false);
@@ -567,51 +613,8 @@ const CreateAccountForm = ({ preferences }) => {
         status: false,
         text: '',
       });
-      acceptDataPoliciesM(false);
-      setModalLoading(true);
-      const res = await registerService(model);
-      if (res.token) {
-        setModalLoading(false);
-        setModalSucces(true);
-        setModalError({
-          status: false,
-          text: '',
-        });
-        withoutError();
-        const resSignIn = await signIn('credentials', {
-          email: model.email,
-          password: model.password,
-          redirect: false,
-        });
-
-        if (resSignIn?.error) {
-          setModalLoading(false);
-          setModalSucces(false);
-          setModalError({
-            status: true,
-            text: 'Dirección de correo electrónico y/o contraseña incorrectos.',
-          });
-          setError('');
-        }
-        if (resSignIn.url) {
-          if (dataInvite.invitation && (dataInvite.email === model.email)) {
-            router.push('/validate-invitation');
-          } else {
-            //
-            router.push('/trending-topics?user=true');
-          }
-        }
-      } else {
-        setModalLoading(false);
-        setModalSucces(false);
-        setNextStep(false);
-        setError('');
-        setErrorStatus(false);
-        setModalError({
-          status: true,
-          text: 'Algo ha salido mal, revisa tus datos y vuelve a intentarlo más tarde, es posible que ya este registrado un usuario con el mismo correo',
-        });
-      }
+      acceptDataPoliciesM(true);
+      setModalLoading(false);
     }
   };
 
@@ -862,7 +865,7 @@ const CreateAccountForm = ({ preferences }) => {
                 <span className="text-sm d-block mb-3">
                   Al hacer clic en Crear cuenta, reconozco que he leído y aceptado
                   las <Link href="#" passHref><a className={styles.link}> Condiciones de uso </a></Link>
-                  y la <Link href="#" passHref><a className={styles.link}> Política de Privacidad</a></Link>.
+                  y la <Link href="/policies/privacy" passHref><a className={styles.link} target="_blank" rel="noopener noreferrer"> Política de Privacidad</a></Link>.
                 </span>
                 {
                   errorStatus ? (
@@ -892,7 +895,7 @@ const CreateAccountForm = ({ preferences }) => {
                 Recuerda que siempre podrás modificarlas o añadir más ingresando a la opción
                 Editar perfil.
               </span>
-              <form onSubmit={acceptPolicies} className="mb-2">
+              <form onSubmit={handleSubmit} className="mb-2">
                 <span className="d-block subtitle mb-2">Me interesa el contenido relacionado con</span>
                 {
                   preferences.length > 0 ? (
@@ -929,7 +932,7 @@ const CreateAccountForm = ({ preferences }) => {
       <DataPoliciesModal
         show={dataPoliciesM}
         onClose={() => acceptDataPoliciesM(false)}
-        acceptDP={() => handleSubmit()}
+        acceptDP={() => acceptPolicies()}
       />
       <LoadingIndicatorModal
         show={modalLoading}
