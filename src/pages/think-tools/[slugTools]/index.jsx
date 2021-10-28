@@ -56,6 +56,7 @@ export async function getStaticProps({ params }) {
           toolsInfo: toolsInfo[0] || null,
           toolsCode: toolsCode.data || toolsCode || null,
         },
+        revalidate: 60,
       };
     }
     const toolsCode = await fetchToolsContent(toolsInfo._id);
@@ -64,6 +65,7 @@ export async function getStaticProps({ params }) {
         toolsInfo: toolsInfo || null,
         toolsCode: toolsCode.data || toolsCode || null,
       },
+      revalidate: 60,
     };
   }
 
