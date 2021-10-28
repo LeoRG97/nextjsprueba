@@ -154,6 +154,18 @@ const ToolEditorComponent = ({
     }
   };
 
+  const handleZipModal = () => {
+    if (initialData._id) {
+      setAttachmentZip(true);
+    } else {
+      setErrorData({
+        show: true,
+        title: 'Operación no permitida',
+        message: 'Para habilitar otras opciones de visualización de contenido, primero debes publicar tu herramienta.',
+      });
+    }
+  };
+
   return (
     <div>
       {preview ? (
@@ -182,19 +194,17 @@ const ToolEditorComponent = ({
               </div>
             </TooltipContainer>
 
-            {initialData._id && (
-              <TooltipContainer
-                tooltipText="Archivo de descarga"
-                placement="left"
+            <TooltipContainer
+              tooltipText="Archivo de descarga"
+              placement="left"
+            >
+              <div
+                onClick={handleZipModal}
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
               >
-                <div
-                  onClick={() => setAttachmentZip(true)}
-                  className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-                >
-                  r
-                </div>
-              </TooltipContainer>
-            )}
+                r
+              </div>
+            </TooltipContainer>
 
             <TooltipContainer tooltipText="Vista previa" placement="left">
               <div
