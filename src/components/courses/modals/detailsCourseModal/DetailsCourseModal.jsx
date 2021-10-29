@@ -1,25 +1,112 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
+import { useSession } from 'next-auth/client';
 import styles from './detailsCourseModal.module.css';
 import { FileInput, Switch } from '@/components';
-import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { getPreferencesService } from '@/services/preferences';
 import ImagePicker from '@/components/formComponents/imagePicker/ImagePicker';
+import { CourseContext } from '@/helpers/contexts/CourseContext';
+import { validateCourseData } from './courseValidation';
+import { remove, upload } from '@/services/aws';
+import { BUCKET_URL } from '@/global/constants';
+import { stringToSlug } from '@/helpers/slugs';
 
-const ModalDetailsCourse = ({ show, onClose }) => {
+const ModalDetailsCourse = ({ show, onClose, onSubmit }) => {
+  const [session] = useSession();
   const [preferences, setPreferences] = useState([]);
-
-  const onSave = (fileData, inputId) => {
-    // eslint-disable-next-line no-console
-    console.log(fileData, inputId);
-  };
+  const { course, setCourse } = useContext(CourseContext);
+  const [errors, setErrors] = useState({ isValid: true });
+  const [submitted, setSubmitted] = useState(false);
+  const [fileLoading, setFileLoading] = useState(false);
 
   useEffect(() => {
     getPreferencesService().then((res) => {
       setPreferences(res.data);
     });
   }, []);
+
+  useEffect(() => {
+    if (submitted) {
+      const errorObj = validateCourseData(course);
+      setErrors(errorObj);
+    }
+  }, [course]);
+
+  const handleChange = (e) => {
+    setCourse({ ...course, [e.target.name]: e.target.value });
+  };
+
+  const handleCoverImage = (file) => {
+    setCourse({ ...course, archivoPortada: file });
+  };
+
+  const handleCategory = (e) => {
+    const { value } = e.target;
+    setCourse({ ...course, [e.target.name]: value ? [value] : [] });
+  };
+
+  const handleSwitch = (e) => {
+    setCourse({ ...course, [e.target.name]: e.target.checked });
+  };
+
+  const handleSaveFile = async (file) => {
+    if (file.type !== 'application/pdf') {
+      return setErrors({ ...errors, certificado: 'El tipo del archivo no está permitido' });
+    }
+    setErrors({ ...errors, certificado: '' });
+    setFileLoading(true);
+    if (course.certificado) {
+      await remove(`${BUCKET_URL}${course.certificado}`);
+    }
+    const res = await upload(`${session.user.id}/courses/certificates`, file, `certificado-${stringToSlug(course.titulo)}.${file.type.split('/')[1]}`);
+    setFileLoading(false);
+    if (res.ok) {
+      setCourse({ ...course, certificado: res.file.split('.com/')[1] });
+    } else {
+      setErrors({ ...errors, certificado: 'No ha sido posible subir el archivo' });
+    }
+    return '';
+  };
+
+  const handleDeleteFile = () => {
+    setCourse({ ...course, certificado: '', deletedFile: course.certificado });
+  };
+
+  const handleEraseFile = async () => {
+    if (course.deletedFile) {
+      await remove(`${BUCKET_URL}${course.deletedFile}`);
+    }
+  };
+
+  const handlePublishCourse = async () => {
+    setSubmitted(true);
+    handleEraseFile();
+    const errorObj = validateCourseData(course);
+    if (!errorObj.isValid) {
+      setErrors(errorObj);
+    } else {
+      onSubmit('publicado');
+    }
+  };
+
+  const handleSaveDraft = () => {
+    handleEraseFile();
+    onSubmit('borrador');
+  };
+
+  const {
+    titulo,
+    url_presentacion,
+    categorias,
+    duracion,
+    objetivo,
+    descripcion,
+    exclusivo,
+    portada,
+    archivoPortada,
+    certificado,
+  } = course;
 
   return (
     <>
@@ -38,8 +125,13 @@ const ModalDetailsCourse = ({ show, onClose }) => {
               <h3 className="title">Detalles del curso</h3>
               <span className="d-block subtitle">Imagen de portada</span>
               <div className={styles.imageInput}>
-                <ImagePicker />
+                <ImagePicker
+                  image={archivoPortada}
+                  setImage={handleCoverImage}
+                  prevUrl={portada}
+                />
               </div>
+              <small className="text-sm text--theme-error">{errors.portada}</small>
               <label className="d-block subtitle" htmlFor="title">Título del curso
                 <input
                   type="text"
@@ -47,64 +139,83 @@ const ModalDetailsCourse = ({ show, onClose }) => {
                   id="title"
                   className="input"
                   placeholder="Título"
+                  value={titulo}
+                  onChange={handleChange}
                 />
               </label>
+              <small className="text-sm text--theme-error">{errors.titulo}</small>
               <label className="d-block subtitle" htmlFor="url">Video de presentación
                 <input
                   type="text"
-                  name="url"
+                  name="url_presentacion"
                   id="url"
                   className="input"
                   placeholder="URL"
+                  value={url_presentacion}
+                  onChange={handleChange}
                 />
               </label>
-              <label className="d-block subtitle" htmlFor="title">Duración aproximada del curso
+              <small className="text-sm text--theme-error">{errors.url_presentacion}</small>
+              <label className="d-block subtitle" htmlFor="duration">Duración aproximada del curso
                 <input
                   type="text"
-                  name="url"
-                  id="url"
+                  name="duracion"
+                  id="duration"
                   className="input"
                   placeholder="Ejemplo: 4 horas"
+                  value={duracion}
+                  onChange={handleChange}
                 />
               </label>
             </Col>
             <Col md={6}>
-              <div className={styles.visibilitySection}>
-                <h3 className="title mb-3">Visibilidad</h3>
-                <div className={styles.switchContainer}>
-                  <label className="subtitle">Contenido exclusivo</label>
-                  <Switch
-                    name="premium"
-                    checked={false}
-                    onChange={() => true}
-                  />
-                </div>
-                <label className="d-block subtitle">Categoría(s) a la que pertenece</label>
-                <CategorySelector
-                  data={preferences}
-                  placeholder="Selecciona las categorías"
-                  initialSelectedItems={[]}
-                  addCategory={() => false}
-                  deleteCategory={() => false}
+
+              <h3 className="title mb-3">Visibilidad</h3>
+              <div className={styles.switchContainer}>
+                <label className="subtitle">Contenido exclusivo</label>
+                <Switch
+                  name="exclusivo"
+                  checked={exclusivo}
+                  onChange={handleSwitch}
                 />
               </div>
-              <label className="d-block subtitle" htmlFor="title">Certificado
-                <FileInput
-                  onSave={onSave}
-                  type="text"
-                  name="url"
-                  id="url"
-                  className="input"
-                  placeholder="Añadir archivo del certificado"
-                />
-              </label>
-              <label className="d-block subtitle" htmlFor="title">Objetivo del curso
+
+              <label className="d-block subtitle">Categoría a la que pertenece</label>
+              <div className="select-arrow">
+                <select
+                  id="rol"
+                  name="categorias"
+                  placeholder="Selecciona uno"
+                  className="select"
+                  value={categorias[0]}
+                  onChange={handleCategory}
+                >
+                  <option value="">Selecciona uno</option>
+                  {preferences && preferences.map((item) => (
+                    <option key={item._id} value={item._id}>
+                      {item.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <small className="text-sm text--theme-error">{errors.categorias}</small>
+              <label className="d-block subtitle" htmlFor="certificado">Certificado</label>
+              <FileInput
+                inputId="certificado"
+                fileName={fileLoading ? 'Cargando...' : certificado.split('certificates/')[1]}
+                onSave={handleSaveFile}
+                onDelete={handleDeleteFile}
+                accept="application/pdf"
+              />
+              <label className="d-block subtitle" htmlFor="objective">Objetivo del curso
                 <input
                   type="text"
-                  name="url"
-                  id="url"
+                  name="objetivo"
+                  id="objective"
                   className="input"
                   placeholder="Objetivo"
+                  value={objetivo}
+                  onChange={handleChange}
                 />
               </label>
               <label className="d-block subtitle" htmlFor="description">Descripción
@@ -116,6 +227,8 @@ const ModalDetailsCourse = ({ show, onClose }) => {
                   placeholder="Hasta 250 caracteres"
                   maxLength="250"
                   rows={4}
+                  value={descripcion}
+                  onChange={handleChange}
                 />
               </label>
             </Col>
@@ -127,10 +240,10 @@ const ModalDetailsCourse = ({ show, onClose }) => {
             Cancelar
           </button>
           <div>
-            <button className="button button--theme-success me-3">
+            <button className="button button--theme-success me-3" onClick={handleSaveDraft} disabled={fileLoading}>
               <span className="button__icon-left text--theme-light">I</span>{' '}Guardar borrador
             </button>
-            <button className="button button--theme-primary">
+            <button className="button button--theme-primary" onClick={handlePublishCourse} disabled={fileLoading}>
               <span className="button__icon-left text--theme-light">H</span>{' '}Publicar
             </button>
           </div>

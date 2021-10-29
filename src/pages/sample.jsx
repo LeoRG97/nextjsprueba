@@ -9,13 +9,11 @@ import TooltipContainer from '@/components/articleManager/editorComponents/toolt
 import { fetchData } from '@/services/swr';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
-import ModalDetailsCourse from '@/components/courses/modals/detailsCourseModal/DetailsCourseModal';
 
 export default function Home() {
   const { data } = useSWR('preferencias', fetchData);
   const [checked, setChecked] = useState(false);
   const [checkedInverted, setCheckedInverted] = useState(false);
-  const [modalDetailsCourseShow, setModalDetailsCourseShow] = useState(false);
 
   return (
     <div className="main-container main-bg">
@@ -266,15 +264,6 @@ export default function Home() {
         </div>
         <SubscriptionModal />
         <CourseDetailComponent />
-        <hr className="bg-light" />
-        <button className="button button--theme-primary me-2" onClick={() => setModalDetailsCourseShow(true)}>
-          Modal de detalles del curso
-        </button>
-        <ModalDetailsCourse
-          show={modalDetailsCourseShow}
-          onClose={() => setModalDetailsCourseShow(false)}
-        />
-
       </main>
 
       <Footer />

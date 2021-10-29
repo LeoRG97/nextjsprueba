@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 const InputFile = ({
-  inputId, fileName, onSave, onDelete,
+  inputId, fileName, onSave, onDelete, accept,
 }) => {
   const inputRef = useRef();
 
@@ -29,7 +29,7 @@ const InputFile = ({
           className="input--hidden"
           placeholder="Añadir archivo"
           onChange={handleFile}
-          accept="image/jpeg,image/png,application/pdf,application/zip"
+          accept={accept || 'image/jpeg,image/png,application/pdf,application/zip'}
         />
       </label>
       <span className="input__icon icon" onClick={handleIconClick}>{fileName ? 'O' : 'Ñ'}</span>

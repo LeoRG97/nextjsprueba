@@ -1,18 +1,44 @@
+import { BUCKET_URL } from '@/global/constants';
+import { remove, upload } from './aws';
 import axios from './axios';
 
-export const saveCourse = async (data) => {
+export const saveCourse = async (data, userId) => {
   try {
-    const res = await axios().post('cursos', data);
+    let portada = '';
+    if (data.archivoPortada) {
+      const { file } = await upload(`${userId}/courses/images`, data.archivoPortada);
+      const fileName = file.split('.com/')[1];
+      portada = fileName;
+    }
+    const res = await axios().post('cursos', {
+      ...data,
+      portada,
+      archivoPortada: null,
+    });
     return res;
   } catch (err) {
     return err;
   }
 };
 
-export const updateCourse = async (id, data) => {
+export const updateCourse = async (id, data, userId) => {
   try {
-    const res = await axios().put(`cursos/${id}`, data);
-    return res;
+    let portada = '';
+    if (data.archivoPortada) {
+      await remove(`${BUCKET_URL}${data.portada}`);
+      const { file } = await upload(`${userId}/courses/images`, data.archivoPortada);
+      const fileName = file.split('.com/')[1];
+      portada = fileName;
+    } else if (data.portada) {
+      portada = data.portada;
+    }
+    const course = {
+      ...data,
+      portada,
+      archivoPortada: null,
+    };
+    const res = await axios().put(`cursos/${id}`, course);
+    return { ...res, data: course };
   } catch (err) {
     return err;
   }
