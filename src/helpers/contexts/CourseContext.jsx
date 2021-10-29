@@ -7,7 +7,18 @@ export const CourseContext = createContext();
 const CourseContextProvider = ({ children }) => {
   const [units, setUnits] = useState([]);
   const [lessons, setLessons] = useState([]);
-  const [course, setCourse] = useState({});
+  const [course, setCourse] = useState({
+    titulo: '',
+    url_presentacion: '',
+    duracion: '',
+    objetivo: '',
+    exclusivo: false,
+    certificado: '',
+    categorias: [],
+    descripcion: '',
+    portada: '',
+    archivoPortada: '',
+  });
   const [currentUnit, setCurrentUnit] = useState(null);
   const [showLessonModal, setShowLessonModal] = useState(false);
 

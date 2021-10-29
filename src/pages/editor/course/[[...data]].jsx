@@ -11,7 +11,7 @@ const CourseEditorPage = () => {
   const { data } = router.query;
   const [initialData, setInitialData] = useState(false);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(data && data[0]);
 
   const getCourse = async (id) => {
     const res = await fetchCourseById(id);

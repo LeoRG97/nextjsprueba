@@ -10,6 +10,7 @@ import { saveCourse, updateCourse } from '@/services/courses';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import ModalDetailsCourse from '../modals/detailsCourseModal/DetailsCourseModal';
 
 const CourseEditor = ({ initialData }) => {
   const [session] = useSession();
@@ -28,12 +29,11 @@ const CourseEditor = ({ initialData }) => {
   const [submitting, setSubmitting] = useState(false);
   const [successData, setSuccessData] = useState({ show: false });
   const [errorData, setErrorData] = useState({ show: false });
+  const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     if (initialData._id) {
-      setCourse({
-        _id: initialData._id,
-      });
+      setCourse({ ...course, ...initialData });
       setUnits(initialData.unidades);
       setLessons(initialData.lecciones);
     }
@@ -51,6 +51,7 @@ const CourseEditor = ({ initialData }) => {
   });
 
   const handlePublish = async (estatus) => {
+    setShowDetails(false);
     setSubmitting(true);
     const lecciones = [];
     // asignar el número de lección a cada elemento del arreglo
@@ -72,7 +73,7 @@ const CourseEditor = ({ initialData }) => {
     };
 
     if (!course._id) {
-      const res = await saveCourse(data);
+      const res = await saveCourse(data, session.user.id);
       setSubmitting(false);
       if (res.ok) {
         setSuccessData({
@@ -80,7 +81,7 @@ const CourseEditor = ({ initialData }) => {
           title: estatus === 'publicado' ? 'Publicacion finalizada' : 'Cambios guardados',
           message: estatus === 'publicado' ? 'El curso ha sido publicado exitosamente.' : 'El curso ha sido guardado correctamente.',
         });
-        setCourse({ ...course, _id: res.data._id });
+        setCourse({ ...course, ...res.data });
         router.replace(`${router.asPath}/${res.data._id}`, undefined, { shallow: false });
       } else {
         setErrorData({
@@ -90,7 +91,7 @@ const CourseEditor = ({ initialData }) => {
         });
       }
     } else {
-      const res = await updateCourse(course._id, data);
+      const res = await updateCourse(course._id, data, session.user.id);
       setSubmitting(false);
       if (res.ok) {
         setSuccessData({
@@ -98,6 +99,7 @@ const CourseEditor = ({ initialData }) => {
           title: estatus === 'publicado' ? 'Publicación finalizada' : 'Cambios guardados',
           message: estatus === 'publicado' ? 'El curso ha sido publicado exitosamente.' : 'El curso ha sido actualizado correctamente.',
         });
+        setCourse({ ...course, ...res.data });
       } else {
         setErrorData({
           show: true,
@@ -124,7 +126,7 @@ const CourseEditor = ({ initialData }) => {
         <TooltipContainer tooltipText="Publicar" placement="left">
           <div
             className={`icon-button icon-button--primary ${styles.optionsItem}`}
-            onClick={() => {}}
+            onClick={() => setShowDetails(true)}
           >
             H
           </div>
@@ -145,6 +147,11 @@ const CourseEditor = ({ initialData }) => {
       <ModalDetailsLesson
         show={showLessonModal}
         onClose={handleCloseLessonModal}
+      />
+      <ModalDetailsCourse
+        show={showDetails}
+        onClose={() => setShowDetails(false)}
+        onSubmit={handlePublish}
       />
       <LoadingIndicatorModal
         show={submitting}
