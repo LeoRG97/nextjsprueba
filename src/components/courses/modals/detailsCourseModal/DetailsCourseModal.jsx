@@ -59,7 +59,8 @@ const ModalDetailsCourse = ({ show, onClose, onSubmit }) => {
     if (course.certificado) {
       await remove(`${BUCKET_URL}${course.certificado}`);
     }
-    const res = await upload(`${session.user.id}/courses/certificates`, file, `certificado-${stringToSlug(course.titulo)}.${file.type.split('/')[1]}`);
+    const res = await upload(`${session.user.id}/courses/certificates`, file,
+      `certificado-${course.titulo ? stringToSlug(course.titulo) : Date.now()}.${file.type.split('/')[1]}`);
     setFileLoading(false);
     if (res.ok) {
       setCourse({ ...course, certificado: res.file.split('.com/')[1] });

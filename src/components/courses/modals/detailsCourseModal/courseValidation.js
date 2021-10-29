@@ -18,7 +18,7 @@ export const validateCourseData = ({
   }
 
   if (categorias.length === 0) {
-    errors.categorias = 'Seleccione una categoría';
+    errors.categorias = 'Selecciona una categoría';
     errors.isValid = false;
   }
 
