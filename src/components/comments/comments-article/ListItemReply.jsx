@@ -4,10 +4,9 @@ import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import styles from '../comments.module.css';
 import convertDate from '../helpers/convertDate';
 import { useForm } from '../hooks/useForm';
-import { updateRespuesta } from '@/services/articles';
 
 export const ListItemReply = ({
-  reply, session, onDeleteReply, replyValoracion, commentId, eventMutate,
+  reply, session, onDeleteReply, replyValoracion, commentId, eventMutate, onUpdate,
 }) => {
   const [onUpdateReply, setOnUpdate] = useState(false);
   const { values, handleInputChange } = useForm({
@@ -26,7 +25,7 @@ export const ListItemReply = ({
   const handleSubmitUpdateReply = async (e) => {
     e.preventDefault();
 
-    await updateRespuesta(commentId, titulo, reply._id);
+    await onUpdate(commentId, titulo, reply._id);
     eventMutate();
     setOnUpdate(false);
   };
