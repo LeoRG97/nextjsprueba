@@ -12,7 +12,7 @@ import { AddComment } from '../AddComment';
 import {
   addCommentReply, addValoracionComentario,
   addValoracionRespuesta,
-  deleteComentario, deleteRespuesta, updateComentario,
+  deleteComentario, deleteRespuesta, updateComentario, updateRespuesta,
 } from '@/services/articles';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { LoadingIndicator } from '@/components';
@@ -133,6 +133,10 @@ export const ListItem = ({ comment, mutateList }) => {
 
   const onCancelUpdate = () => {
     setOnUpdateComment(false);
+  };
+
+  const onUpdateReply = async (commentId, tituloReply, replyId) => {
+    await updateRespuesta(commentId, tituloReply, replyId);
   };
 
   return (
@@ -313,6 +317,7 @@ export const ListItem = ({ comment, mutateList }) => {
                       commentId={comment._id}
                       session={session}
                       onDeleteReply={onDeleteReply}
+                      onUpdate={onUpdateReply}
                       replyValoracion={replyValoracion}
                       eventMutate={mutate}
                     />

@@ -2,22 +2,47 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/client';
 
+import useSWRInfinite from 'swr/infinite';
+import { useDispatch } from 'react-redux';
 import styles from '../comments.module.css';
 import { useForm } from '../hooks/useForm';
 import { AddComment } from '../AddComment';
+import { fetchData } from '@/services/swr';
+import { ApiRoutes } from '@/global/constants';
 
 import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 import convertDate from '../helpers/convertDate';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
-import { addValoracionComentario, deleteComentario, updateComentario } from '@/services/courses';
+import {
+  addCommentReply, addValoracionComentario, addValoracionRespuesta,
+  deleteComentario, deleteRespuesta, updateComentario, updateRespuesta,
+} from '@/services/courses';
+import { ListItemReply } from '../comments-article/ListItemReply';
+import { LoadingIndicator } from '@/components';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 export const ListItem = ({ comment, mutateList }) => {
   const [selectComment, setSelectComment] = useState(false);
   const [showDeleteComment, setShowDeleteComment] = useState(false);
   const [showDeleteReply, setShowDeleteReply] = useState(false);
   const [onUpdateComment, setOnUpdateComment] = useState(false);
+  const [replyDelete, setReplyDelete] = useState(null);
+  const dispatch = useDispatch();
 
   const session = useSession();
+
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    if (comment.respuesta > 0) {
+      return `${ApiRoutes.CoursesReplies}/${comment._id}?&pageNum=${pageIndex + 1}&pageSize=1`; // API endpoint
+    }
+    return null;
+  };
+
+  const {
+    data, size, setSize, mutate, isValidating,
+  } = useSWRInfinite(getKey, fetchData);
+  const isEmpty = data?.[size - 1]?.length === 0;
 
   const {
     values: comentUpd,
@@ -26,9 +51,10 @@ export const ListItem = ({ comment, mutateList }) => {
     nvoComentario: comment.comentario,
   });
 
-  const { values, handleInputChange } = useForm({
+  const { values, handleInputChange, resetForm } = useForm({
     titulo: '',
   });
+  const { titulo } = values;
 
   // console.log(`Respuestas de ${comment._id}`,data)
 
@@ -40,7 +66,16 @@ export const ListItem = ({ comment, mutateList }) => {
   };
 
   const handleSubmitComment = async () => {
-
+    if (titulo !== '') {
+      const replyData = {
+        titulo,
+      };
+      await addCommentReply(comment._id, replyData);
+      mutate();
+      mutateList();
+      resetForm();
+      setSelectComment(false);
+    }
   };
 
   const commentValoracion = async () => {
@@ -66,8 +101,32 @@ export const ListItem = ({ comment, mutateList }) => {
     setSelectComment(!selectComment);
   };
 
-  const handleDeleteReply = async () => {
+  const replyValoracion = async (respuestaId) => {
+    try {
+      const res = await addValoracionRespuesta(comment._id, respuestaId);
+      mutate();
+      return res;
+    } catch (error) {
+      // console.error(error.message);
+      return error;
+    }
+  };
 
+  const onDeleteReply = async (replyId) => {
+    setShowDeleteReply(true);
+    setReplyDelete(replyId);
+  };
+
+  const handleDeleteReply = async () => {
+    await deleteRespuesta(comment._id, replyDelete);
+    mutate();
+    mutateList();
+    setReplyDelete(null);
+    setShowDeleteReply(false);
+  };
+
+  const onUpdateReply = async (commentId, tituloRespuesta, replyId) => {
+    await updateRespuesta(commentId, tituloRespuesta, replyId);
   };
 
   const handleSubmitUpdateComment = async (e) => {
@@ -246,6 +305,52 @@ export const ListItem = ({ comment, mutateList }) => {
 
           </ul>
         )}
+      {
+        comment.respuesta > 0 ? (
+          <>
+            <ul className={`${styles.commentList}`}>
+              {
+                data && data.map((page) => {
+                  return page.map((reply) => (
+                    <ListItemReply
+                      key={reply._id}
+                      reply={reply}
+                      commentId={comment._id}
+                      session={session}
+                      onDeleteReply={onDeleteReply}
+                      onUpdate={onUpdateReply}
+                      replyValoracion={replyValoracion}
+                      eventMutate={mutate}
+                    />
+                  ));
+                })
+              }
+            </ul>
+            <div className="d-flex justify-content-center">
+              <>
+                {!isEmpty && (
+                  isValidating ? (
+                    <LoadingIndicator />
+                  )
+                    : (
+                      <a
+                        className={`${styles.pointer} subtitle text-link me-3`}
+                        onClick={() => {
+                          /* eslint-disable no-unused-expressions */
+                          session[0]?.user
+                            ? setSize(size + 1)
+                            : dispatch(showSubscribeAlert());
+                        }}
+                      >
+                        Ver más respuestas
+                      </a>
+                    )
+                )}
+              </>
+            </div>
+          </>
+        ) : (<></>)
+      }
 
       <DeleteModal
         show={showDeleteComment}

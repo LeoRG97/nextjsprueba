@@ -68,3 +68,50 @@ export const deleteComentario = async (comentarioId) => {
     return error;
   }
 };
+
+export const addCommentReply = async (comentarioId, comentData) => {
+  try {
+    const dataRes = await axios().post(`/comentarios-curso/respuesta/${comentarioId}`, {
+      ...comentData,
+    });
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addValoracionRespuesta = async (comentarioId, respuestaId) => {
+  try {
+    const dataRes = await axios().post(
+      `/comentarios-curso/valoracion-respuesta/${comentarioId}`, {
+        respuestaId,
+      },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const deleteRespuesta = async (comentarioId, respuestaId) => {
+  try {
+    const dataRes = await axios().delete(
+      `/comentarios-curso/respuesta/${comentarioId}`, { data: { respuestaId } },
+    );
+    return dataRes;
+  } catch (error) {
+    // console.error(error);
+    return error;
+  }
+};
+
+export const updateRespuesta = async (comentarioId, titulo, respuestaId) => {
+  try {
+    const dataRes = await axios().put(
+      `/comentarios-curso/respuesta/${comentarioId}`, { titulo, respuestaId },
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
