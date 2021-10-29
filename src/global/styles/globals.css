@@ -436,6 +436,10 @@ a {
   .button--theme-warning:hover .button__icon-right {
     color: var(--text-color-light) !important;
   }
+  .button--theme-resource:hover {
+    color: var(--text-color-light);
+    background-color: var(--colorPrimaryHover);
+  }
 }
 
 
@@ -479,6 +483,22 @@ a {
 .button--theme-secondary:active .button__icon-left,
 .button--theme-secondary:active .button__icon-right {
   color: var(--text-color-light) !important;
+}
+
+.button--theme-resource {
+  color: var(--text-color-light);
+  background-color: var(--colorPrimaryActive);
+  border: 1px solid var(--contentTransparentRGB);
+}
+
+.button--theme-resource .button__icon-left,
+.button--theme-resource .button__icon-right {
+  color: var(--text-color-highlight);
+}
+
+.button--theme-resource:active {
+  color: var(--text-color-light);
+  background-color: var(--colorPrimaryActive);
 }
 
 .button--theme-success {

@@ -205,54 +205,53 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
     );
   }
 
-  const redirectToResource = (url) => {
-    window.open(url, '_blank');
-  };
-
   const renderResource = (resource, placement) => {
     switch (resource.tipo) {
       case 'reporte': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Reporte">
-            <button
-              className="icon-button icon-button--secondary m-2"
-              onClick={() => {
-                session?.user
-                  ? redirectToResource(`${BUCKET_URL}${resource.ruta}`) : dispatch(showSubscribeAlert());
-              }}
-            >
-              P
-            </button>
+            {session ? (
+              <a href={`${BUCKET_URL}${resource.ruta}`} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
+                P
+              </a>
+            )
+              : (
+                <button className="icon-button icon-button--secondary m-2" onClick={() => dispatch(showSubscribeAlert())}>
+                  P
+                </button>
+              )}
           </TooltipContainer>
         );
       }
       case 'infografia': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Infografía">
-            <button
-              className="icon-button icon-button--secondary m-2"
-              onClick={() => {
-                session?.user
-                  ? redirectToResource(`${BUCKET_URL}${resource.ruta}`) : dispatch(showSubscribeAlert());
-              }}
-            >
-              S
-            </button>
+            {session ? (
+              <a href={`${BUCKET_URL}${resource.ruta}`} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
+                S
+              </a>
+            )
+              : (
+                <button className="icon-button icon-button--secondary m-2" onClick={() => dispatch(showSubscribeAlert())}>
+                  S
+                </button>
+              )}
           </TooltipContainer>
         );
       }
       case 'video': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Vídeo">
-            <button
-              className="icon-button icon-button--secondary m-2"
-              onClick={() => {
-                session?.user
-                  ? redirectToResource(`${resource.ruta}`) : dispatch(showSubscribeAlert());
-              }}
-            >
-              N
-            </button>
+            {session ? (
+              <a href={resource.ruta} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
+                N
+              </a>
+            )
+              : (
+                <button className="icon-button icon-button--secondary m-2" onClick={() => dispatch(showSubscribeAlert())}>
+                  N
+                </button>
+              )}
           </TooltipContainer>
         );
       }
@@ -278,18 +277,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
             ) : (
               <>
                 <Row>
-                  <Col xl="3" lg="3" sm="2" className="col-1">
-                    <div className="content-fixed left">
-                      {
-                        (!isOnView && artInfo.recursos && artInfo.recursos.length > 0) ? (
-                          <div className="content-btns">
-                            <label className="text-md">Ver en</label>
-                            {artInfo.recursos.map((recurso) => renderResource(recurso, 'right'))}
-                          </div>
-                        ) : (<></>)
-                      }
-                    </div>
-                  </Col>
+                  <Col xl="3" lg="3" sm="2" className="col-1" />
                   <Col xl="6" lg="6" sm="8" className="col-12">
                     <BlogComponent
                       blogInfo={blog}

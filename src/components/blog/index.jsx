@@ -13,6 +13,7 @@ import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './blog.module.css';
+import Resources from './Resources';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
@@ -127,6 +128,7 @@ const BlogComponent = ({
         <div className="">
           <h3 className="title-editor-xl">{blogInfo.portada.titulo}</h3>
           <p className="subtitle-editor">{blogInfo.portada.descripcion}</p>
+          <Resources resources={blogInfo.recursos} />
           <AutorComponent
             autor={autorInfo}
             dateBlog={blogInfo.createdAt}

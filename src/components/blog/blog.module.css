@@ -44,6 +44,10 @@
   );
 }
 
+.resourcesBlock {
+  margin: 3rem 0;
+}
+
 @media (max-width: 1399.98px) {
   .cover {
     height: 22.5rem;
