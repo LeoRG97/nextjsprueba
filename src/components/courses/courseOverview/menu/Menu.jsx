@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './menu.module.css';
 
-const CourseMenu = () => {
+const CourseMenu = ({ totalComments }) => {
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [lessonIndex, tab] = params || [];
@@ -36,7 +36,7 @@ const CourseMenu = () => {
     };
 
     dragScroll();
-  });
+  }, []);
 
   const isLinkActive = (value) => {
     return tab === value;
@@ -55,7 +55,7 @@ const CourseMenu = () => {
           className={`subtitle ${styles.item} ${isLinkActive('comments') && styles.active}`}
         >
           Comentarios
-          <span className="ms-2 text-md text--theme-secondary">0</span>
+          <span className="ms-2 text-md text--theme-secondary">{totalComments}</span>
         </a>
       </Link>
       <Link href={`/courses/${slug}/lesson/${lessonIndex}/resources`} passHref scroll={false}>

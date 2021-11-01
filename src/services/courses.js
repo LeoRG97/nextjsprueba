@@ -84,6 +84,17 @@ export const updateComentario = async (comentarioId, nvoComentario) => {
   }
 };
 
+export const getTotalCommentsCourse = async (courseId) => {
+  try {
+    const dataRes = await axios().get(
+      `/comentarios-curso/curso/${courseId}/total`,
+    );
+    return dataRes;
+  } catch (error) {
+    return error;
+  }
+};
+
 export const deleteComentario = async (comentarioId) => {
   try {
     const dataRes = await axios().delete(

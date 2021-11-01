@@ -6,14 +6,33 @@ import UnitList from './unitList/UnitList';
 import { coursesArray } from './data';
 import styles from './course.module.css';
 import { ListComment } from '@/components/comments/comments-course/ListComment';
+import { getTotalCommentsCourse } from '@/services/courses';
 
 const CourseOverview = () => {
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [course, setCourse] = useState({});
+  const [totalComments, setTotalComments] = useState(0);
+  const courseId = '61780623f0307358ca494abf';
+
+  const listenerComentAdded = async (data) => {
+    const aux = [];
+    try {
+      if (data.length === 1 || data === 0) {
+        const rs = await getTotalCommentsCourse(courseId);
+        return setTotalComments(rs.total);
+      }
+      data.map((el) => el.length > 0
+        && el.map((item) => aux.push(item)));
+      return setTotalComments(aux.length);
+    } catch (error) {
+      return error;
+    }
+  };
 
   useEffect(() => {
     setCourse(coursesArray[0]);
+    listenerComentAdded(0);
   }, []);
 
   const [lessonIndex, tab] = params || [];
@@ -54,7 +73,7 @@ const CourseOverview = () => {
         isFirst={isFirst}
         isLast={isLast}
       />
-      <Menu />
+      <Menu totalComments={totalComments} />
 
       {(!tab || tab === 'overview') && course.unidades && (
         <UnitList
@@ -62,7 +81,7 @@ const CourseOverview = () => {
           lessons={course.lecciones}
         />
       )}
-      {tab === 'comments' && <ListComment courseId="61780623f0307358ca494abf" />}
+      {tab === 'comments' && <ListComment courseId={courseId} listenerComentAdded={listenerComentAdded} />}
       {tab === 'resources' && <h3 className="title">Recursos adicionales</h3>}
       {tab === 'certificate' && <h3 className="title">Certificado</h3>}
     </div>
