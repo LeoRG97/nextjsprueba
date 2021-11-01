@@ -56,3 +56,4 @@ export { default as TooltipContainer } from './articleManager/editorComponents/t
 export { default as FileInput } from './formComponents/fileInput/FileInput';
 export { default as ToolPreview } from './articleManager/toolEditor/toolPreview';
 export { default as EditorPreviewComponent } from './articleManager/articlePreview';
+export { default as ProfileCourses } from './profile/profileCourses/ProfileCourses';

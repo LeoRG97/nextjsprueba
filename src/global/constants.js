@@ -23,6 +23,7 @@ module.exports = {
     ArticlesUserAuthor: 'articulos/autor',
     ArticlesComments: 'comentarios/articulo',
     ArticleReplies: 'comentarios/respuesta',
+    CoursesAuthor: 'cursos/autor',
     CoursesComments: 'comentarios-curso/curso',
     CoursesReplies: 'comentarios-curso/respuesta',
     Forums: 'foros/',
