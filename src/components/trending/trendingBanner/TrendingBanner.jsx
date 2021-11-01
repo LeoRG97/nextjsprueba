@@ -58,8 +58,12 @@ const TrendingBannerComponent = ({ loggedIn }) => {
         </div>
       )}
       <div className={styles.centeredTitle}>
+        {
+          !loggedIn ? <h1 className="title-xl text-center">{getTitle()}</h1> : <h1 className={`title-xl text-center ${styles.topPadding}`}>{getTitle()}</h1>
+        }
+        {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
         {loggedIn && !query.search && (
-          <div className={`${styles.pageSwitch} ${styles.topPadding}`}>
+          <div className={`${styles.pageSwitch}`}>
             <small onClick={handleSwitchNavUser} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
             <Switch
               checked={!query.user}
@@ -69,10 +73,6 @@ const TrendingBannerComponent = ({ loggedIn }) => {
             <small onClick={handleSwitchNavNotUser} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
           </div>
         )}
-        {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
-        <h1 className="title-xl text-center">
-          {getTitle()}
-        </h1>
       </div>
     </>
   );
