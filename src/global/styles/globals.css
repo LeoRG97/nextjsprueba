@@ -1903,6 +1903,10 @@ div[disabled] {
   width: 50% !important;
 }
 
+.m-title-xl {
+  margin-bottom: 20px;
+}
+
 
 @media (max-width: 1400px) {
   .mt-lg-title {
