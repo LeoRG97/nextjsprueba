@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import { addComment } from '@/services/courses';
 import { LoadingIndicator } from '@/components';
 import { showSubscribeAlert } from '@/reducers/alert';
 
-export const ListComment = React.memo(({ courseId }) => {
+export const ListComment = React.memo(({ courseId, listenerComentAdded }) => {
   const [session] = useSession();
   const dispatch = useDispatch();
 
@@ -30,6 +30,12 @@ export const ListComment = React.memo(({ courseId }) => {
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
+
+  useEffect(() => {
+    if (data) {
+      listenerComentAdded(data);
+    }
+  }, [data]);
 
   const handleSubmitComment = async () => {
     if (values.comentario !== '') {
