@@ -139,7 +139,7 @@ export default function Home() {
                     { /* eslint-disable max-len */}
                     <div className={styles.margin_text_mapa}>
                       <p className="text-md text--theme-dark w-100 mt-3">
-                        Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando
+                        NTT DATA Group está avanzando con su Iniciativa Global One Team combinando
                         la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero,
                         así como facilitando colaboraciones comerciales entre naciones y empresas que
                         fortalecen el poder de marca mundial de
