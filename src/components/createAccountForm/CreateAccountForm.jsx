@@ -484,18 +484,18 @@ const CreateAccountForm = ({ preferences }) => {
   const handleFirstForm = (e) => {
     e.preventDefault();
     if (firstName === ''
-    || lastName === ''
-    || email === '' || email === undefined
-    || password === ''
-    || company === ''
-    || position === ''
-    || tel === ''
-    || city === ''
-    || country === ''
-    || state === ''
-    || yearValue === '' || yearValue === 'Año'
-    || mounthValue === '' || mounthValue === 'Mes'
-    || dayValue === '' || dayValue === 'Día') {
+      || lastName === ''
+      || email === '' || email === undefined
+      || password === ''
+      || company === ''
+      || position === ''
+      || tel === ''
+      || city === ''
+      || country === ''
+      || state === ''
+      || yearValue === '' || yearValue === 'Año'
+      || mounthValue === '' || mounthValue === 'Mes'
+      || dayValue === '' || dayValue === 'Día') {
       validate(firstName, 'name');
       validate(lastName, 'lastName');
       validate(email, 'email');
@@ -551,6 +551,10 @@ const CreateAccountForm = ({ preferences }) => {
         password: modelData.password,
         redirect: false,
       });
+
+      if (resSignIn.ok) {
+        localStorage.setItem('rememberme', modelData.email);
+      }
 
       if (resSignIn?.error) {
         setModalLoading(false);
