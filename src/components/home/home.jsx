@@ -159,7 +159,7 @@ const HomePage = ({ articulos }) => {
               </div>
               <p className="title">Aumenta<br />tu conocimiento</p>
               <Link href="/trending-topics" passHref>
-                <button className="button button--theme-primary">Trending topics</button>
+                <a className="button button--theme-primary">Trending topics</a>
               </Link>
             </div>
           </Col>
@@ -170,7 +170,7 @@ const HomePage = ({ articulos }) => {
               </div>
               <p className="title">Desarrolla<br />nuevas habilidades</p>
               <Link href="/think-tools" passHref>
-                <button className="button button--theme-primary">Think tools</button>
+                <a className="button button--theme-primary">Think tools</a>
               </Link>
             </div>
           </Col>
@@ -181,7 +181,7 @@ const HomePage = ({ articulos }) => {
               </div>
               <p className="title">Comparte<br />tu opinión</p>
               <Link href="/think-team" passHref>
-                <button className="button button--theme-primary">Think team</button>
+                <a className="button button--theme-primary">Think team</a>
               </Link>
             </div>
           </Col>
@@ -197,7 +197,7 @@ const HomePage = ({ articulos }) => {
               como tú.
             </p>
             <Link href="/experts" passHref>
-              <button className="button button--theme-primary">Buscar expertos</button>
+              <a className="button button--theme-primary">Buscar expertos</a>
             </Link>
           </Col>
           <Col xl="6" lg="6" sm="12">
