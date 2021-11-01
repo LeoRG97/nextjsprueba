@@ -13,6 +13,9 @@
   overflow: hidden;
 }
 
+.cursorPointer {
+  cursor: pointer !important;
+}
 .content_title::after {
   content: "";
   background-image: linear-gradient(to bottom, var(--contentTransparentRGB), var(--colorItemBgRGB) 95%);
