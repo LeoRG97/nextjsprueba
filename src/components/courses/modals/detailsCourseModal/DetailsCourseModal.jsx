@@ -151,7 +151,7 @@ const ModalDetailsCourse = ({ show, onClose, onSubmit }) => {
                   name="url_presentacion"
                   id="url"
                   className="input"
-                  placeholder="URL"
+                  placeholder="Código de incrustación"
                   value={url_presentacion}
                   onChange={handleChange}
                 />

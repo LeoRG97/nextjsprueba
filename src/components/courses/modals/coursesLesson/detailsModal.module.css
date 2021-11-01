@@ -81,7 +81,15 @@
   color: #fff;
 }
 
-
+.resource {
+  align-items: center;
+  display: flex;
+  margin: 1rem 0;
+  padding-left: 1rem;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid var(--colorItemBorder);
+}
 
 @media screen and (min-width: 768px) {
   .visibilitySection {

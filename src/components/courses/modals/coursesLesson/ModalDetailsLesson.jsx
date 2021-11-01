@@ -10,18 +10,32 @@ import { CourseContext } from '@/helpers/contexts/CourseContext';
 const ModalDetailsLesson = ({ show, onClose }) => {
   const [modalFileLessonShow, setModalFileLessonShow] = useState(false);
   const [typeFile, setTypeFile] = useState('');
+
+  const {
+    currentUnit,
+    handleAddLesson,
+    handleOpenLessonModal,
+    handleCloseLessonModal,
+  } = useContext(CourseContext);
+
   const showFile = (type) => {
     setTypeFile(type);
     setModalFileLessonShow(true);
+    handleCloseLessonModal();
   };
 
-  const { currentUnit, handleAddLesson } = useContext(CourseContext);
+  const hideFile = () => {
+    setModalFileLessonShow(false);
+    handleOpenLessonModal(currentUnit);
+  };
 
   const [formData, setFormData] = useState({
     nombre: '',
     video: '',
     descripcion: '',
   });
+  const [resources, setResources] = useState([]);
+
   const [errors, setErrors] = useState({ isValid: true });
   const [submitted, setSubmitted] = useState(false);
 
@@ -40,6 +54,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
       video: '',
       descripcion: '',
     });
+    setResources([]);
   };
 
   useEffect(() => {
@@ -50,13 +65,18 @@ const ModalDetailsLesson = ({ show, onClose }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleAddResource = (item) => {
+    setResources([...resources, item]);
+    hideFile();
+  };
+
   const handleSubmit = () => {
     setSubmitted(true);
     const errorData = validateLessonData(formData);
     if (!errorData.isValid) {
       setErrors(errorData);
     } else {
-      handleAddLesson(formData, currentUnit);
+      handleAddLesson({ ...formData, recursos: resources }, currentUnit);
       onClose();
       resetForm();
     }
@@ -101,7 +121,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
                       name="video"
                       id="linkVideo"
                       className="input"
-                      placeholder="URL"
+                      placeholder="Código de incrustación (iframe)"
                       value={video}
                       onChange={handleChange}
                     />
@@ -133,27 +153,35 @@ const ModalDetailsLesson = ({ show, onClose }) => {
               <h3 className="title mb-3">Recursos adicionales</h3>
             </Col>
             <Col md={12} className="">
-              <div className={styles.tools}>
-                <section>
-                  <div className={`${styles.files} text-md`}>Insertar</div>
-                </section>
-                <section>
-                  <TooltipContainer placement="top" tooltipText="Archivo">
-                    <div
-                      className={`icon ${styles.tools_media}`}
-                      onClick={() => showFile('file')}
-                    >q
-                    </div>
-                  </TooltipContainer>
-                  <TooltipContainer placement="top" tooltipText="Enlace">
-                    <div
-                      className={`icon ${styles.tools_media}`}
-                      onClick={() => showFile('link')}
-                    >l
-                    </div>
-                  </TooltipContainer>
-                </section>
-              </div>
+              <>
+                {resources.map((r) => (
+                  <div className={styles.resource}>
+                    <span className="icon me-2">{r.tipo === 'file' ? 'q' : 'l'}</span>
+                    <small className="text-sm text--theme-light">{r.nombre}</small>
+                  </div>
+                ))}
+                <div className={styles.tools}>
+                  <section>
+                    <div className={`${styles.files} text-md`}>Insertar</div>
+                  </section>
+                  <section>
+                    <TooltipContainer placement="top" tooltipText="Archivo">
+                      <div
+                        className={`icon ${styles.tools_media}`}
+                        onClick={() => showFile('file')}
+                      >q
+                      </div>
+                    </TooltipContainer>
+                    <TooltipContainer placement="top" tooltipText="Enlace">
+                      <div
+                        className={`icon ${styles.tools_media}`}
+                        onClick={() => showFile('link')}
+                      >l
+                      </div>
+                    </TooltipContainer>
+                  </section>
+                </div>
+              </>
             </Col>
           </Row>
 
@@ -171,7 +199,8 @@ const ModalDetailsLesson = ({ show, onClose }) => {
       </Modal>
       <ModalAddFileLesson
         show={modalFileLessonShow}
-        onClose={() => setModalFileLessonShow(false)}
+        onClose={hideFile}
+        onSubmit={handleAddResource}
         typeFile={typeFile} // si es un enlace o un archivo
       />
     </>
