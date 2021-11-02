@@ -6,7 +6,7 @@ import styles from './lessons.module.css';
 
 // listado de lecciones de la unidad
 const Lessons = React.memo(({ lessons, unitId }) => {
-  const { handleOpenLessonModal, handleSortLessons } = useContext(CourseContext);
+  const { handleNewLessonModal, handleSortLessons } = useContext(CourseContext);
 
   return (
     <div className={styles.container}>
@@ -33,7 +33,7 @@ const Lessons = React.memo(({ lessons, unitId }) => {
         <p className="subtitle m-0">Nueva lección</p>
         <button
           className="icon-button icon-button--primary"
-          onClick={() => handleOpenLessonModal(unitId)}
+          onClick={() => handleNewLessonModal(unitId)}
         >
           Ñ
         </button>

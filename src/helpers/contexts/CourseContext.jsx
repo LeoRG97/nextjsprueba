@@ -20,15 +20,20 @@ const CourseContextProvider = ({ children }) => {
     archivoPortada: '',
   });
   const [currentUnit, setCurrentUnit] = useState(null);
+  const [currentLesson, setCurrentLesson] = useState({});
   const [showLessonModal, setShowLessonModal] = useState(false);
 
-  const handleOpenLessonModal = (unitId) => {
+  const handleNewLessonModal = (unitId) => {
     setShowLessonModal(true);
     setCurrentUnit(unitId);
+    setCurrentLesson({});
   };
 
-  const handleCloseLessonModal = () => {
-    setShowLessonModal(false);
+  const handleEditLessonModal = (lessonId) => {
+    setCurrentUnit(null);
+    const item = lessons.find((lesson) => lesson._id === lessonId);
+    setCurrentLesson(item);
+    setShowLessonModal(true);
   };
 
   const handleUnitName = (id, value) => {
@@ -57,6 +62,11 @@ const CourseContextProvider = ({ children }) => {
       _id,
       unidad: currentUnit,
     }]);
+  };
+
+  const handleUpdateLesson = (data) => {
+    const updatedLessons = lessons.map((lesson) => (lesson._id === data._id ? data : lesson));
+    setLessons([...updatedLessons]);
   };
 
   const handleSortUnits = (event) => {
@@ -95,12 +105,15 @@ const CourseContextProvider = ({ children }) => {
       handleUnitName,
       handleAddUnit,
       showLessonModal,
+      setShowLessonModal,
       currentUnit,
-      handleOpenLessonModal,
-      handleCloseLessonModal,
+      currentLesson,
+      handleNewLessonModal,
+      handleEditLessonModal,
       handleAddLesson,
       handleSortUnits,
       handleSortLessons,
+      handleUpdateLesson,
     }}
     >
       {children}

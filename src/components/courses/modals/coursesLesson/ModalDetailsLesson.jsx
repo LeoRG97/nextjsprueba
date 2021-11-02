@@ -13,20 +13,21 @@ const ModalDetailsLesson = ({ show, onClose }) => {
 
   const {
     currentUnit,
+    currentLesson,
     handleAddLesson,
-    handleOpenLessonModal,
-    handleCloseLessonModal,
+    handleUpdateLesson,
+    setShowLessonModal,
   } = useContext(CourseContext);
 
   const showFile = (type) => {
     setTypeFile(type);
     setModalFileLessonShow(true);
-    handleCloseLessonModal();
+    setShowLessonModal(false);
   };
 
   const hideFile = () => {
     setModalFileLessonShow(false);
-    handleOpenLessonModal(currentUnit);
+    setShowLessonModal(true);
   };
 
   const [formData, setFormData] = useState({
@@ -53,12 +54,24 @@ const ModalDetailsLesson = ({ show, onClose }) => {
       nombre: '',
       video: '',
       descripcion: '',
+      _id: '',
     });
     setResources([]);
   };
 
   useEffect(() => {
-    resetForm();
+    if (currentLesson._id) {
+      setFormData({ ...currentLesson });
+      setResources([...currentLesson.recursos]);
+      setErrors({ isValid: true });
+      setSubmitted(false);
+    }
+  }, [currentLesson]);
+
+  useEffect(() => {
+    if (!currentLesson._id) {
+      resetForm();
+    }
   }, [currentUnit]);
 
   const handleChange = (e) => {
@@ -75,10 +88,12 @@ const ModalDetailsLesson = ({ show, onClose }) => {
     const errorData = validateLessonData(formData);
     if (!errorData.isValid) {
       setErrors(errorData);
-    } else {
+    } else if (!currentLesson._id) {
       handleAddLesson({ ...formData, recursos: resources }, currentUnit);
       onClose();
-      resetForm();
+    } else {
+      handleUpdateLesson({ ...formData, recursos: resources });
+      onClose();
     }
   };
 
@@ -155,7 +170,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
             <Col md={12} className="">
               <>
                 {resources.map((r) => (
-                  <div className={styles.resource}>
+                  <div className={styles.resource} key={r._id}>
                     <span className="icon me-2">{r.tipo === 'file' ? 'q' : 'l'}</span>
                     <small className="text-sm text--theme-light">{r.nombre}</small>
                   </div>
@@ -192,7 +207,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
           </button>
           <div>
             <button className="button button--theme-primary" onClick={handleSubmit}>
-              Crear lección
+              {currentLesson._id ? 'Actualizar lección' : 'Crear lección'}
             </button>
           </div>
         </Modal.Footer>

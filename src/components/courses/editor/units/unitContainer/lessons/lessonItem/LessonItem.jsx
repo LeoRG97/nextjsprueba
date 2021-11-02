@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { CourseContext } from '@/helpers/contexts/CourseContext';
 import styles from './lessonItem.module.css';
 
 // contenedor de una lección específica
 const LessonItem = React.memo(({ data, index }) => {
+  const { handleEditLessonModal } = useContext(CourseContext);
+
+  const handleEdit = () => {
+    handleEditLessonModal(data._id);
+  };
+
   return (
     <Draggable draggableId={data._id} index={index}>
       {(provided) => (
@@ -24,7 +31,7 @@ const LessonItem = React.memo(({ data, index }) => {
           <div className={styles.edit}>
             <button className={styles.btn}>0</button>
             <div className={styles.editDropdown}>
-              <div className="drop-item">
+              <div className="drop-item" onClick={handleEdit}>
                 <span className="drop-item__icon">K</span>
                 <span className="drop-item__content">Modificar</span>
               </div>
