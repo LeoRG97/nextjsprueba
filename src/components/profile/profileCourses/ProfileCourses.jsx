@@ -5,7 +5,7 @@ import useSWRInfinite from 'swr/infinite';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import styles from '../profileArticles/profile.module.css';
-import { ArticleListSelectComponent, CourseDetailComponent } from '@/components';
+import { ArticleListSelectComponent, CourseDetailComponent, LoadingIndicator } from '@/components';
 
 const ProfileCourses = () => {
   const router = useRouter();
@@ -24,8 +24,10 @@ const ProfileCourses = () => {
   };
 
   const {
-    data,
+    data, isValidating, size, setSize,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+
+  const isEmpty = data?.[size - 1]?.length === 0;
 
   const handleTypeChange = (item) => {
     const { query, pathname } = router;
@@ -64,11 +66,31 @@ const ProfileCourses = () => {
         </div>
       </div>
 
-      {data && data.map((page) => {
-        return page.map((article) => (
-          <CourseDetailComponent article={article} />
-        ));
-      })}
+      {
+        data && data.map((page) => {
+          return page.map((course) => (
+            <CourseDetailComponent
+              key={course._id}
+              curso={course}
+              isAdmin={session.user.role !== 'user'}
+            />
+          ));
+        })
+      }
+      <div className="d-flex justify-content-center">
+        <>
+          {isValidating
+            ? <LoadingIndicator />
+            : !isEmpty && (
+              <button
+                className="button button--theme-secondary"
+                onClick={() => setSize(size + 1)}
+              >
+                Ver más publicaciones
+              </button>
+            )}
+        </>
+      </div>
     </div>
   );
 };
