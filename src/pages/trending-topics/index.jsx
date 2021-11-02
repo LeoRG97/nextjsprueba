@@ -7,14 +7,15 @@ import {
   Footer,
   MainPosts,
   UserPreferencesPosts,
-  GlobalModals,
+  GlobalModals, MainCourses,
 } from '@/components';
 import { getPreferencesService } from '@/services/preferences';
 import { fetchArticlesSSR, fetchArticlesByUserPreferenceSSR } from '@/services/articles';
+import { fetchCoursesSSR } from '@/services/courses';
 
 // página general de trending topics
 const TrendingPage = ({
-  preferences, articulos, isAuthenticated,
+  preferences, articulos, cursos, isAuthenticated,
 }) => {
   const router = useRouter();
   const { query } = router;
@@ -26,17 +27,33 @@ const TrendingPage = ({
           loggedIn={isAuthenticated}
         />
         <div className="container">
-
-          {query.user
-            ? <UserPreferencesPosts initialData={articulos} />
-            : (
-              <MainPosts
-                initialData={articulos}
-                preferences={preferences}
-                loggedIn={isAuthenticated}
-              />
-            )}
-
+          {
+            query.type !== 'Cursos' ? (
+              <>
+                {query.user
+                  ? <UserPreferencesPosts initialData={articulos} />
+                  : (
+                    <MainPosts
+                      initialData={articulos}
+                      preferences={preferences}
+                      loggedIn={isAuthenticated}
+                    />
+                  )}
+              </>
+            ) : (
+              <>
+                {query.user
+                  ? <UserPreferencesPosts initialData={articulos} />
+                  : (
+                    <MainCourses
+                      initialData={cursos}
+                      preferences={preferences}
+                      loggedIn={isAuthenticated}
+                    />
+                  )}
+              </>
+            )
+          }
         </div>
       </main>
       <GlobalModals />
@@ -49,6 +66,7 @@ export async function getServerSideProps({ query, req }) {
   const { data: preferences } = await getPreferencesService();
   const session = await getSession({ req });
   let results;
+  let courses;
 
   if (query.search) {
     return {
@@ -71,15 +89,18 @@ export async function getServerSideProps({ query, req }) {
     }
     // pre-render articles for the user according to its preferences
     results = await fetchArticlesByUserPreferenceSSR(session.accessToken, query);
+    courses = [];
   } else {
     // pre-render articles
     results = await fetchArticlesSSR(query);
+    courses = await fetchCoursesSSR(query, 'publicado');
   }
 
   return {
     props: {
       preferences,
       articulos: results,
+      cursos: courses,
       isAuthenticated: session !== null,
     },
   };

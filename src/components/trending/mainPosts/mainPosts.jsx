@@ -97,6 +97,7 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
               { label: 'Blogs', value: 'Blog' },
               { label: 'Videos', value: 'Video' },
               { label: 'Podcasts', value: 'Podcast' },
+              { label: 'Cursos', value: 'Cursos' },
             ]}
           />
         </div>

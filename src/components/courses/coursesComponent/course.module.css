@@ -73,7 +73,7 @@
 }
 
 .cardNumbersContainer div {
-  width: auto;
+  width: 15%;
 }
 
 .cardNumbersContainer div:first-child {

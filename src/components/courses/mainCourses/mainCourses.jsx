@@ -1,35 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import Link from 'next/link';
 import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
-import ArticlesListComponent from '@/components/articlesList/articlesListComponent/articlesList';
-import { fetchPaginatedDataWithAuthToken } from '@/services/swr';
+import { fetchCoursesPaginatedData } from '@/services/swr';
+import styles from './mainCourses.module.css';
 import { ApiRoutes } from '@/global/constants';
-import { LoadingIndicator } from '@/components';
+import { CoursesListComponent, LoadingIndicator, TrendingFilterComponent } from '@/components';
 
-const UserPreferencesPosts = ({ initialData }) => {
+const AllCourses = ({ preferences, initialData, loggedIn }) => {
   const router = useRouter();
-  const [articles, setArticles] = useState(initialData);
+  const [cursos, setCursos] = useState(initialData.data);
   const [pageNum, setPageNum] = useState(1);
+  const estado = 'publicado';
 
   const { data, mutate } = useSWR(
-    [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
-    fetchPaginatedDataWithAuthToken,
+    [ApiRoutes.Cursos, router.query, pageNum, estado],
+    fetchCoursesPaginatedData,
   );
 
-  const onFilter = (filteredArticles) => {
-    mutate([...data]);
-    setArticles(filteredArticles);
+  const onFilter = (filteredCursos) => {
+    mutate({ ...data });
+    setCursos(filteredCursos);
   };
-
   useEffect(() => {
     if (data && pageNum === 1) {
-      setArticles(data);
+      setCursos(data.data);
     } else if (data && pageNum > 1) {
-      const array = articles.concat(data);
+      const array = cursos.concat(data.data);
       const set = new Set(array.map(JSON.stringify));
       const arrSinDuplicaciones = Array.from(set).map(JSON.parse);
-      setArticles(arrSinDuplicaciones);
+      setCursos(arrSinDuplicaciones);
     }
   }, [data]);
 
@@ -61,6 +62,15 @@ const UserPreferencesPosts = ({ initialData }) => {
 
   return (
     <>
+      {query.search && (
+        <div className="text-center">
+          <p className={`subtitle d-block ${styles.topPadding}`}>{data ? `${data.registros} resultados para` : 'Cargando...'}</p>
+          <h1 className="title-xl">
+            {`"${query.search}"`}
+          </h1>
+        </div>
+      )}
+      {!router.query.user && <TrendingFilterComponent preferences={preferences} />}
       <div className="selects-container">
         <div className="select-recent">
           <ArticleListSelectComponent
@@ -90,26 +100,53 @@ const UserPreferencesPosts = ({ initialData }) => {
           />
         </div>
       </div>
-      {(articles) ? (
-        <ArticlesListComponent
-          articles={articles}
+      {(cursos) ? (
+        <CoursesListComponent
+          cursos={cursos}
           showOptions
           onFilter={onFilter}
         />
       ) : <></>}
       <div className="d-flex justify-content-center">
-        {!data && <LoadingIndicator />}
-        {data && data.length > 0 && (
-          <button
-            className="button button--theme-secondary"
-            onClick={() => setPageNum(pageNum + 1)}
-          >
-            Ver más publicaciones
-          </button>
+        {!loggedIn ? (
+          <div className={`${styles.listFooter} text-md text--theme-light`}>
+            <div>
+              Para ver más
+              <Link href="/create-account" passHref>
+                <button className="button button--theme-primary ms-2 me-2">Regístrate</button>
+              </Link>
+            </div>
+            <div>
+              ó
+              <Link href="/login" passHref>
+                <a className="text-md text-link ms-2">Inicia sesión</a>
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <>
+            {!data && <LoadingIndicator />}
+            {
+              data && data.data ? (
+                <>
+                  {
+                    data.data.length > 0 && (
+                      <button
+                        className="button button--theme-secondary"
+                        onClick={() => setPageNum(pageNum + 1)}
+                      >
+                        Ver más cursos
+                      </button>
+                    )
+                  }
+                </>
+              ) : (<></>)
+            }
+          </>
         )}
       </div>
     </>
   );
 };
 
-export default UserPreferencesPosts;
+export default AllCourses;
