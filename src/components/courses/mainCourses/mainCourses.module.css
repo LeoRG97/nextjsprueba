@@ -1,0 +1,19 @@
+.listFooter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 22rem;
+}
+
+.topPadding {
+  padding-top: 7rem;
+}
+
+@media (max-width: 575.98px) {
+  .listFooter {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    height: 5rem;
+  }
+}
