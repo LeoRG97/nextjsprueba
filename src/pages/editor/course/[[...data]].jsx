@@ -16,9 +16,9 @@ const CourseEditorPage = () => {
   const getCourse = async (id) => {
     const res = await fetchCourseById(id);
     const course = res.data[0];
+    setLoading(false);
     if (course) {
       setInitialData(course);
-      setLoading(false);
     } else {
       setError('No se encontró el curso');
     }
@@ -33,7 +33,8 @@ const CourseEditorPage = () => {
   const showContent = () => {
     if (loading) {
       return <div className="centered-content mt-5 pt-5"><LoadingIndicator /></div>;
-    } if (error) {
+    }
+    if (error) {
       return <h3 className="text-center title mt-5 pt-5">{error}</h3>;
     }
 

@@ -23,7 +23,7 @@ const CourseEditor = ({ initialData }) => {
     setUnits,
     setLessons,
     showLessonModal,
-    handleCloseLessonModal,
+    setShowLessonModal,
   } = useContext(CourseContext);
 
   const [submitting, setSubmitting] = useState(false);
@@ -146,7 +146,7 @@ const CourseEditor = ({ initialData }) => {
       </div>
       <ModalDetailsLesson
         show={showLessonModal}
-        onClose={handleCloseLessonModal}
+        onClose={() => setShowLessonModal(false)}
       />
       <ModalDetailsCourse
         show={showDetails}
