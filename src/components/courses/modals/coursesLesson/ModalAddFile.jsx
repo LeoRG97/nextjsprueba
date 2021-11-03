@@ -3,23 +3,21 @@ import PropTypes from 'prop-types';
 import { Col, Modal, Row } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 import styles from './detailsModal.module.css';
-import { FileInput } from '@/components';
+import FileInput from '../../../formComponents/fileInput/FileInput';
 import { upload } from '@/services/aws';
 import { generateMongoID } from '@/helpers/mongoIDGenerator';
 import { validateResourceData } from './lessonValidation';
 
 const ModalAddFileLesson = ({
-  show, onClose, onSubmit, typeFile,
+  show, onClose, onSubmit, typeFile, initialData, onUpdate,
 }) => {
   const [session] = useSession();
-
   const [fileData, setFileData] = useState({
     nombre: '',
     ruta: '',
     descripcion: '',
   });
   const [submitted, setSubmitted] = useState(false);
-
   const [fileLoading, setFileLoading] = useState(false);
   const [errors, setErrors] = useState({});
 
@@ -28,7 +26,7 @@ const ModalAddFileLesson = ({
   };
 
   const handleSaveFile = async (file) => {
-    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'application/pdf') {
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'application/pdf' && file.type !== 'application/zip') {
       return setErrors({ ...errors, ruta: 'El tipo de archivo no está permitido' });
     }
     setErrors({ ...errors, ruta: '' });
@@ -45,17 +43,29 @@ const ModalAddFileLesson = ({
     return '';
   };
 
+  const handleDeleteFile = () => {
+    setFileData({ ...fileData, ruta: '' });
+  };
+
   useEffect(() => {
-    setSubmitted(false);
-    setErrors({ isValid: true });
-    setFileData({
-      _id: '',
-      nombre: '',
-      ruta: '',
-      tipo: typeFile,
-      descripcion: '',
-    });
+    if (!initialData._id) {
+      setSubmitted(false);
+      setErrors({ isValid: true });
+      setFileData({
+        _id: '',
+        nombre: '',
+        ruta: '',
+        tipo: typeFile,
+        descripcion: '',
+      });
+    }
   }, [typeFile]);
+
+  useEffect(() => {
+    if (initialData._id) {
+      setFileData({ ...initialData });
+    }
+  }, [initialData]);
 
   useEffect(() => {
     if (submitted) {
@@ -69,9 +79,11 @@ const ModalAddFileLesson = ({
     const errorObj = validateResourceData(fileData);
     if (!errorObj.isValid) {
       setErrors(errorObj);
-    } else {
+    } else if (!fileData._id) {
       const _id = generateMongoID();
       onSubmit({ ...fileData, _id });
+    } else {
+      onUpdate(fileData);
     }
   };
 
@@ -116,7 +128,7 @@ const ModalAddFileLesson = ({
                             inputId="recurso"
                             fileName={fileLoading ? 'Cargando...' : fileData.ruta.split('resources/')[1]}
                             onSave={handleSaveFile}
-                          // onDelete={handleDeleteFile}
+                            onDelete={handleDeleteFile}
                           />
                         </label>
 
@@ -170,8 +182,8 @@ const ModalAddFileLesson = ({
             Descartar
           </button>
           <div>
-            <button className="button button--theme-primary" onClick={handleSubmit}>
-              Insertar
+            <button className="button button--theme-primary" onClick={handleSubmit} disabled={fileLoading}>
+              {fileData._id ? 'Actualizar' : 'Insertar'}
             </button>
           </div>
         </Modal.Footer>

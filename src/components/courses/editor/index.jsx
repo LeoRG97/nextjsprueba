@@ -23,7 +23,8 @@ const CourseEditor = ({ initialData }) => {
     setUnits,
     setLessons,
     showLessonModal,
-    setShowLessonModal,
+    handleCancelLessonEdit,
+    eraseOldResourcesFromS3,
   } = useContext(CourseContext);
 
   const [submitting, setSubmitting] = useState(false);
@@ -76,6 +77,7 @@ const CourseEditor = ({ initialData }) => {
       const res = await saveCourse(data, session.user.id);
       setSubmitting(false);
       if (res.ok) {
+        eraseOldResourcesFromS3();
         setSuccessData({
           show: true,
           title: estatus === 'publicado' ? 'Publicacion finalizada' : 'Cambios guardados',
@@ -94,6 +96,7 @@ const CourseEditor = ({ initialData }) => {
       const res = await updateCourse(course._id, data, session.user.id);
       setSubmitting(false);
       if (res.ok) {
+        eraseOldResourcesFromS3();
         setSuccessData({
           show: true,
           title: estatus === 'publicado' ? 'Publicación finalizada' : 'Cambios guardados',
@@ -146,7 +149,7 @@ const CourseEditor = ({ initialData }) => {
       </div>
       <ModalDetailsLesson
         show={showLessonModal}
-        onClose={() => setShowLessonModal(false)}
+        onClose={handleCancelLessonEdit}
       />
       <ModalDetailsCourse
         show={showDetails}
