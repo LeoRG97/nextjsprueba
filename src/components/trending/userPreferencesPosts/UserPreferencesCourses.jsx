@@ -5,6 +5,7 @@ import ArticleListSelectComponent from '@/components/articlesList/articleListSel
 import { fetchPaginatedDataWithAuthTokenCourses } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { CoursesListComponent, LoadingIndicator } from '@/components';
+import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 
 const UserPreferencesCourses = ({ initialData }) => {
   const router = useRouter();
@@ -74,19 +75,26 @@ const UserPreferencesCourses = ({ initialData }) => {
           />
         </div>
         <div className="select-filter">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-              { label: 'Blogs', value: 'Blog' },
-              { label: 'Videos', value: 'Video' },
-              { label: 'Podcasts', value: 'Podcast' },
-              { label: 'Cursos', value: 'Cursos' },
-            ]}
-          />
+          <TooltipContainer
+            placement="top"
+            tooltipText="Filtrar por tipo de entrada"
+          >
+            <div>
+              <ArticleListSelectComponent
+                defaultTitle="Todos"
+                currentValue={query.type}
+                onChange={handleTypeChange}
+                selectN="2"
+                items={[
+                  { label: 'Todos', value: '' },
+                  { label: 'Blogs', value: 'Blog' },
+                  { label: 'Videos', value: 'Video' },
+                  { label: 'Podcasts', value: 'Podcast' },
+                  { label: 'Cursos', value: 'Cursos' },
+                ]}
+              />
+            </div>
+          </TooltipContainer>
         </div>
       </div>
       {(courses) ? (

@@ -9,6 +9,7 @@ import { fetchPaginatedData } from '@/services/swr';
 import styles from './mainPosts.module.css';
 import { ApiRoutes } from '@/global/constants';
 import { LoadingIndicator } from '@/components';
+import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 
 const AllPosts = ({ preferences, initialData, loggedIn }) => {
   const router = useRouter();
@@ -87,19 +88,26 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
           />
         </div>
         <div className="select-filter">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-              { label: 'Blogs', value: 'Blog' },
-              { label: 'Videos', value: 'Video' },
-              { label: 'Podcasts', value: 'Podcast' },
-              { label: 'Cursos', value: 'Cursos' },
-            ]}
-          />
+          <TooltipContainer
+            placement="top"
+            tooltipText="Filtrar por tipo de entrada"
+          >
+            <div>
+              <ArticleListSelectComponent
+                defaultTitle="Todos"
+                currentValue={query.type}
+                onChange={handleTypeChange}
+                selectN="2"
+                items={[
+                  { label: 'Todos', value: '' },
+                  { label: 'Blogs', value: 'Blog' },
+                  { label: 'Videos', value: 'Video' },
+                  { label: 'Podcasts', value: 'Podcast' },
+                  { label: 'Cursos', value: 'Cursos' },
+                ]}
+              />
+            </div>
+          </TooltipContainer>
         </div>
       </div>
       {(articles) ? (

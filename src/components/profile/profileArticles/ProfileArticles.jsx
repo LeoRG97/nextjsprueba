@@ -16,6 +16,7 @@ import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import styles from './profile.module.css';
+import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 
 const ProfileArticles = ({ estado }) => {
   const router = useRouter();
@@ -90,18 +91,25 @@ const ProfileArticles = ({ estado }) => {
         estado === 'publicado' && (
           <div className="selects-container">
             <div className="select-recent">
-              <ArticleListSelectComponent
-                defaultTitle="Todos"
-                currentValue={query.type}
-                onChange={handleTypeChange}
-                selectN="2"
-                items={[
-                  { label: 'Todos', value: '' },
-                  { label: 'Blogs', value: 'Blog' },
-                  { label: 'Videos', value: 'Video' },
-                  { label: 'Podcasts', value: 'Podcast' },
-                ]}
-              />
+              <TooltipContainer
+                placement="top"
+                tooltipText="Filtrar por tipo de entrada"
+              >
+                <div>
+                  <ArticleListSelectComponent
+                    defaultTitle="Todos"
+                    currentValue={query.type}
+                    onChange={handleTypeChange}
+                    selectN="2"
+                    items={[
+                      { label: 'Todos', value: '' },
+                      { label: 'Blogs', value: 'Blog' },
+                      { label: 'Videos', value: 'Video' },
+                      { label: 'Podcasts', value: 'Podcast' },
+                    ]}
+                  />
+                </div>
+              </TooltipContainer>
             </div>
             <div className={`select-filter ${styles.hideMobile}`}>
               <div
