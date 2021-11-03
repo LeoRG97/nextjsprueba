@@ -12,10 +12,10 @@ import styles from './accordion.module.css';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { deleteToolService } from '@/services/tools';
-import { showPremiumAlert } from '@/reducers/alert';
+import { hideToolsModal, showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
 
 const AccordionCollapse = ({
-  herramienta, isEditable, mutate, isModalClose,
+  herramienta, isEditable, mutate,
 }) => {
   const router = useRouter();
   const [hover, setHover] = useState(false);
@@ -82,6 +82,11 @@ const AccordionCollapse = ({
     }
   };
 
+  const handleSubscribeModal = () => {
+    dispatch(showSubscribeAlert());
+    dispatch(hideToolsModal());
+  };
+
   return (
     <div className={styles.content_tool}>
       <div className="row d-flex mb-2 justify-content-between align-items-center" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
@@ -96,9 +101,7 @@ const AccordionCollapse = ({
               </div>
             ) : (
               <div
-                onClick={() => {
-                  isModalClose();
-                }}
+                onClick={handleSubscribeModal}
                 className={styles.link_tool}
               >
                 <div className="text-md">{herramienta.objetivo}</div>

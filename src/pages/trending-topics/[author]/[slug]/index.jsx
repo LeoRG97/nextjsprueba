@@ -7,7 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
 import { useDispatch } from 'react-redux';
 import {
-  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer, GlobalModals,
+  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer,
 } from '@/components';
 import {
   getArticleBySlug,
@@ -360,7 +360,6 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
         currentUrl={currentUrl}
         title={blog.portada ? blog.portada.titulo : ''}
       />
-      <GlobalModals />
       <Footer />
     </Layout>
   );

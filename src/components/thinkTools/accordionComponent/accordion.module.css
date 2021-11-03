@@ -3,7 +3,7 @@
 }
 
 .card_container {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 
 .card_title {

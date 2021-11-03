@@ -10,6 +10,7 @@ import { fetch as fetchProfile } from '@/reducers/profile';
 import styles from './navbar.module.css';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
 import UserNavbarComponent from './UserNavbar';
+import { showToolsModal } from '@/reducers/alert';
 
 const NavbarComponent = () => {
   const router = useRouter();
@@ -45,6 +46,10 @@ const NavbarComponent = () => {
   };
 
   const inputPlaceholder = router.pathname === '/experts' ? 'Buscar expertos' : 'Buscar artículos';
+
+  const handleToolsModal = () => {
+    dispatch(showToolsModal());
+  };
 
   return (
     <div className={styles.navC}>
@@ -128,11 +133,9 @@ const NavbarComponent = () => {
                     {
                       session ? (
                         <div className={styles.divNavItemStyle}>
-                          <Link href="/think-tools" passHref>
-                            <button className="button button--theme-warning me-2 button_discover">
-                              <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
-                            </button>
-                          </Link>
+                          <button className="button button--theme-warning me-2 button_discover" onClick={handleToolsModal}>
+                            <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                          </button>
                           <UserNavbarComponent
                             picture={data && data.picture}
                             name={data && data.name}
@@ -141,11 +144,9 @@ const NavbarComponent = () => {
                         </div>
                       ) : (
                         <div className={styles.divNavItemStyle}>
-                          <Link href="/think-tools" passHref>
-                            <button className="button button--theme-warning me-2 button_discover">
-                              <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
-                            </button>
-                          </Link>
+                          <button className="button button--theme-warning me-2 button_discover" onClick={handleToolsModal}>
+                            <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                          </button>
                           <Link href="/login" passHref>
                             <Nav.Link className="text-md text--theme-light">Iniciar sesión</Nav.Link>
                           </Link>
@@ -229,11 +230,9 @@ const NavbarComponent = () => {
               </div>
 
               <div className={`${styles.divNavItemStyle} mt-4`}>
-                <Link href="/about" passHref>
-                  <button className="button button--theme-warning">
-                    <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
-                  </button>
-                </Link>
+                <button className="button button--theme-warning" onClick={handleToolsModal}>
+                  <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                </button>
                 <Link href="/about" passHref>
                   <Nav.Link className="text-md text--theme-light mt-4">Acerca de</Nav.Link>
                 </Link>

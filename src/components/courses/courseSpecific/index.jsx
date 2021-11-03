@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/client';
 import { useDispatch } from 'react-redux';
 import styles from './courseSpecific.module.css';
 import ContentCourse from './contentCourse/contentCourse';
-import { AutorCourseComponent, GlobalModals } from '@/components';
+import { AutorCourseComponent } from '@/components';
 import { checkIfSuscribeThisCourse, createSubscriptionService } from '@/services/subscription';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
@@ -173,7 +173,6 @@ const CourseSpecific = ({ course }) => {
         textHeader="Ha ocurrido un error"
         textBody="Por favor, vuelva a intentarlo."
       />
-      <GlobalModals />
     </Container>
   );
 };

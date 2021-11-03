@@ -7,7 +7,7 @@ import {
   Footer,
   MainPosts,
   UserPreferencesPosts,
-  GlobalModals, MainCourses,
+  MainCourses,
 } from '@/components';
 import { getPreferencesService } from '@/services/preferences';
 import { fetchArticlesSSR, fetchArticlesByUserPreferenceSSR } from '@/services/articles';
@@ -57,7 +57,6 @@ const TrendingPage = ({
           }
         </div>
       </main>
-      <GlobalModals />
       <Footer />
     </Layout>
   );
