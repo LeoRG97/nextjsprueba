@@ -96,7 +96,7 @@ const HomePage = ({ articulos }) => {
                             </Col>
                             <Col xs="6" lg="6" sm="12" className={`${styles.content_goto} col-12`}>
                               <div>
-                                <Link href={`trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
+                                <Link href={`/trending-topics/${item.usuario_id[0].slug}/${item.slug}`}>
                                   <a>
                                     <button className="button button--theme-light">Ir a la publicación</button>
                                   </a>
@@ -126,7 +126,7 @@ const HomePage = ({ articulos }) => {
                 <Row>
                   <div className={`${styles.content_centered} ${styles.content_more} `}>
                     <p className="title">Descubre más publicaciones</p>
-                    <Link href="trending-topics/" passHref>
+                    <Link href="/trending-topics" passHref>
                       <a>
                         <button className="button button--theme-secondary">Ver más</button>
                       </a>

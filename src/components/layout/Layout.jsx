@@ -1,5 +1,7 @@
 import React from 'react';
+import GlobalModals from '../modalsIndicators/ModalContainer';
 import NavbarComponent from '../navbar/Navbar';
+import ThinkToolsModal from '../thinkTools/thinkToolsModal/ThinkToolsModal';
 
 const Layout = ({ children, className }) => {
   return (
@@ -8,6 +10,8 @@ const Layout = ({ children, className }) => {
       <div className={`main-container main-bg ${className}`}>
         {children}
       </div>
+      <ThinkToolsModal />
+      <GlobalModals />
     </>
   );
 };

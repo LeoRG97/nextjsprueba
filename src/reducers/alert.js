@@ -6,4 +6,6 @@ export const {
   hideSubscribeAlert,
   showPremiumAlert,
   hidePremiumAlert,
+  showToolsModal,
+  hideToolsModal,
 } = Alert();
