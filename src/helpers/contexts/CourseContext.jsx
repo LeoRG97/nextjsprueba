@@ -1,5 +1,7 @@
 /* eslint-disable no-bitwise */
 import React, { createContext, useState } from 'react';
+import { BUCKET_URL } from '@/global/constants';
+import { remove } from '@/services/aws';
 import { generateMongoID } from '../mongoIDGenerator';
 
 export const CourseContext = createContext();
@@ -22,6 +24,7 @@ const CourseContextProvider = ({ children }) => {
   const [currentUnit, setCurrentUnit] = useState(null);
   const [currentLesson, setCurrentLesson] = useState({});
   const [showLessonModal, setShowLessonModal] = useState(false);
+  const [deletedResources, setDeletedResources] = useState([]);
 
   const handleNewLessonModal = (unitId) => {
     setShowLessonModal(true);
@@ -34,6 +37,14 @@ const CourseContextProvider = ({ children }) => {
     const item = lessons.find((lesson) => lesson._id === lessonId);
     setCurrentLesson(item);
     setShowLessonModal(true);
+  };
+
+  const handleCancelLessonEdit = () => {
+    setShowLessonModal(false);
+    setTimeout(() => {
+      setCurrentUnit(null);
+      setCurrentLesson({});
+    }, 100);
   };
 
   const handleUnitName = (id, value) => {
@@ -94,6 +105,17 @@ const CourseContextProvider = ({ children }) => {
     }
   };
 
+  const addDeletedResources = (data) => {
+    setDeletedResources([...deletedResources, ...data]);
+  };
+
+  const eraseOldResourcesFromS3 = () => {
+    deletedResources.forEach(async (r) => {
+      await remove(`${BUCKET_URL}${r}`);
+    });
+    setDeletedResources([]);
+  };
+
   return (
     <CourseContext.Provider value={{
       course,
@@ -110,10 +132,13 @@ const CourseContextProvider = ({ children }) => {
       currentLesson,
       handleNewLessonModal,
       handleEditLessonModal,
+      handleCancelLessonEdit,
       handleAddLesson,
       handleSortUnits,
       handleSortLessons,
       handleUpdateLesson,
+      addDeletedResources,
+      eraseOldResourcesFromS3,
     }}
     >
       {children}

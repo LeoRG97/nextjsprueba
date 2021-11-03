@@ -46,12 +46,12 @@
 
 .btnFirst {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .btnSecond {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 @media (max-width: 767.98px) {
