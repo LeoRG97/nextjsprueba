@@ -11,7 +11,8 @@ import {
 } from '@/components';
 import { getPreferencesService } from '@/services/preferences';
 import { fetchArticlesSSR, fetchArticlesByUserPreferenceSSR } from '@/services/articles';
-import { fetchCoursesSSR } from '@/services/courses';
+import { fetchCoursesByUserPreferenceSSR, fetchCoursesSSR } from '@/services/courses';
+import UserPreferencesCourses from '@/components/trending/userPreferencesPosts/UserPreferencesCourses';
 
 // página general de trending topics
 const TrendingPage = ({
@@ -43,7 +44,7 @@ const TrendingPage = ({
             ) : (
               <>
                 {query.user
-                  ? <UserPreferencesPosts initialData={articulos} />
+                  ? <UserPreferencesCourses initialData={cursos} />
                   : (
                     <MainCourses
                       initialData={cursos}
@@ -89,7 +90,7 @@ export async function getServerSideProps({ query, req }) {
     }
     // pre-render articles for the user according to its preferences
     results = await fetchArticlesByUserPreferenceSSR(session.accessToken, query);
-    courses = [];
+    courses = await fetchCoursesByUserPreferenceSSR(session.accessToken, query);
   } else {
     // pre-render articles
     results = await fetchArticlesSSR(query);

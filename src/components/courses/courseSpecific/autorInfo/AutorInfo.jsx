@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styles from '../courseSpecific.module.css';
 
 const AutorCourseComponent = ({
-  autor, suscrito, handleSubscribe,
+  autor, suscrito, handleSubscribe, handleLesson,
 }) => {
   return (
     <Container className="content-n-p content-blog-autor mt-3">
@@ -29,7 +29,7 @@ const AutorCourseComponent = ({
           <div className={styles.buttonsContainer}>
             {
               suscrito ? (
-                <button className="button button--theme-light me-2">
+                <button className="button button--theme-light me-2" onClick={handleLesson()}>
                   <span className="button__icon-left">F</span>{' '}Continuar viendo
                 </button>
               ) : (
