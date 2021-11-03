@@ -16,14 +16,14 @@ const Resources = ({ resources }) => {
       case 'reporte': {
         if (session) {
           return (
-            <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer">
+            <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">P</span>
               Reporte
             </a>
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource.tipo}>
+          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">P</span>
             Reporte
           </button>
@@ -32,14 +32,14 @@ const Resources = ({ resources }) => {
       case 'infografia': {
         if (session) {
           return (
-            <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer">
+            <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">S</span>
               Infografía
             </a>
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource.tipo}>
+          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">S</span>
             Infografía
           </button>
@@ -48,14 +48,14 @@ const Resources = ({ resources }) => {
       case 'video': {
         if (session) {
           return (
-            <a href={resource.ruta} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer">
+            <a href={resource.ruta} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">N</span>
               Video
             </a>
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource.tipo}>
+          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">N</span>
             Video
           </button>
