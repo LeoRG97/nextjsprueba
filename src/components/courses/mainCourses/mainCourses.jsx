@@ -130,7 +130,7 @@ const AllCourses = ({ preferences, initialData, loggedIn }) => {
               data && data.data ? (
                 <>
                   {
-                    data.data.length > 0 && (
+                    data.data.length > 0 && data.registros > 9 && (
                       <button
                         className="button button--theme-secondary"
                         onClick={() => setPageNum(pageNum + 1)}
