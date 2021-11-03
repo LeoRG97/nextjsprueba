@@ -27,6 +27,22 @@ const TrendingBannerComponent = ({ loggedIn }) => {
     router.push('/trending-topics', undefined, { shallow: false });
   };
 
+  const handleSwitchNavCourses = () => {
+    if (!query.user) {
+      router.push('/trending-topics?user=true&type=Cursos', undefined, { shallow: false });
+    } else {
+      router.push('/trending-topics?type=Cursos', undefined, { shallow: false });
+    }
+  };
+
+  const handleSwitchNavUserCourses = () => {
+    router.push('/trending-topics?user=true&type=Cursos', undefined, { shallow: false });
+  };
+
+  const handleSwitchNavNotUserCourses = () => {
+    router.push('/trending-topics?type=Cursos', undefined, { shallow: false });
+  };
+
   const getTitle = () => {
     if (query.search) {
       return null;
@@ -91,13 +107,13 @@ const TrendingBannerComponent = ({ loggedIn }) => {
               {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
               {loggedIn && !query.search && (
                 <div className={`${styles.pageSwitch}`}>
-                  <small className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
+                  <small onClick={handleSwitchNavUserCourses} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
                   <Switch
                     checked={!query.user}
-                    onChange={() => console.log('change')}
+                    onChange={handleSwitchNavCourses}
                     inverted
                   />
-                  <small className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
+                  <small onClick={handleSwitchNavNotUserCourses} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
                 </div>
               )}
             </>

@@ -182,13 +182,12 @@ export const updateRespuesta = async (comentarioId, titulo, respuestaId) => {
 };
 
 export const fetchCoursesByUserPreferenceSSR = async (token, query) => {
-  const { category, sort } = query;
+  const { sort } = query;
   try {
     const res = await axios().get(ApiRoutes.CursosUserPreference, {
       params: {
         pageNum: 1,
         pageSize: 9,
-        ...(category && { categoria: category }),
         ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
       },
       headers: {

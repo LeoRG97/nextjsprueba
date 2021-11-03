@@ -14,6 +14,7 @@ import { showSubscribeAlert } from '@/reducers/alert';
 
 const CourseSpecific = ({ course }) => {
   const router = useRouter();
+  const { query: { slug } } = router;
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState(false);
   const [suscrito, setSuscrito] = useState(false);
@@ -23,6 +24,14 @@ const CourseSpecific = ({ course }) => {
 
   const goCoursesNav = () => {
     router.push('/trending-topics?type=Cursos', undefined, { scroll: false, shallow: true });
+  };
+
+  const handleLesson = () => {
+    if (course && course.lecciones) {
+      if (course.lecciones.length > 0) {
+        router.push(`/courses/${slug}/lesson/${course.lecciones[0]._id}/`, undefined, { scroll: false, shallow: true });
+      }
+    }
   };
 
   const handleSubscribe = async () => {
@@ -108,6 +117,7 @@ const CourseSpecific = ({ course }) => {
               session?.user
                 ? (handleSubscribe()) : dispatchCourse(showSubscribeAlert())
             )}
+            handleLesson={() => handleLesson}
           />
           <Col xs={12}>
             <div className="mt-3">
@@ -131,7 +141,7 @@ const CourseSpecific = ({ course }) => {
               <Col xs={6} className={styles.btnSecond}>
                 {
                   suscrito ? (
-                    <button className="button button--theme-light me-2">
+                    <button className="button button--theme-light me-2" onClick={() => handleLesson()}>
                       <span className="button__icon-left">F</span>{' '}Continuar viendo
                     </button>
                   ) : (
