@@ -16,16 +16,6 @@ const ModalVideo = (props) => {
   const [disable, setDisable] = useState(true);
   const [invalidLink, setInvalid] = useState(false);
 
-  const validURL = (str) => {
-    const pattern = new RegExp('^(https?:\\/\\/)?' // protocol
-      + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-      + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-      + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-      + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-      + '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!pattern.test(str);
-  };
-
   const handleChange = (e) => {
     e.persist();
     setData(e.target.value);
@@ -36,26 +26,20 @@ const ModalVideo = (props) => {
       setInvalid(true);
     }
 
-    if (!validURL(e.target.value)) {
-      const iframeContentStart = e.target.value.startsWith('<iframe');
-      const iframeContentEnd = e.target.value.endsWith('></iframe>');
-      if (!iframeContentStart || !iframeContentEnd) {
-        setDisable(true);
-        setInvalid(true);
-      } else {
-        setDisable(false);
-        setInvalid(false);
-      }
-
-      if (iframeContentStart) {
-        setEmbed(true);
-      } else {
-        setEmbed(false);
-      }
-    } else if (validURL(e.target.value)) {
-      setEmbed(false);
+    const iframeContentStart = e.target.value.startsWith('<iframe');
+    const iframeContentEnd = e.target.value.endsWith('></iframe>');
+    if (!iframeContentStart || !iframeContentEnd) {
+      setDisable(true);
+      setInvalid(true);
+    } else {
       setDisable(false);
       setInvalid(false);
+    }
+
+    if (iframeContentStart) {
+      setEmbed(true);
+    } else {
+      setEmbed(false);
     }
   };
 
@@ -106,19 +90,19 @@ const ModalVideo = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={`${styles.modal_video_backC} ${styles.modal_video_body} `}>
-          <label className="subtitle text--theme-light">Enlace</label>
+          <label className="subtitle text--theme-light">Código de incrustación</label>
           <input
             className="input"
             type="url"
             pattern="https://.*"
-            placeholder="Link del video o código de incrustación"
+            placeholder="Código de incrustación"
             required
             onChange={callsFunctions}
             value={inputLink}
           />
           {
             (invalidLink)
-              ? (<label className="text-sm text--theme-error">URL &oacute; IFRAME invalido</label>) : (<> </>)
+              ? (<p className="text-sm text--theme-error">IFRAME invalido</p>) : (<> </>)
           }
           <label className="text-sm">Puedes incrustar videos desde: YouTube o Vimeo.</label>
         </Modal.Body>

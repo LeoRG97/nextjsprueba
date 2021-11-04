@@ -17,16 +17,6 @@ const ModalAudio = (props) => {
   const [disable, setDisable] = useState(true);
   const [invalidLink, setInvalid] = useState(false);
 
-  const validURL = (str) => {
-    const pattern = new RegExp('^(https?:\\/\\/)?' // protocol
-      + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-      + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-      + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-      + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-      + '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return !!pattern.test(str);
-  };
-
   const handleChange = (e) => {
     e.persist();
     setData(e.target.value);
@@ -37,23 +27,15 @@ const ModalAudio = (props) => {
       setInvalid(true);
     }
 
-    if (!validURL(e.target.value)) {
-      const iframeContentStart = e.target.value.startsWith('<iframe');
-      const iframeContentEnd = e.target.value.endsWith('></iframe>');
-      if (!iframeContentStart || !iframeContentEnd) {
-        setDisable(true);
-        setInvalid(true);
-      } else {
-        setDisable(false);
-        setInvalid(false);
-        setDataOut(e.target.value);
-      }
-    } else if (validURL(e.target.value)) {
-      const htmlAudio = `<iframe title="audio" frameborder="0" allowtransparency="true" allow="encrypted-media" src="${e.target.value}"></iframe>`;
-      setDataOut(htmlAudio);
-      setEmbed(false);
+    const iframeContentStart = e.target.value.startsWith('<iframe');
+    const iframeContentEnd = e.target.value.endsWith('></iframe>');
+    if (!iframeContentStart || !iframeContentEnd) {
+      setDisable(true);
+      setInvalid(true);
+    } else {
       setDisable(false);
       setInvalid(false);
+      setDataOut(e.target.value);
     }
   };
 
@@ -99,19 +81,19 @@ const ModalAudio = (props) => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={`${styles.modal_audio_backC} ${styles.modal_audio_body} `}>
-          <label className="subtitle text--theme-light">Enlace</label>
+          <label className="subtitle text--theme-light">Código de incrustación</label>
           <input
             className="input"
             type="url"
             pattern="https://.*"
-            placeholder="Link del audio o código de incrustación"
+            placeholder="Código de incrustación"
             required
             onChange={callsFunctions}
             value={inputLink}
           />
           {
             (invalidLink)
-              ? (<label className="text-sm text--theme-error">URL &oacute; IFRAME invalido</label>) : (<> </>)
+              ? (<p className="text-sm text--theme-error">IFRAME invalido </p>) : (<> </>)
           }
           <label className="text-sm">Puedes incrustar audios desde: Spotify o Tidal.</label>
         </Modal.Body>

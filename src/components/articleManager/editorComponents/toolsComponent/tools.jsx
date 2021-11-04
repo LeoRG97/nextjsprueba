@@ -4,7 +4,14 @@ import TooltipContainer from '../tooltipContainer/TooltipContainer';
 import styles from './tools.module.css';
 
 const ToolsComponent = ({
-  option, addTextFunct, setModalShowVideo, setModalShow, addedVideo, addedAudio, addImage,
+  option,
+  addTextFunct,
+  setModalShowVideo,
+  setModalShow,
+  addedVideo,
+  addedAudio,
+  addImage,
+  setModalShowLink,
 }) => {
   const optionBottons = (optionRender) => {
     const enableVideo = addedVideo;
@@ -64,6 +71,15 @@ const ToolsComponent = ({
                   className={`icon ${styles.tools_media}`}
                 >
                   G
+                </div>
+              </TooltipContainer>
+
+              <TooltipContainer placement="top" tooltipText="Link">
+                <div
+                  onClick={() => setModalShowLink(true)}
+                  className={`icon ${styles.tools_media}`}
+                >
+                  l
                 </div>
               </TooltipContainer>
             </section>
@@ -250,6 +266,7 @@ ToolsComponent.propTypes = {
   setModalShowVideo: PropTypes.func,
   setModalShow: PropTypes.func,
   addImage: PropTypes.func,
+  setModalShowLink: PropTypes.func,
 };
 
 ToolsComponent.defaultProps = {
@@ -260,6 +277,7 @@ ToolsComponent.defaultProps = {
   setModalShow: () => {},
   setModalShowVideo: () => {},
   addTextFunct: () => {},
+  setModalShowLink: () => {},
 };
 
 export default ToolsComponent;
