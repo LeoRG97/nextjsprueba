@@ -23,10 +23,10 @@ const ModalZip = ({
     }
   }, [initialData]);
 
-  const handleSaveFile = async (file, inputId) => {
+  const handleSaveFile = async (file) => {
     try {
-      if (file.type !== 'application/zip') {
-        return setErrors({ ...errors, [inputId]: 'El tipo del archivo no está permitido, sólo acepta .zip' });
+      if (!file.type.includes('zip')) {
+        return setErrors({ ...errors, zip: 'El tipo del archivo no está permitido, sólo acepta .zip' });
       }
 
       setZip({ ...zip, loading: true });
@@ -109,6 +109,7 @@ const ModalZip = ({
               fileName={zip.loading ? 'Cargando...' : zip.nombre}
               onSave={handleSaveFile}
               onDelete={handleDeleteFile}
+              accept="application/zip,application/x-zip-compressed"
             />
             <small className="text-sm text--theme-error">{errors.zip}</small>
           </Row>
