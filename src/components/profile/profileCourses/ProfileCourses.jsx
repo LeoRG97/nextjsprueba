@@ -6,9 +6,7 @@ import useSWRInfinite from 'swr/infinite';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import styles from '../profileArticles/profile.module.css';
-import {
-  ArticleListSelectComponent, CourseDetailComponent, LoadingIndicator, SuccessIndicatorModal,
-} from '@/components';
+import { CourseDetailComponent, LoadingIndicator, SuccessIndicatorModal } from '@/components';
 import { deleteCourse } from '@/services/courses';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
@@ -43,18 +41,6 @@ const ProfileCourses = () => {
 
   const isEmpty = data?.[size - 1]?.length === 0;
 
-  const handleTypeChange = (item) => {
-    const { query, pathname } = router;
-    delete query.type;
-    router.push({
-      pathname,
-      query: {
-        ...query,
-        ...(item.value && { type: item.value }),
-      },
-    }, undefined, { scroll: false, shallow: true });
-  };
-
   const handleDelete = async (courseId) => {
     setLoadModal(true);
     try {
@@ -72,17 +58,7 @@ const ProfileCourses = () => {
   return (
     <div>
       <div className="selects-container">
-        <div className="select-recent">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={router.query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-            ]}
-          />
-        </div>
+        <div className="select-recent" />
         <div className={`select-filter ${styles.hideMobile}`}>
           <div
             className={styles.optionsContainer}

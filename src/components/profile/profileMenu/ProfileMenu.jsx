@@ -110,7 +110,7 @@ const TabMenu = () => {
                 <a
                   className={`subtitle ${styles.item} ${query.borradores === 'true' && query.setting === 'courses' && styles.active}`}
                 >
-                  Borradores cursos
+                  Borradores de cursos
                   <span className="ms-2 text-md text--theme-secondary">{data.borradoresCursos}</span>
                 </a>
               </Link>
