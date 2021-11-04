@@ -6,9 +6,7 @@ import useSWRInfinite from 'swr/infinite';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import styles from '../profileArticles/profile.module.css';
-import {
-  ArticleListSelectComponent, CourseDetailComponent, LoadingIndicator, SuccessIndicatorModal,
-} from '@/components';
+import { CourseDetailComponent, LoadingIndicator, SuccessIndicatorModal } from '@/components';
 import { deleteCourse } from '@/services/courses';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
@@ -22,14 +20,19 @@ const ProfileCourses = () => {
 
   const getKey = (pageIndex, previousPageData) => {
     let params = '';
+    let estado = 'publicado';
 
     if (router.query.type) {
       const { type } = router.query;
       params = `${params}&tipo=${type}`;
     }
 
+    if (router.query.borradores === 'true') {
+      estado = 'borrador';
+    }
+
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}&estado=publicado`; // API endpoint
+    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}&estado=${estado}`; // API endpoint
   };
 
   const {
@@ -37,18 +40,6 @@ const ProfileCourses = () => {
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
-
-  const handleTypeChange = (item) => {
-    const { query, pathname } = router;
-    delete query.type;
-    router.push({
-      pathname,
-      query: {
-        ...query,
-        ...(item.value && { type: item.value }),
-      },
-    }, undefined, { scroll: false, shallow: true });
-  };
 
   const handleDelete = async (courseId) => {
     setLoadModal(true);
@@ -67,17 +58,7 @@ const ProfileCourses = () => {
   return (
     <div>
       <div className="selects-container">
-        <div className="select-recent">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={router.query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-            ]}
-          />
-        </div>
+        <div className="select-recent" />
         <div className={`select-filter ${styles.hideMobile}`}>
           <div
             className={styles.optionsContainer}
