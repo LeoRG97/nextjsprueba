@@ -199,3 +199,12 @@ export const fetchCoursesByUserPreferenceSSR = async (token, query) => {
     return err;
   }
 };
+
+export const deleteCourse = async (id) => {
+  try {
+    const res = await axios().delete(`cursos/${id}`);
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
