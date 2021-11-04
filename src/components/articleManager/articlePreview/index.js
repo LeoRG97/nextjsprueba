@@ -29,7 +29,6 @@ const EditorPreviewComponent = ({
       });
     }
   };
-
   useEffect(() => {
     if (initialData && initialData.usuario_id) {
       authorInfo(initialData.usuario_id);

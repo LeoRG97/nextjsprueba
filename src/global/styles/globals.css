@@ -1421,6 +1421,15 @@ html {
   justify-content: center;
 }
 
+.Editor-content-child a {
+  color: var(--text-color-highlight);
+  font-family: var(--font-regular);
+}
+
+.Editor-content-child a:hover {
+  color: var(--text-color-highlight);
+}
+
 .Editor-content:hover .Edit-btn , .Editor-content:hover .Edit-dropbtn {
   opacity: 1;
 }

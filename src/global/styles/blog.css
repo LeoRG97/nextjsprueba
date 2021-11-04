@@ -245,6 +245,15 @@
   width: 100%;
 }
 
+.article-content a {
+  color: var(--text-color-highlight);
+  font-family: var(--font-regular);
+}
+
+.article-content a:hover {
+  color: var(--text-color-highlight);
+}
+
 .content-fixed {
   position: fixed;
 }
