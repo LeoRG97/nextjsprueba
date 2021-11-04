@@ -21,6 +21,7 @@ import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ResourcesModal from './modals/articleResourcesModal/ArticleResourcesModal';
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import EditorPreviewComponent from './articlePreview';
+import ModalLink from './modals/addLinkModal/addLinkModal';
 
 const EditorComponent = ({
   option, initialData, setInitialData, initialContent,
@@ -42,6 +43,7 @@ const EditorComponent = ({
   const [activeOption, setActiveCont] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [preview, setPreview] = useState(false);
+  const [modalShowLink, setModalShowLink] = useState(false);
   const [successData, setSuccessData] = useState({
     show: false,
     title: '',
@@ -220,6 +222,15 @@ const EditorComponent = ({
     setModalShow(false);
   };
 
+  const addLinkFunct = (tag) => {
+    // const EditorContent = localStorage.getItem('contentEditor');
+    const obj = arrayItemsEditor;
+    const idContainer = makeid();
+    obj.html.push({ id: idContainer, type: 'link', content: tag, tag });
+    // localStorage.setItem('contentEditor', JSON.stringify(obj));
+    setItems(obj);
+    setModalShowLink(false);
+  };
   /* ######################### */
 
   /* Edit components functions */
@@ -473,6 +484,13 @@ const EditorComponent = ({
         updateFunctionEvent={updateFunctionEventVideo}
         showModal={() => setModalShowVideo(false)}
       />
+      <ModalLink
+        show={modalShowLink}
+        editInfo={editVideo}
+        updateEvent={updateEvent}
+        addLink={addLinkFunct}
+        showModal={() => setModalShowLink(false)}
+      />
       {
         preview ? (
           <EditorPreviewComponent
@@ -526,6 +544,7 @@ const EditorComponent = ({
                 addTextFunct={addTextFunct}
                 setModalShowVideo={setModalShowVideo}
                 setModalShow={setModalShow}
+                setModalShowLink={setModalShowLink}
                 addImage={addImage}
               />
             </div>

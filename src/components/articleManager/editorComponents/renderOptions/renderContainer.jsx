@@ -10,7 +10,6 @@ const EditorOptionRender = memo(({
   setActiveClass, index, dragDisabled,
 }) => {
   const [active, setActive] = useState('');
-
   const renderElement = (item) => {
     switch (item.type) {
       case 'linkVideo':
@@ -68,6 +67,10 @@ const EditorOptionRender = memo(({
             placeholder="Agrega un pie de texto"
             onChange={(e) => handleChange(item.id, e)}
           />
+        );
+      case 'link':
+        return (
+          <div className={`Editor-content-child ${active}`} dangerouslySetInnerHTML={{ __html: item.content }} />
         );
       default:
         return <></>;

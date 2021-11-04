@@ -23,7 +23,7 @@ const CourseDetailComponent = ({
   };
 
   const handleUpdate = () => {
-    console.log('update');
+    router.push(`/editor/course/${curso._id}`);
   };
 
   const deleteCourseFunc = (id) => {

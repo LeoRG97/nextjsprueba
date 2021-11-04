@@ -22,14 +22,19 @@ const ProfileCourses = () => {
 
   const getKey = (pageIndex, previousPageData) => {
     let params = '';
+    let estado = 'publicado';
 
     if (router.query.type) {
       const { type } = router.query;
       params = `${params}&tipo=${type}`;
     }
 
+    if (router.query.borradores === 'true') {
+      estado = 'borrador';
+    }
+
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}&estado=publicado`; // API endpoint
+    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}&estado=${estado}`; // API endpoint
   };
 
   const {
