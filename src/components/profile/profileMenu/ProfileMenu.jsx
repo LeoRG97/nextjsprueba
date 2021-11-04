@@ -23,7 +23,7 @@ const TabMenu = () => {
         borradores: 0,
         herramientas: 0,
         foros: 0,
-        cursos: 0,
+        publicaconesCursos: 0,
         invitaciones: 0,
         biblioteca: 0,
         valoraciones: 0,
@@ -102,7 +102,7 @@ const TabMenu = () => {
                   className={`subtitle ${styles.item} ${query.setting === 'courses' && styles.active}`}
                 >
                   Cursos
-                  <span className="ms-2 text-md text--theme-secondary">{data.cursos}</span>
+                  <span className="ms-2 text-md text--theme-secondary">{data.publicaconesCursos}</span>
                 </a>
               </Link>
               <Link href="/profile/forums" passHref scroll={false}>

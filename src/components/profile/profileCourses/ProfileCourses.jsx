@@ -29,7 +29,7 @@ const ProfileCourses = () => {
     }
 
     if (previousPageData && !previousPageData.length) return null; // reached the end
-    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}`; // API endpoint
+    return `${ApiRoutes.CoursesAuthor}/${session.user.id}?pageNum=${pageIndex + 1}&pageSize=9${params}&estado=publicado`; // API endpoint
   };
 
   const {
@@ -82,8 +82,8 @@ const ProfileCourses = () => {
           <div
             className={styles.optionsContainer}
           >
-            <button className="button button--theme-primary">
-              Nuevo curso <span className="button__icon-right text--theme-light">1</span>
+            <button onClick={() => router.push('/editor/course')} className="button button--theme-primary">
+              Nuevo curso
             </button>
           </div>
         </div>
