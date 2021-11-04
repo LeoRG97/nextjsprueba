@@ -23,6 +23,8 @@ const TabMenu = () => {
         borradores: 0,
         herramientas: 0,
         foros: 0,
+        publicaconesCursos: 0,
+        subscripcionesCursos: 0,
         invitaciones: 0,
         biblioteca: 0,
         valoraciones: 0,
@@ -94,6 +96,22 @@ const TabMenu = () => {
                 >
                   Herramientas
                   <span className="ms-2 text-md text--theme-secondary">{data.herramientas}</span>
+                </a>
+              </Link>
+              <Link href="/profile/courses" passHref scroll={false}>
+                <a
+                  className={`subtitle ${styles.item} ${query.setting === 'courses' && query.borradores !== 'true' && styles.active}`}
+                >
+                  Cursos
+                  <span className="ms-2 text-md text--theme-secondary">{data.publicaconesCursos}</span>
+                </a>
+              </Link>
+              <Link href="/profile/courses?borradores=true" passHref scroll={false}>
+                <a
+                  className={`subtitle ${styles.item} ${query.borradores === 'true' && query.setting === 'courses' && styles.active}`}
+                >
+                  Borradores cursos
+                  <span className="ms-2 text-md text--theme-secondary">{data.borradoresCursos}</span>
                 </a>
               </Link>
               <Link href="/profile/forums" passHref scroll={false}>
