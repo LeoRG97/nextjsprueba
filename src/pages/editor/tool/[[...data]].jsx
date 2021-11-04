@@ -77,4 +77,4 @@ const ToolEditor = () => {
   );
 };
 
-export default withAuth(ToolEditor, [Roles.Admin, Roles.Author, Roles.Reviewer]);
+export default withAuth(ToolEditor, [Roles.Admin, Roles.Reviewer]);
