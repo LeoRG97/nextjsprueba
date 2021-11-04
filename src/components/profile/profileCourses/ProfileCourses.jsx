@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
@@ -5,11 +6,19 @@ import useSWRInfinite from 'swr/infinite';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import styles from '../profileArticles/profile.module.css';
-import { ArticleListSelectComponent, CourseDetailComponent, LoadingIndicator } from '@/components';
+import {
+  ArticleListSelectComponent, CourseDetailComponent, LoadingIndicator, SuccessIndicatorModal,
+} from '@/components';
+import { deleteCourse } from '@/services/courses';
+import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 
 const ProfileCourses = () => {
   const router = useRouter();
   const [session] = useSession();
+  const [loadModal, setLoadModal] = useState(false);
+  const [successModal, setSuccessModal] = useState(false);
+  const [modalError, setModalError] = useState(false);
 
   const getKey = (pageIndex, previousPageData) => {
     let params = '';
@@ -24,7 +33,7 @@ const ProfileCourses = () => {
   };
 
   const {
-    data, isValidating, size, setSize,
+    data, isValidating, size, setSize, mutate,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
   const isEmpty = data?.[size - 1]?.length === 0;
@@ -39,6 +48,20 @@ const ProfileCourses = () => {
         ...(item.value && { type: item.value }),
       },
     }, undefined, { scroll: false, shallow: true });
+  };
+
+  const handleDelete = async (courseId) => {
+    setLoadModal(true);
+    try {
+      await deleteCourse(courseId);
+      setLoadModal(false);
+      setSuccessModal(true);
+      return mutate();
+    } catch (error) {
+      setLoadModal(false);
+      setModalError(true);
+      return error;
+    }
   };
 
   return (
@@ -72,6 +95,7 @@ const ProfileCourses = () => {
             <CourseDetailComponent
               key={course._id}
               curso={course}
+              onDelete={() => handleDelete(course._id)}
               isAdmin={session.user.role !== 'user'}
             />
           ));
@@ -91,6 +115,24 @@ const ProfileCourses = () => {
             )}
         </>
       </div>
+      <LoadingIndicatorModal
+        show={loadModal}
+        onClose={() => setLoadModal(false)}
+        textHeader="Eliminando curso"
+        textBody=""
+      />
+      <SuccessIndicatorModal
+        show={successModal}
+        onClose={() => setSuccessModal(false)}
+        textHeader="Curso Eliminado"
+        textBody="Se ha eliminado el curso correctamente"
+      />
+      <ErrorIndicatorModal
+        show={modalError}
+        onClose={() => setModalError(false)}
+        textHeader="Ha ocurrido un error"
+        textBody="Algo ha salido mal, vulve a intentarlo más tarde"
+      />
     </div>
   );
 };
