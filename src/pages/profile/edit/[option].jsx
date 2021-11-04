@@ -28,7 +28,7 @@ const EditProfile = ({ preferences }) => {
     <Layout>
       <Container className="mb-lg-5">
         <Row className="justify-content-md-center mt-xxl-5">
-          <Col className="title-xl mt-xxl-5 mt-lg-title" md="auto">
+          <Col className="title-xl mt-xxl-5 mt-lg-title m-title-xl" md="auto">
             Ajustes de la cuenta
           </Col>
         </Row>

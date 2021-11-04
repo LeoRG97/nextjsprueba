@@ -1,5 +1,5 @@
 import {
-  Layout, ForumsComponent, Footer, GlobalModals,
+  Layout, ForumsComponent, Footer,
 } from '@/components';
 import { fetchForums } from '@/services/forums';
 import styles from './think.module.css';
@@ -11,7 +11,6 @@ const ThinkTeam = ({ forums }) => {
         <h2 className="title-xl">Únete a la conversación sobre...</h2>
       </div>
       <ForumsComponent data={forums} showOptions={false} showSubs />
-      <GlobalModals />
       <Footer />
     </Layout>
   );

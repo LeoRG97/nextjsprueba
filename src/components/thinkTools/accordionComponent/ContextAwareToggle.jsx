@@ -18,7 +18,7 @@ const ContextAwareToggle = ({ eventKey, callback }) => {
       className={isCurrentEventKey ? styles.flag_selected : styles.flag}
       onClick={decoratedOnClick}
     >
-      <span className={`icon ${styles.icon_flag}`}>{isCurrentEventKey ? '2' : 'b' }</span>
+      <span className={`icon ${styles.icon_flag}`}>{isCurrentEventKey ? '1' : 'b'}</span>
     </button>
   );
 };

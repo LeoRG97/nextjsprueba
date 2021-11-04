@@ -28,5 +28,7 @@ module.exports = {
     CoursesReplies: 'comentarios-curso/respuesta',
     Forums: 'foros/',
     UserNotes: 'notas/usuario',
+    Cursos: 'cursos',
+    CursosUserPreference: 'cursos/preferencias/usuario',
   },
 };

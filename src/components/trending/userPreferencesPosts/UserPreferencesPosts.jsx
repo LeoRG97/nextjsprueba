@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
 import ArticlesListComponent from '@/components/articlesList/articlesListComponent/articlesList';
+import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchPaginatedDataWithAuthToken } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { LoadingIndicator } from '@/components';
@@ -75,18 +76,26 @@ const UserPreferencesPosts = ({ initialData }) => {
           />
         </div>
         <div className="select-filter">
-          <ArticleListSelectComponent
-            defaultTitle="Todos"
-            currentValue={query.type}
-            onChange={handleTypeChange}
-            selectN="2"
-            items={[
-              { label: 'Todos', value: '' },
-              { label: 'Blogs', value: 'Blog' },
-              { label: 'Videos', value: 'Video' },
-              { label: 'Podcasts', value: 'Podcast' },
-            ]}
-          />
+          <TooltipContainer
+            placement="top"
+            tooltipText="Filtrar por tipo de entrada"
+          >
+            <div>
+              <ArticleListSelectComponent
+                defaultTitle="Todos"
+                currentValue={query.type}
+                onChange={handleTypeChange}
+                selectN="2"
+                items={[
+                  { label: 'Todos', value: '' },
+                  { label: 'Blogs', value: 'Blog' },
+                  { label: 'Videos', value: 'Video' },
+                  { label: 'Podcasts', value: 'Podcast' },
+                  { label: 'Cursos', value: 'Cursos' },
+                ]}
+              />
+            </div>
+          </TooltipContainer>
         </div>
       </div>
       {(articles) ? (
@@ -98,7 +107,7 @@ const UserPreferencesPosts = ({ initialData }) => {
       ) : <></>}
       <div className="d-flex justify-content-center">
         {!data && <LoadingIndicator />}
-        {data && data.length > 0 && (
+        {data && data.length > 0 && data.registros > 9 && (
           <button
             className="button button--theme-secondary"
             onClick={() => setPageNum(pageNum + 1)}

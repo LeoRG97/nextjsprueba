@@ -66,11 +66,14 @@ const TabMenu = () => {
 
   return (
     <div className={styles.tabBar} id="profileNavbar">
+      <span className={`icon ${styles.indicatorMovilLeft}`}>
+        a
+      </span>
       {authorAccess(user.role) && (
         <div className={styles.authorSection}>
           <Link href="/profile/articles" passHref scroll={false}>
             <a
-              className={`subtitle ${styles.item} ${query.setting === 'articles' && styles.active}`}
+              className={`linkItem subtitle ${styles.item} ${query.setting === 'articles' && styles.active}`}
             >
               Publicaciones
               <span className="ms-2 text-md text--theme-secondary">{data.publicacones}</span>
@@ -150,11 +153,14 @@ const TabMenu = () => {
       </Link>
       <Link href="/profile/about-me" passHref scroll={false}>
         <a
-          className={`subtitle ${styles.item} ${query.setting === 'about-me' && styles.active}`}
+          className={`subtitle ${styles.item} ${query.setting === 'about-me' && styles.active} ${styles.lastOption}`}
         >
           Sobre mí
         </a>
       </Link>
+      <span className={`icon ${styles.indicatorMovilRight}`}>
+        b
+      </span>
     </div>
   );
 };

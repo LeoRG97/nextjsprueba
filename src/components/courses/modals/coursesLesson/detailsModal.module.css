@@ -81,7 +81,45 @@
   color: #fff;
 }
 
+.resource {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+  padding-left: 1rem;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid var(--colorItemBorder);
+}
 
+.edit {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.btn {
+  color: var(--text-color-secondary);
+  font-family: Icons;
+  margin-right: 1rem;
+}
+
+.editDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0rem;
+  visibility: hidden;
+  z-index: 5;
+}
+
+.edit:hover .btn {
+  color: var(--text-color-light);
+}
+
+.edit:hover .editDropdown {
+  visibility: visible;
+}
 
 @media screen and (min-width: 768px) {
   .visibilitySection {

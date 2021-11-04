@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import Link from 'next/link';
 import React from 'react';
@@ -26,6 +27,22 @@ const TrendingBannerComponent = ({ loggedIn }) => {
     router.push('/trending-topics', undefined, { shallow: false });
   };
 
+  const handleSwitchNavCourses = () => {
+    if (!query.user) {
+      router.push('/trending-topics?user=true&type=Cursos', undefined, { shallow: false });
+    } else {
+      router.push('/trending-topics?type=Cursos', undefined, { shallow: false });
+    }
+  };
+
+  const handleSwitchNavUserCourses = () => {
+    router.push('/trending-topics?user=true&type=Cursos', undefined, { shallow: false });
+  };
+
+  const handleSwitchNavNotUserCourses = () => {
+    router.push('/trending-topics?type=Cursos', undefined, { shallow: false });
+  };
+
   const getTitle = () => {
     if (query.search) {
       return null;
@@ -33,6 +50,15 @@ const TrendingBannerComponent = ({ loggedIn }) => {
       return 'Selección de publicaciones de acuerdo a tus intereses';
     }
     return 'Todas las publicaciones';
+  };
+
+  const getTitleCourses = () => {
+    if (query.search) {
+      return null;
+    } if (query.user) {
+      return 'Selección de cursos de acuerdo a tus intereses';
+    }
+    return 'Todos los cursos';
   };
 
   return (
@@ -58,21 +84,41 @@ const TrendingBannerComponent = ({ loggedIn }) => {
         </div>
       )}
       <div className={styles.centeredTitle}>
-        {loggedIn && !query.search && (
-          <div className={`${styles.pageSwitch} ${styles.topPadding}`}>
-            <small onClick={handleSwitchNavUser} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
-            <Switch
-              checked={!query.user}
-              onChange={handleSwitchNav}
-              inverted
-            />
-            <small onClick={handleSwitchNavNotUser} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
-          </div>
-        )}
-        {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
-        <h1 className="title-xl text-center">
-          {getTitle()}
-        </h1>
+        {
+          query && query.type !== 'Cursos' ? (
+            <>
+              {!loggedIn ? <h1 className="title-xl text-center">{getTitle()}</h1> : <h1 className={`title-xl text-center ${styles.topPadding}`}>  {getTitle()}</h1>}
+              {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
+              {loggedIn && !query.search && (
+                <div className={`${styles.pageSwitch}`}>
+                  <small onClick={handleSwitchNavUser} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
+                  <Switch
+                    checked={!query.user}
+                    onChange={handleSwitchNav}
+                    inverted
+                  />
+                  <small onClick={handleSwitchNavNotUser} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
+                </div>
+              )}
+            </>
+          ) : (
+            <>
+              {!loggedIn ? <h1 className="title-xl text-center">{getTitleCourses()}</h1> : <h1 className={`title-xl text-center ${styles.topPadding}`}>  {getTitleCourses()}</h1>}
+              {!loggedIn && !query.search && <p className="subtitle d-block mt-4">Quiero ver</p>}
+              {loggedIn && !query.search && (
+                <div className={`${styles.pageSwitch}`}>
+                  <small onClick={handleSwitchNavUserCourses} className={`subtitle ${styles.switchTag} ${query.user && styles.active}`}>Para mí</small>
+                  <Switch
+                    checked={!query.user}
+                    onChange={handleSwitchNavCourses}
+                    inverted
+                  />
+                  <small onClick={handleSwitchNavNotUserCourses} className={`subtitle ${styles.switchTag} ${!query.user && styles.active}`}>Todos</small>
+                </div>
+              )}
+            </>
+          )
+        }
       </div>
     </>
   );

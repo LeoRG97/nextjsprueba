@@ -65,11 +65,11 @@ const Footer = () => {
             </p>
           </Col>
           <Col sm="12" md="6" className={styles.foote_mob_top}>
-            <Link href="/#">
-              <a className={`${styles.link_fr} icon`}> N </a>
+            <Link href="https://www.youtube.com/c/NTTDATAEuropeLatam/featured">
+              <a target="_blank" className={`${styles.link_fr} icon`}> N </a>
             </Link>
-            <Link href="/#">
-              <a className={`${styles.link_fr} icon`}> M </a>
+            <Link href="https://www.linkedin.com/company/ntt-data-europe/?originalSubdomain=mx">
+              <a target="_blank" className={`${styles.link_fr} icon`}> M </a>
             </Link>
           </Col>
         </Row>

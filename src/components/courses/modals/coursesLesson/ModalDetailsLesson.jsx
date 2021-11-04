@@ -6,22 +6,58 @@ import TooltipContainer from '@/components/articleManager/editorComponents/toolt
 import ModalAddFileLesson from './ModalAddFile';
 import { validateLessonData } from './lessonValidation';
 import { CourseContext } from '@/helpers/contexts/CourseContext';
+import LessonResources from './lessonResource/LessonResources';
+import DeleteModal from '@/components/modalsIndicators/DeleteModal';
 
 const ModalDetailsLesson = ({ show, onClose }) => {
   const [modalFileLessonShow, setModalFileLessonShow] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [typeFile, setTypeFile] = useState('');
-  const showFile = (type) => {
-    setTypeFile(type);
-    setModalFileLessonShow(true);
-  };
-
-  const { currentUnit, handleAddLesson } = useContext(CourseContext);
+  const [resourceEdit, setResourceEdit] = useState({});
+  const [deletedResources, setDeletedResources] = useState([]);
 
   const [formData, setFormData] = useState({
     nombre: '',
     video: '',
     descripcion: '',
   });
+  const [resources, setResources] = useState([]);
+
+  const {
+    currentUnit,
+    currentLesson,
+    handleAddLesson,
+    handleUpdateLesson,
+    setShowLessonModal,
+    addDeletedResources,
+  } = useContext(CourseContext);
+
+  const showFile = (type) => {
+    // abrir modal de archivo para añadir uno nuevo
+    setTypeFile(type);
+    setModalFileLessonShow(true);
+    setShowLessonModal(false);
+  };
+
+  const showEditFile = (id) => {
+    // abrir modal de archivo para editar un recurso
+    const selected = resources.find((r) => r._id === id);
+    setResourceEdit(selected);
+    setTypeFile(selected.tipo);
+    setModalFileLessonShow(true);
+    setShowLessonModal(false);
+  };
+
+  const hideFile = () => {
+    // ocultar el modal de archivo y reiniciar los estados que intervienen
+    setModalFileLessonShow(false);
+    setShowLessonModal(true);
+    setTimeout(() => {
+      setResourceEdit({});
+      setTypeFile('');
+    }, 100);
+  };
+
   const [errors, setErrors] = useState({ isValid: true });
   const [submitted, setSubmitted] = useState(false);
 
@@ -39,15 +75,64 @@ const ModalDetailsLesson = ({ show, onClose }) => {
       nombre: '',
       video: '',
       descripcion: '',
+      _id: '',
     });
+    setResources([]);
   };
 
   useEffect(() => {
-    resetForm();
+    if (currentLesson._id) {
+      setFormData({ ...currentLesson });
+      setResources([...currentLesson.recursos]);
+      setErrors({ isValid: true });
+      setSubmitted(false);
+    }
+  }, [currentLesson]);
+
+  useEffect(() => {
+    if (!currentLesson._id) {
+      resetForm();
+    }
   }, [currentUnit]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAddResource = (item) => {
+    setResources([...resources, item]);
+    hideFile();
+  };
+
+  const handleUpdateResource = (item) => {
+    // actualiza el arreglo de recursos después de modificar un elemento
+    const prevItem = resources.find((r) => r._id === item._id);
+    if (item.tipo === 'file' && prevItem.ruta !== item.ruta) {
+      setDeletedResources([...deletedResources, prevItem.ruta]);
+    }
+    const updatedArray = resources.map((r) => (r._id === item._id ? item : r));
+    setResources([...updatedArray]);
+    hideFile();
+  };
+
+  const handleAlert = (id) => {
+    setShowDeleteModal(true);
+    const selected = resources.find((r) => r._id === id);
+    setResourceEdit(selected);
+  };
+
+  const handleCloseAlert = () => {
+    setShowDeleteModal(false);
+  };
+
+  const handleDeleteResource = () => {
+    // actualiza el arreglo de recursos después de eliminar uno
+    const updatedArray = resources.filter((r) => r._id !== resourceEdit._id);
+    if (resourceEdit.tipo === 'file') {
+      setDeletedResources([...deletedResources, resourceEdit.ruta]);
+    }
+    setResources([...updatedArray]);
+    handleCloseAlert();
   };
 
   const handleSubmit = () => {
@@ -56,7 +141,12 @@ const ModalDetailsLesson = ({ show, onClose }) => {
     if (!errorData.isValid) {
       setErrors(errorData);
     } else {
-      handleAddLesson(formData, currentUnit);
+      if (!currentLesson._id) {
+        handleAddLesson({ ...formData, recursos: resources }, currentUnit);
+      } else {
+        handleUpdateLesson({ ...formData, recursos: resources });
+      }
+      addDeletedResources(deletedResources);
       onClose();
       resetForm();
     }
@@ -101,7 +191,7 @@ const ModalDetailsLesson = ({ show, onClose }) => {
                       name="video"
                       id="linkVideo"
                       className="input"
-                      placeholder="URL"
+                      placeholder="Código de incrustación (iframe)"
                       value={video}
                       onChange={handleChange}
                     />
@@ -133,27 +223,34 @@ const ModalDetailsLesson = ({ show, onClose }) => {
               <h3 className="title mb-3">Recursos adicionales</h3>
             </Col>
             <Col md={12} className="">
-              <div className={styles.tools}>
-                <section>
-                  <div className={`${styles.files} text-md`}>Insertar</div>
-                </section>
-                <section>
-                  <TooltipContainer placement="top" tooltipText="Archivo">
-                    <div
-                      className={`icon ${styles.tools_media}`}
-                      onClick={() => showFile('file')}
-                    >q
-                    </div>
-                  </TooltipContainer>
-                  <TooltipContainer placement="top" tooltipText="Enlace">
-                    <div
-                      className={`icon ${styles.tools_media}`}
-                      onClick={() => showFile('link')}
-                    >l
-                    </div>
-                  </TooltipContainer>
-                </section>
-              </div>
+              <>
+                <LessonResources
+                  resources={resources}
+                  onEdit={showEditFile}
+                  onDelete={handleAlert}
+                />
+                <div className={styles.tools}>
+                  <section>
+                    <div className={`${styles.files} text-md`}>Insertar</div>
+                  </section>
+                  <section>
+                    <TooltipContainer placement="top" tooltipText="Archivo">
+                      <div
+                        className={`icon ${styles.tools_media}`}
+                        onClick={() => showFile('file')}
+                      >q
+                      </div>
+                    </TooltipContainer>
+                    <TooltipContainer placement="top" tooltipText="Enlace">
+                      <div
+                        className={`icon ${styles.tools_media}`}
+                        onClick={() => showFile('link')}
+                      >l
+                      </div>
+                    </TooltipContainer>
+                  </section>
+                </div>
+              </>
             </Col>
           </Row>
 
@@ -164,15 +261,27 @@ const ModalDetailsLesson = ({ show, onClose }) => {
           </button>
           <div>
             <button className="button button--theme-primary" onClick={handleSubmit}>
-              Crear lección
+              {currentLesson._id ? 'Actualizar lección' : 'Crear lección'}
             </button>
           </div>
         </Modal.Footer>
       </Modal>
       <ModalAddFileLesson
         show={modalFileLessonShow}
-        onClose={() => setModalFileLessonShow(false)}
+        onClose={hideFile}
+        onSubmit={handleAddResource}
         typeFile={typeFile} // si es un enlace o un archivo
+        initialData={resourceEdit}
+        onUpdate={handleUpdateResource}
+      />
+      <DeleteModal
+        show={showDeleteModal}
+        onClose={handleCloseAlert}
+        functionDelete={handleDeleteResource}
+        btnConfirm="Confirmar"
+        btnCancel="Cancelar"
+        textHeader="Alerta"
+        textBody={`¿Estás seguro de eliminar el recurso "${resourceEdit.nombre}"?`}
       />
     </>
   );

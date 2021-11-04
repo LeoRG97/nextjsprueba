@@ -54,6 +54,10 @@ const LoginForm = () => {
         password: formData.password,
         redirect: false,
       });
+      if (res.ok) {
+        localStorage.setItem('rememberme', formData.email);
+      }
+
       if (res?.error) {
         setSubmitError('Dirección de correo electrónico y/o contraseña incorrectos.');
       }
@@ -73,6 +77,13 @@ const LoginForm = () => {
       const elementsInvitation = JSON.parse(dataInvitation);
       setFormData({ ...formData, email: elementsInvitation.email });
       setDataInvite({ ...elementsInvitation });
+    }
+  }, []);
+
+  useEffect(() => {
+    const remember = localStorage.getItem('rememberme');
+    if (remember) {
+      setFormData({ email: remember });
     }
   }, []);
 

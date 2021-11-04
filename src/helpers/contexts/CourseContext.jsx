@@ -1,5 +1,7 @@
 /* eslint-disable no-bitwise */
 import React, { createContext, useState } from 'react';
+import { BUCKET_URL } from '@/global/constants';
+import { remove } from '@/services/aws';
 import { generateMongoID } from '../mongoIDGenerator';
 
 export const CourseContext = createContext();
@@ -20,15 +22,29 @@ const CourseContextProvider = ({ children }) => {
     archivoPortada: '',
   });
   const [currentUnit, setCurrentUnit] = useState(null);
+  const [currentLesson, setCurrentLesson] = useState({});
   const [showLessonModal, setShowLessonModal] = useState(false);
+  const [deletedResources, setDeletedResources] = useState([]);
 
-  const handleOpenLessonModal = (unitId) => {
+  const handleNewLessonModal = (unitId) => {
     setShowLessonModal(true);
     setCurrentUnit(unitId);
+    setCurrentLesson({});
   };
 
-  const handleCloseLessonModal = () => {
+  const handleEditLessonModal = (lessonId) => {
+    setCurrentUnit(null);
+    const item = lessons.find((lesson) => lesson._id === lessonId);
+    setCurrentLesson(item);
+    setShowLessonModal(true);
+  };
+
+  const handleCancelLessonEdit = () => {
     setShowLessonModal(false);
+    setTimeout(() => {
+      setCurrentUnit(null);
+      setCurrentLesson({});
+    }, 100);
   };
 
   const handleUnitName = (id, value) => {
@@ -59,6 +75,11 @@ const CourseContextProvider = ({ children }) => {
     }]);
   };
 
+  const handleUpdateLesson = (data) => {
+    const updatedLessons = lessons.map((lesson) => (lesson._id === data._id ? data : lesson));
+    setLessons([...updatedLessons]);
+  };
+
   const handleSortUnits = (event) => {
     if (event.destination) {
       const prevUnits = [...units];
@@ -84,6 +105,17 @@ const CourseContextProvider = ({ children }) => {
     }
   };
 
+  const addDeletedResources = (data) => {
+    setDeletedResources([...deletedResources, ...data]);
+  };
+
+  const eraseOldResourcesFromS3 = () => {
+    deletedResources.forEach(async (r) => {
+      await remove(`${BUCKET_URL}${r}`);
+    });
+    setDeletedResources([]);
+  };
+
   return (
     <CourseContext.Provider value={{
       course,
@@ -95,12 +127,18 @@ const CourseContextProvider = ({ children }) => {
       handleUnitName,
       handleAddUnit,
       showLessonModal,
+      setShowLessonModal,
       currentUnit,
-      handleOpenLessonModal,
-      handleCloseLessonModal,
+      currentLesson,
+      handleNewLessonModal,
+      handleEditLessonModal,
+      handleCancelLessonEdit,
       handleAddLesson,
       handleSortUnits,
       handleSortLessons,
+      handleUpdateLesson,
+      addDeletedResources,
+      eraseOldResourcesFromS3,
     }}
     >
       {children}

@@ -1,4 +1,4 @@
-import { BUCKET_URL } from '@/global/constants';
+import { ApiRoutes, BUCKET_URL } from '@/global/constants';
 import { remove, upload } from './aws';
 import axios from './axios';
 
@@ -106,6 +106,34 @@ export const deleteComentario = async (comentarioId) => {
   }
 };
 
+export const fetchCoursesSSR = async (query, estado) => {
+  const {
+    category, sort, pageSize,
+  } = query;
+  try {
+    const res = await axios().get(ApiRoutes.Cursos, {
+      params: {
+        estado,
+        pageNum: 1,
+        pageSize: pageSize || 9,
+        ...(category && { categoria: category }),
+        ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getCourseBySlug = async (slug) => {
+  try {
+    const res = await axios().get(`cursos/slug/${slug}`);
+    return res;
+  } catch (error) {
+    return error;
+  }
+};
 export const addCommentReply = async (comentarioId, comentData) => {
   try {
     const dataRes = await axios().post(`/comentarios-curso/respuesta/${comentarioId}`, {
@@ -150,5 +178,24 @@ export const updateRespuesta = async (comentarioId, titulo, respuestaId) => {
     return dataRes;
   } catch (error) {
     return error;
+  }
+};
+
+export const fetchCoursesByUserPreferenceSSR = async (token, query) => {
+  const { sort } = query;
+  try {
+    const res = await axios().get(ApiRoutes.CursosUserPreference, {
+      params: {
+        pageNum: 1,
+        pageSize: 9,
+        ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
+      },
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
   }
 };

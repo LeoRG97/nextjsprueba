@@ -33,7 +33,9 @@ export default function Home() {
             <Row>
               <div className={styles.content_title_text}>
                 <small className="text-sm text--theme-light">Somos NTT DATA</small>
-                <h1 className="title-xl text--theme-light">Su socio global <br />en innovación</h1>
+                <a target="_blank" href="https://www.nttdata.com/global/en/about-us" rel="noopener noreferrer">
+                  <h1 className={`title-xl text--theme-light ${styles.cursorPointer}`}>Su socio global <br />en innovación</h1>
+                </a>
               </div>
             </Row>
             <video id="bgVideo" className={styles.content_title_video} controls preload="true" autoPlay loop muted>
@@ -137,7 +139,7 @@ export default function Home() {
                     { /* eslint-disable max-len */}
                     <div className={styles.margin_text_mapa}>
                       <p className="text-md text--theme-dark w-100 mt-3">
-                        Ntt DATA Group ahora está avanzando con su Iniciativa Global One Team combinando
+                        NTT DATA Group está avanzando con su Iniciativa Global One Team combinando
                         la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero,
                         así como facilitando colaboraciones comerciales entre naciones y empresas que
                         fortalecen el poder de marca mundial de
