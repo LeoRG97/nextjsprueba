@@ -54,7 +54,10 @@ const TrendingFilterComponent = ({ preferences }) => {
   const { category } = router.query;
 
   return (
-    <div align="center">
+    <div className="d-flex justify-content-center align-items-center">
+      <span className={`icon ${styles.indicatorMovilLeft}`}>
+        a
+      </span>
       <div className={styles.filterContainer}>
         <div className={styles.filterOpacity1} />
         <div className={`items ${styles.filters}`}>
@@ -71,6 +74,9 @@ const TrendingFilterComponent = ({ preferences }) => {
         </div>
         <div className={styles.filterOpacity2} />
       </div>
+      <span className={`icon ${styles.indicatorMovilRight}`}>
+        b
+      </span>
     </div>
   );
 };
