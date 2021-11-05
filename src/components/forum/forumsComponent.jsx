@@ -2,6 +2,7 @@
 import { useSWRConfig } from 'swr';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
+import Image from 'next/image';
 import { useSession } from 'next-auth/client';
 import { useDispatch } from 'react-redux';
 import { BUCKET_URL, ApiRoutes } from '@/global/constants';
@@ -119,10 +120,11 @@ const ForumsComponent = ({
               <Col xl="6" lg="6" sm="12" className="col-12">
                 <div className={styles.forum_info_cont}>
                   <div className={styles.forum_conten_img}>
-                    <img
+                    <Image
                       src={`${BUCKET_URL}${forum.imagen}`}
-                      className={styles.forum_img}
                       alt={forum.titulo}
+                      layout="fill"
+                      objectFit="cover"
                     />
                   </div>
                   <div>

@@ -8,6 +8,8 @@ import styles from './profileS.module.css';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import { reduceImageSize } from '@/helpers/images';
+import { remove } from '@/services/aws';
 
 const FormGeneral = ({
   id,
@@ -62,11 +64,16 @@ const FormGeneral = ({
   const _handleImageChange = async (e) => {
     e.preventDefault();
 
-    const path = `${id}/resources`;
+    const path = `${id}/profile`;
     const reader = new FileReader();
     const file = e.target.files[0];
+    const reducedFile = await reduceImageSize(file, 'profile');
 
-    const res = await uploadImgProfile(path, file, file.name);
+    if (pictureU) {
+      await remove(pictureU);
+    }
+
+    const res = await uploadImgProfile(path, reducedFile, file.name);
 
     if (res.ok) {
       saveProfile({

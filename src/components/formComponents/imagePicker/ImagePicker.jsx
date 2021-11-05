@@ -2,8 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import styles from './imagePicker.module.css';
 import { BUCKET_URL } from '@/global/constants';
+import { reduceImageSize } from '@/helpers/images';
 
-const ImagePicker = React.memo(({ image, setImage, prevUrl }) => {
+const ImagePicker = React.memo(({
+  image, setImage, prevUrl, resizeType,
+}) => {
   const imgRef = useRef();
   const [previewUrl, setPreviewUrl] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,6 +24,11 @@ const ImagePicker = React.memo(({ image, setImage, prevUrl }) => {
     } else {
       setImage('');
     }
+  };
+
+  const handleFile = async (file) => {
+    const reducedFile = await reduceImageSize(file, resizeType);
+    setImage(reducedFile);
   };
 
   useEffect(() => {
@@ -64,7 +72,7 @@ const ImagePicker = React.memo(({ image, setImage, prevUrl }) => {
         className="input--hidden"
         ref={imgRef}
         accept="image/*"
-        onChange={(e) => setImage(e.target.files[0])}
+        onChange={(e) => handleFile(e.target.files[0])}
       />
     </>
   );

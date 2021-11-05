@@ -1,6 +1,7 @@
 /* eslint-disable react/no-danger */
 import { Container, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './tools.module.css';
@@ -66,7 +67,14 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
             <Col lg="8" className="col-12">
               <div className={`${styles.centered} ${styles.content_tool_title}`}>
                 <h1 className="title-xl">{toolsInfo.nombre}</h1>
-                <img src={setImage(toolsInfo.url_imagen)} alt="img" />
+                <Image
+                  src={setImage(toolsInfo.url_imagen)}
+                  alt={toolsInfo.nombre}
+                  layout="responsive"
+                  objectFit="cover"
+                  width={720}
+                  height={480}
+                />
               </div>
               <Row className={styles.content_inspired}>
                 <Col className="col-6">
