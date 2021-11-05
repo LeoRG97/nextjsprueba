@@ -22,6 +22,7 @@ const NavbarComponent = () => {
   const navigateToProfile = () => {
     router.push('/profile/about-me');
   };
+  let inputPlaceholder = '';
 
   const logOut = async () => {
     await signout({ callbackUrl: `${window.location.origin}/login` });
@@ -39,13 +40,20 @@ const NavbarComponent = () => {
     if (searchText.length >= minLength) {
       router.push({
         pathname: router.pathname === '/experts' ? '/experts' : '/trending-topics',
-        query: { search: searchText },
+        query: {
+          search: searchText,
+          type: router.query.type,
+        },
       }, null, { shallow: true });
       setExpanded(false);
     }
   };
 
-  const inputPlaceholder = router.pathname === '/experts' ? 'Buscar expertos' : 'Buscar artículos';
+  inputPlaceholder = router.pathname === '/experts' ? 'Buscar expertos' : 'Buscar artículos';
+
+  if (router.query.type === 'Cursos') {
+    inputPlaceholder = 'Buscar cursos';
+  }
 
   const handleToolsModal = () => {
     dispatch(showToolsModal());

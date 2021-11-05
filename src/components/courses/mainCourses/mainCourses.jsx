@@ -11,7 +11,7 @@ import TooltipContainer from '@/components/articleManager/editorComponents/toolt
 
 const AllCourses = ({ preferences, initialData, loggedIn }) => {
   const router = useRouter();
-  const [cursos, setCursos] = useState(initialData.data);
+  const [cursos, setCursos] = useState(initialData?.data ? initialData.data : []);
   const [pageNum, setPageNum] = useState(1);
   const estado = 'publicado';
 

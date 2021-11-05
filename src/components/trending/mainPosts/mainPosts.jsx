@@ -16,9 +16,17 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
   const [articles, setArticles] = useState(initialData.data);
   const [pageNum, setPageNum] = useState(1);
 
+  const useSWROptions = [];
+
+  if (router.query.type === 'Cursos') {
+    delete router.query.type;
+    useSWROptions.push(ApiRoutes.Cursos, router.query, pageNum);
+  } else {
+    useSWROptions.push(ApiRoutes.Articles, router.query, pageNum);
+  }
+
   const { data, mutate } = useSWR(
-    [ApiRoutes.Articles, router.query, pageNum],
-    fetchPaginatedData,
+    useSWROptions, fetchPaginatedData,
   );
 
   const onFilter = (filteredArticles) => {

@@ -5,10 +5,6 @@
   width: 22rem;
 }
 
-.topPadding {
-  padding-top: 7rem;
-}
-
 @media (max-width: 575.98px) {
   .listFooter {
     display: flex;
