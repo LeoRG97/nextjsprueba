@@ -93,7 +93,7 @@ const CourseEditor = ({ initialData }) => {
         });
       }
     } else {
-      const res = await updateCourse(course._id, data, session.user.id);
+      const res = await updateCourse(course._id, data);
       setSubmitting(false);
       if (res.ok) {
         eraseOldResourcesFromS3();

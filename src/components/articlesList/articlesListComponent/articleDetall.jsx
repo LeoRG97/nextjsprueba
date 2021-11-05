@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { useDispatch, useSelector } from 'react-redux';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './articlesList.module.css';
@@ -85,7 +86,7 @@ const ArticlesDetailComponent = ({
       <>
         <div
           key={article._id}
-          className={estado !== 'borrador' ? `${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}` : `${styles.cardContainerNotFocus} ${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}`}
+          className={estado !== 'borrador' ? `${styles.cardContainer} ${classContent} ${isAdmin && styles.adminOptions}` : `${styles.cardContainerNotFocus} ${styles.cardContainer}`}
           onMouseEnter={() => setShowOptions(true)}
           onMouseLeave={() => setShowOptions(false)}
         >
@@ -117,11 +118,23 @@ const ArticlesDetailComponent = ({
                 Premium{' '}<span className="icon text--theme-light">R</span>
               </div>
             )}
-            <img
-              onClick={showArticle}
-              src={article.portada && article.portada.ruta_imagen ? `${BUCKET_URL}${article.portada.ruta_imagen}` : '/images/imgpr2.jpg'}
-              alt=""
-            />
+
+            <div className={styles.image}>
+              {article.portada && article.portada.ruta_imagen ? (
+                <Image
+                  src={`${BUCKET_URL}${article.portada.ruta_imagen}`}
+                  alt={article.portada.titulo || ''}
+                  layout="fill"
+                  objectFit="cover"
+                  onClick={showArticle}
+                />
+              ) : (
+                <div className={styles.emptyImg}>
+                  <span className="icon">E</span>
+                </div>
+              )}
+            </div>
+
           </div>
 
           {

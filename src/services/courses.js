@@ -21,12 +21,12 @@ export const saveCourse = async (data, userId) => {
   }
 };
 
-export const updateCourse = async (id, data, userId) => {
+export const updateCourse = async (id, data) => {
   try {
     let portada = '';
     if (data.archivoPortada) {
       await remove(`${BUCKET_URL}${data.portada}`);
-      const { file } = await upload(`${userId}/courses/images`, data.archivoPortada);
+      const { file } = await upload(`${data.autor}/courses/images`, data.archivoPortada);
       const fileName = file.split('.com/')[1];
       portada = fileName;
     } else if (data.portada) {

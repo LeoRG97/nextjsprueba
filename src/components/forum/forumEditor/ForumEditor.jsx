@@ -180,6 +180,7 @@ const ForumModal = ({ show, onClose, idEdit }) => {
               image={archivo}
               setImage={handleCoverChange}
               prevUrl={imagen}
+              resizeType="medium"
             />
           </div>
           <span className="text-sm text--theme-error">{errors.archivo}</span>
