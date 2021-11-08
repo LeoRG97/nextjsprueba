@@ -15,6 +15,10 @@
   top: 0 !important;
 }
 
+.cancelIcon {
+  color: var(--colorSecondary)
+}
+
 .navbar {
   display: flex !important;
   padding-left: 60px;
