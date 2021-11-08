@@ -61,3 +61,4 @@ export { default as CourseSpecific } from './courses/courseSpecific';
 export { default as MainCourses } from './courses/mainCourses/mainCourses';
 export { default as CoursesListComponent } from './courses/coursesComponent/coursesList';
 export { default as AutorCourseComponent } from './courses/courseSpecific/autorInfo/AutorInfo';
+export { default as ProfileCourseSubscription } from './profile/profileCourses/ProfileCourseSubscription';

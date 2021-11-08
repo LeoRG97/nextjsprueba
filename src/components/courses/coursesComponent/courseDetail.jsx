@@ -110,6 +110,7 @@ const CourseDetailComponent = ({
                   src={`${BUCKET_URL}${curso.portada}`}
                   alt={curso.titulo || ''}
                   layout="fill"
+                  onClick={showCourse}
                   objectFit="cover"
                 />
               ) : (
