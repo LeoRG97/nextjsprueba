@@ -9,5 +9,7 @@ module.exports = {
   },
   env: {
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    BASE_URL: process.env.BASE_URL,
+    BUCKET_URL: process.env.BUCKET_URL,
   },
 };
