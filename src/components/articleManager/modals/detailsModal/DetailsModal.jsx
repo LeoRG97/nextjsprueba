@@ -111,6 +111,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
                   image={portada}
                   setImage={handleCoverChange}
                   prevUrl={rutaPortada}
+                  resizeType="large"
                 />
               </div>
               <span className="text-sm text--theme-error">{errors.portada}</span>

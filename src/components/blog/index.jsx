@@ -4,6 +4,7 @@ import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useState, useRef } from 'react';
 import { useSession } from 'next-auth/client';
+import Image from 'next/image';
 import { AutorComponent } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
@@ -143,10 +144,13 @@ const BlogComponent = ({
           />
           {blogInfo.portada.ruta_imagen && (
             <div className={styles.cover_gradient}>
-              <img
+              <Image
                 src={`${BUCKET_URL}${blogInfo.portada.ruta_imagen}`}
                 alt={blogInfo.portada.titulo}
-                className={styles.cover}
+                layout="responsive"
+                objectFit="cover"
+                width={720}
+                height={480}
               />
             </div>
           )}

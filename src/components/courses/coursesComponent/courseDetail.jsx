@@ -3,6 +3,7 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './course.module.css';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
@@ -103,11 +104,20 @@ const CourseDetailComponent = ({
                 Premium{' '}<span className="icon text--theme-light">R</span>
               </div>
             )}
-            <img
-              onClick={showCourse}
-              src={curso.portada ? `${BUCKET_URL}${curso.portada}` : '/images/imgpr2.jpg'}
-              alt=""
-            />
+            <div className={styles.image}>
+              {curso.portada ? (
+                <Image
+                  src={`${BUCKET_URL}${curso.portada}`}
+                  alt={curso.titulo || ''}
+                  layout="fill"
+                  objectFit="cover"
+                />
+              ) : (
+                <div className={styles.emptyImg}>
+                  <span className="icon">E</span>
+                </div>
+              )}
+            </div>
           </div>
           {
             curso.autor ? (

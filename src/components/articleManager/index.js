@@ -421,6 +421,7 @@ const EditorComponent = ({
             title: estatus === 'publicado' ? 'Publicación finalizada' : 'Cambios guardados',
             message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
           });
+          setInitialData(res.data);
         }
       }
     } catch (err) {

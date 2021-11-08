@@ -1,4 +1,5 @@
-import { ApiRoutes } from '@/global/constants';
+import { ApiRoutes, BUCKET_URL } from '@/global/constants';
+import { remove } from './aws';
 import axios from './axios';
 
 export const fetchToolsById = async (idTool) => {
@@ -61,13 +62,10 @@ export const updateTool = async (article, details, initialData) => {
     fileRes = await saveFile(article, 'thinkTools/posts', currentJsonKey);
     if (details.portada) {
       if (url_imagen) {
-        // si ya hay una imagen, actualiza el registro actual
-        const currentCoverKey = url_imagen.split('resources/')[1];
-        coverUrl = await saveFile(details.portada, 'thinkTools/resources', currentCoverKey);
-      } else {
-        // de lo contrario guarda una imagen nueva
-        coverUrl = await saveFile(details.portada, 'thinkTools/resources');
+        // si la herramienta ya tiene imagen, borrar el registro anterior
+        await remove(`${BUCKET_URL}${url_imagen}`);
       }
+      coverUrl = await saveFile(details.portada, 'thinkTools/resources');
     } else if (url_imagen) {
       coverUrl = url_imagen;
     }

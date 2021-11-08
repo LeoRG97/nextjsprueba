@@ -1,6 +1,7 @@
 // import vanillaAxios from 'axios';
 // import { BASE_URL } from '@/global/constants';
-import { ApiRoutes } from '@/global/constants';
+import { ApiRoutes, BUCKET_URL } from '@/global/constants';
+import { remove } from './aws';
 import axios from './axios';
 
 export const fetchArticleById = async (id) => {
@@ -84,8 +85,6 @@ const saveFile = async (file, route, prevFileKey) => {
 export const saveArticle = async (article, details, option, userId) => {
   let coverUrl = null;
   let fileRes = null;
-  // let reportUrl = null;
-  // let infographicUrl = null;
 
   let entryType = 'Blog';
   if (option === 'onlyVideo') {
@@ -128,8 +127,6 @@ export const saveArticle = async (article, details, option, userId) => {
 export const updateArticle = async (article, details, userId, initialData) => {
   let fileRes = null;
   let coverUrl = null;
-  // let reportUrl = null;
-  // let infographicUrl = null;
 
   try {
     const { ruta, portada } = initialData;
@@ -137,13 +134,10 @@ export const updateArticle = async (article, details, userId, initialData) => {
     const currentJsonKey = ruta.split('articles/')[1]; // obtener nombre del artículo
     fileRes = await saveFile(article, `${routeId}/articles`, currentJsonKey);
     if (details.portada) {
-      // reemplazar imagen de portada
-      if (portada && portada.ruta_imagen) {
-        const currentCoverKey = portada.ruta_imagen.split('resources/')[1]; // obtener nombre de la imagen
-        coverUrl = await saveFile(details.portada, `${routeId}/resources`, currentCoverKey);
-      } else {
-        coverUrl = await saveFile(details.portada, `${routeId}/resources`);
+      if (portada.ruta_imagen) {
+        await remove(`${BUCKET_URL}${portada.ruta_imagen}`);
       }
+      coverUrl = await saveFile(details.portada, `${routeId}/resources`);
     } else if (portada && portada.ruta_imagen) {
       // o conservar imagen de portada actual
       coverUrl = portada.ruta_imagen;
@@ -165,7 +159,7 @@ export const updateArticle = async (article, details, userId, initialData) => {
 
     // guardar la información del artículo en la API
     const response = await axios().put(`/articulos/${initialData._id}`, { ...articleData });
-    return response;
+    return { ...response, data: articleData };
   } catch (err) {
     throw Promise.reject(err);
   }
@@ -341,9 +335,7 @@ export const addValoracionComentario = async (comentarioId) => {
 export const addValoracionRespuesta = async (comentarioId, respuestaId) => {
   try {
     const dataRes = await axios().post(
-      `/comentarios/valoracion-respuesta/${comentarioId}`, {
-        respuestaId,
-      },
+      `/comentarios/valoracion-respuesta/${comentarioId}`, { respuestaId },
     );
     return dataRes;
   } catch (error) {
