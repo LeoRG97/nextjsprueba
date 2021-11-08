@@ -1,8 +1,6 @@
 module.exports = {
-  BASE_URL: 'https://api-everis.girasolo.mx/v1/', // development
-  // BASE_URL: 'https://api.caleidoscopiocx.com/v1/', // production
-  BUCKET_URL: 'https://ilovet-app.s3.us-east-2.amazonaws.com/', // development
-  // BUCKET_URL: 'https://everis-resources.s3.us-east-2.amazonaws.com/'  // production
+  BASE_URL: process.env.BASE_URL, // production
+  BUCKET_URL: process.env.BUCKET_URL, // production
   BASE_URL_PROYECT: 'https://www.caleidoscopiocx.com/',
   Roles: {
     User: 'user',
