@@ -28,6 +28,7 @@ module.exports = {
     CoursesAuthor: 'cursos/autor',
     CoursesComments: 'comentarios-curso/curso',
     CoursesReplies: 'comentarios-curso/respuesta',
+    Subscriptions: 'subscripciones/usuario',
     Forums: 'foros/',
     UserNotes: 'notas/usuario',
     Cursos: 'cursos',

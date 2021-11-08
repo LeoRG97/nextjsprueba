@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   Footer, Layout, ProfileHeader, ProfileMenu, AboutMeComponent, ProfileArticles,
   RatedArticles, ProfileSavedArts, ProfileTools, ProfileForums, ProfileCourses,
+  ProfileCourseSubscription,
 } from '@/components';
 
 import withAuth from '@/helpers/withAuth';
@@ -43,6 +44,7 @@ const ProfileScreen = () => {
         {query.setting === 'notes' && <ProfileNotes />}
         {query.setting === 'tools' && <ProfileTools />}
         {query.setting === 'courses' && <ProfileCourses />}
+        {query.setting === 'subscripciones' && <ProfileCourseSubscription />}
         {query.setting === 'forums' && <ProfileForums />}
 
       </div>
