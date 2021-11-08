@@ -9,53 +9,49 @@ const Footer = () => {
     <footer className={styles.footer}>
       <Container className={styles.footer_container}>
         <Row className={styles.footer_container_row}>
-          <Col xs="12" lg="3">
+          <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
+            <Link href="/about" passHref>
+              <a className="text-regular">Acerca de</a>
+            </Link>
+            <Link href="/trending-topics" passHref>
+              <a className="text-regular">Trending Topics</a>
+            </Link>
+            <Link href="/think-tools" passHref>
+              <a className="text-regular">Think Tools</a>
+            </Link>
+            <a href="https://www.nttdata.com/global/en/" target="_blank" className="text-regular" rel="noreferrer">
+              NTT DATA GLOBAL
+            </a>
           </Col>
-          <Col xs="12" lg="9">
-            <Row>
-              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
-                <Link href="/about" passHref>
-                  <a className="text-regular">Acerca de</a>
-                </Link>
-              </Col>
-              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
-                <Link href="/trending-topics" passHref>
-                  <a className="text-regular">Trending topics</a>
-                </Link>
-              </Col>
-              <Col xs="12" sm="4" lg="3" className={`${styles.footer_content}`}>
-                <Link href="/think-tools" passHref>
-                  <a className="text-regular">Think tools</a>
-                </Link>
-              </Col>
-              <Col xs="12" sm="12" lg="3" className={`${styles.footer_content}`}>
-                <p className="subtitle">Ayuda</p>
-                <Link href="/experts">
-                  <a>Nuestos expertos</a>
-                </Link>
-                <Link href="/#">
-                  <a>Soporte técnico</a>
-                </Link>
-                <Link href="/#">
-                  <a>Términos de uso</a>
-                </Link>
-                <Link href="/policies/privacy">
-                  <a>Política de privacidad</a>
-                </Link>
-                <Link href="/policies/cookies">
-                  <a>Política de cookies</a>
-                </Link>
-                <Link href="/policies/legal">
-                  <a>Aviso legal</a>
-                </Link>
-                <div>
-                  <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
-                </div>
-                <p> </p>
-                <p> </p>
-              </Col>
-            </Row>
+          <Col xs="12" md="4" className={`${styles.footer_content}`}>
+            <p className="subtitle">Ayuda</p>
+            <Link href="/experts">
+              <a>Nuestros Expertos</a>
+            </Link>
+            <Link href="/#">
+              <a>Soporte Técnico</a>
+            </Link>
+            <Link href="/#">
+              <a>Términos de Uso</a>
+            </Link>
+            <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
+          </Col>
+          <Col xs="12" md="4" className={`${styles.footer_content}`}>
+            <p className="subtitle">Políticas</p>
+
+            <Link href="/policies/privacy">
+              <a>Política de Privacidad</a>
+            </Link>
+            <Link href="/policies/cookies">
+              <a>Política de Cookies</a>
+            </Link>
+            <Link href="/policies/legal">
+              <a>Aviso Legal</a>
+            </Link>
+
+            <p> </p>
+            <p> </p>
           </Col>
         </Row>
         <Row className={styles.footer_container_row_copyright}>
