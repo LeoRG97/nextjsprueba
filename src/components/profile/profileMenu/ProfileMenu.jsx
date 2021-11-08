@@ -152,6 +152,14 @@ const TabMenu = () => {
           <span className="ms-2 text-md text--theme-secondary">{data.valoraciones}</span>
         </a>
       </Link>
+      <Link href="/profile/subscripciones" passHref scroll={false}>
+        <a
+          className={`subtitle ${styles.item} ${query.setting === 'subscripciones' && styles.active}`}
+        >
+          Subscripciones
+          <span className="ms-2 text-md text--theme-secondary">{data.subscripcionesCursos}</span>
+        </a>
+      </Link>
       <Link href="/profile/notes" passHref scroll={false}>
         <a
           className={`subtitle ${styles.item} ${query.setting === 'notes' && styles.active}`}
