@@ -16,6 +16,7 @@ const NavbarComponent = () => {
   const router = useRouter();
   const [session, loading] = useSession();
   const [searchText, setSearchText] = useState('');
+  const [onSearch, setOnSearch] = useState(false);
   const dispatch = useDispatch();
   const { data, fetched } = useSelector((state) => state.profile);
   const [expanded, setExpanded] = useState(false);
@@ -32,6 +33,10 @@ const NavbarComponent = () => {
     if (!fetched) {
       dispatch(fetchProfile());
     }
+    if (router.query.search) {
+      setSearchText(router.query.search);
+      setOnSearch(true);
+    }
   }, []);
 
   const handleSearch = (e) => {
@@ -46,8 +51,27 @@ const NavbarComponent = () => {
         },
       }, null, { shallow: true });
       setExpanded(false);
+      setOnSearch(true);
     }
   };
+
+  const handleCancel = () => {
+    setSearchText('');
+    router.push({
+      pathname: router.pathname === '/experts' ? '/experts' : '/trending-topics',
+      query: {
+        type: router.query.type,
+      },
+    }, null, { shallow: true });
+    setOnSearch(false);
+  };
+
+  useEffect(() => {
+    if (searchText.length === 0 && onSearch) {
+      setOnSearch(false);
+      handleCancel();
+    }
+  }, [searchText]);
 
   inputPlaceholder = router.pathname === '/experts' ? 'Buscar expertos' : 'Buscar artículos';
 
@@ -127,9 +151,17 @@ const NavbarComponent = () => {
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
                     />
-                    <button className="icon input__icon" type="button" onClick={handleSearch}>
-                      7
-                    </button>
+                    {
+                      onSearch ? (
+                        <div onClick={handleCancel} className={`input__icon ${styles.cancelIcon}`}>
+                          &#x2715;
+                        </div>
+                      ) : (
+                        <button className="icon input__icon" type="button" onClick={handleSearch}>
+                          7
+                        </button>
+                      )
+                    }
                   </div>
                 </form>
               </div>
@@ -229,9 +261,17 @@ const NavbarComponent = () => {
                         value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                       />
-                      <button className="input__icon" type="button">
-                        <span className="icon icon--theme-secondary">7</span>
-                      </button>
+                      {
+                        onSearch ? (
+                          <div onClick={handleCancel} className={`input__icon ${styles.cancelIcon}`}>
+                            &#x2715;
+                          </div>
+                        ) : (
+                          <button className="input__icon" type="button">
+                            <span className="icon icon--theme-secondary">7</span>
+                          </button>
+                        )
+                      }
                     </div>
                   </form>
                 </div>
