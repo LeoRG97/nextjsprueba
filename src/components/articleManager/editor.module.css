@@ -73,7 +73,6 @@
   margin-bottom: 0;
 }
 
-
 .cover {
   width: 100%;
   height: 30rem;
@@ -132,6 +131,7 @@
   /* position: relative; */
   /* display: grid; */
   /* justify-content: center; */
+  width: 75%;
   min-height: 100vh;
   padding-top: 60px;
   margin-top: 8%;
@@ -164,15 +164,16 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  position: relative;
   height: 500px;
 }
 
-.imgPreview{
+.imgPreview {
   max-width: 100%;
   /* height: 100%; */
 }
 
-.editorContentP iframe{
+.editorContentP iframe {
   width: 100%;
 }
 
@@ -183,7 +184,7 @@
   }
 }
 
-@media (max-width: 999px){
+@media (max-width: 999px) {
   .previewContentImg {
     height: auto;
   }
