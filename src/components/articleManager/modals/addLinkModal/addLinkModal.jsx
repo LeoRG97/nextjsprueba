@@ -8,7 +8,7 @@ import styles from './modalLink.module.css';
 
 const ModalLink = (props) => {
   const {
-    addLink, showModal, show, updateEvent, editInfo,
+    addLink, showModal, show, updateEvent, editInfo, updateLinkFunc,
   } = props;
 
   const [inputLink, setData] = useState('');
@@ -86,9 +86,18 @@ const ModalLink = (props) => {
       } else {
         setEmbed(false);
       }
-      setData(editInfo.tagEdit);
+      const element = new DOMParser().parseFromString(editInfo.tagEdit, 'text/html');
+      const link = element.querySelector('a');
+      setData(link.href);
+      setName(link.innerHTML);
     }
   }, [editInfo, updateEvent]);
+
+  const handleUpdateLinkFunc = () => {
+    updateLinkFunc(editInfo.idContent, { name, inputLink });
+    setName('');
+    setData('');
+  };
 
   return (
     <div>
@@ -145,7 +154,7 @@ const ModalLink = (props) => {
           </button>
           {
             (updateEvent) ? (
-              <button className="button button--theme-primary" disabled={disable}>Actualizar</button>
+              <button className="button button--theme-primary" onClick={handleUpdateLinkFunc} disabled={disable}>Actualizar</button>
             ) : (<button className="button button--theme-primary" onClick={callsFunctLink} disabled={disable}>Incrustar</button>)
           }
         </Modal.Footer>
