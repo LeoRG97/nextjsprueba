@@ -44,7 +44,21 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
   };
 
   const handleSwitch = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.checked });
+    if (e.target.name === 'premium' && e.target.checked) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.checked,
+        destacado: false,
+      });
+    } else if (e.target.name === 'destacado' && e.target.checked) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.checked,
+        premium: false,
+      });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    }
   };
 
   const handleCoverChange = async (file) => {
@@ -130,7 +144,10 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
             </Col>
             <Col md={6}>
               <div className={styles.visibilitySection}>
-                <h3 className="title mb-3">Visibilidad</h3>
+                <h3 className="title mb-2">Visibilidad</h3>
+                <small className="text-sm text--theme-error">
+                  {errors.premium}
+                </small>
                 <div className={styles.switchContainer}>
                   <label className="subtitle">Destacar publicación</label>
                   <Switch
@@ -147,6 +164,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
                     onChange={handleSwitch}
                   />
                 </div>
+
                 <label className="d-block subtitle">Categoría(s) a la que pertenece</label>
                 <CategorySelector
                   data={preferences}
