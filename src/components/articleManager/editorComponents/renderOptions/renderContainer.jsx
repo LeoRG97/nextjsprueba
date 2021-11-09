@@ -77,6 +77,10 @@ const EditorOptionRender = memo(({
     }
   };
 
+  const onChangeImage = (e) => {
+    handleChangeImage(data.id, data.content, e);
+  };
+
   useEffect(() => {
     if (activeOption === data.id) {
       setActive('active');
@@ -108,21 +112,19 @@ const EditorOptionRender = memo(({
                               ? (
                                 (
                                   <a>
-                                    <label htmlFor="imagenUpdate">
+                                    <label htmlFor={`imagenUpdate${data.id}`}>
                                       <span className="icon">E</span>&nbsp;&nbsp;&nbsp;&nbsp; Modificar
                                       <input
                                         className="input-image-none"
                                         accept="image/png,image/jpeg,image/jpeg"
-                                        id="imagenUpdate"
+                                        id={`imagenUpdate${data.id}`}
                                         size="60"
                                         type="file"
                                         placeholder="Imagen"
                                         autoComplete="off"
                                         name="imagenUpdate"
                                         required="required"
-                                        onChange={(event) => handleChangeImage(
-                                          data.id, data.content, event,
-                                        )}
+                                        onChange={onChangeImage}
                                       />
                                     </label>
                                   </a>

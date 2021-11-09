@@ -22,6 +22,7 @@ import ResourcesModal from './modals/articleResourcesModal/ArticleResourcesModal
 import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import EditorPreviewComponent from './articlePreview';
 import ModalLink from './modals/addLinkModal/addLinkModal';
+import { reduceImageSize } from '@/helpers/images';
 
 const EditorComponent = ({
   option, initialData, setInitialData, initialContent,
@@ -273,7 +274,8 @@ const EditorComponent = ({
 
       const resDelete = await remove(currentContent);
       if (resDelete.ok) {
-        const res = await upload(path, image);
+        const reducedImage = await reduceImageSize(image);
+        const res = await upload(path, reducedImage);
         if (res.ok) {
           arrayItemsEditor.html.forEach((item, index) => {
             if (item.id === idElement) {
