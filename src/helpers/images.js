@@ -9,10 +9,10 @@ const getSize = (size) => {
       return { w: 720, h: 480 };
     }
     case 'large': {
-      return { w: 1024, h: 768 };
+      return { w: 1280, h: 768 };
     }
     default: {
-      return { w: 1024, h: 768 };
+      return { w: 1280, h: 768 };
     }
   }
 };
@@ -25,7 +25,7 @@ export const reduceImageSize = (file, size) => {
       dimensions.w,
       dimensions.h,
       file.type.split('/')[1],
-      100,
+      90,
       0,
       async (newFile) => {
         resolve(newFile);
