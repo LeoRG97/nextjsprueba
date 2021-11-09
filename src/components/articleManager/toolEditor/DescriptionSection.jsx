@@ -1,14 +1,11 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable react/jsx-filename-extension */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import styles from '../editor.module.css';
-// import DetailsModal from '../modals/detailsModal/DetailsModal';
 import EditorOptionRender from '../editorComponents/renderOptions/renderContainer';
 import ToolsComponent from '../editorComponents/toolsComponent/tools';
 
-const DescriptionSection = ({ setValidateContent }) => {
+const DescriptionSection = () => {
   const {
     usage: arrayItemsEditor,
     setUsage: setItems,
@@ -99,14 +96,6 @@ const DescriptionSection = ({ setValidateContent }) => {
   const setActiveClass = (id) => {
     setActiveCont(id);
   };
-
-  useEffect(() => {
-    let validateText = false;
-    if (arrayItemsEditor.html.length > 0) {
-      validateText = true;
-    }
-    setValidateContent(validateText);
-  }, [arrayItemsEditor]);
 
   return (
     <>

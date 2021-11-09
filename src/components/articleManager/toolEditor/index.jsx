@@ -14,6 +14,7 @@ import { ToolContext } from '@/helpers/contexts/toolContext';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { saveTool, updateTool, updateToolFile } from '@/services/tools';
 import ModalZip from './ModalZip';
+import JustificationSection from './JustificationSection';
 
 const ToolEditorComponent = ({
   initialData,
@@ -28,11 +29,12 @@ const ToolEditorComponent = ({
     usage,
     setDefinition,
     setUsage,
+    justification,
+    setJustification,
+    contentValidated,
   } = useContext(ToolContext);
   const router = useRouter();
   const [showPublish, setShowPublish] = useState(false);
-  const [validateDefinition, setValidateDefinition] = useState(false);
-  const [validateDescription, setValidateDescription] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [successData, setSuccessData] = useState({
     show: false,
@@ -73,25 +75,26 @@ const ToolEditorComponent = ({
 
   useEffect(() => {
     if (initialContent) {
-      setDefinition(initialContent.definition);
-      setUsage(initialContent.usage);
+      setDefinition(initialContent.definition || { html: [] });
+      setJustification(initialContent.justification || { html: [] });
+      setUsage(initialContent.usage || { html: [] });
     }
   }, []);
 
   const handleOpenModal = () => {
-    if (validateDefinition && validateDescription) {
+    if (contentValidated) {
       setShowPublish(true);
     } else {
       setErrorData({
         show: true,
-        title: 'Error',
-        message: 'No has agregado el contenido suficiente para tu publicación',
+        title: 'Operación no permitida',
+        message: 'No has agregado contenido para tu herramienta.',
       });
     }
   };
 
   const handlePublish = async () => {
-    const jsonData = { definition, usage };
+    const jsonData = { definition, justification, usage };
     setShowPublish(false);
     setSubmitting(true);
     const blob = new Blob([JSON.stringify(jsonData)], {
@@ -178,9 +181,11 @@ const ToolEditorComponent = ({
                 Estructura aquí el contenido de tu herramienta
               </p>
               <h1 className="title-xl text-center">¿Qué es?</h1>
-              <VideoSection setValidateContent={setValidateDefinition} />
-              <h1 className="title-xl text-center">¿Cómo funciona?</h1>
-              <DescriptionSection setValidateContent={setValidateDescription} />
+              <VideoSection />
+              <h1 className="title-xl text-center">¿Por qué debería usarlo?</h1>
+              <JustificationSection />
+              <h1 className="title-xl text-center">¿Cómo lo uso?</h1>
+              <DescriptionSection />
             </div>
           </div>
           {/* EDITOR OPTIONS NAV */}

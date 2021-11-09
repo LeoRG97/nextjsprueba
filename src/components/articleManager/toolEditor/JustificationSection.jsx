@@ -1,21 +1,15 @@
-/* eslint-disable object-curly-newline */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
+import { ToolContext } from '@/helpers/contexts/toolContext';
 import styles from '../editor.module.css';
-import ModalVideo from '../modals/addVideoModal/addVideoModal';
 import EditorOptionRender from '../editorComponents/renderOptions/renderContainer';
 import ToolsComponent from '../editorComponents/toolsComponent/tools';
-import { ToolContext } from '@/helpers/contexts/toolContext';
 
-const VideoSection = () => {
+const JustificationSection = () => {
   const {
-    definition: arrayItemsEditor,
-    setDefinition: setItems,
+    justification: arrayItemsEditor,
+    setJustification: setItems,
   } = useContext(ToolContext);
-  const [modalShowVideo, setModalShowVideo] = useState(false);
-  const [addedVideo, setContentVideo] = useState(false);
-  const [editVideo, setEditVideo] = useState({ idContent: '', tagEdit: '', type: '' });
-  const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
 
   const makeid = () => {
@@ -63,22 +57,6 @@ const VideoSection = () => {
 
   /* Add components functions */
 
-  const addVideoFunct = (tag, embedIframe) => {
-    const obj = { ...arrayItemsEditor };
-    const idContainer = makeid();
-    const topVideo = { html: [] };
-    if (!embedIframe) {
-      topVideo.html.push({ id: idContainer, type: 'linkVideo', content: tag, tag });
-    } else {
-      topVideo.html.push({ id: idContainer, type: 'iframeVideo', content: tag, tag });
-    }
-    obj.html.forEach((item) => {
-      topVideo.html.push(item);
-    });
-    setItems(topVideo);
-    setModalShowVideo(false);
-  };
-
   const addTextFunct = (optionText) => {
     const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
@@ -104,34 +82,6 @@ const VideoSection = () => {
 
   /* ######################### */
 
-  /* Edit components functions */
-  const editComponentFunct = (tag, idElement, typeOption) => {
-    if (typeOption === 'linkVideo' || typeOption === 'iframeVideo') {
-      setModalShowVideo(true);
-      setEditVideo({ idContent: idElement, tagEdit: tag, type: typeOption });
-      setUpdateEvent(true);
-    }
-  };
-
-  const updateFunctionEventVideo = (tag, idElement, typeContent) => {
-    setUpdateEvent(false);
-    setModalShowVideo(false);
-    const oldArray = arrayItemsEditor.html;
-    let newTag = {};
-    if (!typeContent) {
-      newTag = { id: idElement, type: 'linkVideo', content: tag, tag };
-    } else {
-      newTag = { id: idElement, type: 'iframeVideo', content: tag, tag };
-    }
-    oldArray.forEach((item, index) => {
-      if (item.id === idElement) {
-        oldArray[index] = newTag;
-      }
-    });
-  };
-
-  /* ######################### */
-
   const deleteComponentEditor = (idContent) => {
     const newArrayContent = { html: [] };
     // let deleteImage = true;
@@ -147,31 +97,13 @@ const VideoSection = () => {
     setActiveCont(id);
   };
 
-  useEffect(() => {
-    let validateVideo = false;
-    arrayItemsEditor.html.forEach((item) => {
-      if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
-        validateVideo = true;
-      }
-    });
-    setContentVideo(validateVideo);
-  }, [arrayItemsEditor]);
-
   return (
     <>
-      <ModalVideo
-        show={modalShowVideo}
-        editInfo={editVideo}
-        updateEvent={updateEvent}
-        addVideo={addVideoFunct}
-        updateFunctionEvent={updateFunctionEventVideo}
-        showModal={() => setModalShowVideo(false)}
-      />
       <DragDropContext>
         <Droppable droppableId="canvasDrop">
           {(provided) => (
             <div
-              id="canvas"
+              id="canvas2"
               className={styles.canvas}
               {...provided.droppableProps}
               ref={provided.innerRef}
@@ -185,7 +117,6 @@ const VideoSection = () => {
                           index={index}
                           data={item}
                           deleteComponentEditor={deleteComponentEditor}
-                          editComponentFunct={editComponentFunct}
                           handleChange={handleChange}
                           setActiveClass={setActiveClass}
                           activeOption={activeOption}
@@ -199,15 +130,13 @@ const VideoSection = () => {
           )}
         </Droppable>
       </DragDropContext>
-      <ToolsComponent
-        option="tool"
-        addedVideo={addedVideo}
-        addTextFunct={addTextFunct}
-        setModalShowVideo={setModalShowVideo}
-      />
 
+      <ToolsComponent
+        option="toolDescription"
+        addTextFunct={addTextFunct}
+      />
     </>
   );
 };
 
-export default VideoSection;
+export default JustificationSection;
