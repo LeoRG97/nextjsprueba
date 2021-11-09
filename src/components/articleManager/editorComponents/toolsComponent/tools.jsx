@@ -24,7 +24,7 @@ const ToolsComponent = ({
               <div className={`${styles.files} text-md`}>Insertar</div>
             </section>
             <section className={`${styles.tools_select} `}>
-              <div className="dropdown">
+              <div className="dropdown me-3">
                 <TooltipContainer placement="top" tooltipText="Texto">
                   <div className="dropdown-select">
                     <span id="select-span" className="text-sm">T<small>T</small></span>
@@ -110,7 +110,7 @@ const ToolsComponent = ({
               <section>
                 <div className={`${styles.files} text-md`}>Insertar</div>
               </section>
-              <section className={`${styles.tools_select} `}>
+              <section className={`${styles.tools_select_multimedia} `}>
                 <div className="dropdown no-m">
                   <TooltipContainer placement="top" tooltipText="Texto">
                     <div className="dropdown-select">
@@ -175,7 +175,7 @@ const ToolsComponent = ({
               <section>
                 <div className={`${styles.files} text-md`}>Insertar</div>
               </section>
-              <section className={`${styles.tools_select} `}>
+              <section className={`${styles.tools_select_multimedia} `}>
                 <div className="dropdown no-m">
                   <TooltipContainer placement="top" tooltipText="Texto">
                     <div className="dropdown-select">
@@ -294,11 +294,11 @@ ToolsComponent.defaultProps = {
   option: '',
   addedVideo: false,
   addedAudio: false,
-  addImage: () => { },
-  setModalShow: () => { },
-  setModalShowVideo: () => { },
-  addTextFunct: () => { },
-  setModalShowLink: () => { },
+  addImage: () => {},
+  setModalShow: () => {},
+  setModalShowVideo: () => {},
+  addTextFunct: () => {},
+  setModalShowLink: () => {},
 };
 
 export default ToolsComponent;
