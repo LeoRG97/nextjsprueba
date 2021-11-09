@@ -232,10 +232,27 @@ const EditorComponent = ({
     setItems(obj);
     setModalShowLink(false);
   };
+
+  const updateLinkFunc = (tag, data) => {
+    const obj = arrayItemsEditor;
+    const found = obj.html.findIndex((idx) => idx.id === tag);
+
+    obj.html[found].tagEdit = `<a target="_blank" href="${data.inputLink}">${data.name}</a>`;
+    obj.html[found].content = `<a target="_blank" href="${data.inputLink}">${data.name}</a>`;
+    obj.html[found].tag = `<a target="_blank" href="${data.inputLink}">${data.name}</a>`;
+
+    setUpdateEvent(false);
+    setModalShowLink(false);
+  };
   /* ######################### */
 
   /* Edit components functions */
   const editComponentFunct = (tag, idElement, typeOption) => {
+    if (typeOption === 'link') {
+      setUpdateEvent(true);
+      setEditVideo({ idContent: idElement, tagEdit: tag, type: typeOption });
+      setModalShowLink(true);
+    }
     if (typeOption === 'linkVideo' || typeOption === 'iframeVideo') {
       setModalShowVideo(true);
       setEditVideo({ idContent: idElement, tagEdit: tag, type: typeOption });
@@ -492,6 +509,7 @@ const EditorComponent = ({
         editInfo={editVideo}
         updateEvent={updateEvent}
         addLink={addLinkFunct}
+        updateLinkFunc={updateLinkFunc}
         showModal={() => setModalShowLink(false)}
       />
       {
