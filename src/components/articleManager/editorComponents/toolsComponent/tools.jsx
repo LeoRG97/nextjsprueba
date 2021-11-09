@@ -134,7 +134,18 @@ const ToolsComponent = ({
                     </li>
                   </ul>
                 </div>
+                <div>
+                  <TooltipContainer placement="top" tooltipText="Link">
+                    <div
+                      onClick={() => setModalShowLink(true)}
+                      className={`icon ${styles.tools_media} ${styles.tools_media_multimedia}`}
+                    >
+                      l
+                    </div>
+                  </TooltipContainer>
+                </div>
               </section>
+
             </div>
           </>
         );
@@ -187,6 +198,16 @@ const ToolsComponent = ({
                       Pie de texto
                     </li>
                   </ul>
+                </div>
+                <div>
+                  <TooltipContainer placement="top" tooltipText="Link">
+                    <div
+                      onClick={() => setModalShowLink(true)}
+                      className={`icon ${styles.tools_media} ${styles.tools_media_multimedia}`}
+                    >
+                      l
+                    </div>
+                  </TooltipContainer>
                 </div>
               </section>
             </div>
@@ -273,11 +294,11 @@ ToolsComponent.defaultProps = {
   option: '',
   addedVideo: false,
   addedAudio: false,
-  addImage: () => {},
-  setModalShow: () => {},
-  setModalShowVideo: () => {},
-  addTextFunct: () => {},
-  setModalShowLink: () => {},
+  addImage: () => { },
+  setModalShow: () => { },
+  setModalShowVideo: () => { },
+  addTextFunct: () => { },
+  setModalShowLink: () => { },
 };
 
 export default ToolsComponent;
