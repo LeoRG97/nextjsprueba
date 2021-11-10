@@ -132,7 +132,7 @@ const HomePage = ({ articulos }) => {
                   </Row>
                   <Row>
                     <div className={`${styles.content_centered} ${styles.content_more} `}>
-                      <p className="title">Descubre más publicaciones</p>
+                      <p className="title">Encuentra más publicaciones</p>
                       <Link href="/trending-topics" passHref>
                         <a>
                           <button className="button button--theme-secondary">Ver más</button>
@@ -200,10 +200,18 @@ const HomePage = ({ articulos }) => {
           <Col xl="6" lg="6" sm="12" className={styles.margin_movil_y}>
             <small className="text-md text--theme-secondary">Expertos</small>
             <h2 className="title-xl">Conoce a <br />nuestros expertos</h2>
-            <p className="text-md mt-4 mb-4">Más de 300 colaboradores creando y compartiendo publicaciones de
-              relevancia, especialmente diseñados para mentes visionarias,
-              como tú.
+            { /* eslint-disable max-len */}
+
+            <p className="text-md mt-4">En NTT DATA contamos con consultores expertos en marketing,
+              creación y gestión de contenidos,
+              cursos, herramientas y foros, especialmente diseñados para mentes visionarias como la tuya.
             </p>
+            <p className="text-md">
+              Capaces de llevar organizaciones a niveles exponenciales en innovación, customer experience,
+              transformación digital y mucho más.
+            </p>
+            { /* eslint-enable max-len */}
+
             <Link href="/experts" passHref>
               <a className="button button--theme-primary">Buscar expertos</a>
             </Link>
