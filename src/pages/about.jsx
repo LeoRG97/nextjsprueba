@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from '@/global/styles/Us.module.css';
@@ -8,11 +7,6 @@ import { Footer, Layout } from '@/components';
 import WorldComponent from '../components/world/World';
 
 export default function Home() {
-  const [viewportRef] = useEmblaCarousel({
-    dragFree: true,
-    containScroll: 'trimSnaps',
-  });
-
   return (
     <Layout>
       <Head>
@@ -119,66 +113,24 @@ export default function Home() {
             </Container>
           </Container>
           <Container fluid className={styles.content_map}>
-            <Container className={`${styles.content_pt_sect} `}>
-              <div className={` ${styles.content_map_text}`}>
-                <div className="text-center">
-                  <small className="text-sm">Impacto geográfico</small>
-                  <h1 className="title-xl text--theme-dark mb-3">Una empresa <br /> de clase mundial</h1>
-                  <WorldComponent />
-                  <div className="d-flex justify-content-center">
-                    { /* eslint-disable max-len */}
-                    <div className={styles.margin_text_mapa}>
-                      <p className="text-md text--theme-dark w-100 mt-3">
-                        NTT DATA Group está avanzando con su Iniciativa Global One Team combinando
-                        la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero,
-                        así como facilitando colaboraciones comerciales entre naciones y empresas que
-                        fortalecen el poder de marca mundial de
-                        NTT DATA Group como &quot;One NTT DATA&quot;.
-                      </p>
-                    </div>
-                    { /* eslint-enable max-len */}
-                  </div>
+            <div className="text-center py-4">
+              <small className="text-sm">Impacto geográfico</small>
+              <h1 className="title-xl text--theme-dark mb-3">Una empresa <br /> de clase mundial</h1>
+              <WorldComponent />
+              <div className="d-flex justify-content-center">
+                { /* eslint-disable max-len */}
+                <div className={styles.margin_text_mapa}>
+                  <p className="text-md text--theme-dark w-100 mt-3">
+                    NTT DATA Group está avanzando con su Iniciativa Global One Team combinando
+                    la experiencia y los recursos de las empresas del Grupo en Japón y en el extranjero,
+                    así como facilitando colaboraciones comerciales entre naciones y empresas que
+                    fortalecen el poder de marca mundial de
+                    NTT DATA Group como &quot;One NTT DATA&quot;.
+                  </p>
                 </div>
+                { /* eslint-enable max-len */}
               </div>
-            </Container>
-          </Container>
-          <Container fluid>
-            <Container>
-              <Col xl="12" lg="12" sm="12">
-                <Row>
-                  <div className={styles.content_carousel}>
-                    <small className="text-sm">Aliados</small>
-                    <h1 className="title-xl text--theme-light ">Más relaciones, <br />mejores resultados</h1>
-                  </div>
-                </Row>
-                <Row>
-                  <div className="embla">
-                    <div className="embla__viewport" ref={viewportRef}>
-                      <div className="embla__container">
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                        <div className="embla__slide">
-                          <img src="/images/imgpr2.jpg" alt="" className={styles.image_carousel} />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </Row>
-              </Col>
-            </Container>
+            </div>
           </Container>
         </Container>
       </main>
