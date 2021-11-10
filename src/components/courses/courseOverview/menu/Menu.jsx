@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './menu.module.css';
 
-const CourseMenu = ({ totalComments, certificateL }) => {
+const CourseMenu = ({ totalComments, certificateIc, certificateLink }) => {
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [lessonIndex, tab] = params || [];
@@ -65,13 +65,25 @@ const CourseMenu = ({ totalComments, certificateL }) => {
           Recursos adicionales
         </a>
       </Link>
-      <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false}>
-        <a
-          className={`subtitle ${styles.item} ${isLinkActive('certificate') && styles.active}`}
-        ><i className={`icon-md ${styles.iconC}`}>{certificateL}</i>
-          Certificado
-        </a>
-      </Link>
+      {
+        certificateLink && certificateIc !== 'W' && (
+          <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false}>
+            <a
+              className={`subtitle ${styles.item} ${isLinkActive('certificate') && styles.active}`}
+            ><i className={`icon-md ${styles.iconC} ${isLinkActive('certificate') && styles.active}`}>{certificateIc}</i>
+              Certificado
+            </a>
+          </Link>
+        )
+      }
+      {
+        certificateLink && certificateIc === 'W' && (
+          <p className={`subtitle ${styles.item} ${isLinkActive('certificate') && styles.active}`}>
+            <i className={`icon-md ${styles.iconC} ${isLinkActive('certificate') && styles.active}`}>{certificateIc}</i>
+            Certificado
+          </p>
+        )
+      }
     </div>
   );
 };

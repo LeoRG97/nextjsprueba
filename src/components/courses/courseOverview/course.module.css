@@ -9,6 +9,10 @@
   margin-bottom: 20px;
 }
 
+.content_certificate {
+  text-align: center;
+}
+
 @media (max-width: 767.98px) {
   .container {
     width: 100%;

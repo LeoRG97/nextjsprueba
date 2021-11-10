@@ -28,7 +28,7 @@ const Lesson = React.memo(({ lesson, lessonsRead }) => {
     if (BtnValue) {
       return (
         <button className={`icon-button icon-button--primary active_light ${styles.lectionView}`} onClick={handleNav}>
-          A
+          s
         </button>
       );
     }
