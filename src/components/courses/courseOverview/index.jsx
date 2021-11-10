@@ -68,13 +68,11 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
       } else {
         setCertf('W');
       }
-    }
-    if (course.lecciones.length === subsInfo.lecciones.length) {
+    } else if (course.lecciones.length === subsInfo.lecciones.length) {
       setCertf('q');
     } else {
       setCertf('W');
     }
-
     return resp;
   };
 
@@ -152,11 +150,16 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
 
   useEffect(() => {
     if (currentLesson && slug && lessonIndex && infoSubsCourse) {
-      registerlection();
       handlePrev();
       handleNext();
     }
   }, [slug, currentLesson, lessonIndex, infoSubsCourse]);
+
+  useEffect(() => {
+    if (course && course.lecciones && infoSubsCourse) {
+      registerlection();
+    }
+  }, [slug, lessonIndex, course]);
 
   return (
     <div className={styles.container}>
@@ -170,7 +173,13 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
           unitsCourse={course.unidades}
         />
       )}
-      <Menu totalComments={totalComments} certificateL={iconCertificate} />
+      {course && (
+        <Menu
+          totalComments={totalComments}
+          certificateIc={iconCertificate}
+          certificateLink={course.certificado}
+        />
+      )}
 
       {(!tab || tab === 'overview') && course && course.unidades && infoSubsCourse && (
         <UnitList
