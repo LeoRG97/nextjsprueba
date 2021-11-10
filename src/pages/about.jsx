@@ -32,7 +32,7 @@ export default function Home() {
               <div className={styles.content_title_text}>
                 <small className="text-sm text--theme-light">Somos NTT DATA</small>
                 <a target="_blank" href="https://www.nttdata.com/global/en/about-us" rel="noopener noreferrer">
-                  <h1 className={`title-xl text--theme-light ${styles.cursorPointer}`}>Su socio global <br />en innovación</h1>
+                  <h1 className={`title-xl text--theme-light ${styles.cursorPointer}`}>Somos el mejor socio global<br />en innovación</h1>
                 </a>
               </div>
             </Row>
@@ -62,7 +62,7 @@ export default function Home() {
                     </div>
                     {
                       // eslint-disable-next-line max-len
-                      <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo a través de relaciones a largo plazo, desarrollamos ecosistemas en evolución con nuestros clientes a través de tecnologías de vanguardia y potenciamos nuestra creatividad respetando la diversidad.</p>
+                      <p className="text-md">Hacemos realidad los sueños de nuestros clientes en todo el mundo, a través de relaciones a largo plazo. Desarrollamos ecosistemas con evolución para nuestros clientes empleando tecnologías disruptivas. Potenciamos nuestra creatividad respetando la diversidad.</p>
                     }
                   </div>
                 </Col>
@@ -78,7 +78,7 @@ export default function Home() {
                     </div>
                     {
                       // eslint-disable-next-line max-len
-                      <p className="text-md">NTT DATA utiliza la tecnología de la información para crear nuevos paradigmas y valores, que ayudan a contribuir a una sociedad más próspera y armoniosa.</p>
+                      <p className="text-md">En NTT DATA implementamos tecnologías de la información para crear nuevos paradigmas y valores que contribuyan a una sociedad más próspera.</p>
                     }
                   </div>
                 </Col>
