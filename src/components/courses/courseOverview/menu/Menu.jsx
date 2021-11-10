@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './menu.module.css';
 
-const CourseMenu = ({ totalComments }) => {
+const CourseMenu = ({ totalComments, certificateL }) => {
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [lessonIndex, tab] = params || [];
@@ -68,7 +68,7 @@ const CourseMenu = ({ totalComments }) => {
       <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false}>
         <a
           className={`subtitle ${styles.item} ${isLinkActive('certificate') && styles.active}`}
-        >
+        ><i className={`icon-md ${styles.iconC}`}>{certificateL}</i>
           Certificado
         </a>
       </Link>

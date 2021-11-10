@@ -1,17 +1,19 @@
 import React from 'react';
 import Unit from './unit/Unit';
 
-const UnitList = React.memo(({ units, lessons }) => {
+const UnitList = React.memo(({ units, lessons, lessonsRead }) => {
   return (
     <div>
       {
         units.map((unit) => {
-          const unitLessons = lessons.filter((lesson) => lesson.no_unidad === unit.no_unidad);
+          // eslint-disable-next-line max-len
+          const unitLessons = lessons.filter((lesson) => lesson.unidad === unit._id);
           return (
             <Unit
-              key={unit.nombre}
+              key={unit.titulo}
               unit={unit}
               lessons={unitLessons}
+              lessonsRead={lessonsRead}
             />
           );
         })
