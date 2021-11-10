@@ -353,6 +353,10 @@ a {
   color: var(--text-color-highlight);
 }
 
+.icon-button--primary.active_light {
+  background-color: var(--colorPrimaryHover);
+}
+
 .icon-button--secondary {
   background-color: var(--contentTransparentRGB);
   color: var(--text-color-secondary);

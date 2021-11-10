@@ -37,3 +37,10 @@
 .item.active {
   color: var(--colorLight);
 }
+
+.iconC {
+  font-style: normal;
+  font-size: 90%;
+  top: -7px;
+  position: relative;
+}
