@@ -11,6 +11,7 @@ module.exports = {
   },
   ApiRoutes: {
     // rutas para SWR
+    Users: 'users',
     Tools: 'herramientas',
     ToolsCategories: 'categorias-herramientas',
     Experts: 'users/expertos',

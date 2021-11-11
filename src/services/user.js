@@ -28,3 +28,12 @@ export const activateUserEmail = async (data) => {
     return err;
   }
 };
+
+export const disableUserAccount = async (userId) => {
+  try {
+    const res = await axios().patch(`users/${userId}`, { estatus: false });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
