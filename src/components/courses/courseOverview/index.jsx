@@ -22,6 +22,7 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
   const [nextLection, setNextL] = useState('');
   const [courseId, setCourseID] = useState('');
   const [iconCertificate, setCertf] = useState('W');
+  const [checkResourses, setResour] = useState(false);
 
   const listenerComentAdded = async (data) => {
     const aux = [];
@@ -80,6 +81,11 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
     if (course && course.lecciones) {
       // eslint-disable-next-line consistent-return
       const lessonObj = course.lecciones.find((lesson) => lesson._id === lessonIndex);
+      if (!checkResourses && lessonObj && lessonObj.recursos.length > 0) {
+        setResour(true);
+      } else if (checkResourses && lessonObj && lessonObj.recursos.length === 0) {
+        setResour(false);
+      }
       return lessonObj;
     }
     return null;
@@ -176,6 +182,7 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
       {course && (
         <Menu
           totalComments={totalComments}
+          checkRes={checkResourses}
           certificateIc={iconCertificate}
           certificateLink={course.certificado}
         />
