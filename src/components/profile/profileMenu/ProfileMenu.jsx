@@ -25,7 +25,7 @@ const TabMenu = () => {
         foros: 0,
         publicaconesCursos: 0,
         subscripcionesCursos: 0,
-        invitaciones: 0,
+        usuarios: 0,
         biblioteca: 0,
         valoraciones: 0,
         notas: 0,
@@ -124,13 +124,13 @@ const TabMenu = () => {
               </Link>
             </>
           )}
-          {adminAccess(user.role) && (
+          {authorAccess(user.role) && (
             <Link href="/profile/members-and-invitations" passHref scroll={false}>
               <a
                 className={`subtitle ${styles.item} ${query.setting === 'members-and-invitations' && styles.active}`}
               >
                 Miembros e invitaciones
-                <span className="ms-2 text-md text--theme-secondary">{data.invitaciones}</span>
+                {adminAccess(user.role) && <span className="ms-2 text-md text--theme-secondary">{data.usuarios}</span>}
               </a>
             </Link>
           )}
@@ -152,11 +152,11 @@ const TabMenu = () => {
           <span className="ms-2 text-md text--theme-secondary">{data.valoraciones}</span>
         </a>
       </Link>
-      <Link href="/profile/subscripciones" passHref scroll={false}>
+      <Link href="/profile/subscriptions" passHref scroll={false}>
         <a
-          className={`subtitle ${styles.item} ${query.setting === 'subscripciones' && styles.active}`}
+          className={`subtitle ${styles.item} ${query.setting === 'subscriptions' && styles.active}`}
         >
-          Subscripciones
+          Suscripciones
           <span className="ms-2 text-md text--theme-secondary">{data.subscripcionesCursos}</span>
         </a>
       </Link>

@@ -44,7 +44,7 @@ const ProfileScreen = () => {
         {query.setting === 'notes' && <ProfileNotes />}
         {query.setting === 'tools' && <ProfileTools />}
         {query.setting === 'courses' && <ProfileCourses />}
-        {query.setting === 'subscripciones' && <ProfileCourseSubscription />}
+        {query.setting === 'subscriptions' && <ProfileCourseSubscription />}
         {query.setting === 'forums' && <ProfileForums />}
 
       </div>

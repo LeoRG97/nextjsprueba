@@ -1,23 +1,18 @@
 import { useState, useEffect } from 'react';
-// import { useSession } from 'next-auth/client';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   Modal,
 } from 'react-bootstrap';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import { updateUserData } from '@/services/profile';
-import { updateInvitationService } from '@/services/invitations';
 import styles from './updateRol.module.css';
 
 const UpdateRolUserModal = ({
-  show, idUserRol, idUserInvt, showModal, mutate,
+  show, idUserRol, showModal, mutate,
 }) => {
-  // const [session] = useSession();
   const [loading, setLoading] = useState(false);
   const [errorUpdate, setError] = useState(false);
   const [updated, setUpdated] = useState(false);
-  // const [modalShow, setModalShow] = useState(false);
-  // const [idUserRol, setUser] = useState('');
   const [optionRol, setOptionRol] = useState('admin');
 
   const handleChange = (e) => {
@@ -25,22 +20,14 @@ const UpdateRolUserModal = ({
     setOptionRol(e.target.value);
   };
 
-  /* const showModal = (idUser) => {
-    setUser(idUser);
-    setModalShow(!modalShow);
-    setUpdated(false);
-  }; */
-
   const updateRoleFunc = async () => {
     setLoading(true);
     const newRol = {
       role: optionRol,
     };
 
-    const respInvt = await updateInvitationService(idUserInvt,
-      { rol: optionRol });
     const respUser = await updateUserData(idUserRol, newRol);
-    if (respUser && respInvt) {
+    if (respUser) {
       mutate();
       setLoading(false);
       setUpdated(true);
@@ -127,13 +114,15 @@ const UpdateRolUserModal = ({
     </div>
   );
 };
-/*
+
 UpdateRolUserModal.propTypes = {
   show: PropTypes.bool.isRequired,
-  idUser: PropTypes.string.isRequired,
+  idUserRol: PropTypes.string,
   showModal: PropTypes.func.isRequired,
 };
 
-UpdateRolUserModal.defaultProps = {};
-*/
+UpdateRolUserModal.defaultProps = {
+  idUserRol: '',
+};
+
 export default UpdateRolUserModal;

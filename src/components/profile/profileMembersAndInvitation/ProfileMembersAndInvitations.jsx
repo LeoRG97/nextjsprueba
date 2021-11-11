@@ -1,39 +1,50 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-import useSWR from 'swr';
+import React, { useState } from 'react';
+import useSWRInfinite from 'swr/infinite';
+import { useSession } from 'next-auth/client';
 import InviteMemberForm from './InviteMemberForm';
 import TableMember from './TableMembers';
-import { fetchInvitationsData } from '@/services/swr';
-import { deleteInvitationService } from '@/services/invitations';
+import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { SuccessIndicatorModal } from '@/components';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import styles from './profileMembersAndInvitations.module.css';
+import { adminAccess } from '@/helpers/accessVerifiers';
+import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
+import { disableUserAccount } from '@/services/user';
 
 const ProfileMembersAndInvitations = () => {
-  const router = useRouter();
-  useEffect(() => {
-
-  }, [router]);
+  const [session] = useSession();
 
   const [modalLoading, setModalLoading] = useState(false);
   const [modalSucces, setModalSucces] = useState(false);
   const [modalError, setModalError] = useState(false);
 
-  const { data, mutate } = useSWR(`${ApiRoutes.Invitation}?pageNum=${1}&pageSize=${100}`, fetchInvitationsData);
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.length) return null; // reached the end
+    return `${ApiRoutes.Users}?pageNum=${pageIndex + 1}&pageSize=9&rol=${session.user.role}`; // API endpoint
+  };
+
+  const {
+    data, size, setSize, isValidating, mutate,
+  } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+
   let dataMembers = [];
-  if (data && data.invitaciones) {
-    dataMembers = data.invitaciones;
+  if (data) {
+    data.forEach((page) => {
+      dataMembers = [...dataMembers, ...page];
+    });
   }
+
+  const isEmpty = data?.[size - 1]?.length === 0;
 
   const deleteMember = async (id) => {
     setModalLoading(true);
     setModalSucces(false);
     setModalError(false);
-    const res = await deleteInvitationService(id);
-    if (res.ok) {
-      mutate({ ...data });
+    const res = await disableUserAccount(id);
+    if (res._id) {
+      mutate();
       setModalLoading(false);
       setModalSucces(true);
       setModalError(false);
@@ -47,29 +58,45 @@ const ProfileMembersAndInvitations = () => {
   return (
     <div className="container">
       <div className="row justify-content-between">
-        <div className="col-md-3">
-          <InviteMemberForm />
-        </div>
-        <div className="col-md-8">
+        {adminAccess(session.user.role) && (
+          <div className="col-md-3">
+            <InviteMemberForm />
+          </div>
+        )}
+        <div className={adminAccess(session.user.role) ? 'col-md-8' : 'col-md-12'}>
           <h1 className={`title ${styles.content_table}`}>Listado de miembros</h1>
-          <TableMember
-            data={dataMembers}
-            deleteMember={deleteMember}
-            mutate={mutate}
-          />
+          {(!isValidating || dataMembers.length > 0) && (
+            <TableMember
+              data={dataMembers}
+              deleteMember={deleteMember}
+              mutate={mutate}
+            />
+          )}
+          <div className="d-flex justify-content-center">
+            {isValidating
+              ? <LoadingIndicator />
+              : !isEmpty && (
+                <button
+                  className="button button--theme-secondary"
+                  onClick={() => setSize(size + 1)}
+                >
+                  Ver más usuarios
+                </button>
+              )}
+          </div>
         </div>
       </div>
       <LoadingIndicatorModal
         show={modalLoading}
-        onClose={() => setModalLoading(false)}
-        textHeader="Eliminando miembro..."
+        onClose={() => {}}
+        textHeader="Deshabilitando..."
         textBody="Esta operación podría tardar unos minutos, por favor espere."
       />
       <SuccessIndicatorModal
         show={modalSucces}
         onClose={() => setModalSucces(false)}
-        textHeader="Miembro eliminado"
-        textBody="El miembro ha sido eliminado correctamente."
+        textHeader="Miembro deshabilitado"
+        textBody="La cuenta del miembro ha sido desactivada correctamente. Si se desea habilitar de nuevo, se tiene que enviar otra invitación al usuario."
       />
       <ErrorIndicatorModal
         show={modalError}

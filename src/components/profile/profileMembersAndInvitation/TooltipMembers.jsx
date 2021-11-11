@@ -5,9 +5,12 @@
 import React, { useState, useRef, Fragment } from 'react';
 import { DropdownButton } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { useSession } from 'next-auth/client';
 import styles from './profileMembersAndInvitations.module.css';
+import { adminAccess } from '@/helpers/accessVerifiers';
 
 const TooltipsMembers = ({ options, data }) => {
+  const [session] = useSession();
   const [show, setShow] = useState(false);
   const [target, setTarget] = useState(this);
   const ref = useRef(null);
@@ -16,6 +19,10 @@ const TooltipsMembers = ({ options, data }) => {
     setTarget(e.target);
     setShow(!show);
   };
+
+  if (!adminAccess(session.user.role) || (data && !data.estatus)) {
+    return <></>;
+  }
 
   return (
     <Fragment>
@@ -41,7 +48,7 @@ const TooltipsMembers = ({ options, data }) => {
                   <div
                     key={index.option}
                     onClick={() => (options[i].event
-                      ? options[i].eventName(objData.data._id, objData.data.invitado_id)
+                      ? options[i].eventName(objData.data.id)
                       : null)}
                     className="drop-item"
                   >

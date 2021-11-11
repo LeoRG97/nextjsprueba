@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
@@ -7,6 +6,7 @@ import styles from './profileMembersAndInvitations.module.css';
 import TooltipsMembers from './TooltipMembers';
 import { DeleteModal, UpdateRolUserModal } from '@/components';
 import { Roles } from '@/global/constants';
+import { dateFormatter } from '@/helpers/dates';
 
 const TableMember = ({ data, deleteMember, mutate }) => {
   const router = useRouter();
@@ -21,9 +21,9 @@ const TableMember = ({ data, deleteMember, mutate }) => {
     setOptionsModal({
       fncConfirm: id,
       cancel: 'Cancelar',
-      confirm: 'Eliminar miembro',
+      confirm: 'Deshabilitar cuenta',
       textHeader: 'Alerta',
-      textBody: 'Estás apunto de eliminar la cuenta de este miembro ¿Seguro que deseas continuar?',
+      textBody: 'Estás apunto de deshabilitar la cuenta de este miembro. ¿Seguro que deseas continuar?',
     });
     setModalDelete(true);
   };
@@ -35,13 +35,13 @@ const TableMember = ({ data, deleteMember, mutate }) => {
 
   const [modalShow, setModalShow] = useState(false);
   const [idUserRol, setUser] = useState('');
-  const [idUserInvt, setUserInvt] = useState('');
+  // const [idUserInvt, setUserInvt] = useState('');
   const [updated, setUpdated] = useState(false);
 
-  const showModalUpdate = (idUser, idInvit) => {
+  const showModalUpdate = (idUser) => {
     setUpdated(false);
     setUser(idUser);
-    setUserInvt(idInvit);
+    // setUserInvt(idInvit);
     setModalShow(!modalShow);
   };
 
@@ -50,21 +50,21 @@ const TableMember = ({ data, deleteMember, mutate }) => {
     setModalShow(!modalShow);
   };
 
-  const updateRoleMember = (idInvit, userId) => {
-    showModalUpdate(userId, idInvit);
+  const updateRoleMember = (userId) => {
+    showModalUpdate(userId);
   };
 
   const [hoverIdx, setHoverIdx] = useState(null);
   const [optionsToolTip] = useState([
     {
-      option: 'Actualizar Rol',
+      option: 'Actualizar rol',
       event: true,
       eventName: updateRoleMember,
       data: true,
       iconType: '6',
     },
     {
-      option: 'Eliminar',
+      option: 'Deshabilitar',
       event: true,
       eventName: deleteMemberFunc,
       data: true,
@@ -81,27 +81,47 @@ const TableMember = ({ data, deleteMember, mutate }) => {
     },
   };
 
+  const setRole = (role) => {
+    switch (role) {
+      case (Roles.Admin): {
+        return 'Administrador';
+      }
+      case (Roles.Reviewer): {
+        return 'Curador';
+      }
+      case (Roles.Author): {
+        return 'Colaborador';
+      }
+      case (Roles.Premium): {
+        return 'Premium';
+      }
+      case (Roles.User): {
+        return 'Usuario';
+      }
+      default:
+        return '';
+    }
+  };
+
   const columns = [{
-    dataField: 'rol',
+    dataField: 'role',
+    sort: true,
+    sortFunc: (a, b, order) => {
+      const rolA = setRole(a);
+      const rolB = setRole(b);
+      if (order === 'asc') {
+        return rolB < rolA;
+      }
+      return rolA < rolB;
+    },
     text: 'Rol de usuario',
     formatter(_cell) {
-      let rol = '';
-      if (Roles.Admin === _cell) {
-        rol = 'Administrador';
-      } else if (Roles.Author === _cell) {
-        rol = 'Colaborador';
-      } else if (Roles.Premium === _cell) {
-        rol = 'Premium';
-      } else if (Roles.Reviewer === _cell) {
-        rol = 'Curador';
-      } else if (Roles.User === _cell) {
-        rol = 'Usuario';
-      }
-      return <>{rol}</>;
+      return setRole(_cell);
     },
     headerClasses: 'wRol',
   }, {
     dataField: 'email',
+    sort: true,
     text: 'Correo electrónico',
     formatExtraData: { hoverIdx },
     formatter(_cell) {
@@ -109,15 +129,13 @@ const TableMember = ({ data, deleteMember, mutate }) => {
     },
   }, {
     dataField: 'createdAt',
-    text: 'Invitado en',
+    text: 'Registrado en',
+    sort: true,
     formatter(_cell) {
-      const dateCreated = new Date(_cell.replace(/-/g, '/').replace(/T.+/, ''));
-      const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-        'Julio', 'Augosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre',
-      ];
-
-      const date = `${monthNames[dateCreated.getUTCMonth()]} ${dateCreated.getUTCDate()}, ${dateCreated.getUTCFullYear()}`;
-      return (<>{date}</>);
+      if (_cell) {
+        return dateFormatter(_cell);
+      }
+      return '';
     },
   }, {
     dataField: 'isDummyField',
@@ -129,7 +147,7 @@ const TableMember = ({ data, deleteMember, mutate }) => {
       if ((hoverId !== null || hoverId !== undefined) && hoverId === rowIndex) {
         return (
           <TooltipsMembers
-            key={row._id}
+            key={row.id}
             id={rowIndex}
             data={row}
             options={optionsToolTip}
@@ -148,13 +166,13 @@ const TableMember = ({ data, deleteMember, mutate }) => {
       <BootstrapTable
         responsive
         bootstrap4
-        keyField="_id"
+        keyField="id"
         data={data}
         columns={columns}
         bordered={false}
         noDataIndication="No se encontraron resultados"
         headerClasses={styles.header_table}
-        rowClasses={styles.row_table}
+        rowClasses={(row) => (row.estatus ? styles.row_table : `${styles.row_table} ${styles.row_table_disabled}`)}
         rowEvents={rowEvents}
         hover
       />
@@ -170,7 +188,6 @@ const TableMember = ({ data, deleteMember, mutate }) => {
       <UpdateRolUserModal
         show={modalShow}
         idUserRol={idUserRol}
-        idUserInvt={idUserInvt}
         showModal={showModalUpdateFunc}
         isUpdated={updated}
         mutate={mutate}
