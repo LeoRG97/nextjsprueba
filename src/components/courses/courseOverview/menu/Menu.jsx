@@ -4,7 +4,12 @@ import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import styles from './menu.module.css';
 
-const CourseMenu = ({ totalComments, certificateIc, certificateLink }) => {
+const CourseMenu = ({
+  totalComments,
+  checkRes,
+  certificateIc,
+  certificateLink,
+}) => {
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [lessonIndex, tab] = params || [];
@@ -58,13 +63,17 @@ const CourseMenu = ({ totalComments, certificateIc, certificateLink }) => {
           <span className="ms-2 text-md text--theme-secondary">{totalComments}</span>
         </a>
       </Link>
-      <Link href={`/courses/${slug}/lesson/${lessonIndex}/resources`} passHref scroll={false}>
-        <a
-          className={`subtitle ${styles.item} ${isLinkActive('resources') && styles.active}`}
-        >
-          Recursos adicionales
-        </a>
-      </Link>
+      {
+        checkRes && (
+          <Link href={`/courses/${slug}/lesson/${lessonIndex}/resources`} passHref scroll={false}>
+            <a
+              className={`subtitle ${styles.item} ${isLinkActive('resources') && styles.active}`}
+            >
+              Recursos adicionales
+            </a>
+          </Link>
+        )
+      }
       {
         certificateLink && certificateIc !== 'W' && (
           <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false}>
