@@ -159,7 +159,7 @@ const RedesSocialesForm = ({ data }) => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h1 className="title">
         Redes Sociales
       </h1>

@@ -32,13 +32,13 @@ const EditProfile = ({ preferences }) => {
             Ajustes de la cuenta
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row className="justify-content-center">
           <Col md={12} lg={2}>
             <ProfileNavComponent />
           </Col>
           {
             data.name !== undefined ? (
-              <Col md={12} lg={5} align="left">
+              <Col md={12} lg={5}>
                 {
                   query.option === 'general'
                   && (

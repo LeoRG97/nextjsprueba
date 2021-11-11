@@ -126,7 +126,7 @@ const FormGeneral = ({
       <h1 className="title">General</h1>
       <Form>
         <div>
-          <div className="text-md">Imagen de perfil</div>
+          <div className="subtitle">Imagen de perfil</div>
           <div className={styles.profileSettingsImg}>
             <div className={styles.profilImg}>
               {picture && picture !== 'string' ? (
@@ -143,12 +143,13 @@ const FormGeneral = ({
                 </div>
               )}
             </div>
-            <div className={styles.profilSettingsFile}>
+            <div className={styles.profileSettingsFile}>
               <Form.Group controlId="formFileSm">
                 <Form.Label
-                  className={`button button--theme-secondary ${styles.fileLabel}`}
+                  as="button"
+                  className="button button--theme-secondary"
                 >
-                  Cambiar foto de perfil
+                  Cambiar imagen de perfil
                 </Form.Label>
                 <Form.Control
                   accept="image/png,image/jpeg,image/jpeg"
@@ -164,8 +165,8 @@ const FormGeneral = ({
         </div>
       </Form>
       <Form noValidate validated={validated} onSubmit={submitForm}>
-        <Form.Group className="mb-3" controlId="IpuntName">
-          <Form.Label className="text-md">Nombre(s)*</Form.Label>
+        <Form.Group className="mb-2" controlId="IpuntName">
+          <Form.Label className="subtitle">Nombre(s)*</Form.Label>
           <input
             className="input"
             type="text"
@@ -176,11 +177,11 @@ const FormGeneral = ({
             onChange={updateState}
           />
           <Form.Control.Feedback type="invalid">
-            Introduce el nombre.
+            Introduce tu nombre
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="IpuntNameLastName">
-          <Form.Label className="text-md">Apellidos*</Form.Label>
+        <Form.Group className="mb-2" controlId="IpuntNameLastName">
+          <Form.Label className="subtitle">Apellido(s)*</Form.Label>
           <input
             className="input"
             type="text"
@@ -191,11 +192,11 @@ const FormGeneral = ({
             onChange={updateState}
           />
           <Form.Control.Feedback type="invalid">
-            Introduce el apellido.
+            Introduce tu(s) apellido(s)
           </Form.Control.Feedback>
         </Form.Group>
-        <Form.Group className="mb-3" controlId="TextareaBiografy">
-          <Form.Label className="text-md">Biografía</Form.Label>
+        <Form.Group className="mb-2" controlId="TextareaBiografy">
+          <Form.Label className="subtitle">Biografía</Form.Label>
           <textarea
             id="text-area"
             className={`input ${styles.settingsTextare}`}
@@ -206,9 +207,6 @@ const FormGeneral = ({
             onChange={updateState}
             maxLength="120"
           />
-          <Form.Control.Feedback type="invalid">
-            Introduce la biografía.
-          </Form.Control.Feedback>
           <div className="text-sm"> <span id="contador">{userBio ? userBio.length : 0}</span>/120</div>
         </Form.Group>
         <div align="right">
