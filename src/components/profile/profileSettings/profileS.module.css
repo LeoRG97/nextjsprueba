@@ -21,12 +21,12 @@
 }
 
 .profilImg {
-  width: 60%;
+  width: 50%;
 }
 
-.profilSettingsFile {
+.profileSettingsFile {
+  width: 50%;
   text-align: right;
-  width: 40%;
 }
 
 .imgContent {
@@ -47,11 +47,6 @@
     object-fit: cover;
     object-position: center center;
   }
-}
-
-.fileLabel {
-  cursor: pointer;
-  width: 200px;
 }
 
 .fileInputName {
@@ -107,7 +102,7 @@
     justify-content: center;
   }
 
-  .profilSettingsFile {
+  .profileSettingsFile {
     text-align: center;
     width: 100%;
   }
@@ -116,43 +111,6 @@
 /* EMAIL AND PASSWORD FORM STYLES */
 .content_title {
   padding-left: 10px;
-}
-
-.full_form,
-.half_form {
-  margin-top: 15px;
-}
-
-.full_form div {
-  position: relative;
-}
-
-.full_form div,
-.half_form div {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.full_form label,
-.full_form input,
-.half_form label,
-.half_form input {
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-.full_form button,
-.half_form button {
-  margin-top: 5px;
-  margin-bottom: 20px;
-  float: right;
-}
-
-.half_form div {
-  width: 50%;
-  max-width: 50%;
-  display: inline-block;
-  position: relative;
 }
 
 .content_success {
@@ -178,11 +136,6 @@
   height: 45px;
 }
 
-.half_form .content_faild {
-  width: 100%;
-  max-width: 100%;
-}
-
 .content_messsage {
   width: 100% !important;
   max-width: 100% !important;
@@ -194,12 +147,4 @@
   position: absolute;
   right: 222px;
   top: 19px;
-}
-
-@media (max-width: 576px) {
-  .half_form div {
-    width: 100%;
-    max-width: 100%;
-    display: block;
-  }
 }

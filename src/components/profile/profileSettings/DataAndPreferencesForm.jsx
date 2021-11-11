@@ -374,7 +374,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
   };
 
   return (
-    <div className="container">
+    <div>
       <h1 className="title">
         Datos y preferencias
       </h1>
