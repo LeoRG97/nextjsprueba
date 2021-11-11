@@ -27,6 +27,14 @@ function MyApp({ Component, pageProps }) {
         id="jQuery"
         strategy="beforeInteractive"
       />
+      <Script
+        type="text/javascript"
+        id="hs-script-loader"
+        async
+        defer
+        src="//js.hs-scripts.com/20382611.js"
+        strategy="beforeInteractive"
+      />
     </Provider>
   );
 }
