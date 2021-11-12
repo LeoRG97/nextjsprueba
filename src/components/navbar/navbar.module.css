@@ -40,8 +40,9 @@
 
 .logo {
   position: relative;
-  width: 128px;
-  height: 44px;
+  width: 180px;
+  height: 60px;
+  line-height: 1.8;
 }
 
 .linksContainer {
@@ -55,7 +56,7 @@
 }
 
 .divNavItemStyle a {
-  color: var(--text-color-light) !important;
+  color: var(--text-color-highlight) !important;
 }
 
 .divNavItemStyle:first-child {
@@ -282,12 +283,26 @@
     justify-content: center !important;
     margin-right: 0px !important;
   }
+
+  .logo {
+    position: relative;
+    width: 128px;
+    height: 44px;
+
+  }
 }
 
 @media (max-width: 345px) {
   .iconToggleMovil {
     min-width: 3rem;
     max-width: 3rem;
+  }
+
+  .logo {
+    position: relative;
+    width: 128px;
+    height: 44px;
+
   }
 
 }

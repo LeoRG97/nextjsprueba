@@ -41,7 +41,6 @@ const UserNavbarComponent = ({
   const navigateToSettings = () => {
     router.push('/profile/edit/general');
   };
-
   return (
     <Nav>
       <NavDropdown
@@ -52,7 +51,7 @@ const UserNavbarComponent = ({
         onMouseEnter={showDropdown}
         onMouseLeave={hideDropdown}
       >
-        <NavDropdown.Item className="drop-item" onClick={navigateToProfile}>Perfil</NavDropdown.Item>
+        <NavDropdown.Item className={`drop-item ${router && router.asPath && router.asPath === '/profile/about-me' ? 'active' : ''}`} onClick={navigateToProfile}>Perfil</NavDropdown.Item>
         <NavDropdown.Item className="drop-item" onClick={navigateToSettings}>Ajustes</NavDropdown.Item>
         <NavDropdown.Item className="drop-item" onClick={() => logOut()}>Cerrar sesión</NavDropdown.Item>
       </NavDropdown>

@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 import { signout, useSession } from 'next-auth/client';
 import { useDispatch, useSelector } from 'react-redux';
 import Script from 'next/script';
@@ -23,6 +24,11 @@ const NavbarComponent = () => {
   const navigateToProfile = () => {
     router.push('/profile/about-me');
   };
+
+  const navigateToSettings = () => {
+    router.push('/profile/edit/general');
+  };
+
   let inputPlaceholder = '';
 
   const logOut = async () => {
@@ -127,18 +133,29 @@ const NavbarComponent = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={styles.linksContainer}>
               <div className={styles.divNavItemStyle}>
-                <Link href="/about" passHref>
-                  <Nav.Link className="text-md text--theme-light">Acerca de</Nav.Link>
-                </Link>
-                <Link href="/trending-topics" passHref>
-                  <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
-                </Link>
-                <Link href="/think-tools" passHref>
-                  <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
-                </Link>
-                <Link href="/think-team" passHref>
-                  <Nav.Link className="text-md text--theme-light">Think team</Nav.Link>
-                </Link>
+                <Nav.Item>
+                  <Link href="/about" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>Acerca de</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/trending-topics" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/trending-topics' ? 'active' : ''}`}>Trending Topics</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/think-tools" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/think-tools' ? 'active' : ''}`}>Think tools</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/think-team" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/think-team' ? 'active' : ''}`}>Think team</Nav.Link>
+                  </Link>
+                </Nav.Item>
               </div>
 
               <div className={styles.divNavItemStyle}>
@@ -281,18 +298,29 @@ const NavbarComponent = () => {
                 <button className="button button--theme-warning" onClick={handleToolsModal}>
                   <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
                 </button>
-                <Link href="/about" passHref>
-                  <Nav.Link className="text-md text--theme-light mt-4">Acerca de</Nav.Link>
-                </Link>
-                <Link href="/trending-topics" passHref>
-                  <Nav.Link className="text-md text--theme-light">Trending Topics</Nav.Link>
-                </Link>
-                <Link href="/think-tools" passHref>
-                  <Nav.Link className="text-md text--theme-light">Think tools</Nav.Link>
-                </Link>
-                <Link href="/think-team" passHref>
-                  <Nav.Link className="text-md text--theme-light">Think team</Nav.Link>
-                </Link>
+                <Nav.Item>
+                  <Link href="/about" passHref>
+                    <Nav.Link className={`text-md text--theme-light mt-4 ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>Acerca de</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/trending-topics" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/trending-topics' ? 'active' : ''}`}>Trending Topics</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/think-tools" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/think-tools' ? 'active' : ''}`}>Think tools</Nav.Link>
+                  </Link>
+                </Nav.Item>
+
+                <Nav.Item>
+                  <Link href="/think-team" passHref>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/think-team' ? 'active' : ''}`}>Think team</Nav.Link>
+                  </Link>
+                </Nav.Item>
                 {
                   /** data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path stroke='rgba%28255, 255, 255, 0.5%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/></svg> */
                 }
@@ -304,8 +332,8 @@ const NavbarComponent = () => {
                       {
                         session ? (
                           <div className={`${styles.buttonRegisterContent} mt-4`}>
-                            <Nav.Link className="text-md text--theme-light" onClick={navigateToProfile}>Perfil</Nav.Link>
-                            <Nav.Link className="text-md text--theme-light">Ajustes</Nav.Link>
+                            <Nav.Link className={`text-md text--theme-light ${router && router.asPath && router.asPath === '/profile/about-me' ? 'active' : ''}`} onClick={navigateToProfile}>Perfil</Nav.Link>
+                            <Nav.Link className={`text-md text--theme-light ${router && router.asPath && router.asPath === '/profile/edit/general' ? 'active' : ''}`} onClick={navigateToSettings}>Ajustes</Nav.Link>
                             <Nav.Link className="text-md text--theme-light" onClick={() => logOut()}>Cerrar sesión</Nav.Link>
                           </div>
                         ) : (

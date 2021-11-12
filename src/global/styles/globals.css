@@ -1262,6 +1262,10 @@ html {
   font-size: 0.70rem !important;
 }
 
+.navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .show>.nav-link {
+  color: var(--text-color-light) !important;
+}
+
 .input-group-text {
   background-color: var(--backgroung-color-dark) !important;
   border: none !important;
