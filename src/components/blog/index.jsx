@@ -129,6 +129,18 @@ const BlogComponent = ({
         <div className="">
           <h3 className="title-editor-xl">{blogInfo.portada.titulo}</h3>
           <p className="subtitle-editor">{blogInfo.portada.descripcion}</p>
+          <ul className={styles.categoryList}>
+            {
+              blogInfo.categorias && blogInfo.categorias.map((category) => (
+                <li
+                  key={category._id}
+                  className={`text-sm text--theme-light ${styles.category}`}
+                >
+                  {category.nombre}
+                </li>
+              ))
+            }
+          </ul>
           <Resources resources={blogInfo.recursos} />
           <AutorComponent
             autor={autorInfo}
