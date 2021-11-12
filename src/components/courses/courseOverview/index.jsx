@@ -44,11 +44,16 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
       setInfoSubsCourse(subsInfo);
     }
     setCourse(courseInfo[0]);
-    listenerComentAdded(0);
     if (courseInfo[0]) {
       setCourseID(courseInfo[0]._id);
     }
   }, []);
+
+  useEffect(() => {
+    if (courseId) {
+      listenerComentAdded(0);
+    }
+  }, [courseId]);
 
   const [lessonIndex, tab] = params || [];
 

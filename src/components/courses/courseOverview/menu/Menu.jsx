@@ -48,14 +48,14 @@ const CourseMenu = ({
   };
   return (
     <div className={styles.tabBar} id="profileNavbar">
-      <Link href={`/courses/${slug}/lesson/${lessonIndex}/overview`} passHref scroll={false}>
+      <Link href={`/courses/${slug}/lesson/${lessonIndex}/overview`} passHref scroll={false} shallow>
         <a
           className={`subtitle ${styles.item} ${(isLinkActive('overview') || !tab) && styles.active}`}
         >
           Contenidos
         </a>
       </Link>
-      <Link href={`/courses/${slug}/lesson/${lessonIndex}/comments`} passHref scroll={false}>
+      <Link href={`/courses/${slug}/lesson/${lessonIndex}/comments`} passHref scroll={false} shallow>
         <a
           className={`subtitle ${styles.item} ${isLinkActive('comments') && styles.active}`}
         >
@@ -65,7 +65,7 @@ const CourseMenu = ({
       </Link>
       {
         checkRes && (
-          <Link href={`/courses/${slug}/lesson/${lessonIndex}/resources`} passHref scroll={false}>
+          <Link href={`/courses/${slug}/lesson/${lessonIndex}/resources`} passHref scroll={false} shallow>
             <a
               className={`subtitle ${styles.item} ${isLinkActive('resources') && styles.active}`}
             >
@@ -76,7 +76,7 @@ const CourseMenu = ({
       }
       {
         certificateLink && certificateIc !== 'W' && (
-          <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false}>
+          <Link href={`/courses/${slug}/lesson/${lessonIndex}/certificate`} passHref scroll={false} shallow>
             <a
               className={`subtitle ${styles.item} ${isLinkActive('certificate') && styles.active}`}
             ><i className={`icon-md ${styles.iconC} ${isLinkActive('certificate') && styles.active}`}>{certificateIc}</i>
