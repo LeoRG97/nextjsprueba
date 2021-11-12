@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 3.75rem;
+  min-width: 3.75rem;
   height: 3.75rem;
   background-color: var(--gray);
   margin-right: 1rem;
@@ -11,4 +11,11 @@
 
 .lectionView {
   font-size: 1.5rem;
+}
+
+@media (max-width: 575.76px) {
+  .lessonIndex {
+    min-width: 3.2rem;
+    height: 3.2rem;
+  }
 }
