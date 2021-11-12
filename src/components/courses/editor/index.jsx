@@ -11,6 +11,7 @@ import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import ModalDetailsCourse from '../modals/detailsCourseModal/DetailsCourseModal';
+import CoursePreviewComponent from './coursePreview';
 
 const CourseEditor = ({ initialData }) => {
   const [session] = useSession();
@@ -31,6 +32,7 @@ const CourseEditor = ({ initialData }) => {
   const [successData, setSuccessData] = useState({ show: false });
   const [errorData, setErrorData] = useState({ show: false });
   const [showDetails, setShowDetails] = useState(false);
+  const [preview, setPreview] = useState(false);
 
   useEffect(() => {
     if (initialData._id) {
@@ -116,37 +118,66 @@ const CourseEditor = ({ initialData }) => {
   return (
     <div className={styles.editor}>
       <div className={styles.editorContent}>
-        <>
-          {unitsArray && (
-            <Units
-              units={unitsArray}
+        {
+          preview ? (
+            <CoursePreviewComponent
+              initialData={course}
+              initialContent={unitsArray}
+              preview={() => setPreview(!preview)}
             />
-          )}
-        </>
+          ) : (
+            <>
+              {unitsArray && (
+                <Units
+                  units={unitsArray}
+                />
+              )}
+            </>
+          )
+        }
       </div>
-      <div className={styles.optionsContainer}>
-
-        <TooltipContainer tooltipText="Publicar" placement="left">
-          <div
-            className={`icon-button icon-button--primary ${styles.optionsItem}`}
-            onClick={() => setShowDetails(true)}
-          >
-            H
+      {
+        preview ? (
+          <div className={styles.optionsContainer}>
+            <TooltipContainer tooltipText="Volver" placement="left">
+              <div
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                onClick={() => setPreview(!preview)}
+              >
+                a
+              </div>
+            </TooltipContainer>
           </div>
-        </TooltipContainer>
+        ) : (
+          <div className={styles.optionsContainer}>
+            <TooltipContainer tooltipText="Publicar" placement="left">
+              <div
+                className={`icon-button icon-button--primary ${styles.optionsItem}`}
+                onClick={() => setShowDetails(true)}
+              >
+                H
+              </div>
+            </TooltipContainer>
 
-        <TooltipContainer tooltipText="Guardar borrador" placement="left">
-          <div
-            className={`icon-button icon-button--success ${styles.optionsItem}`}
-            onClick={() => handlePublish('borrador')}
-          >
-            I
+            <TooltipContainer tooltipText="Guardar borrador" placement="left">
+              <div
+                className={`icon-button icon-button--success ${styles.optionsItem}`}
+                onClick={() => handlePublish('borrador')}
+              >
+                I
+              </div>
+            </TooltipContainer>
+            <TooltipContainer tooltipText="Vista previa" placement="left">
+              <div
+                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                onClick={() => setPreview(!preview)}
+              >
+                C
+              </div>
+            </TooltipContainer>
           </div>
-        </TooltipContainer>
-        <TooltipContainer tooltipText="Vista previa" placement="left">
-          <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>C</div>
-        </TooltipContainer>
-      </div>
+        )
+      }
       <ModalDetailsLesson
         show={showLessonModal}
         onClose={handleCancelLessonEdit}
