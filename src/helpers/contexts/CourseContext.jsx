@@ -25,6 +25,11 @@ const CourseContextProvider = ({ children }) => {
   const [currentLesson, setCurrentLesson] = useState({});
   const [showLessonModal, setShowLessonModal] = useState(false);
   const [deletedResources, setDeletedResources] = useState([]);
+  const [deletedUnit, setDeletedUnit] = useState();
+  const [deletedLesson, setDeletedLesson] = useState();
+
+  const [showDeltModal, setShowDeltModal] = useState(false);
+  const [showDeltModalLesson, setShowDeltModalLesson] = useState(false);
 
   const handleNewLessonModal = (unitId) => {
     setShowLessonModal(true);
@@ -116,6 +121,64 @@ const CourseContextProvider = ({ children }) => {
     setDeletedResources([]);
   };
 
+  const handleCancelDeltlessonModal = () => {
+    setDeletedUnit(null);
+    setShowDeltModal(false);
+  };
+
+  const handleDeltlessonModal = (data) => {
+    setDeletedUnit(data);
+    setShowDeltModal(true);
+  };
+
+  const sumitDeleteUnit = () => {
+    let newUnits = [];
+    const newLessons = [];
+    // eslint-disable-next-line array-callback-return
+    units.map((item) => {
+      if (item._id !== deletedUnit) {
+        newUnits.push(item);
+      }
+    });
+    newUnits = newUnits.map((unit, i) => {
+      return {
+        ...unit,
+        numero: i + 1,
+      };
+    });
+    // eslint-disable-next-line array-callback-return
+    lessons.map((item) => {
+      if (item.unidad !== deletedUnit) {
+        newLessons.push(item);
+      }
+    });
+    setUnits(newUnits);
+    setLessons(newLessons);
+    handleCancelDeltlessonModal();
+  };
+
+  const handleCancelDeltlessonModalLesson = () => {
+    setDeletedLesson(null);
+    setShowDeltModalLesson(false);
+  };
+
+  const handleDeltlessonModalLesson = (data) => {
+    setDeletedLesson(data);
+    setShowDeltModalLesson(true);
+  };
+
+  const sumitDeleteLesson = () => {
+    const newLessons = [];
+    // eslint-disable-next-line array-callback-return
+    lessons.map((item) => {
+      if (item._id !== deletedLesson) {
+        newLessons.push(item);
+      }
+    });
+    setLessons(newLessons);
+    handleCancelDeltlessonModalLesson();
+  };
+
   return (
     <CourseContext.Provider value={{
       course,
@@ -139,6 +202,14 @@ const CourseContextProvider = ({ children }) => {
       handleUpdateLesson,
       addDeletedResources,
       eraseOldResourcesFromS3,
+      showDeltModal,
+      handleCancelDeltlessonModal,
+      handleDeltlessonModal,
+      sumitDeleteUnit,
+      showDeltModalLesson,
+      handleCancelDeltlessonModalLesson,
+      handleDeltlessonModalLesson,
+      sumitDeleteLesson,
     }}
     >
       {children}

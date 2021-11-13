@@ -5,7 +5,10 @@ import styles from './lessonItem.module.css';
 
 // contenedor de una lección específica
 const LessonItem = React.memo(({ data, index }) => {
-  const { handleEditLessonModal } = useContext(CourseContext);
+  const {
+    handleEditLessonModal,
+    handleDeltlessonModalLesson,
+  } = useContext(CourseContext);
 
   const handleEdit = () => {
     handleEditLessonModal(data._id);
@@ -35,7 +38,7 @@ const LessonItem = React.memo(({ data, index }) => {
                 <span className="drop-item__icon">K</span>
                 <span className="drop-item__content">Modificar</span>
               </div>
-              <div className="drop-item">
+              <div className="drop-item" onClick={() => handleDeltlessonModalLesson(data._id)}>
                 <span className="drop-item__icon">L</span>
                 <span className="drop-item__content">Eliminar</span>
               </div>

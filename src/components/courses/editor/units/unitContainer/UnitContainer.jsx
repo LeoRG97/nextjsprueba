@@ -6,7 +6,7 @@ import styles from './unitContainer.module.css';
 
 // contenedor para una unidad específica
 const UnitContainer = React.memo(({ data, index }) => {
-  const { handleUnitName } = useContext(CourseContext);
+  const { handleUnitName, handleDeltlessonModal } = useContext(CourseContext);
   const handleChange = (e) => {
     const { value } = e.target;
     handleUnitName(data._id, value);
@@ -40,7 +40,7 @@ const UnitContainer = React.memo(({ data, index }) => {
                 0
               </button>
               <div className={styles.editDropdown}>
-                <div className="drop-item">
+                <div className="drop-item" onClick={() => handleDeltlessonModal(data._id)}>
                   <span className="drop-item__icon">L</span>
                   <span className="drop-item__content">Eliminar</span>
                 </div>
