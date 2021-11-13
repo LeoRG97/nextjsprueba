@@ -1,0 +1,58 @@
+.modalContainer {
+  background-color: var(--colorItemBg);
+  padding: 2.5rem;
+  border-radius: 10px;
+}
+
+.modalWidth {
+  max-width: 550px;
+}
+
+.imageInput {
+  height: 15rem;
+  margin-bottom: 1rem;
+}
+
+.textarea {
+  resize: vertical !important;
+  height: fit-content;
+}
+
+.textarea::placeholder {
+  color: var(--text-color-light);
+}
+
+.textarea:focus {
+  background-color: transparent !important;
+}
+
+.visibilitySection {
+  margin-bottom: 1rem;
+}
+
+.footer {
+  border: 0;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  padding-bottom: 2.5rem;
+}
+
+.switchContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.btn_div {
+  float: right;
+  position: absolute;
+  right: 0;
+}
+
+.btn_div div {
+  position: relative;
+}

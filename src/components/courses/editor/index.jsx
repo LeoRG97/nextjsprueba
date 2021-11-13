@@ -11,6 +11,8 @@ import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import ModalDetailsCourse from '../modals/detailsCourseModal/DetailsCourseModal';
+import ModalDeleteCourse from '../modals/deleteUnitModal/deleteUnitModal';
+import ModalDeleteLesson from '../modals/deleteLessonModal/deleteLessonModal';
 import CoursePreviewComponent from './coursePreview';
 
 const CourseEditor = ({ initialData }) => {
@@ -26,6 +28,10 @@ const CourseEditor = ({ initialData }) => {
     showLessonModal,
     handleCancelLessonEdit,
     eraseOldResourcesFromS3,
+    showDeltModal,
+    handleCancelDeltlessonModal,
+    showDeltModalLesson,
+    handleCancelDeltlessonModalLesson,
   } = useContext(CourseContext);
 
   const [submitting, setSubmitting] = useState(false);
@@ -182,6 +188,14 @@ const CourseEditor = ({ initialData }) => {
         show={showLessonModal}
         onClose={handleCancelLessonEdit}
       />
+      <ModalDeleteCourse
+        show={showDeltModal}
+        onClose={handleCancelDeltlessonModal}
+      />
+      <ModalDeleteLesson
+        show={showDeltModalLesson}
+        onClose={handleCancelDeltlessonModalLesson}
+      />
       <ModalDetailsCourse
         show={showDetails}
         onClose={() => setShowDetails(false)}
@@ -189,7 +203,7 @@ const CourseEditor = ({ initialData }) => {
       />
       <LoadingIndicatorModal
         show={submitting}
-        onClose={() => {}}
+        onClose={() => { }}
         textHeader="Guardando cambios"
         textBody="Esta operación podría tardar unos minutos, por favor espere."
       />
