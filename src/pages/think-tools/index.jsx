@@ -22,15 +22,15 @@ export default function ThinkTools() {
         >
           <div className="row p-5 d-flex align-items-center">
             <div className="col-lg-6 col-md-6 col-sm-12 px-4">
-              <h1 className="title-xl">Soluciones a medida de sus objetivos</h1>
+              <h1 className="title-xl">Soluciones creadas a la medida de tus objetivos</h1>
               <p className="py-4 text-sm text--theme-light">
-                Hemos preparado para ti, una serie de herramientas,
-                especialmente diseñadas para obtener mejores resultados
-                e impulsar su desarrollo personal.
+                Hemos preparado para ti, una serie de herramientas, especialmente
+                diseñadas para obtener mejores resultados e impulsar el desarrollo
+                de tu organización.
               </p>
               <div className={styles.btnTool}>
                 <button onClick={() => dispatch(showToolsModal())} className="button button--theme-primary me-2">
-                  Encuentra tu herramienta
+                  Encuentra la herramienta para ti
                 </button>
               </div>
             </div>
