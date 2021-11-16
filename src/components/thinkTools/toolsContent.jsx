@@ -95,7 +95,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
               </Row>
               <Row className={styles.content_info_tool}>
                 <Col>
-                  <h5 className="title-xl">¿Qué es?</h5>
+                  {toolsCode.definition.html && toolsCode.definition.html.length > 0 && <h5 className="title-xl">¿Qué es?</h5>}
                   {
                     toolsCode && toolsCode.definition && (
                       toolsCode.definition.html.map((item) => {
@@ -148,7 +148,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
                     <TooltipContainer placement="left" tooltipText="Descargar">
                       <button
-                        onClick={() => { }}
+                        onClick={() => {}}
                         className="icon-button icon-button--primary m-2"
                       >
                         i
