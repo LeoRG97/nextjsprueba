@@ -11,7 +11,7 @@ const ProfileHeader = ({
     <div className={`${styles.headerContainer} texture-top`}>
       <div className={styles.profileCard}>
         <div className={styles.imgFrame}>
-          <Image layout="fill" objectFit="contain" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
+          <Image layout="fill" objectFit="cover" src={picture === 'string' || !picture ? '/images/profile/no-profile-img.png' : picture} />
         </div>
         <h1 className="title">{name} {lastName}</h1>
         <p className="subtitle">{state && country && `${state}, ${country}`}</p>
