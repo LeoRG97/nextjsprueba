@@ -16,7 +16,7 @@
 }
 
 .cancelIcon {
-  color: var(--colorSecondary)
+  color: var(--colorSecondary);
 }
 
 .navbar {
@@ -183,7 +183,6 @@
   width: auto !important;
 }
 
-
 .navDropDownIcon {
   padding: 0 0 0 0;
   width: auto !important;
@@ -223,18 +222,15 @@
   .divNavItemStyle:last-child {
     justify-content: space-evenly;
   }
-
 }
 
-
 @media (max-width: 991px) {
-
   .divNavItemStyle {
     width: 100%;
     display: grid;
   }
 
-  .navDropDownImage > div  {
+  .navDropDownImage > div {
     display: flex !important;
   }
 
@@ -288,7 +284,6 @@
     position: relative;
     width: 128px;
     height: 44px;
-
   }
 }
 
@@ -302,7 +297,5 @@
     position: relative;
     width: 128px;
     height: 44px;
-
   }
-
 }

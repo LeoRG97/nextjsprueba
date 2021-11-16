@@ -135,7 +135,7 @@ const NavbarComponent = () => {
               <div className={styles.divNavItemStyle}>
                 <Nav.Item>
                   <Link href="/about" passHref>
-                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>Acerca de</Nav.Link>
+                    <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>About Us</Nav.Link>
                   </Link>
                 </Nav.Item>
 
@@ -191,7 +191,7 @@ const NavbarComponent = () => {
                       session ? (
                         <div className={styles.divNavItemStyle}>
                           <button className="button button--theme-warning me-2 button_discover" onClick={handleToolsModal}>
-                            <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                            <span className="button__icon-left text--theme-warning">9</span>{' '}Recursos
                           </button>
                           <UserNavbarComponent
                             picture={data && data.picture}
@@ -202,10 +202,10 @@ const NavbarComponent = () => {
                       ) : (
                         <div className={styles.divNavItemStyle}>
                           <button className="button button--theme-warning me-2 button_discover" onClick={handleToolsModal}>
-                            <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                            <span className="button__icon-left text--theme-warning">9</span>{' '}Recursos
                           </button>
                           <Link href="/login" passHref>
-                            <Nav.Link className="text-md text--theme-light">Iniciar sesión</Nav.Link>
+                            <Nav.Link className="text-md active">Iniciar sesión</Nav.Link>
                           </Link>
                           <Link href="/create-account" passHref>
                             <button className="button button--theme-primary">
@@ -247,7 +247,7 @@ const NavbarComponent = () => {
               loading ? (
                 <LoadingIndicator />
               ) : (
-                <div className={`${styles.divNavItemStyle} ${styles.iconToggleMovil}`}>
+                <div className={` ${styles.iconToggleMovil}`}>
                   {
                     session ? (
                       <div className={`${styles.navDropDownImage} col-12`}>
@@ -296,11 +296,11 @@ const NavbarComponent = () => {
 
               <div className={`${styles.divNavItemStyle} mt-4`}>
                 <button className="button button--theme-warning" onClick={handleToolsModal}>
-                  <span className="button__icon-left text--theme-warning">9</span>{' '}Descubrir
+                  <span className="button__icon-left text--theme-warning">9</span>{' '}Recursos
                 </button>
                 <Nav.Item>
                   <Link href="/about" passHref>
-                    <Nav.Link className={`text-md text--theme-light mt-4 ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>Acerca de</Nav.Link>
+                    <Nav.Link className={`text-md text--theme-light mt-4 ${router && router.pathname && router.pathname === '/about' ? 'active' : ''}`}>About Us</Nav.Link>
                   </Link>
                 </Nav.Item>
 
