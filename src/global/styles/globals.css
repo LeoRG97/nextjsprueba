@@ -269,6 +269,10 @@ a {
   text-decoration: none;
 }
 
+.text-bold {
+  font-weight: bold;
+}
+
 .icon {
   font-family: Icons;
   font-size: var(--icon-size-sm);
