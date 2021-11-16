@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
       session={pageProps.session}
     >
       <Head>
-        <title>NTT Data</title>
+        <title>NTT Data - CX</title>
       </Head>
       <Component {...pageProps} />
       <Script

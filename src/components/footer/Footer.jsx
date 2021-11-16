@@ -12,7 +12,7 @@ const Footer = () => {
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
             <Link href="/about" passHref>
-              <a className="text-regular">Acerca de</a>
+              <a className="text-regular">About Us</a>
             </Link>
             <Link href="/trending-topics" passHref>
               <a className="text-regular">Trending Topics</a>
@@ -20,9 +20,6 @@ const Footer = () => {
             <Link href="/think-tools" passHref>
               <a className="text-regular">Think Tools</a>
             </Link>
-            <a href="https://www.nttdata.com/global/en/" target="_blank" className="text-regular" rel="noreferrer">
-              NTT DATA GLOBAL
-            </a>
           </Col>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <p className="subtitle">Ayuda</p>
@@ -38,7 +35,7 @@ const Footer = () => {
             <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
           </Col>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
-            <p className="subtitle">Políticas</p>
+            <p className="subtitle">Legales</p>
 
             <Link href="/policies/privacy">
               <a>Política de Privacidad</a>
@@ -50,23 +47,18 @@ const Footer = () => {
               <a>Aviso Legal</a>
             </Link>
 
-            <p> </p>
-            <p> </p>
           </Col>
         </Row>
         <Row className={styles.footer_container_row_copyright}>
           <Col sm="12" md="6">
-            <p className="text-sm text--theme-light">
-              © Copyright NTT Data Europa & Americas
-            </p>
+            <a className="text-sm text--theme-light" href="#">
+              © Copyright NTT Data EMEAL - Latam
+            </a>
           </Col>
           <Col sm="12" md="6" className={styles.foote_mob_top}>
-            <Link href="https://www.youtube.com/c/NTTDATAEuropeLatam/featured">
-              <a target="_blank" className={`${styles.link_fr} icon`}> N </a>
-            </Link>
-            <Link href="https://www.linkedin.com/company/ntt-data-europe/?originalSubdomain=mx">
-              <a target="_blank" className={`${styles.link_fr} icon`}> M </a>
-            </Link>
+            <a href="https://www.youtube.com/c/NTTDATAEuropeLatam/featured" target="_blank" className={`${styles.link_fr} icon`} rel="noreferrer"> N </a>
+            <a href="https://www.linkedin.com/company/ntt-data-europe/?originalSubdomain=mx" target="_blank" className={`${styles.link_fr} icon`} rel="noreferrer"> M </a>
+            <a href="https://twitter.com/nttdatalatam/" target="_blank" className={`${styles.link_fr} icon`} rel="noreferrer"> X </a>
           </Col>
         </Row>
       </Container>
