@@ -146,8 +146,7 @@ const FormGeneral = ({
             <div className={styles.profileSettingsFile}>
               <Form.Group controlId="formFileSm">
                 <Form.Label
-                  as="button"
-                  className="button button--theme-secondary"
+                  className="button button--theme-secondary pointer"
                 >
                   Cambiar imagen de perfil
                 </Form.Label>
