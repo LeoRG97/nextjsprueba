@@ -48,11 +48,11 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
           <Container className={styles.content_tool}>
             <div className={styles.centered}>
               <h5 className={`title ${styles.content_title}`}>
-                <span className={`icon ${styles.doots}`}>h</span>
+                {/* <span className={`icon ${styles.doots}`}>h</span> */}
                 {toolsInfo.categoria}
-                <span className={`icon ${styles.doots}`}>j</span>
+                {/* <span className={`icon ${styles.doots}`}>j</span> */}
               </h5>
-              <p className="text-md">{toolsInfo.objetivo}</p>
+              <p className="text-md text-bold">{toolsInfo.objetivo}</p>
               <Link href="/think-tools" passHref>
                 <a>
                   <button className="button button--theme-warning"><span className="button__icon-left text--theme-warning">9</span>Explorar más herramientas</button>
@@ -95,7 +95,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
               </Row>
               <Row className={styles.content_info_tool}>
                 <Col>
-                  <h5 className="title-xl">¿Qué es y cómo se usa?</h5>
+                  <h5 className="title-xl">¿Qué es?</h5>
                   {
                     toolsCode && toolsCode.definition && (
                       toolsCode.definition.html.map((item) => {
@@ -107,7 +107,26 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                       })
                     )
                   }
-                  <h5 className={`title ${styles.content_title_use}`}>¿Cómo se usa?</h5>
+                  {
+                    toolsCode && toolsCode.justification && toolsCode.justification.html
+                    && toolsCode.justification.html.length > 0 && <h5 className={`title ${styles.content_title_use}`}>¿Por qué debería de usarlo?</h5>
+                  }
+                  {
+                    toolsCode && toolsCode.justification && toolsCode.justification.html
+                    && toolsCode.justification.html.length > 0 && (
+                      toolsCode.justification.html.map((item) => {
+                        return (
+                          <div key={item.id}>
+                            <div dangerouslySetInnerHTML={{ __html: item.tag }} />
+                          </div>
+                        );
+                      })
+                    )
+                  }
+                  {
+                    toolsCode && toolsCode.usage && toolsCode.usage.html
+                    && toolsCode.usage.html.length > 0 && <h5 className={`title ${styles.content_title_use}`}>¿Cómo se usa?</h5>
+                  }
                   {
                     toolsCode && toolsCode.usage && (
                       toolsCode.usage.html.map((item) => {
@@ -129,7 +148,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
                     <TooltipContainer placement="left" tooltipText="Descargar">
                       <button
-                        onClick={() => {}}
+                        onClick={() => { }}
                         className="icon-button icon-button--primary m-2"
                       >
                         i
