@@ -10,6 +10,11 @@
   right: 0;
 }
 
+.cardList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .optionsContainer:hover .list_content {
   display: block;
 }

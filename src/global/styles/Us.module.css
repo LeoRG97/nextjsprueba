@@ -3,7 +3,7 @@
 }
 
 .content_title {
-  background-image: url('/images/imgpr2.jpg');
+  background-color: var(--colorPrimaryDark);
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center;

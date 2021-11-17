@@ -17,7 +17,7 @@ const UserCard = ({ user }) => {
       <div className={styles.image}>
         <Image
           layout="fill"
-          objectFit="contain"
+          objectFit="cover"
           src={renderPicture(user.picture)}
         />
       </div>

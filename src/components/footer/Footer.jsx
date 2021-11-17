@@ -12,46 +12,46 @@ const Footer = () => {
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
             <Link href="/about" passHref>
-              <a className="text-regular">About Us</a>
+              <a className="text-md text--theme-light">About Us</a>
             </Link>
             <Link href="/trending-topics" passHref>
-              <a className="text-regular">Trending Topics</a>
+              <a className="text-md text--theme-light">Trending Topics</a>
             </Link>
             <Link href="/think-tools" passHref>
-              <a className="text-regular">Think Tools</a>
+              <a className="text-md text--theme-light">Think Tools</a>
             </Link>
           </Col>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <p className="subtitle">Ayuda</p>
             <Link href="/experts">
-              <a>Nuestros Expertos</a>
+              <a className="text-md text--theme-light">Nuestros Expertos</a>
             </Link>
             <Link href="/#">
-              <a>Soporte Técnico</a>
+              <a className="text-md text--theme-light">Soporte Técnico</a>
             </Link>
             <Link href="/#">
-              <a>Términos de Uso</a>
+              <a className="text-md text--theme-light">Términos de Uso</a>
             </Link>
-            <a href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
+            <a className="text-md text--theme-light" href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
           </Col>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <p className="subtitle">Legales</p>
 
             <Link href="/policies/privacy">
-              <a>Política de Privacidad</a>
+              <a className="text-md text--theme-light">Política de Privacidad</a>
             </Link>
             <Link href="/policies/cookies">
-              <a>Política de Cookies</a>
+              <a className="text-md text--theme-light">Política de Cookies</a>
             </Link>
             <Link href="/policies/legal">
-              <a>Aviso Legal</a>
+              <a className="text-md text--theme-light">Aviso Legal</a>
             </Link>
 
           </Col>
         </Row>
         <Row className={styles.footer_container_row_copyright}>
           <Col sm="12" md="6">
-            <a className="text-sm text--theme-light" href="#">
+            <a className="text-sm text--theme-light" href="https://mexico.nttdata.com/" target="_blank" rel="noreferrer">
               © Copyright NTT Data EMEAL - Latam
             </a>
           </Col>
