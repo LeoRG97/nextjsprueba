@@ -11,7 +11,7 @@ import { deleteCourse } from '@/services/courses';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 
-const ProfileCourses = () => {
+const ProfileCourses = ({ estado }) => {
   const router = useRouter();
   const [session] = useSession();
   const [loadModal, setLoadModal] = useState(false);
@@ -20,15 +20,10 @@ const ProfileCourses = () => {
 
   const getKey = (pageIndex, previousPageData) => {
     let params = '';
-    let estado = 'publicado';
 
     if (router.query.type) {
       const { type } = router.query;
       params = `${params}&tipo=${type}`;
-    }
-
-    if (router.query.borradores === 'true') {
-      estado = 'borrador';
     }
 
     if (previousPageData && !previousPageData.length) return null; // reached the end

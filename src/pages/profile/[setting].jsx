@@ -43,7 +43,8 @@ const ProfileScreen = () => {
         {query.setting === 'ratings' && <RatedArticles />}
         {query.setting === 'notes' && <ProfileNotes />}
         {query.setting === 'tools' && <ProfileTools />}
-        {query.setting === 'courses' && <ProfileCourses />}
+        {query.setting === 'courses' && <ProfileCourses estado="publicado" />}
+        {query.setting === 'courses-drafts' && <ProfileCourses estado="borrador" />}
         {query.setting === 'subscriptions' && <ProfileCourseSubscription />}
         {query.setting === 'forums' && <ProfileForums />}
 

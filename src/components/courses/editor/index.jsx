@@ -78,7 +78,7 @@ const CourseEditor = ({ initialData }) => {
       estatus,
       unidades: units,
       lecciones,
-      autor: session.user.id,
+      autor: course.autor || session.user.id,
     };
 
     if (!course._id) {
@@ -203,7 +203,7 @@ const CourseEditor = ({ initialData }) => {
       />
       <LoadingIndicatorModal
         show={submitting}
-        onClose={() => { }}
+        onClose={() => {}}
         textHeader="Guardando cambios"
         textBody="Esta operación podría tardar unos minutos, por favor espere."
       />

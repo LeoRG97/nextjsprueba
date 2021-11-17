@@ -29,6 +29,11 @@
   padding-right: 10px;
   margin-bottom: 3rem;
   cursor: pointer;
+  position: relative;
+}
+
+.draft {
+  cursor: initial;
 }
 
 .cardMargin {
@@ -104,6 +109,12 @@
 
 .peopleContainer span {
   margin-left: 10px;
+}
+
+.premium {
+  left: unset;
+  right: 10px;
+  background-color: var(--colorArticlePremium);
 }
 
 @media (max-width: 999px) {
