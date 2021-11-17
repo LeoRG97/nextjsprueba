@@ -9,6 +9,7 @@ import styles from './articlesList.module.css';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
 import { showPremiumAlert } from '@/reducers/alert';
+import { premiumUserAccess } from '@/helpers/accessVerifiers';
 
 const ArticlesDetailComponent = ({
   article, classContent, isAdmin = false, onDelete, estado,
@@ -16,7 +17,7 @@ const ArticlesDetailComponent = ({
   const [showOptions, setShowOptions] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [optionsModal, setOptionsModal] = useState({});
-  const { data } = useSelector((state) => state.profile);
+  const { data: profile } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   const getTypeIcon = (type) => {
     switch (type) {
@@ -29,19 +30,13 @@ const ArticlesDetailComponent = ({
   const router = useRouter();
 
   const showArticle = () => {
-    if (data.role) {
-      if (data.role !== 'user' && article.premium === true && estado !== 'borrador') {
-        router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
-      } else if (data.role === 'user' && article.premium === true) {
-        dispatch(showPremiumAlert());
-      } else if (article.premium === false && data.role !== undefined && estado !== 'borrador') {
-        router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
-      }
-    } else if (article.premium === true) {
-      dispatch(showPremiumAlert());
-    } else {
-      router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
+    if (article.estatus === 'borrador') {
+      return '';
     }
+    if (article.premium && !premiumUserAccess(profile.role)) {
+      return dispatch(showPremiumAlert());
+    }
+    return router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
   };
 
   const handleUpdate = () => {

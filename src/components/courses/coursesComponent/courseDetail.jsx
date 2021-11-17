@@ -4,10 +4,13 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import { useDispatch, useSelector } from 'react-redux';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './course.module.css';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
+import { showPremiumAlert } from '@/reducers/alert';
+import { premiumUserAccess } from '@/helpers/accessVerifiers';
 
 const CourseDetailComponent = ({
   curso, classContent, isAdmin = false, onDelete, estado,
@@ -15,12 +18,18 @@ const CourseDetailComponent = ({
   const [showOptions, setShowOptions] = useState(false);
   const [modalDelete, setModalDelete] = useState(false);
   const [optionsModal, setOptionsModal] = useState({});
-  /*  const { data } = useSelector((state) => state.profile);
-  const dispatch = useDispatch(); */
+  const { data: profile } = useSelector((state) => state.profile);
+  const dispatch = useDispatch();
   const router = useRouter();
 
   const showCourse = () => {
-    router.push(`/courses/${curso.slug}`);
+    if (curso.estatus === 'borrador') {
+      return '';
+    }
+    if (curso.exclusivo && !premiumUserAccess(profile.role)) {
+      return dispatch(showPremiumAlert());
+    }
+    return router.push(`/courses/${curso.slug}`);
   };
 
   const handleUpdate = () => {
@@ -64,7 +73,7 @@ const CourseDetailComponent = ({
       <>
         <div
           key="id"
-          className={`${styles.cardContainer}`}
+          className={`${styles.cardContainer} ${curso.estatus === 'borrador' && styles.draft}`}
           onMouseEnter={() => setShowOptions(true)}
           onMouseLeave={() => setShowOptions(false)}
         >
@@ -95,11 +104,11 @@ const CourseDetailComponent = ({
                     {curso.categorias[0].nombre || ''}{' '}
                   </>
                 ) : (
-                  <>{'Sin categoria'}{' '}</>
+                  'Sin categoría'
                 )
               }
             </div>
-            {curso.premium && !isAdmin && (
+            {curso.exclusivo && !isAdmin && (
               <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
                 Premium{' '}<span className="icon text--theme-light">R</span>
               </div>

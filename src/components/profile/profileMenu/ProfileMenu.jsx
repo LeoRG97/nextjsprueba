@@ -106,9 +106,9 @@ const TabMenu = () => {
                   <span className="ms-2 text-md text--theme-secondary">{data.publicaconesCursos}</span>
                 </a>
               </Link>
-              <Link href="/profile/courses?borradores=true" passHref scroll={false}>
+              <Link href="/profile/courses-drafts" passHref scroll={false}>
                 <a
-                  className={`subtitle ${styles.item} ${query.borradores === 'true' && query.setting === 'courses' && styles.active}`}
+                  className={`subtitle ${styles.item} ${query.setting === 'courses-drafts' && styles.active}`}
                 >
                   Borradores de cursos
                   <span className="ms-2 text-md text--theme-secondary">{data.borradoresCursos}</span>
