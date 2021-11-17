@@ -298,11 +298,11 @@ ToolsComponent.defaultProps = {
   option: '',
   addedVideo: false,
   addedAudio: false,
-  addImage: () => { },
-  setModalShow: () => { },
-  setModalShowVideo: () => { },
-  addTextFunct: () => { },
-  setModalShowLink: () => { },
+  addImage: () => {},
+  setModalShow: () => {},
+  setModalShowVideo: () => {},
+  addTextFunct: () => {},
+  setModalShowLink: () => {},
 };
 
 export default ToolsComponent;

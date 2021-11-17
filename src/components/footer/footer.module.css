@@ -61,11 +61,6 @@
 
 .footer_content a {
   display: grid;
-  text-decoration: none;
-  cursor: pointer;
-  color: var(--text-color-light);
-  font-size: var(--font-size-md);
-  /* min-height: 36px; */
   margin-bottom: 0.8rem;
 }
 

@@ -18,11 +18,12 @@
 
 .titleInput {
   /* width: max-content; */
+  background-color: var(--contentTransparentRGB);
+  border: none;
   color: var(--text-color-light);
   font-size: var(--font-size-lg);
   font-family: var(--font-regular);
-  border: none;
-  background-color: var(--contentTransparentRGB);
+  height: 3rem;
 }
 
 .btn {

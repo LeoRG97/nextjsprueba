@@ -1,5 +1,6 @@
 // import Script from 'next/script';
 import React from 'react';
+import styles from './world.module.css';
 // import define from './index';
 // import { Runtime, Inspector } from './runtime';
 
@@ -15,7 +16,7 @@ const WorldComponent = () => {
           src="https://d3js.org/d3.v7.min.js"
           strategy="lazyOnload"
         /> */}
-      <img className="img img-fluid" src="/images/home/Mapa.gif" alt="impactgo geográfico" />
+      <img className={styles.map} src="/images/home/Mapa.gif" alt="impactgo geográfico" />
     </>
   );
 };

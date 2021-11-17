@@ -33,10 +33,6 @@
   border-radius: 0 !important;
 }
 
-.tools_select_multimedia {
-  /* width: 15%!important; */
-}
-
 .tools_media_multimedia {
   height: 45px !important;
 }
@@ -68,6 +64,7 @@
 
 .tools_img {
   visibility: hidden;
+  display: none;
   width: 0;
   position: relative;
 }

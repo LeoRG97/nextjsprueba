@@ -135,18 +135,20 @@ const ProfileArticles = ({ estado }) => {
         )
       }
       <>
-        {data && data.map((page) => {
-          return page.map((article) => (
-            <ArticlesDetailComponent
-              onDelete={onDelete}
-              onUpdate={null}
-              key={article._id}
-              article={article}
-              estado={estado}
-              isAdmin
-            />
-          ));
-        })}
+        <div className={styles.cardList}>
+          {data && data.map((page) => {
+            return page.map((article) => (
+              <ArticlesDetailComponent
+                onDelete={onDelete}
+                onUpdate={null}
+                key={article._id}
+                article={article}
+                estado={estado}
+                isAdmin
+              />
+            ));
+          })}
+        </div>
         <div className="d-flex justify-content-center">
           <>
             {isValidating

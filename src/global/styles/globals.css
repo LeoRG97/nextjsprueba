@@ -205,7 +205,7 @@ a {
   color: var(--text-color-light);
 }
 
-.text-md {
+.text-md, .text-regular {
   font-family: var(--font-regular);
   font-size: var(--font-size-md);
   color: var(--text-color-light);
@@ -1542,6 +1542,10 @@ html {
   cursor: pointer;
 }
 
+.Edit-dropdown-container a label {
+  cursor: pointer;
+}
+
 
 .Edit-dropdown-container span {
   display: inline;
@@ -1577,7 +1581,7 @@ html {
 }
 
 .input-image-none {
-  visibility: hidden;
+  display: none;
   width: 0;
   position: relative;
 }
