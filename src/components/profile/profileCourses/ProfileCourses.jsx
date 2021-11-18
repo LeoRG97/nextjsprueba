@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 // import { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import styles from '../profileArticles/profile.module.css';
@@ -34,7 +35,12 @@ const ProfileCourses = ({ estado }) => {
     data, isValidating, size, setSize, mutate,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
 
-  const isEmpty = data?.[size - 1]?.length === 0;
+  const { data: total } = useSWR([ApiRoutes.UserTotals, session.user.id],
+    { fallbackData: { publicacones: 0, borradores: 0 } });
+
+  const { publicaconesCursos, borradoresCursos } = total;
+
+  const isEmpty = (estado === 'publicado' ? size * 9 >= publicaconesCursos : size * 9 >= borradoresCursos);
 
   const handleDelete = async (courseId) => {
     setLoadModal(true);
@@ -86,7 +92,7 @@ const ProfileCourses = ({ estado }) => {
                 className="button button--theme-secondary"
                 onClick={() => setSize(size + 1)}
               >
-                Ver más publicaciones
+                Ver más cursos
               </button>
             )}
         </>

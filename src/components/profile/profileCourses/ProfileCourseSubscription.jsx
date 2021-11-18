@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
-// import { useSWRConfig } from 'swr';
+import useSWR from 'swr';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import { LoadingIndicator, SuccessIndicatorModal } from '@/components';
@@ -32,8 +32,12 @@ const ProfileCourseSubscription = () => {
   const {
     data, isValidating, size, setSize,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+  const { data: total } = useSWR([ApiRoutes.UserTotals, session.user.id],
+    { fallbackData: { subscripcionesCursos: 0 } });
 
-  const isEmpty = data?.[size - 1]?.length === 0;
+  const { subscripcionesCursos } = total;
+
+  const isEmpty = size * 9 >= subscripcionesCursos;
 
   return (
     <div>
@@ -58,7 +62,7 @@ const ProfileCourseSubscription = () => {
                 className="button button--theme-secondary"
                 onClick={() => setSize(size + 1)}
               >
-                Ver más publicaciones
+                Ver más cursos
               </button>
             )}
         </>

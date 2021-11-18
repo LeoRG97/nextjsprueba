@@ -1,6 +1,7 @@
 import React from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
+import useSWR from 'swr';
 import { fetchData } from '@/services/swr';
 import { LoadingIndicator } from '@/components';
 import ArticlesDetailComponent from '@/components/articlesList/articlesListComponent/articleDetall';
@@ -18,7 +19,12 @@ const RatedArticles = () => {
     data, size, setSize, isValidating,
   } = useSWRInfinite(getKey, fetchData);
 
-  const isEmpty = data?.[size - 1]?.length === 0;
+  const { data: total } = useSWR([ApiRoutes.UserTotals, session.user.id],
+    { fallbackData: { valoraciones: 0 } });
+
+  const { valoraciones } = total;
+
+  const isEmpty = size * 9 >= valoraciones;
 
   return (
     <>

@@ -1,94 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import useSWR from 'swr';
+import React from 'react';
+import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
-import { Container, Row } from 'react-bootstrap';
+import useSWR from 'swr';
 import { fetchData } from '@/services/swr';
+import { LoadingIndicator } from '@/components';
+import ArticlesDetailComponent from '@/components/articlesList/articlesListComponent/articleDetall';
 import { ApiRoutes } from '@/global/constants';
-import {
-  ArticlesListComponent, LoadingIndicator,
-} from '@/components';
 
 const ProfileSavedArts = () => {
-  const [pageBlog, setData] = useState(1);
-  const [arrayBlog, setArrayData] = useState([]);
-  const [initData, setInitData] = useState();
-
   const [session] = useSession();
-  const [routeUri, setURLAPI] = useState(`${ApiRoutes.UserSavedArticles}/${session.user.id}/user?pageSize=9&pageNum=${pageBlog}`);
 
-  const { data } = useSWR(
-    [routeUri],
-    fetchData,
-  );
-
-  const getSavedArts = () => {
-    const results = initData;
-    if (results) {
-      if (results.length > 0) {
-        const arrayArt = [];
-        // eslint-disable-next-line array-callback-return
-        results.map((item) => {
-          if (!item.registros) {
-            let blogInfo = item.articulo[0];
-            blogInfo.likes = item.likes;
-            blogInfo = JSON.stringify(blogInfo);
-            const addautorInfo = `, "usuario_id": { "slug": "${item.autor[0].slug}", "name": "${item.autor[0].name}", "apellidos": "${item.autor[0].apellidos}" }}`;
-            blogInfo = blogInfo.slice(0, -1) + addautorInfo;
-            blogInfo = JSON.parse(blogInfo);
-            arrayArt.push(blogInfo);
-          }
-        });
-        setArrayData(arrayArt);
-      }
-    }
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.data.length) return null; // reached the end
+    return `${ApiRoutes.UserSavedArticles}/${session.user.id}/user?pageNum=${pageIndex + 1}&pageSize=9`; // API endpoint
   };
 
-  const moreArts = () => {
-    const pagination = pageBlog + 1;
-    setURLAPI(`${ApiRoutes.UserSavedArticles}/${session.user.id}/user?pageSize=9&pageNum=${pagination}`);
-    setData(pagination);
-  };
+  const {
+    data, size, setSize, isValidating,
+  } = useSWRInfinite(getKey, fetchData);
 
-  useEffect(() => {
-    if (data) {
-      if (data.data && pageBlog === 1) {
-        setInitData(data.data);
-      } else if (data.data && pageBlog > 1) {
-        setInitData([...initData, ...data.data]);
-      }
-    }
-  }, [data]);
+  const { data: total } = useSWR([ApiRoutes.UserTotals, session.user.id],
+    { fallbackData: { biblioteca: 0 } });
 
-  useEffect(() => {
-    if (initData) {
-      getSavedArts();
-    }
-  }, [initData]);
+  const { biblioteca } = total;
+
+  const isEmpty = size * 9 >= biblioteca;
 
   return (
     <>
-      {
-        (arrayBlog.length !== 0) ? (
-          <>
-            <ArticlesListComponent articles={arrayBlog} />
-            <Container>
-              <Row>
-                <div className="content-centered childs">
-                  {!data && <LoadingIndicator />}
-                  {data && data.data && data.data.length > 1 && (
-                    <button
-                      className="button button--theme-secondary"
-                      onClick={moreArts}
-                    >
-                      Ver más publicaciones
-                    </button>
-                  )}
-                </div>
-              </Row>
-            </Container>
-          </>
-        ) : (<></>)
-      }
+      {data && data.map((page) => {
+        return page.data.map((saved) => {
+          const article = { ...saved.articulo[0], usuario_id: saved.autor[0], likes: saved.likes };
+          return (
+            <ArticlesDetailComponent key={saved._id} article={article} />
+          );
+        });
+      })}
+      <div className="d-flex justify-content-center">
+        <>
+          {isValidating
+            ? <LoadingIndicator />
+            : !isEmpty && (
+              <button
+                className="button button--theme-secondary"
+                onClick={() => setSize(size + 1)}
+              >
+                Ver más publicaciones
+              </button>
+            )}
+        </>
+      </div>
     </>
   );
 };
