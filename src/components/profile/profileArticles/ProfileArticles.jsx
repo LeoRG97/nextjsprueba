@@ -37,7 +37,7 @@ const ProfileArticles = ({ estado }) => {
       params = `${params}&tipo=${type}`;
     }
 
-    if (previousPageData && !previousPageData.length) return null; // reached the end
+    if (previousPageData && !previousPageData.data.length) return null; // reached the end
     return `${ApiRoutes.ArticlesUserAuthor}/${session.user.id}?estado=${estado}&pageNum=${pageIndex + 1}&pageSize=9${params}`; // API endpoint
   };
 
@@ -51,7 +51,7 @@ const ProfileArticles = ({ estado }) => {
     try {
       const rs = await deleteArticle(id);
       updated = mutate(async (existingData) => {
-        const filtered = await existingData.filter((item) => item[0]?._id !== rs.id);
+        const filtered = await existingData.data.filter((item) => item[0]?._id !== rs.id);
         return filtered;
       });
       globalMutate([ApiRoutes.UserTotals, session.user.id]);
@@ -77,7 +77,7 @@ const ProfileArticles = ({ estado }) => {
     }, undefined, { scroll: false, shallow: true });
   };
 
-  const isEmpty = data?.[size - 1]?.length === 0;
+  const isEmpty = data && size * 9 >= data[0].registros;
 
   const { query } = router;
 
@@ -137,7 +137,7 @@ const ProfileArticles = ({ estado }) => {
       <>
         <div className={styles.cardList}>
           {data && data.map((page) => {
-            return page.map((article) => (
+            return page.data.map((article) => (
               <ArticlesDetailComponent
                 onDelete={onDelete}
                 onUpdate={null}

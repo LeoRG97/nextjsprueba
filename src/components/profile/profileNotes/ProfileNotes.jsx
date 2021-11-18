@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
-import { useSWRConfig } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import NoteComponent from './NoteComponent';
 import ModalEditNote from './ModalEditNote';
 import { ApiRoutes } from '@/global/constants';
@@ -14,11 +13,7 @@ import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 
 const ProfileNotes = () => {
-  const router = useRouter();
   const { mutate: globalMutate } = useSWRConfig();
-  useEffect(() => {
-
-  }, [router]);
 
   const [modalNotes, setModalNotes] = useState(false);
   const [noteSelected, setNoteSelected] = useState({});
@@ -44,6 +39,11 @@ const ProfileNotes = () => {
   const {
     data, size, setSize, isValidating, mutate,
   } = useSWRInfinite(getKey, fetchData, { revalidateAll: true });
+
+  const { data: total } = useSWR([ApiRoutes.UserTotals, session.user.id],
+    { fallbackData: { valoraciones: 0 } });
+
+  const { notas } = total;
 
   const saveNota = async (model) => {
     const saveModel = {
@@ -107,7 +107,7 @@ const ProfileNotes = () => {
     setModalNotes(true);
   };
 
-  const isEmpty = data?.[size - 1]?.length === 0;
+  const isEmpty = size * 9 >= notas;
 
   return (
     <div className="container">
