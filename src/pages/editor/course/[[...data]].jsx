@@ -15,13 +15,13 @@ const CourseEditorPage = () => {
 
   const getCourse = async (id) => {
     const res = await fetchCourseById(id);
-    const course = res.data[0];
-    setLoading(false);
-    if (course) {
+    if (res.ok) {
+      const course = res.data[0];
       setInitialData(course);
     } else {
       setError('No se encontró el curso');
     }
+    setLoading(false);
   };
 
   useEffect(() => {

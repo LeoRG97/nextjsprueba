@@ -71,9 +71,9 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   src={setImage(toolsInfo.url_imagen)}
                   alt={toolsInfo.nombre}
                   layout="responsive"
-                  objectFit="cover"
+                  objectFit="contain"
                   width={720}
-                  height={480}
+                  height={460}
                 />
               </div>
               <Row className={styles.content_inspired}>

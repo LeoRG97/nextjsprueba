@@ -6,10 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import { BUCKET_URL } from '@/global/constants';
-import TooltipContainer from '../editorComponents/tooltipContainer/TooltipContainer';
 import styles from '../editor.module.css';
 
-const ToolPreview = ({ setPreview, preview }) => {
+const ToolPreview = () => {
   const [previewUrl, setPreviewUrl] = useState('');
   const {
     formData,
@@ -168,29 +167,6 @@ const ToolPreview = ({ setPreview, preview }) => {
           </div>
 
         </Container>
-      </div>
-      <div className={styles.optionsContainer}>
-        {
-          preview ? (
-            <TooltipContainer tooltipText="Volver" placement="left">
-              <div
-                onClick={() => setPreview()}
-                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-              >
-                a
-              </div>
-            </TooltipContainer>
-          ) : (
-            <TooltipContainer tooltipText="Vista previa" placement="left">
-              <div
-                onClick={() => setPreview()}
-                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-              >
-                C
-              </div>
-            </TooltipContainer>
-          )
-        }
       </div>
     </>
   );

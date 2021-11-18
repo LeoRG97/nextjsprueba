@@ -28,6 +28,13 @@
   overflow: hidden;
 }
 
+.returnButton {
+  position: absolute;
+  margin-top: 8%;
+  left: 7vw;
+  top: 0;
+}
+
 .optionsContainer {
   position: absolute;
   top: 0;
@@ -117,7 +124,6 @@
   display: flex;
   justify-content: flex-end;
 }
-
 
 @media (max-width: 999px) {
   .optionsContainer {
