@@ -13,21 +13,11 @@ import { Roles } from '@/global/constants';
 
 const ToolEditor = () => {
   const router = useRouter();
-  // console.log(router);
   const { data } = router.query;
   const [tool, setTool] = useState({});
   const [toolContent, setToolContent] = useState(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(data && data[0]);
-  // const [preview, setToolPreview] = useState(false);
-
-  // const setPreview = () => {
-  //   if (preview === false) {
-  //     setToolPreview(true);
-  //   } else {
-  //     setToolPreview(false);
-  //   }
-  // };
 
   const getTool = async () => {
     try {

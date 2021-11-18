@@ -47,13 +47,9 @@ const ProfileArticles = ({ estado }) => {
 
   const onDelete = async (id) => {
     setLoadModal(true);
-    let updated = null;
     try {
-      const rs = await deleteArticle(id);
-      updated = mutate(async (existingData) => {
-        const filtered = await existingData.data.filter((item) => item[0]?._id !== rs.id);
-        return filtered;
-      });
+      await deleteArticle(id);
+      mutate();
       globalMutate([ApiRoutes.UserTotals, session.user.id]);
       setLoadModal(false);
       setSuccessModal(true);
@@ -62,7 +58,7 @@ const ProfileArticles = ({ estado }) => {
       setModalError(true);
       return error;
     }
-    return updated;
+    return '';
   };
 
   const handleTypeChange = (item) => {

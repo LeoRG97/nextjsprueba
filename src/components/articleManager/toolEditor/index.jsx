@@ -169,12 +169,29 @@ const ToolEditorComponent = ({
     }
   };
 
+  const handleReturnButton = () => {
+    if (preview) {
+      setPreview(false);
+    } else {
+      router.back();
+    }
+  };
+
   return (
     <div>
+      <TooltipContainer placement="right" tooltipText="Regresar">
+        <button
+          className={`icon-button icon-button--secondary ${styles.returnButton}`}
+          onClick={handleReturnButton}
+        >
+          a
+        </button>
+      </TooltipContainer>
       {preview ? (
         <ToolPreview preview={preview} setPreview={() => setPreview()} />
       ) : (
         <div className={styles.editor}>
+
           <div className={styles.editorContent} align="center">
             <div>
               <p className="subtitle text-center">
@@ -191,33 +208,33 @@ const ToolEditorComponent = ({
           {/* EDITOR OPTIONS NAV */}
           <div className={styles.optionsContainer}>
             <TooltipContainer tooltipText="Publicar" placement="left">
-              <div
+              <button
                 className={`icon-button icon-button--primary ${styles.optionsItem}`}
                 onClick={handleOpenModal}
               >
                 H
-              </div>
+              </button>
             </TooltipContainer>
 
             <TooltipContainer
               tooltipText="Archivo de descarga"
               placement="left"
             >
-              <div
+              <button
                 onClick={handleZipModal}
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}
               >
                 r
-              </div>
+              </button>
             </TooltipContainer>
 
             <TooltipContainer tooltipText="Vista previa" placement="left">
-              <div
+              <button
                 onClick={() => setPreview()}
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}
               >
                 C
-              </div>
+              </button>
             </TooltipContainer>
           </div>
           <ToolDetailsModal

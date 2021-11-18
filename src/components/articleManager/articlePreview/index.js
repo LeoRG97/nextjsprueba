@@ -5,13 +5,10 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Image from 'next/image';
 import { useSession } from 'next-auth/client';
 import styles from '../editor.module.css';
-import { TooltipContainer } from '@/components';
 import { BUCKET_URL } from '@/global/constants';
 import { getProfile } from '@/services/profile';
 
-const EditorPreviewComponent = ({
-  initialData, initialContent, preview,
-}) => {
+const EditorPreviewComponent = ({ initialData, initialContent }) => {
   const [autor, setAutor] = useState({});
   const target = useRef(null);
   const [session] = useSession();
@@ -145,25 +142,6 @@ const EditorPreviewComponent = ({
             }
           </div>
         </Container>
-      </div>
-      {/* EDITOR OPTIONS NAV */}
-      <div className={styles.optionsContainer}>
-
-        <TooltipContainer tooltipText="Volver" placement="left">
-          <div
-            className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-            onClick={preview}
-          >
-            a
-          </div>
-        </TooltipContainer>
-        {
-          /*
-           <TooltipContainer tooltipText="Detalles" placement="left">
-            <div className={`icon-button icon-button--secondary ${styles.optionsItem}`}>J</div>
-          </TooltipContainer>
-          */
-        }
       </div>
     </>
   );

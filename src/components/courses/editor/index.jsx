@@ -121,8 +121,24 @@ const CourseEditor = ({ initialData }) => {
     }
   };
 
+  const handleReturnButton = () => {
+    if (preview) {
+      setPreview(false);
+    } else {
+      router.back();
+    }
+  };
+
   return (
     <div className={styles.editor}>
+      <TooltipContainer placement="right" tooltipText="Regresar">
+        <button
+          className={`icon-button icon-button--secondary ${styles.returnButton}`}
+          onClick={handleReturnButton}
+        >
+          a
+        </button>
+      </TooltipContainer>
       <div className={styles.editorContent}>
         {
           preview ? (
@@ -143,43 +159,32 @@ const CourseEditor = ({ initialData }) => {
         }
       </div>
       {
-        preview ? (
-          <div className={styles.optionsContainer}>
-            <TooltipContainer tooltipText="Volver" placement="left">
-              <div
-                className={`icon-button icon-button--secondary ${styles.optionsItem}`}
-                onClick={() => setPreview(!preview)}
-              >
-                a
-              </div>
-            </TooltipContainer>
-          </div>
-        ) : (
+        !preview && (
           <div className={styles.optionsContainer}>
             <TooltipContainer tooltipText="Publicar" placement="left">
-              <div
+              <button
                 className={`icon-button icon-button--primary ${styles.optionsItem}`}
                 onClick={() => setShowDetails(true)}
               >
                 H
-              </div>
+              </button>
             </TooltipContainer>
 
             <TooltipContainer tooltipText="Guardar borrador" placement="left">
-              <div
+              <button
                 className={`icon-button icon-button--success ${styles.optionsItem}`}
                 onClick={() => handlePublish('borrador')}
               >
                 I
-              </div>
+              </button>
             </TooltipContainer>
             <TooltipContainer tooltipText="Vista previa" placement="left">
-              <div
+              <button
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}
                 onClick={() => setPreview(!preview)}
               >
                 C
-              </div>
+              </button>
             </TooltipContainer>
           </div>
         )
