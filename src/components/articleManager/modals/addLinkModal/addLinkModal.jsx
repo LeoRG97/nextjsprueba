@@ -79,7 +79,7 @@ const ModalLink = (props) => {
   };
 
   useEffect(() => {
-    if (updateEvent) {
+    if (updateEvent && show) {
       setDisable(false);
       if (editInfo.type) {
         setEmbed(true);
@@ -91,7 +91,7 @@ const ModalLink = (props) => {
       setData(link.href);
       setName(link.innerHTML);
     }
-  }, [editInfo, updateEvent]);
+  }, [editInfo, updateEvent, showModal]);
 
   const handleUpdateLinkFunc = () => {
     updateLinkFunc(editInfo.idContent, { name, inputLink });
