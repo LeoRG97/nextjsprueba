@@ -67,12 +67,13 @@ export const fetchInvitationsData = async (...args) => {
 };
 
 export const fetchPaginatedDataWithAuthTokenCourses = async (route, query, pageNum) => {
-  const { sort } = query;
+  const { sort, category } = query;
   const res = await axios().get(`${route}`, {
     params: {
       pageSize: 9,
       pageNum,
       ...(sort && { sort }),
+      ...(category && { categoria: category }),
     },
   });
   return res;

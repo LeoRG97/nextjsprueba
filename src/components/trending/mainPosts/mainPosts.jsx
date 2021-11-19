@@ -91,7 +91,7 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
             selectN="1"
             items={[
               { label: 'Más recientes', value: 'desc' },
-              { label: 'Más antiguos', value: 'asc' },
+              { label: 'Más antiguas', value: 'asc' },
             ]}
           />
         </div>
