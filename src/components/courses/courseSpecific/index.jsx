@@ -7,16 +7,18 @@ import { useDispatch } from 'react-redux';
 import styles from './courseSpecific.module.css';
 import ContentCourse from './contentCourse/contentCourse';
 import { AutorCourseComponent } from '@/components';
-import { checkIfSuscribeThisCourse, createSubscriptionService } from '@/services/subscription';
+import { checkIfSuscribeThisCourse, createSubscriptionService, getSubscriptionsUser } from '@/services/subscription';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { showSubscribeAlert } from '@/reducers/alert';
+import ModalInfo from './ModalInfo';
 
 const CourseSpecific = ({ course }) => {
   const router = useRouter();
   const { query: { slug } } = router;
   const [modalLoading, setModalLoading] = useState(false);
   const [modalError, setModalError] = useState(false);
+  const [modalInfo, setModalInfo] = useState(false);
   const [suscrito, setSuscrito] = useState(false);
   // const target = useRef(null);
   const [session] = useSession();
@@ -26,10 +28,33 @@ const CourseSpecific = ({ course }) => {
     router.push('/trending-topics?type=Cursos', undefined, { scroll: false, shallow: true });
   };
 
-  const handleLesson = () => {
+  const handleLesson = async () => {
     if (course && course.lecciones) {
       if (course.lecciones.length > 0) {
-        router.push(`/courses/${slug}/lesson/${course.lecciones[0]._id}/`, undefined, { scroll: false, shallow: true });
+        const data = {
+          curso_id: course._id,
+          usuario_id: session.user.id,
+        };
+        const subsInfoNew = await getSubscriptionsUser(data, session.accessToken);
+        const arrayLessonsIncludedInSubsNew = [];
+        const arrayIdsLessonsCourses = [];
+
+        course.lecciones.forEach((lessonCourse) => arrayIdsLessonsCourses.push(lessonCourse._id));
+        arrayIdsLessonsCourses.forEach((lessonCourseId) => {
+          subsInfoNew.lecciones.forEach((lessonsSubsNew) => {
+            if (lessonCourseId === lessonsSubsNew) {
+              arrayLessonsIncludedInSubsNew.push(lessonsSubsNew);
+            }
+          });
+        });
+
+        if (arrayLessonsIncludedInSubsNew.length > 0) {
+          router.push(`/courses/${slug}/lesson/${arrayLessonsIncludedInSubsNew[arrayLessonsIncludedInSubsNew.length - 1]}/`, undefined, { scroll: false, shallow: true });
+        } else {
+          router.push(`/courses/${slug}/lesson/${course.lecciones[0]._id}/`, undefined, { scroll: false, shallow: true });
+        }
+      } else {
+        setModalInfo(true);
       }
     }
   };
@@ -172,6 +197,10 @@ const CourseSpecific = ({ course }) => {
         onClose={() => setModalError(false)}
         textHeader="Ha ocurrido un error"
         textBody="Por favor, vuelva a intentarlo."
+      />
+      <ModalInfo
+        show={modalInfo}
+        onClose={() => setModalInfo(false)}
       />
     </Container>
   );

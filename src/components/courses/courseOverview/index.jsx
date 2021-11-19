@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
@@ -8,11 +10,11 @@ import ResoursesLect from './resourses/resourses';
 import CertificateCourse from './certificate/certificate';
 import styles from './course.module.css';
 import { ListComment } from '@/components/comments/comments-course/ListComment';
-import { getTotalCommentsCourse } from '@/services/courses';
+import { checkIfLikedThisCourse, getTotalCommentsCourse, rateCourse } from '@/services/courses';
 import { postSubscLection, getSubscriptionsUser } from '@/services/subscription';
 
 const CourseOverview = ({ courseInfo, subsInfo }) => {
-  const session = useSession();
+  const [session] = useSession();
   const router = useRouter();
   const { query: { slug, params } } = router;
   const [course, setCourse] = useState({});
@@ -23,6 +25,9 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
   const [courseId, setCourseID] = useState('');
   const [iconCertificate, setCertf] = useState('W');
   const [checkResourses, setResour] = useState(false);
+  const [canValue, setCanValue] = useState(false);
+  const [isLiked, setLiked] = useState(false);
+  const [rateTotal, setRateTotal] = useState(0);
 
   const listenerComentAdded = async (data) => {
     const aux = [];
@@ -38,6 +43,38 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
       return error;
     }
   };
+
+  const handleRateCourse = async () => {
+    if (session && course) {
+      const res = await rateCourse(course._id, session.user.id);
+      if (res.message.toString() === 'liked') {
+        setLiked(true);
+        setRateTotal(rateTotal + 1);
+      }
+      if (res.message.toString() === 'unliked') {
+        setLiked(false);
+        setRateTotal(rateTotal - 1);
+      }
+    }
+  };
+
+  const checkIfLikedThisCourseFunc = async () => {
+    if (session && course && course._id) {
+      const liked = await checkIfLikedThisCourse(course._id, session.accessToken);
+      setRateTotal(liked.likes);
+      if (liked.ok) {
+        setLiked(true);
+      } else {
+        setLiked(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (session && course) {
+      checkIfLikedThisCourseFunc();
+    }
+  }, [session, course]);
 
   useEffect(() => {
     if (subsInfo) {
@@ -56,28 +93,35 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
   }, [courseId]);
 
   const [lessonIndex, tab] = params || [];
-
   const registerlection = async () => {
     const lection = {
       leccionId: lessonIndex,
     };
+    const arrayIdsLessonsCourses = [];
+    course.lecciones.forEach((lessonCourse) => arrayIdsLessonsCourses.push(lessonCourse._id));
     const resp = await postSubscLection(infoSubsCourse._id, lection);
     if (resp.ok && resp.message && resp.message === 'added') {
       const data = {
         curso_id: course._id,
-        usuario_id: session[0].user.id,
+        usuario_id: session.user.id,
       };
-      const subsInfoNew = await getSubscriptionsUser(data, session[0].accessToken);
+      const subsInfoNew = await getSubscriptionsUser(data, session.accessToken);
       setInfoSubsCourse(subsInfoNew);
-      if (course.lecciones.length === subsInfoNew.lecciones.length) {
+      const arrayLessonsIncludedInSubsNew = [];
+      arrayIdsLessonsCourses.forEach((lessonCourseId) => {
+        subsInfoNew.lecciones.forEach((lessonsSubsNew) => {
+          if (lessonCourseId === lessonsSubsNew) {
+            arrayLessonsIncludedInSubsNew.push(lessonsSubsNew);
+          }
+        });
+      });
+      if (arrayIdsLessonsCourses.length === arrayLessonsIncludedInSubsNew.length) {
         setCertf('q');
+        setCanValue(true);
       } else {
         setCertf('W');
+        setCanValue(false);
       }
-    } else if (course.lecciones.length === subsInfo.lecciones.length) {
-      setCertf('q');
-    } else {
-      setCertf('W');
     }
     return resp;
   };
@@ -172,6 +216,28 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
     }
   }, [slug, lessonIndex, course]);
 
+  useEffect(() => {
+    const idsLessonsCourses = [];
+    const idsMatch = [];
+    if (infoSubsCourse && infoSubsCourse.lecciones && course && course.lecciones) {
+      course.lecciones.forEach((lessonCourse) => idsLessonsCourses.push(lessonCourse._id));
+      idsLessonsCourses.forEach((elemento) => {
+        infoSubsCourse.lecciones.forEach((lessonsSubs) => {
+          if (elemento === lessonsSubs) {
+            idsMatch.push(lessonsSubs);
+          }
+        });
+      });
+      if (idsLessonsCourses.length === idsMatch.length) {
+        setCertf('q');
+        setCanValue(true);
+      } else {
+        setCertf('W');
+        setCanValue(false);
+      }
+    }
+  }, [infoSubsCourse]);
+
   return (
     <div className={styles.container}>
       {course && course.unidades && (
@@ -198,6 +264,10 @@ const CourseOverview = ({ courseInfo, subsInfo }) => {
           units={course.unidades}
           lessons={course.lecciones}
           lessonsRead={infoSubsCourse}
+          onLike={handleRateCourse}
+          canValue={canValue}
+          rateTotal={rateTotal}
+          isLiked={isLiked}
         />
       )}
       {tab === 'comments' && <ListComment courseId={courseId} listenerComentAdded={listenerComentAdded} />}
