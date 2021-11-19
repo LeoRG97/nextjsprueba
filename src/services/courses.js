@@ -208,3 +208,25 @@ export const deleteCourse = async (id) => {
     return error;
   }
 };
+
+export const rateCourse = async (courseId, userId) => {
+  try {
+    const res = await axios().post(`cursos/likes/${courseId}`, { usuarioId: userId });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const checkIfLikedThisCourse = async (idCourse, token) => {
+  try {
+    const res = await axios().get(`cursos/likes/${idCourse}`, {
+      headers: {
+        Authorization: token,
+      },
+    });
+    return res;
+  } catch (err) {
+    return err;
+  }
+};
