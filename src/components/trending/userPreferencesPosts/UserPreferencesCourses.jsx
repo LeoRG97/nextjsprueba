@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { useSession } from 'next-auth/client';
 import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
 import { fetchPaginatedDataWithAuthTokenCourses } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
-import { CoursesListComponent, LoadingIndicator } from '@/components';
+import { CoursesListComponent, LoadingIndicator, TrendingFilterComponent } from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
+import { getProfile } from '@/services/profile';
 
 const UserPreferencesCourses = ({ initialData }) => {
+  const [session] = useSession();
   const router = useRouter();
   const [courses, setCourses] = useState(initialData);
   const [pageNum, setPageNum] = useState(1);
+  const [preferencesUser, setPreferencesUser] = useState([]);
 
   const { data, mutate } = useSWR(
     [ApiRoutes.CursosUserPreference, router.query, pageNum],
@@ -57,10 +61,25 @@ const UserPreferencesCourses = ({ initialData }) => {
     }, undefined, { scroll: false, shallow: true });
   };
 
+  useEffect(async () => {
+    if (session && session.user) {
+      const user = await getProfile(session.user.id);
+      if (user.preferences) {
+        if ((user.preferences.length !== preferencesUser.length)) {
+          setPreferencesUser(user.preferences);
+        }
+      }
+    }
+  }, [preferencesUser, session]);
+
   const { query } = router;
 
   return (
-    <>
+    <div>
+      {
+        router.query.user && preferencesUser
+        && <TrendingFilterComponent preferences={preferencesUser} />
+      }
       <div className="selects-container">
         <div className="select-recent">
           <ArticleListSelectComponent
@@ -115,7 +134,7 @@ const UserPreferencesCourses = ({ initialData }) => {
           </button>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,17 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+import { useSession } from 'next-auth/client';
 import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
 import ArticlesListComponent from '@/components/articlesList/articlesListComponent/articlesList';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchPaginatedDataWithAuthToken } from '@/services/swr';
+import { getProfile } from '@/services/profile';
 import { ApiRoutes } from '@/global/constants';
-import { LoadingIndicator } from '@/components';
+import { LoadingIndicator, TrendingFilterComponent } from '@/components';
 
 const UserPreferencesPosts = ({ initialData }) => {
+  const [session] = useSession();
   const router = useRouter();
   const [articles, setArticles] = useState(initialData);
   const [pageNum, setPageNum] = useState(1);
+  const [preferencesUser, setPreferencesUser] = useState([]);
 
   const { data, mutate } = useSWR(
     [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
@@ -58,10 +62,25 @@ const UserPreferencesPosts = ({ initialData }) => {
     }, undefined, { scroll: false, shallow: true });
   };
 
+  useEffect(async () => {
+    if (session && session.user) {
+      const user = await getProfile(session.user.id);
+      if (user.preferences) {
+        if ((user.preferences.length !== preferencesUser.length)) {
+          setPreferencesUser(user.preferences);
+        }
+      }
+    }
+  }, [preferencesUser, session]);
+
   const { query } = router;
 
   return (
     <>
+      {
+        router.query.user && preferencesUser && preferencesUser.length > 0
+        && <TrendingFilterComponent preferences={preferencesUser} />
+      }
       <div className="selects-container">
         <div className="select-recent">
           <ArticleListSelectComponent
@@ -71,7 +90,7 @@ const UserPreferencesPosts = ({ initialData }) => {
             selectN="1"
             items={[
               { label: 'Más recientes', value: 'desc' },
-              { label: 'Más antiguos', value: 'asc' },
+              { label: 'Más antiguas', value: 'asc' },
             ]}
           />
         </div>
