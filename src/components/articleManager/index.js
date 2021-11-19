@@ -603,15 +603,6 @@ const EditorComponent = ({
               </button>
             </TooltipContainer>
 
-            <TooltipContainer tooltipText="Guardar borrador" placement="left">
-              <button
-                className={`icon-button icon-button--success ${styles.optionsItem}`}
-                onClick={() => handlePublish('borrador')}
-              >
-                I
-              </button>
-            </TooltipContainer>
-
             <TooltipContainer tooltipText="Opciones de visualización" placement="left">
               <button
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}
