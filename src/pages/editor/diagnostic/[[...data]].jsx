@@ -10,23 +10,22 @@ import { fetchToolById, fetchToolContent } from '@/services/tools';
 import withAuth from '@/helpers/withAuth';
 import { Roles } from '@/global/constants';
 
-const ToolEditor = () => {
+const DiagnosticMainEditor = () => {
   const router = useRouter();
   const { data } = router.query;
+  const [toolId] = data || '';
   const [tool, setTool] = useState({});
   const [toolContent, setToolContent] = useState(null);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(data && data[0]);
+  const [loading, setLoading] = useState(toolId);
 
   const getTool = async () => {
     try {
-      if (data[0]) {
-        const res = await fetchToolById(data[0]);
-        const content = await fetchToolContent(res._id);
-        setTool(res);
-        setToolContent(content);
-        setLoading(false);
-      }
+      const res = await fetchToolById(toolId);
+      const content = await fetchToolContent(res._id);
+      setTool(res);
+      setToolContent(content);
+      setLoading(false);
     } catch (err) {
       setError('Herramienta no encontrada');
       setLoading(false);
@@ -34,7 +33,7 @@ const ToolEditor = () => {
   };
 
   useEffect(() => {
-    if (data && data[0]) {
+    if (toolId) {
       getTool();
     }
   }, [data]);
@@ -66,4 +65,4 @@ const ToolEditor = () => {
   );
 };
 
-export default withAuth(ToolEditor, [Roles.Admin, Roles.Reviewer]);
+export default withAuth(DiagnosticMainEditor, [Roles.Admin, Roles.Reviewer]);

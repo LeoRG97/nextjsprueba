@@ -19,6 +19,11 @@
   overflow: hidden;
 }
 
+.diagnosticContent {
+  padding-left: 150px;
+  padding-right: 150px;
+}
+
 .editorContentPreview {
   background-color: var(--blackEditor);
   position: relative;

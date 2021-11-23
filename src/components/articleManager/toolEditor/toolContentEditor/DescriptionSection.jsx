@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { ToolContext } from '@/helpers/contexts/toolContext';
-import styles from '../editor.module.css';
-import EditorOptionRender from '../editorComponents/renderOptions/renderContainer';
-import ToolsComponent from '../editorComponents/toolsComponent/tools';
+import styles from '../../editor.module.css';
+import EditorOptionRender from '../../editorComponents/renderOptions/renderContainer';
+import ToolsComponent from '../../editorComponents/toolsComponent/tools';
 
 const DescriptionSection = () => {
   const {

@@ -234,7 +234,7 @@ a {
 }
 
 .text--theme-secondary {
-  color: var(--text-color-secondary) !important;
+  color: var(--text-color-secondary);
 }
 
 .text--theme-error {

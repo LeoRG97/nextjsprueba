@@ -54,7 +54,6 @@ export { default as Legal } from './policies/legal';
 export { default as DataPoliciesModal } from './modalsIndicators/DataPolicies';
 export { default as TooltipContainer } from './articleManager/editorComponents/tooltipContainer/TooltipContainer';
 export { default as FileInput } from './formComponents/fileInput/FileInput';
-export { default as ToolPreview } from './articleManager/toolEditor/toolPreview';
 export { default as EditorPreviewComponent } from './articleManager/articlePreview';
 export { default as ProfileCourses } from './profile/profileCourses/ProfileCourses';
 export { default as CourseSpecific } from './courses/courseSpecific';
