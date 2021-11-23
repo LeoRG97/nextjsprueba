@@ -1,20 +1,17 @@
 import React from 'react';
+import Toolbox from '@/components/editorComponents/toolbox/Toolbox';
 import QuestionItem from './questionItem/QuestionItem';
-import styles from './questionsList.module.css';
 
+// lista de preguntas con toolbox para añadir una nueva
 const QuestionsList = () => {
   return (
     <div>
       <QuestionItem />
-      <div className={styles.addBlock}>
-
-        <button
-          className={`subtitle ${styles.btnNew}`}
-          onClick={() => {}}
-        >
-          Insertar pregunta
-        </button>
-      </div>
+      <Toolbox
+        toolsType="question"
+        buttonText="Insertar pregunta"
+        handleAddNew={() => {}}
+      />
     </div>
   );
 };

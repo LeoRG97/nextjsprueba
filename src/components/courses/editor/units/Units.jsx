@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { CourseContext } from '@/helpers/contexts/CourseContext';
 import UnitContainer from './unitContainer/UnitContainer';
-import styles from './units.module.css';
+import Toolbox from '@/components/editorComponents/toolbox/Toolbox';
 
 // contenedor para la lista de unidades
 const Units = React.memo(({ units }) => {
@@ -33,14 +33,10 @@ const Units = React.memo(({ units }) => {
           )}
         </Droppable>
       </DragDropContext>
-      <div className={styles.addBlock}>
-        <button
-          className={`subtitle ${styles.btnNew}`}
-          onClick={handleAddUnit}
-        >
-          Nueva unidad
-        </button>
-      </div>
+      <Toolbox
+        toolsType="unit"
+        handleAddNew={handleAddUnit}
+      />
     </div>
   );
 });
