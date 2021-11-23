@@ -3,13 +3,14 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { CourseContext } from '@/helpers/contexts/CourseContext';
 import LessonItem from './lessonItem/LessonItem';
 import styles from './lessons.module.css';
+import Toolbox from '@/components/editorComponents/toolbox/Toolbox';
 
 // listado de lecciones de la unidad
 const Lessons = React.memo(({ lessons, unitId }) => {
   const { handleNewLessonModal, handleSortLessons } = useContext(CourseContext);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.paddingHorizontal}>
       <DragDropContext
         onDragEnd={(e) => handleSortLessons(e, unitId)}
       >
@@ -29,15 +30,10 @@ const Lessons = React.memo(({ lessons, unitId }) => {
           )}
         </Droppable>
       </DragDropContext>
-      <div className={styles.addBlock}>
-        <p className="subtitle m-0">Nueva lección</p>
-        <button
-          className="icon-button icon-button--primary"
-          onClick={() => handleNewLessonModal(unitId)}
-        >
-          Ñ
-        </button>
-      </div>
+      <Toolbox
+        toolsType="lesson"
+        handleAddNew={() => handleNewLessonModal(unitId)}
+      />
     </div>
   );
 });

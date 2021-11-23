@@ -1,22 +1,18 @@
 import React from 'react';
+import Toolbox from '@/components/editorComponents/toolbox/Toolbox';
 import AnswerItem from './answerItem/AnswerItem';
 import styles from './answersList.module.css';
 
+// lista de respuestas dentro de una pregunta, con el toolbox para añadir nuevas respuestas
 const AnswersList = () => {
   return (
-    <div className={styles.container}>
+    <div className={styles.paddingHorizontal}>
       <AnswerItem />
-      <AnswerItem />
-      <AnswerItem />
-      <div className={styles.addBlock}>
-        <p className="subtitle m-0">Insertar respuesta</p>
-        <button
-          className="icon-button icon-button--primary"
-          onClick={() => {}}
-        >
-          Ñ
-        </button>
-      </div>
+      <Toolbox
+        toolsType="answer"
+        buttonText="Insertar respuesta"
+        handleAddNew={() => {}}
+      />
     </div>
   );
 };

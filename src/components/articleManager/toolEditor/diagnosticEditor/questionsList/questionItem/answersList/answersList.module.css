@@ -1,29 +1,4 @@
-.container {
+.paddingHorizontal {
   padding-left: 8rem;
   padding-right: 8rem;
-}
-
-.addBlock {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 6rem;
-  border: 1px dashed var(--colorPrimary);
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  padding: 0 2rem;
-}
-
-.addIconOutline {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  background-color: var(--colorPrimaryTransp);
-}
-
-.addIconOutline i {
-  font-style: normal;
 }

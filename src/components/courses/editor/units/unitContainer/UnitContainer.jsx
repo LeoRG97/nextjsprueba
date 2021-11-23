@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 import { CourseContext } from '@/helpers/contexts/CourseContext';
 import Lessons from './lessons/Lessons';
-import styles from './unitContainer.module.css';
+import EditorListHeader from '@/components/editorComponents/editorListHeader/EditorListHeader';
 
 // contenedor para una unidad específica
 const UnitContainer = React.memo(({ data, index }) => {
@@ -19,34 +19,14 @@ const UnitContainer = React.memo(({ data, index }) => {
           {...provided.draggableProps}
           ref={provided.innerRef}
         >
-          <div className={styles.unitHeader}>
-            <div className={styles.move}>
-              <div className={styles.btn} {...provided.dragHandleProps}>4</div>
-            </div>
-            <div className={`d-flex align-items-center ${styles.titleContainer}`}>
-              <div className={styles.unitIndex}>
-                <span className="text-regular text--theme-light">U{data.numero}</span>
-              </div>
-              <input
-                type="text"
-                className={`input ${styles.titleInput}`}
-                placeholder="Ingresa el título de la unidad"
-                value={data.titulo}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.edit}>
-              <button className={styles.btn}>
-                0
-              </button>
-              <div className={styles.editDropdown}>
-                <div className="drop-item" onClick={() => handleDeltlessonModal(data._id)}>
-                  <span className="drop-item__icon">L</span>
-                  <span className="drop-item__content">Eliminar</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <EditorListHeader
+            number={data.numero}
+            title={data.titulo}
+            titlePlaceholder="Ingresa el título de la unidad"
+            handleChangeTitle={handleChange}
+            onDelete={() => handleDeltlessonModal(data._id)}
+            dragHandleProps={provided.dragHandleProps}
+          />
           <Lessons lessons={data.lessons} unitId={data._id} />
         </div>
       )}

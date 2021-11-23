@@ -1,0 +1,23 @@
+.btn {
+  align-items: center;
+  background-color: var(--colorPrimary);
+  border: none;
+  color: var(--colorLight);
+  display: flex;
+  font-family: Icons;
+  justify-content: center;
+  width: 46px;
+  height: 2.5rem;
+}
+
+.editDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0.7rem;
+  visibility: hidden;
+  z-index: 5;
+}
+
+.hoverContainer:hover .editDropdown {
+  visibility: visible;
+}
