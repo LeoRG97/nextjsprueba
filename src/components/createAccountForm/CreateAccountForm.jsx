@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/client';
 import styles from './createAccountForm.module.css';
@@ -76,17 +75,6 @@ const CreateAccountForm = ({ preferences }) => {
 
   const [tel, setTel] = useState('');
   const [errorTel, setErrorTel] = useState(
-    {
-      text: '',
-      status: false,
-    },
-  );
-
-  const [yearValue, setYearValue] = useState('');
-  const [mounthValue, setMounthValue] = useState('');
-  const [dayValue, setDayValue] = useState('');
-  const [birthDay, setBirthDay] = useState('');
-  const [errorBirthDay, setErrorBirthDay] = useState(
     {
       text: '',
       status: false,
@@ -353,78 +341,6 @@ const CreateAccountForm = ({ preferences }) => {
         setErrorGeneral(false);
       }
     }
-    if (type === 'yearValue') {
-      if (!value || value === '' || value === 'Año') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setYearValue(value);
-        setErrorGeneral(true);
-      } else if (mounthValue !== '' && dayValue !== '' && mounthValue !== 'Mes' && dayValue !== 'Día') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setYearValue(value);
-        setErrorGeneral(false);
-      } else {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setYearValue(value);
-        setErrorGeneral(true);
-      }
-    }
-    if (type === 'mounthValue') {
-      if (!value || value === '' || value === 'Mes') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setMounthValue(value);
-        setErrorGeneral(true);
-      } else if (yearValue !== '' && dayValue !== '' && yearValue !== 'Año' && dayValue !== 'Día') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setMounthValue(value);
-        setErrorGeneral(false);
-      } else {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setMounthValue(value);
-        setErrorGeneral(true);
-      }
-    }
-    if (type === 'dayValue') {
-      if (!value || value === '' || value === 'Día') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setDayValue(value);
-        setErrorGeneral(true);
-      } else if (mounthValue !== '' && yearValue !== '' && mounthValue !== 'Mes' && yearValue !== 'Año') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setDayValue(value);
-        setErrorGeneral(false);
-      } else {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setDayValue(value);
-        setErrorGeneral(true);
-      }
-    }
   };
 
   const handleCheck = () => {
@@ -472,10 +388,6 @@ const CreateAccountForm = ({ preferences }) => {
       status: false,
       text: '',
     });
-    setErrorBirthDay({
-      status: false,
-      text: '',
-    });
     setError('');
     setErrorStatus(false);
     setErrorGeneral(false);
@@ -492,10 +404,7 @@ const CreateAccountForm = ({ preferences }) => {
       || tel === ''
       || city === ''
       || country === ''
-      || state === ''
-      || yearValue === '' || yearValue === 'Año'
-      || mounthValue === '' || mounthValue === 'Mes'
-      || dayValue === '' || dayValue === 'Día') {
+      || state === '') {
       validate(firstName, 'name');
       validate(lastName, 'lastName');
       validate(email, 'email');
@@ -506,31 +415,10 @@ const CreateAccountForm = ({ preferences }) => {
       validate(city, 'city');
       validate(country, 'country');
       validate(state, 'state');
-      validate(yearValue, 'yearValue');
-      validate(mounthValue, 'mounthValue');
-      validate(dayValue, 'dayValue');
-    } else {
-      const yyyy = yearValue;
-      let mm = 0;
-      let dd = 0;
-      if (yearValue !== '' && mounthValue !== '' && dayValue !== '') {
-        if (mounthValue < 9) {
-          mm = (`0${(Number(mounthValue) + 1)}`);
-        } else {
-          mm = (Number(mounthValue) + 1);
-        }
-        if (dayValue < 10) {
-          dd = (`0${(Number(dayValue))}`);
-        } else {
-          dd = dayValue;
-        }
-        setBirthDay(`${yyyy}-${mm}-${dd}`);
-      }
-      if (!errorGeneral) {
-        setError('');
-        setErrorStatus(false);
-        setNextStep(true);
-      }
+    } else if (!errorGeneral) {
+      setError('');
+      setErrorStatus(false);
+      setNextStep(true);
     }
   };
 
@@ -600,7 +488,6 @@ const CreateAccountForm = ({ preferences }) => {
       country,
       state,
       newsLetter,
-      birthDay,
       preferences: preferencesState,
       role: dataInvite ? dataInvite.role : 'user',
     };
@@ -746,66 +633,6 @@ const CreateAccountForm = ({ preferences }) => {
                   />
                   {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
                 </label>
-                <div className="row mb-2">
-                  <div className="d-block subtitle">Fecha de nacimiento* </div>
-                  <div className="col-6 col-sm-4 flechita">
-                    <div className="select-arrow">
-                      <DayPicker
-                        defaultValue="Día"
-                        year={yearValue}
-                        month={mounthValue}
-                        endYearGiven
-                        required
-                        value={dayValue}
-                        onChange={(day) => {
-                          validate(day, 'dayValue');
-                        }}
-                        id="day"
-                        name="day"
-                        classes="classes select"
-                        optionClasses="option classes"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-6 col-sm-4">
-                    <div className="select-arrow">
-                      <MonthPicker
-                        defaultValue="Mes"
-                        numeric // to get months as numbers
-                        endYearGiven // mandatory if end={} is given in YearPicker
-                        year={yearValue} // mandatory
-                        required // default is false
-                        value={mounthValue} // mandatory
-                        onChange={(month) => { // mandatory
-                          validate(month, 'mounthValue');
-                        }}
-                        id="month"
-                        name="month"
-                        classes="classes select"
-                        optionClasses="option classes"
-                      />
-                    </div>
-                  </div>
-                  <div className="col-12 col-sm-4">
-                    <div className="select-arrow">
-                      <YearPicker
-                        defaultValue="Año"
-                        start={1921} // default is 1900 (end default is current year)
-                        reverse // default is ASCENDING
-                        required // default is false
-                        value={yearValue} // mandatory
-                        onChange={(year) => { // mandatory
-                          validate(year, 'yearValue');
-                        }}
-                        id="year"
-                        name="year"
-                        classes="classes select"
-                        optionClasses="option classes"
-                      />
-                    </div>
-                  </div>
-                  {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
-                </div>
                 <div className="row">
                   <div className="col-12 col-sm-6">
                     <label className="d-block subtitle mb-2" htmlFor="country">País o región*
