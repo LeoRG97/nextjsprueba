@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
-import { YearPicker, MonthPicker, DayPicker } from 'react-dropdown-date';
 import { useDispatch } from 'react-redux';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { updateUserProfile } from '@/services/user';
@@ -14,7 +13,6 @@ import { update as updateProfile } from '@/reducers/profile';
 
 const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
   const dispatch = useDispatch();
-  const dateBirthday = new Date(data.birthDay.replace(/-/g, '/').replace(/T.+/, ''));
   const [company, setCompany] = useState(companydta || '');
   const [errorCompany, setErrorCompany] = useState(
     {
@@ -33,17 +31,6 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
 
   const [tel, setTel] = useState(data ? data.tel : '');
   const [errorTel, setErrorTel] = useState(
-    {
-      text: '',
-      status: false,
-    },
-  );
-
-  const [yearValue, setYearValue] = useState(dateBirthday.getUTCFullYear());
-  const [mounthValue, setMounthValue] = useState(dateBirthday.getUTCMonth());
-  const [dayValue, setDayValue] = useState(dateBirthday.getUTCDate());
-  const [birthDay, setBirthDay] = useState(data.birthDay);
-  const [errorBirthDay, setErrorBirthDay] = useState(
     {
       text: '',
       status: false,
@@ -202,54 +189,6 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
         setErrorGeneral(false);
       }
     }
-    if (type === 'yearValue') {
-      if (!value || value === '' || value === 'Año') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setErrorGeneral(true);
-      } else if (mounthValue !== '' && dayValue !== '' && mounthValue !== 'Mes' && dayValue !== 'Día') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setYearValue(value);
-        setErrorGeneral(false);
-      }
-    }
-    if (type === 'mounthValue') {
-      if (!value || value === '' || value === 'Mes') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setErrorGeneral(true);
-      } else if (yearValue !== '' && dayValue !== '' && yearValue !== 'Año' && dayValue !== 'Día') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setMounthValue(value);
-        setErrorGeneral(false);
-      }
-    }
-    if (type === 'dayValue') {
-      if (!value || value === '' || value === 'Día') {
-        setErrorBirthDay({
-          status: true,
-          text: 'Selecciona una fecha válida.',
-        });
-        setErrorGeneral(true);
-      } else if (mounthValue !== '' && yearValue !== '' && mounthValue !== 'Mes' && yearValue !== 'Año') {
-        setErrorBirthDay({
-          status: false,
-          text: '',
-        });
-        setDayValue(value);
-        setErrorGeneral(false);
-      }
-    }
   };
 
   const withoutError = () => {
@@ -281,15 +220,11 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       status: false,
       text: '',
     });
-    setErrorBirthDay({
-      status: false,
-      text: '',
-    });
     setError('');
     setErrorStatus(false);
   };
 
-  const handleSubmit = async (e, bornDay) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const model = {
       company,
@@ -298,7 +233,6 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       state,
       city,
       tel,
-      birthDay: bornDay || birthDay,
       preferences: (preferencesState.map((p) => p._id)),
     };
 
@@ -335,41 +269,17 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       || tel === ''
       || city === ''
       || country === ''
-      || state === ''
-      || yearValue === '' || yearValue === 'Año'
-      || mounthValue === '' || mounthValue === 'Mes'
-      || dayValue === '' || dayValue === 'Día') {
+      || state === '') {
       validate(company, 'company');
       validate(position, 'position');
       validate(tel, 'tel');
       validate(city, 'city');
       validate(country, 'country');
       validate(state, 'state');
-      validate(yearValue, 'yearValue');
-      validate(mounthValue, 'mounthValue');
-      validate(dayValue, 'dayValue');
-    } else {
-      let mm = 0;
-      let dd = 0;
-      if (yearValue !== '' && mounthValue !== '' && dayValue !== '') {
-        if (mounthValue < 9) {
-          mm = (`0${(Number(mounthValue) + 1)}`);
-        } else {
-          mm = (Number(mounthValue) + 1);
-        }
-        if (dayValue < 10) {
-          dd = (`0${(Number(dayValue))}`);
-        } else {
-          dd = dayValue;
-        }
-        setBirthDay(`${yearValue}-${mm}-${dd}`);
-      }
-      const bornDay = `${yearValue}-${mm}-${dd}`;
-      if (!errorGeneral) {
-        setError('');
-        setErrorStatus(false);
-        handleSubmit(e, bornDay);
-      }
+    } else if (!errorGeneral) {
+      setError('');
+      setErrorStatus(false);
+      handleSubmit(e);
     }
   };
 
@@ -479,66 +389,6 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           />
           {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
         </label>
-        <div className="row mb-2">
-          <div className="d-block subtitle">Fecha de nacimiento* </div>
-          <div className="col-4 flechita">
-            <div className="select-arrow">
-              <DayPicker
-                defaultValue="Día"
-                year={yearValue}
-                month={mounthValue}
-                endYearGiven
-                required
-                value={dayValue}
-                onChange={(day) => {
-                  setDayValue(day);
-                }}
-                id="day"
-                name="day"
-                classes="classes select"
-                optionClasses="option classes"
-              />
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="select-arrow">
-              <MonthPicker
-                defaultValue="Mes"
-                numeric // to get months as numbers
-                endYearGiven // mandatory if end={} is given in YearPicker
-                year={yearValue} // mandatory
-                required // default is false
-                value={mounthValue} // mandatory
-                onChange={(month) => { // mandatory
-                  setMounthValue(month);
-                }}
-                id="month"
-                name="month"
-                classes="classes select"
-                optionClasses="option classes"
-              />
-            </div>
-          </div>
-          <div className="col-4">
-            <div className="select-arrow">
-              <YearPicker
-                defaultValue="Año"
-                start={1921} // default is 1900
-                reverse // default is ASCENDING
-                required // default is false
-                value={yearValue} // mandatory
-                onChange={(year) => { // mandatory
-                  setYearValue(year);
-                }}
-                id="year"
-                name="year"
-                classes="classes select"
-                optionClasses="option classes"
-              />
-            </div>
-          </div>
-          {errorBirthDay.status && <span className={`text-sm ${styles.error}`}>{errorBirthDay.text}</span>}
-        </div>
         <label className="d-block subtitle">Mis preferencias*</label>
         <CategorySelector
           data={preferences}
