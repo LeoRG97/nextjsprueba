@@ -33,14 +33,9 @@ export const saveTool = async (article, details) => {
     }
 
     const toolData = {
-      categoria: details.categoria,
-      categoria_id: details.categoria_id,
-      nombre: details.nombre,
-      creditos: details.creditos,
       url_imagen: coverUrl,
-      objetivo: details.objetivo,
       url_contenido: fileRes,
-      premium: details.premium,
+      ...details,
     };
 
     // guardar la información de la herramienta en la API
@@ -71,14 +66,9 @@ export const updateTool = async (article, details, initialData) => {
     }
 
     const toolData = {
-      categoria: details.categoria,
-      categoria_id: details.categoria_id,
-      nombre: details.nombre,
-      creditos: details.creditos || '',
       url_imagen: coverUrl,
-      objetivo: details.objetivo,
       url_contenido: fileRes,
-      premium: details.premium,
+      ...details,
     };
 
     // guardar la información de la herramienta en la API

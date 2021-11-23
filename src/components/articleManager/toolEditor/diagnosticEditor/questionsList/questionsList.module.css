@@ -1,0 +1,20 @@
+.addBlock {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 6rem;
+  border: 1px dashed var(--colorPrimary);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.btnNew {
+  background-color: var(--contentTransparentRGB);
+  border: none;
+  padding: 0.5rem;
+}
+
+.btnNew:active {
+  color: var(--colorPrimary);
+}
