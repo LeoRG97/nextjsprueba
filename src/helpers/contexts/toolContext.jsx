@@ -74,6 +74,28 @@ const ToolContextProvider = ({ children }) => {
     });
   };
 
+  const handleDeleteQuestion = (questionId) => {
+    // elimina una pregunta del editor de diagnóstico
+    setDiagnosticQuestions((questions) => questions.filter(
+      (question) => question._id !== questionId,
+    ));
+  };
+
+  const handleDeleteAnswer = (questionId, answerId) => {
+    // elimina una respuesta asociada a una pregunta
+    setDiagnosticQuestions((questions) => {
+      return questions.map((question) => {
+        if (question._id === questionId) {
+          return {
+            ...question,
+            respuestas: question.respuestas.filter((resp) => resp._id !== answerId),
+          };
+        }
+        return question;
+      });
+    });
+  };
+
   return (
     <ToolContext.Provider value={{
       formData,
@@ -97,6 +119,8 @@ const ToolContextProvider = ({ children }) => {
       handleNewAnswerModal,
       currentQuestion,
       handleAddNewAnswer,
+      handleDeleteQuestion,
+      handleDeleteAnswer,
     }}
     >
       {children}

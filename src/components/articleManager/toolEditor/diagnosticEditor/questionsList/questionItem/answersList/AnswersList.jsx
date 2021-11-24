@@ -19,6 +19,7 @@ const AnswersList = ({ answers, questionId }) => {
           key={answer._id}
           item={answer}
           index={i}
+          questionId={questionId}
         />
       ))}
       <Toolbox
