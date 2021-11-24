@@ -2,11 +2,11 @@ import React from 'react';
 import ListItem from '@/components/editorComponents/editorListItem/EditorListItem';
 
 // ítem de una respuesta en específico
-const AnswerItem = () => {
+const AnswerItem = ({ item }) => {
   return (
     <>
       <ListItem
-        itemText="Respuesta"
+        itemText={item.valor}
         onUpdate={() => {}} // actualizar una respuesta
         onDelete={() => {}} // eliminar una respuesta
       />

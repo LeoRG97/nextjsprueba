@@ -1,0 +1,9 @@
+.modalContainer {
+  background-color: var(--colorItemBg);
+  padding: 2.5rem;
+  border-radius: 10px;
+}
+
+.description {
+  min-height: 8rem;
+}

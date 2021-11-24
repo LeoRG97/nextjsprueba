@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
+import { generateMongoID } from '../mongoIDGenerator';
 
 export const ToolContext = createContext();
 
@@ -22,6 +23,17 @@ const ToolContextProvider = ({ children }) => {
   const [justification, setJustification] = useState({ html: [] });
   const [usage, setUsage] = useState({ html: [] });
 
+  const [diagnosticQuestions, setDiagnosticQuestions] = useState([]);
+
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [showQuestionModal, setShowQuestionModal] = useState(false);
+  const [showAnswerModal, setShowAnswerModal] = useState(false);
+
+  const handleNewAnswerModal = (show, questionId) => {
+    setCurrentQuestion(questionId || null);
+    setShowAnswerModal(show);
+  };
+
   useEffect(() => {
     const { html: definitionArray } = definition;
     const { html: justificationArray } = justification;
@@ -32,6 +44,34 @@ const ToolContextProvider = ({ children }) => {
       setContentValidated(false);
     }
   }, [definition, justification, usage]);
+
+  const handleAddNewQuestion = (questionData) => {
+    setDiagnosticQuestions([
+      ...diagnosticQuestions,
+      {
+        _id: generateMongoID(),
+        respuestas: [],
+        ...questionData,
+      },
+    ]);
+  };
+
+  const handleAddNewAnswer = (answerData) => {
+    setDiagnosticQuestions((questions) => {
+      return questions.map((question) => {
+        if (question._id === currentQuestion) {
+          return {
+            ...question,
+            respuestas: [
+              ...question.respuestas,
+              { _id: generateMongoID(), ...answerData },
+            ],
+          };
+        }
+        return question;
+      });
+    });
+  };
 
   return (
     <ToolContext.Provider value={{
@@ -46,6 +86,15 @@ const ToolContextProvider = ({ children }) => {
       justification,
       setJustification,
       contentValidated,
+      diagnosticQuestions,
+      handleAddNewQuestion,
+      showQuestionModal,
+      setShowQuestionModal,
+      showAnswerModal,
+      setShowAnswerModal,
+      handleNewAnswerModal,
+      currentQuestion,
+      handleAddNewAnswer,
     }}
     >
       {children}
