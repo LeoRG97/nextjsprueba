@@ -13,6 +13,7 @@ const ToolContextProvider = ({ children }) => {
     objetivo: '',
     premium: false,
     url_imagen: '',
+    emailDestinatario: '',
   });
   const [errors, setErrors] = useState({
     isValid: true,
@@ -87,6 +88,7 @@ const ToolContextProvider = ({ children }) => {
       setJustification,
       contentValidated,
       diagnosticQuestions,
+      setDiagnosticQuestions,
       handleAddNewQuestion,
       showQuestionModal,
       setShowQuestionModal,

@@ -13,10 +13,17 @@ import JustificationSection from './toolContentEditor/JustificationSection';
 import ToolDetailsModal from '../modals/toolDetailsModal/ToolDetailsModal';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
-import { saveTool, updateTool, updateToolFile } from '@/services/tools';
+import { saveDiagnosticTool, saveTool, updateTool, updateToolFile } from '@/services/tools';
 import ModalZip from './ModalZip';
 
 import DiagnosticEditor from './diagnosticEditor';
+import EmailModal from './diagnosticEditor/modals/emailModal/EmailModal';
+
+/*
+  Componente raíz del editor de herramientas.
+  Contiene la vista principal del editor, la vista previa de la herramienta y
+  el editor de diagnósticos.
+*/
 
 const ToolEditorComponent = ({
   initialData,
@@ -34,6 +41,7 @@ const ToolEditorComponent = ({
     justification,
     setJustification,
     contentValidated,
+    diagnosticQuestions,
   } = useContext(ToolContext);
   const router = useRouter();
   const [showPublish, setShowPublish] = useState(false);
@@ -50,6 +58,8 @@ const ToolEditorComponent = ({
   });
   const [attachmentZip, setAttachmentZip] = useState(false);
   const [preview, setToolPreview] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
+  const [modalSaveMode, setModalSaveMode] = useState('');
 
   const setPreview = () => {
     if (preview === false) {
@@ -60,7 +70,7 @@ const ToolEditorComponent = ({
   };
 
   useEffect(() => {
-    if (initialData && initialData._id) {
+    if (!formData.herramienta_id && initialData && initialData._id) {
       setFormData({
         herramienta_id: initialData._id,
         nombre: initialData.nombre,
@@ -72,6 +82,7 @@ const ToolEditorComponent = ({
         url_imagen: initialData.url_imagen,
         url_contenido: initialData.url_contenido,
         tipo: initialData.tipo,
+        emailDestinatario: initialData.emailDestinatario,
       });
     }
   }, [initialData]);
@@ -174,9 +185,13 @@ const ToolEditorComponent = ({
   };
 
   const handleDiagnosticButton = () => {
+    const [toolId] = router.query.data || '';
     if (initialData._id) {
       // navegar al editor de preguntas y respuestas
-      router.push(`${router.asPath}?edit=questions`, undefined, { shallow: true });
+      router.push({
+        pathname: `/editor/diagnostic/${toolId}`,
+        query: { edit: 'questions' },
+      }, undefined, { shallow: true });
     } else {
       setErrorData({
         show: true,
@@ -189,7 +204,51 @@ const ToolEditorComponent = ({
   const { edit } = router.query;
   const showQuestionsEditor = edit === 'questions'; // si es "true", cambia la vista al editor de preguntas
   const contentType = router.pathname.includes('diagnostic') ? 'diagnostic' : 'tool'; // para determinar si el contenido será una herramienta normal o un diagnóstico
-  // const contentType = router.query.type === 'diagnostic' ? 'diagnostic' : 'tool';
+
+  const handleSubmitQuestions = async (email) => {
+    setShowEmailModal(false);
+    setSubmitting(true);
+    const diagnosticData = {
+      emailDestinatario: email,
+      diagnostico: diagnosticQuestions,
+    };
+    const res = await saveDiagnosticTool(diagnosticData, initialData._id);
+    setSubmitting(false);
+    if (res.ok) {
+      setSuccessData({
+        show: true,
+        title: 'Diagnóstico añadido',
+        message: 'El diagnóstico ha sido añadido exitosamente',
+      });
+      router.back();
+    } else {
+      setErrorData({
+        show: true,
+        title: 'Ha ocurrido un error',
+        message: 'Vuelva a intentarlo más tarde',
+      });
+    }
+  };
+
+  const handleSaveDiagnosticButton = () => {
+    if (diagnosticQuestions.length < 4) {
+      setErrorData({
+        show: true,
+        title: 'Operación no permitida',
+        message: 'Debes agregar al menos 4 preguntas al diagnóstico',
+      });
+    } else if (!formData.emailDestinatario) {
+      setShowEmailModal(true);
+      setModalSaveMode('submit');
+    } else {
+      handleSubmitQuestions(formData.emailDestinatario);
+    }
+  };
+
+  const handleOpenEmailModal = () => {
+    setShowEmailModal(true);
+    setModalSaveMode('local');
+  };
 
   const handleReturnButton = () => {
     if (preview) {
@@ -210,7 +269,7 @@ const ToolEditorComponent = ({
         </button>
       </TooltipContainer>
       <div className={styles.editor}>
-        {showQuestionsEditor && <DiagnosticEditor />}
+        {showQuestionsEditor && <DiagnosticEditor initialData={initialData.diagnostico} />}
         {preview && <ToolPreview preview={preview} setPreview={() => setPreview()} />}
 
         {!preview && !showQuestionsEditor && (
@@ -284,12 +343,21 @@ const ToolEditorComponent = ({
 
           {showQuestionsEditor && (
             <>
-              <TooltipContainer tooltipText="Guardar" placement="left">
+              <TooltipContainer tooltipText="Guardar diagnóstico" placement="left">
                 <button
-                  onClick={() => {}}
+                  onClick={handleSaveDiagnosticButton}
                   className={`icon-button icon-button--primary ${styles.optionsItem}`}
                 >
                   s
+                </button>
+              </TooltipContainer>
+
+              <TooltipContainer tooltipText="Actualizar destinatario" placement="left">
+                <button
+                  onClick={handleOpenEmailModal}
+                  className={`icon-button icon-button--secondary ${styles.optionsItem}`}
+                >
+                  J
                 </button>
               </TooltipContainer>
             </>
@@ -324,6 +392,12 @@ const ToolEditorComponent = ({
           show={attachmentZip}
           onClose={() => setAttachmentZip(false)}
           onSubmit={handleSubmitResources}
+        />
+        <EmailModal
+          show={showEmailModal}
+          onClose={() => setShowEmailModal(false)}
+          onSubmit={handleSubmitQuestions}
+          saveMode={modalSaveMode}
         />
       </div>
 
