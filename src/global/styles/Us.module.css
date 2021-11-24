@@ -188,8 +188,19 @@
   max-width: 475px;
 }
 
+.container_carousel {
+  max-width: 20rem;
+  min-height: 13rem;
+  max-height: 13rem;
+  display: flex;
+  background-color: white;
+  margin-left: 1rem;
+  padding-left: 0 !important;
+  align-items: center;
+}
+
 .image_carousel {
-  max-width: 300px;
+  max-width: 100%;
 }
 
 .content_carousel {
