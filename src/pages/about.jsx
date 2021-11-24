@@ -2,11 +2,17 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useEmblaCarousel } from 'embla-carousel/react';
 import styles from '@/global/styles/Us.module.css';
 import { Footer, Layout } from '@/components';
 import WorldComponent from '../components/world/World';
 
 export default function Home() {
+  const [viewportRef] = useEmblaCarousel({
+    dragFree: true,
+    containScroll: 'trimSnaps',
+  });
+
   return (
     <Layout>
       <Head>
@@ -131,6 +137,32 @@ export default function Home() {
                 { /* eslint-enable max-len */}
               </div>
             </div>
+          </Container>
+          <Container fluid>
+            <Container>
+              <Col xl="12" lg="12" sm="12">
+                <Row>
+                  <div className={styles.content_carousel}>
+                    <small className="text-sm">Aliados</small>
+                    <h1 className="title-xl text--theme-light ">Más relaciones, <br />mejores resultados</h1>
+                  </div>
+                </Row>
+                <Row>
+                  <div className="embla">
+                    <div className="embla__viewport" ref={viewportRef}>
+                      <div className={`${styles.container_carousel} embla__container`}>
+                        <div className={`${styles.container_carousel} embla__slide`}>
+                          <img src="/images/aliados/amiti-color.jpg" alt="" className={styles.image_carousel} />
+                        </div>
+                        <div className={`${styles.container_carousel} embla__slide`}>
+                          <img src="/images/aliados/amvo-color.png" alt="" className={styles.image_carousel} />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Row>
+              </Col>
+            </Container>
           </Container>
         </Container>
       </main>
