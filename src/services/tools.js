@@ -33,9 +33,9 @@ export const saveTool = async (article, details) => {
     }
 
     const toolData = {
+      ...details,
       url_imagen: coverUrl,
       url_contenido: fileRes,
-      ...details,
     };
 
     // guardar la información de la herramienta en la API
@@ -66,9 +66,9 @@ export const updateTool = async (article, details, initialData) => {
     }
 
     const toolData = {
+      ...details,
       url_imagen: coverUrl,
       url_contenido: fileRes,
-      ...details,
     };
 
     // guardar la información de la herramienta en la API
@@ -77,6 +77,15 @@ export const updateTool = async (article, details, initialData) => {
     return dataRes;
   } catch (err) {
     throw Promise.reject(err);
+  }
+};
+
+export const saveDiagnosticTool = async (data, toolId) => {
+  try {
+    const res = await axios().put(`herramientas/${toolId}`, { ...data });
+    return res;
+  } catch (err) {
+    return err;
   }
 };
 

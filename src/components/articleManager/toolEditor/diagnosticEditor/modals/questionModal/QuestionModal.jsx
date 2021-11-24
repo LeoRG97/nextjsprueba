@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import { ToolContext } from '@/helpers/contexts/toolContext';
-import styles from './questionModal.module.css';
+import styles from '../diagnosticModals.module.css';
 import { validateQuestionModal } from '../diagnosticModalsValidation';
 
 const QuestionModal = ({ show, onClose }) => {
@@ -99,11 +99,9 @@ const QuestionModal = ({ show, onClose }) => {
             <button className="button button--theme-secondary" onClick={handleCloseModal} type="button">
               Descartar
             </button>
-            <div>
-              <button className="button button--theme-primary" type="submit">
-                Insertar
-              </button>
-            </div>
+            <button className="button button--theme-primary" type="submit">
+              Insertar
+            </button>
           </Modal.Footer>
         </form>
       </Modal>
