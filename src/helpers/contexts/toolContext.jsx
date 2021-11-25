@@ -96,6 +96,34 @@ const ToolContextProvider = ({ children }) => {
     });
   };
 
+  const handleSortQuestions = (event) => {
+    if (event.destination) {
+      const newQuestions = [...diagnosticQuestions];
+      const [movedItem] = newQuestions.splice(event.source.index, 1);
+      newQuestions.splice(event.destination.index, 0, movedItem);
+      setDiagnosticQuestions([...newQuestions]);
+    }
+  };
+
+  const handleSortAnswers = (event, questionId) => {
+    if (event.destination) {
+      setDiagnosticQuestions((questions) => {
+        return questions.map((question) => {
+          if (question._id === questionId) {
+            const newAnswers = [...question.respuestas];
+            const [movedItem] = newAnswers.splice(event.source.index, 1);
+            newAnswers.splice(event.destination.index, 0, movedItem);
+            return {
+              ...question,
+              respuestas: [...newAnswers],
+            };
+          }
+          return question;
+        });
+      });
+    }
+  };
+
   return (
     <ToolContext.Provider value={{
       formData,
@@ -121,6 +149,8 @@ const ToolContextProvider = ({ children }) => {
       handleAddNewAnswer,
       handleDeleteQuestion,
       handleDeleteAnswer,
+      handleSortQuestions,
+      handleSortAnswers,
     }}
     >
       {children}
