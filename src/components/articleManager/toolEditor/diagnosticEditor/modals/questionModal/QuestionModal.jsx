@@ -5,7 +5,7 @@ import styles from '../diagnosticModals.module.css';
 import { validateQuestionModal } from '../diagnosticModalsValidation';
 
 const QuestionModal = ({ show, onClose }) => {
-  const { handleAddNewQuestion } = useContext(ToolContext);
+  const { handleAddNewQuestion, questionEdit, handleUpdateQuestion } = useContext(ToolContext);
 
   const [formData, setFormData] = useState({
     pregunta: '',
@@ -34,13 +34,23 @@ const QuestionModal = ({ show, onClose }) => {
     }
   }, [formData]);
 
+  useEffect(() => {
+    if (questionEdit) {
+      setFormData(questionEdit);
+    }
+  }, [questionEdit]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formErrors = validateQuestionModal(formData);
     if (!formErrors.isValid) {
       setErrors(formErrors);
     } else {
-      handleAddNewQuestion(formData);
+      if (!questionEdit) {
+        handleAddNewQuestion(formData);
+      } else {
+        handleUpdateQuestion(questionEdit._id, formData);
+      }
       onClose();
       resetForm();
     }
@@ -65,7 +75,7 @@ const QuestionModal = ({ show, onClose }) => {
       >
         <form onSubmit={handleSubmit}>
           <Modal.Body>
-            <h2 className="title text-center">Nueva pregunta</h2>
+            <h2 className="title text-center">{questionEdit ? 'Actualizar pregunta' : 'Nueva pregunta'}</h2>
             <label htmlFor="title" className="d-block subtitle">
               Título
               <textarea
@@ -100,7 +110,7 @@ const QuestionModal = ({ show, onClose }) => {
               Descartar
             </button>
             <button className="button button--theme-primary" type="submit">
-              Insertar
+              {questionEdit ? 'Actualizar' : 'Insertar'}
             </button>
           </Modal.Footer>
         </form>

@@ -5,7 +5,7 @@ import { ToolContext } from '@/helpers/contexts/toolContext';
 
 // ítem de una respuesta en específico
 const AnswerItem = ({ item, questionId, index }) => {
-  const { handleDeleteAnswer } = useContext(ToolContext);
+  const { handleDeleteAnswer, handleEditAnswerModal } = useContext(ToolContext);
   return (
     <Draggable draggableId={item._id} index={index}>
       {(provided) => (
@@ -15,8 +15,8 @@ const AnswerItem = ({ item, questionId, index }) => {
         >
           <ListItem
             itemText={item.valor}
-            onUpdate={() => {}} // actualizar una respuesta
-            onDelete={() => handleDeleteAnswer(questionId, item._id)}
+            onUpdate={() => handleEditAnswerModal(questionId, item._id)} // actualizar una respuesta
+            onDelete={() => handleDeleteAnswer(questionId, item._id)} // eliminar una respuesta
             dragHandleProps={provided.dragHandleProps}
           />
         </div>

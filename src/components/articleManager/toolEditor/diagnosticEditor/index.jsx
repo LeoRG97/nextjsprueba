@@ -9,7 +9,7 @@ const DiagnosticEditor = ({ initialData }) => {
   const {
     showQuestionModal,
     showAnswerModal,
-    setShowQuestionModal,
+    handleCloseQuestionModal,
     handleNewAnswerModal,
     diagnosticQuestions,
     setDiagnosticQuestions,
@@ -33,7 +33,7 @@ const DiagnosticEditor = ({ initialData }) => {
       </div>
       <QuestionModal
         show={showQuestionModal}
-        onClose={() => setShowQuestionModal(false)}
+        onClose={handleCloseQuestionModal}
       />
       <AnswerModal
         show={showAnswerModal}

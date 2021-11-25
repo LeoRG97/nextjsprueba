@@ -18,6 +18,7 @@ import ModalZip from './ModalZip';
 
 import DiagnosticEditor from './diagnosticEditor';
 import EmailModal from './diagnosticEditor/modals/emailModal/EmailModal';
+import { validateDiagnosticContent } from '@/helpers/diagnostics';
 
 /*
   Componente raíz del editor de herramientas.
@@ -231,11 +232,12 @@ const ToolEditorComponent = ({
   };
 
   const handleSaveDiagnosticButton = () => {
-    if (diagnosticQuestions.length < 4) {
+    const validContent = validateDiagnosticContent(diagnosticQuestions);
+    if (!validContent.ok) {
       setErrorData({
         show: true,
         title: 'Operación no permitida',
-        message: 'Debes agregar al menos 4 preguntas al diagnóstico',
+        message: validContent.message,
       });
     } else if (!formData.emailDestinatario) {
       setShowEmailModal(true);

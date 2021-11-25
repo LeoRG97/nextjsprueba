@@ -6,7 +6,7 @@ import { ToolContext } from '@/helpers/contexts/toolContext';
 
 // título de una pregunta con su lista de respuestas
 const QuestionItem = ({ item, index }) => {
-  const { handleDeleteQuestion } = useContext(ToolContext);
+  const { handleDeleteQuestion, handleEditQuestionModal } = useContext(ToolContext);
   return (
     <Draggable draggableId={item._id} index={index}>
       {(provided) => (
@@ -18,8 +18,10 @@ const QuestionItem = ({ item, index }) => {
             icon={item.tipo === 'unica' ? 'A' : 'u'}
             title={item.pregunta}
             titleDisabled
+            // eliminar la pregunta con base en su ID
             onDelete={() => handleDeleteQuestion(item._id)}
-            onUpdate={() => {}} // actualizar los datos de una pregunta en específico
+            // abrir modal para editar la pregunta
+            onUpdate={() => handleEditQuestionModal(item._id)}
             dragHandleProps={provided.dragHandleProps}
           />
           <AnswersList
