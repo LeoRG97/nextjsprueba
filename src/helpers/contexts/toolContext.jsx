@@ -26,12 +26,15 @@ const ToolContextProvider = ({ children }) => {
 
   const [diagnosticQuestions, setDiagnosticQuestions] = useState([]);
 
-  const [currentQuestion, setCurrentQuestion] = useState(null);
+  const [currentQuestionId, setCurrentQuestionId] = useState(null);
+  const [questionEdit, setQuestionEdit] = useState(null);
+  const [answerEdit, setAnswerEdit] = useState(null);
   const [showQuestionModal, setShowQuestionModal] = useState(false);
   const [showAnswerModal, setShowAnswerModal] = useState(false);
 
   const handleNewAnswerModal = (show, questionId) => {
-    setCurrentQuestion(questionId || null);
+    setCurrentQuestionId(questionId || null);
+    setAnswerEdit(null);
     setShowAnswerModal(show);
   };
 
@@ -45,6 +48,11 @@ const ToolContextProvider = ({ children }) => {
       setContentValidated(false);
     }
   }, [definition, justification, usage]);
+
+  const handleCloseQuestionModal = () => {
+    setShowQuestionModal(false);
+    setQuestionEdit(null);
+  };
 
   const handleAddNewQuestion = (questionData) => {
     setDiagnosticQuestions([
@@ -60,7 +68,7 @@ const ToolContextProvider = ({ children }) => {
   const handleAddNewAnswer = (answerData) => {
     setDiagnosticQuestions((questions) => {
       return questions.map((question) => {
-        if (question._id === currentQuestion) {
+        if (question._id === currentQuestionId) {
           return {
             ...question,
             respuestas: [
@@ -124,6 +132,50 @@ const ToolContextProvider = ({ children }) => {
     }
   };
 
+  const handleEditQuestionModal = (id) => {
+    const questionToEdit = diagnosticQuestions.find((question) => question._id === id);
+    setQuestionEdit(questionToEdit);
+    setShowQuestionModal(true);
+  };
+
+  const handleUpdateQuestion = (id, data) => {
+    setDiagnosticQuestions((questions) => {
+      return questions.map((question) => {
+        if (question._id === id) {
+          return { ...question, ...data };
+        }
+        return question;
+      });
+    });
+  };
+
+  const handleEditAnswerModal = (questionId, answerId) => {
+    const questionData = diagnosticQuestions.find((question) => question._id === questionId);
+    const answerToEdit = questionData.respuestas.find((answer) => answer._id === answerId);
+    setAnswerEdit(answerToEdit);
+    setCurrentQuestionId(questionId);
+    setShowAnswerModal(true);
+  };
+
+  const handleUpdateAnswer = (answerId, data) => {
+    setDiagnosticQuestions((questions) => {
+      return questions.map((question) => {
+        if (question._id === currentQuestionId) {
+          return {
+            ...question,
+            respuestas: question.respuestas.map((answer) => {
+              if (answer._id === answerId) {
+                return { ...answer, ...data };
+              }
+              return answer;
+            }),
+          };
+        }
+        return question;
+      });
+    });
+  };
+
   return (
     <ToolContext.Provider value={{
       formData,
@@ -142,15 +194,22 @@ const ToolContextProvider = ({ children }) => {
       handleAddNewQuestion,
       showQuestionModal,
       setShowQuestionModal,
+      handleCloseQuestionModal,
       showAnswerModal,
       setShowAnswerModal,
       handleNewAnswerModal,
-      currentQuestion,
+      currentQuestionId,
       handleAddNewAnswer,
       handleDeleteQuestion,
       handleDeleteAnswer,
       handleSortQuestions,
       handleSortAnswers,
+      handleEditQuestionModal,
+      questionEdit,
+      handleUpdateQuestion,
+      handleEditAnswerModal,
+      answerEdit,
+      handleUpdateAnswer,
     }}
     >
       {children}

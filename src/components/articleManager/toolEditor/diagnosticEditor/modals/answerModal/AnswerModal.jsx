@@ -5,7 +5,7 @@ import styles from '../diagnosticModals.module.css';
 import { validateAnswerForm } from '../diagnosticModalsValidation';
 
 const AnswerModal = ({ show, onClose }) => {
-  const { handleAddNewAnswer } = useContext(ToolContext);
+  const { handleAddNewAnswer, answerEdit, handleUpdateAnswer } = useContext(ToolContext);
 
   const [formData, setFormData] = useState({
     valor: '',
@@ -34,6 +34,12 @@ const AnswerModal = ({ show, onClose }) => {
     }
   }, [formData]);
 
+  useEffect(() => {
+    if (answerEdit) {
+      setFormData(answerEdit);
+    }
+  }, [answerEdit]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
@@ -41,7 +47,11 @@ const AnswerModal = ({ show, onClose }) => {
     if (!formErrors.isValid) {
       setErrors(formErrors);
     } else {
-      handleAddNewAnswer(formData);
+      if (!answerEdit) {
+        handleAddNewAnswer(formData);
+      } else {
+        handleUpdateAnswer(answerEdit._id, formData);
+      }
       onClose();
       resetForm();
     }
@@ -66,7 +76,7 @@ const AnswerModal = ({ show, onClose }) => {
       >
         <form onSubmit={handleSubmit}>
           <Modal.Body>
-            <h2 className="title text-center">Nueva respuesta</h2>
+            <h2 className="title text-center">{answerEdit ? 'Actualizar respuesta' : 'Nueva respuesta'}</h2>
             <label htmlFor="textValue" className="d-block subtitle">
               Título
               <textarea
@@ -85,6 +95,7 @@ const AnswerModal = ({ show, onClose }) => {
                 name="puntaje"
                 className="input"
                 value={puntaje}
+                placeholder="De 0 a 100 puntos"
                 onChange={handleChange}
               />
             </label>
@@ -95,7 +106,7 @@ const AnswerModal = ({ show, onClose }) => {
               Descartar
             </button>
             <button className="button button--theme-primary" type="submit">
-              Insertar
+              {answerEdit ? 'Actualizar' : 'Insertar'}
             </button>
           </Modal.Footer>
         </form>
