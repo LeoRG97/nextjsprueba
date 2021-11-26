@@ -134,11 +134,12 @@ const AllCourses = ({ preferences, initialData, loggedIn }) => {
         ) : (
           <>
             {!data && <LoadingIndicator />}
+
             {
               data && data.data ? (
                 <>
                   {
-                    data.data.length > 0 && data.registros > 9 && (
+                    (data.data.length > 0) && data.registros > cursos.length && (
                       <button
                         className="button button--theme-secondary"
                         onClick={() => setPageNum(pageNum + 1)}

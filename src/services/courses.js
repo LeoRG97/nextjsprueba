@@ -108,14 +108,14 @@ export const deleteComentario = async (comentarioId) => {
 
 export const fetchCoursesSSR = async (query, estado) => {
   const {
-    category, sort, pageSize,
+    category, sort,
   } = query;
   try {
     const res = await axios().get(ApiRoutes.Cursos, {
       params: {
         estado,
         pageNum: 1,
-        pageSize: pageSize || 9,
+        pageSize: 9,
         ...(category && { categoria: category }),
         ...(sort && { sort: sort === 'desc' ? 'desc' : 'asc' }),
       },
