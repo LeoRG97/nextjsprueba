@@ -93,7 +93,7 @@ export async function getServerSideProps({ query, req }) {
   } else {
     // pre-render articles
     results = await fetchArticlesSSR(query);
-    courses = await fetchCoursesSSR(query, 'publicado');
+    courses = await fetchCoursesSSR(query);
   }
 
   return {
