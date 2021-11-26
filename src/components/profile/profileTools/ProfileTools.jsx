@@ -22,10 +22,10 @@ const ProfileTools = () => {
             </button>
             <div className={styles.list_content}>
               <div className="drop-item" onClick={() => navigateToEditor('tool')}>
-                <span className="drop-item__content">Con archivo</span>
+                <span className="drop-item__content">Archivo</span>
               </div>
               <div className="drop-item" onClick={() => navigateToEditor('diagnostic')}>
-                <span className="drop-item__content">Con diagnóstico</span>
+                <span className="drop-item__content">Diagnóstico</span>
               </div>
             </div>
           </div>
