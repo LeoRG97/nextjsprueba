@@ -148,14 +148,14 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
               data && data.data && data.registros > 9 ? (
                 <>
                   {
-                    data.data.length > 0 && (
+                    (data.data.length > 0) && (data.registros > articles.length) ? (
                       <button
                         className="button button--theme-secondary"
                         onClick={() => setPageNum(pageNum + 1)}
                       >
                         Ver más publicaciones
                       </button>
-                    )
+                    ) : <></>
                   }
                 </>
               ) : (<></>)
