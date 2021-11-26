@@ -56,7 +56,7 @@ const AccordionCollapse = ({
       option: 'Modificar',
       iconType: 'K',
       event: true,
-      eventName: (() => router.push(`/editor/tool/${herramienta._id}`)),
+      eventName: (() => router.push(`/editor/${herramienta && herramienta.tipo && herramienta.tipo === 'diagnostico' ? 'diagnostic' : 'tool'}/${herramienta._id}`)),
     },
     {
       option: 'Eliminar',
