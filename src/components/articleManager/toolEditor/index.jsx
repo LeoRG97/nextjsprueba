@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import styles from '../editor.module.css';
 import ToolPreview from './toolPreview';
@@ -19,6 +19,7 @@ import ModalZip from './ModalZip';
 import DiagnosticEditor from './diagnosticEditor';
 import EmailModal from './diagnosticEditor/modals/emailModal/EmailModal';
 import { validateDiagnosticContent } from '@/helpers/diagnostics';
+import AutoSaveIndicator from '../editorComponents/autoSaveIndicator/AutoSaveIndicator';
 
 /*
   Componente raíz del editor de herramientas.
@@ -43,6 +44,8 @@ const ToolEditorComponent = ({
     setJustification,
     contentValidated,
     diagnosticQuestions,
+    modifiedContent,
+    setModifiedContent,
   } = useContext(ToolContext);
   const router = useRouter();
   const [showPublish, setShowPublish] = useState(false);
@@ -61,6 +64,8 @@ const ToolEditorComponent = ({
   const [preview, setToolPreview] = useState(false);
   const [showEmailModal, setShowEmailModal] = useState(false);
   const [modalSaveMode, setModalSaveMode] = useState('');
+  const [autoSave, setAutoSave] = useState(false);
+  const isMounted = useRef(false);
 
   const setPreview = () => {
     if (preview === false) {
@@ -132,11 +137,13 @@ const ToolEditorComponent = ({
           });
           setInitialData(res.data);
           setInitialContent(jsonData);
+          setModifiedContent(false);
         }
       } else {
         const res = await updateTool(file, formData, initialData);
         if (res.ok) {
           setSubmitting(false);
+          setModifiedContent(false);
           setSuccessData({
             show: true,
             title: 'Publicación finalizada',
@@ -150,6 +157,38 @@ const ToolEditorComponent = ({
         title: 'Ha ocurrido un error',
         message: 'Vuelva a intentarlo más tarde',
       });
+      setModifiedContent(false);
+    }
+  };
+
+  const handleAutoPublish = async () => {
+    setAutoSave(true);
+    const tipo = router.pathname.includes('diagnostic') ? 'diagnostico' : 'herramienta';
+    const jsonData = { definition, justification, usage };
+    const blob = new Blob([JSON.stringify(jsonData)], {
+      type: 'application/json',
+    });
+    const file = new File([blob], 'article.json', { type: 'application/json' });
+    try {
+      if (!initialData || !initialData._id) {
+        const res = await saveTool(file, { ...formData, tipo });
+        if (res.ok) {
+          // auto saved
+          setAutoSave(false);
+          router.replace(`${router.asPath}/${res.data._id}`, undefined, {
+            shallow: true,
+          });
+          setInitialData(res.data);
+          setInitialContent(jsonData);
+        }
+      } else {
+        const res = await updateTool(file, formData, initialData);
+        if (res.ok) {
+          setAutoSave(false);
+        }
+      }
+    } catch (err) {
+      // catch error
     }
   };
 
@@ -246,6 +285,27 @@ const ToolEditorComponent = ({
       handleSubmitQuestions(formData.emailDestinatario);
     }
   };
+
+  useEffect(() => {
+    // auto save interval
+    let interval = null;
+    if (isMounted.current && modifiedContent && initialData._id) {
+      interval = setInterval(() => {
+        handleAutoPublish();
+        setModifiedContent(false);
+      }, 10000);
+    }
+    return () => {
+      clearInterval(interval);
+    };
+  }, [modifiedContent, isMounted.current]);
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleOpenEmailModal = () => {
     setShowEmailModal(true);
@@ -365,7 +425,7 @@ const ToolEditorComponent = ({
             </>
           )}
         </div>
-
+        <AutoSaveIndicator show={autoSave} />
         <ToolDetailsModal
           show={showPublish}
           onClose={() => setShowPublish(false)}

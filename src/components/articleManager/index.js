@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-newline */
 /* eslint-disable react/jsx-filename-extension */
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useSession } from 'next-auth/client';
@@ -23,9 +23,10 @@ import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import EditorPreviewComponent from './articlePreview';
 import ModalLink from './modals/addLinkModal/addLinkModal';
 import { reduceImageSize } from '@/helpers/images';
+import AutoSaveIndicator from './editorComponents/autoSaveIndicator/AutoSaveIndicator';
 
 const EditorComponent = ({
-  option, initialData, setInitialData, initialContent,
+  option, initialData, setInitialData, initialContent, setInitialContent,
 }) => {
   const [session] = useSession();
   const router = useRouter();
@@ -43,6 +44,8 @@ const EditorComponent = ({
   const [updateEvent, setUpdateEvent] = useState(false);
   const [activeOption, setActiveCont] = useState('');
   const [submitting, setSubmitting] = useState(false);
+  const [autoSave, setAutoSave] = useState(false);
+  const [modifiedPost, setModifiedPost] = useState(false);
   const [preview, setPreview] = useState(false);
   const [modalShowLink, setModalShowLink] = useState(false);
   const [successData, setSuccessData] = useState({
@@ -56,6 +59,7 @@ const EditorComponent = ({
     message: '',
   });
 
+  const isMounted = useRef(false);
   const { data: profile } = useSelector((state) => state.profile);
 
   useEffect(() => {
@@ -71,6 +75,7 @@ const EditorComponent = ({
         premium: initialData.premium,
         rutaPortada: portada && portada.ruta_imagen ? portada.ruta_imagen : '',
         rutaArticulo: initialData.ruta || '',
+        estatus: initialData.estatus,
       });
     }
   }, [initialData]);
@@ -87,6 +92,7 @@ const EditorComponent = ({
 
   const handleChange = (idContent, e) => {
     // e.persist();
+    setModifiedPost(true);
     arrayItemsEditor.html.forEach((item, index) => {
       if (item.id === idContent) {
         // eslint-disable-next-line prefer-const
@@ -123,6 +129,7 @@ const EditorComponent = ({
 
   const addVideoFunct = (tag, embedIframe) => {
     // const EditorContent = localStorage.getItem('contentEditor');
+    setModifiedPost(true);
     const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
     if (option === 'onlyVideo') {
@@ -154,6 +161,7 @@ const EditorComponent = ({
 
   const addImage = async (event) => {
     event.preventDefault();
+    setModifiedPost(true);
     // const EditorContent = localStorage.getItem('contentEditor');
     const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
@@ -176,6 +184,7 @@ const EditorComponent = ({
   };
 
   const addTextFunct = (optionText) => {
+    setModifiedPost(true);
     // const EditorContent = localStorage.getItem('contentEditor');
     const obj = { ...arrayItemsEditor };
     const idContainer = makeid();
@@ -201,6 +210,7 @@ const EditorComponent = ({
   };
 
   const addAudioFunct = (tag) => {
+    setModifiedPost(true);
     // const EditorContent = localStorage.getItem('contentEditor');
     const obj = arrayItemsEditor;
     const idContainer = makeid();
@@ -224,6 +234,7 @@ const EditorComponent = ({
   };
 
   const addLinkFunct = (tag) => {
+    setModifiedPost(true);
     // const EditorContent = localStorage.getItem('contentEditor');
     const obj = arrayItemsEditor;
     const idContainer = makeid();
@@ -243,6 +254,7 @@ const EditorComponent = ({
 
     setUpdateEvent(false);
     setModalShowLink(false);
+    setModifiedPost(true);
   };
   /* ######################### */
 
@@ -265,6 +277,7 @@ const EditorComponent = ({
   };
 
   const updateFunctionEventVideo = (tag, idElement, typeContent) => {
+    setModifiedPost(true);
     setUpdateEvent(false);
     setModalShowVideo(false);
     const oldArray = arrayItemsEditor.html;
@@ -294,6 +307,7 @@ const EditorComponent = ({
         const reducedImage = await reduceImageSize(image);
         const res = await upload(path, reducedImage);
         if (res.ok) {
+          setModifiedPost(true);
           arrayItemsEditor.html.forEach((item, index) => {
             if (item.id === idElement) {
               const contents = arrayItemsEditor;
@@ -314,6 +328,7 @@ const EditorComponent = ({
   };
 
   const updateFunctionEvent = (tag, idElement, typeContent) => {
+    setModifiedPost(true);
     setUpdateEvent(false);
     setModalShow(false);
     const oldArray = arrayItemsEditor.html;
@@ -342,6 +357,7 @@ const EditorComponent = ({
         content = item.content;
       }
     });
+    setModifiedPost(true);
     setItems(newArrayContent);
     // localStorage.setItem('contentEditor', JSON.stringify(newArrayContent));
     if (option === 'onlyVideo') {
@@ -372,17 +388,12 @@ const EditorComponent = ({
   };
 
   useEffect(() => {
-    // const EditorContent = localStorage.getItem('contentEditor');
     if (!initialContent) {
-      // {id: "", type: "", content: ""}
-      // const jsonStr = '{"html":[]}';
-      // localStorage.setItem('contentEditor', jsonStr);
       setItems({ html: [] });
     } else {
-      // setItems(JSON.parse(EditorContent));
-      setItems(initialContent);
-      // const elementsEditor = JSON.parse(EditorContent);
-      initialContent.html.forEach((item) => {
+      const items = { html: [...initialContent.html] };
+      setItems(items);
+      items.html.forEach((item) => {
         if (item.type === 'linkVideo' || item.type === 'iframeVideo') {
           setContentVideo(true);
         }
@@ -400,6 +411,7 @@ const EditorComponent = ({
       html.splice(event.destination.index, 0, movedItem);
       const newObj = { html: [...html] };
       setItems(newObj);
+      setModifiedPost(true);
       // localStorage.setItem('contentEditor', JSON.stringify(newObj));
     }
   };
@@ -411,7 +423,6 @@ const EditorComponent = ({
     };
     setShowPublish(false);
     setSubmitting(true);
-
     const blob = new Blob([JSON.stringify(arrayItemsEditor)], { type: 'application/json' });
     const file = new File([blob], 'article.json', { type: 'application/json' });
     try {
@@ -429,6 +440,7 @@ const EditorComponent = ({
           router.replace(`${router.asPath}/${data._id}`, undefined, { shallow: false });
           // mantén la información original en el state del componente padre
           setInitialData(data);
+          setModifiedPost(false);
         }
       } else {
         // update existing article
@@ -441,6 +453,7 @@ const EditorComponent = ({
             message: estatus === 'publicado' ? 'La publicación ha sido realizada exitosamente.' : 'La información de su publicación ha sido actualizada correctamente.',
           });
           setInitialData(res.data);
+          setModifiedPost(false);
         }
       }
     } catch (err) {
@@ -450,6 +463,41 @@ const EditorComponent = ({
         title: 'Ha ocurrido un error',
         message: 'Vuelva a intentarlo más tarde',
       });
+      // catch error
+    }
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  const handleAutoPublish = async (estatus) => {
+    const details = {
+      ...formData,
+      estatus,
+    };
+    setAutoSave(true);
+    const blob = new Blob([JSON.stringify(arrayItemsEditor)], { type: 'application/json' });
+    const file = new File([blob], 'article.json', { type: 'application/json' });
+    try {
+      if (!initialData) {
+        // save article
+        const { data } = await saveArticle(file, details, option, session.user.id);
+        setAutoSave(false);
+        if (data && data._id) {
+          // shallow routing a la pantalla de edición
+          router.replace(`${router.asPath}/${data._id}`, undefined, { shallow: false });
+          // mantén la información original en el state del componente padre
+          setInitialData(data);
+          setInitialContent(arrayItemsEditor);
+        }
+      } else {
+        // update existing article
+        const res = await updateArticle(file, details, session.user.id, initialData);
+        setAutoSave(false);
+        if (res.ok) {
+          setInitialData(res.data);
+          setInitialContent(arrayItemsEditor);
+        }
+      }
+    } catch (err) {
       // catch error
     }
   };
@@ -473,6 +521,30 @@ const EditorComponent = ({
       });
     }
   };
+
+  useEffect(() => {
+    // AUTO SAVE INTERVAL
+    let interval = null;
+    if (modifiedPost && isMounted.current) {
+      interval = setInterval(() => {
+        handleAutoPublish(formData.estatus || 'borrador');
+        setModifiedPost(false);
+      }, 10000);
+    }
+    return () => {
+      // stop interval
+      clearInterval(interval);
+    };
+  }, [arrayItemsEditor, initialContent, modifiedPost, isMounted.current]);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      // indicar que el componente será desmontado
+      isMounted.current = false;
+    };
+  }, []);
 
   const handleOpenResources = () => {
     if (initialData && initialData._id) {
@@ -630,6 +702,7 @@ const EditorComponent = ({
           </div>
         )
       }
+      <AutoSaveIndicator show={autoSave} />
       <DetailsModal
         show={showPublish}
         onClose={() => setShowPublish(false)}

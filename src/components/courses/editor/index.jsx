@@ -169,7 +169,6 @@ const CourseEditor = ({ initialData }) => {
                 H
               </button>
             </TooltipContainer>
-
             <TooltipContainer tooltipText="Vista previa" placement="left">
               <button
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}

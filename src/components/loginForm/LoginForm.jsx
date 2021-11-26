@@ -83,7 +83,7 @@ const LoginForm = () => {
   useEffect(() => {
     const remember = localStorage.getItem('rememberme');
     if (remember) {
-      setFormData({ email: remember });
+      setFormData({ ...formData, email: remember });
     }
   }, []);
 
