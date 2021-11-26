@@ -11,6 +11,7 @@ const VideoSection = () => {
   const {
     definition: arrayItemsEditor,
     setDefinition: setItems,
+    setModifiedContent,
   } = useContext(ToolContext);
   const [modalShowVideo, setModalShowVideo] = useState(false);
   const [addedVideo, setContentVideo] = useState(false);
@@ -56,7 +57,8 @@ const VideoSection = () => {
             break;
           }
         }
-        setItems(modText);
+        setItems({ ...modText });
+        setModifiedContent(true);
       }
     });
   };
@@ -75,7 +77,8 @@ const VideoSection = () => {
     obj.html.forEach((item) => {
       topVideo.html.push(item);
     });
-    setItems(topVideo);
+    setItems({ ...topVideo });
+    setModifiedContent(true);
     setModalShowVideo(false);
   };
 
@@ -99,7 +102,8 @@ const VideoSection = () => {
         id: idContainer, type: 'textFooter', content: '', tag: '<small></small>',
       });
     }
-    setItems(obj);
+    setItems({ ...obj });
+    setModifiedContent(true);
   };
 
   /* ######################### */
@@ -140,7 +144,8 @@ const VideoSection = () => {
         newArrayContent.html.push(item);
       }
     });
-    setItems(newArrayContent);
+    setItems({ ...newArrayContent });
+    setModifiedContent(true);
   };
 
   const setActiveClass = (id) => {

@@ -9,6 +9,7 @@ const JustificationSection = () => {
   const {
     justification: arrayItemsEditor,
     setJustification: setItems,
+    setModifiedContent,
   } = useContext(ToolContext);
   const [activeOption, setActiveCont] = useState('');
 
@@ -50,7 +51,8 @@ const JustificationSection = () => {
             break;
           }
         }
-        setItems(modText);
+        setItems({ ...modText });
+        setModifiedContent(true);
       }
     });
   };
@@ -77,7 +79,8 @@ const JustificationSection = () => {
         id: idContainer, type: 'textFooter', content: '', tag: '<small></small>',
       });
     }
-    setItems(obj);
+    setItems({ ...obj });
+    setModifiedContent(true);
   };
 
   /* ######################### */
@@ -90,7 +93,8 @@ const JustificationSection = () => {
         newArrayContent.html.push(item);
       }
     });
-    setItems(newArrayContent);
+    setItems({ ...newArrayContent });
+    setModifiedContent(true);
   };
 
   const setActiveClass = (id) => {

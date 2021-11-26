@@ -9,6 +9,7 @@ const DescriptionSection = () => {
   const {
     usage: arrayItemsEditor,
     setUsage: setItems,
+    setModifiedContent,
   } = useContext(ToolContext);
   const [activeOption, setActiveCont] = useState('');
 
@@ -51,6 +52,7 @@ const DescriptionSection = () => {
           }
         }
         setItems(modText);
+        setModifiedContent(true);
       }
     });
   };
@@ -78,6 +80,7 @@ const DescriptionSection = () => {
       });
     }
     setItems(obj);
+    setModifiedContent(true);
   };
 
   /* ######################### */
@@ -91,6 +94,7 @@ const DescriptionSection = () => {
       }
     });
     setItems(newArrayContent);
+    setModifiedContent(true);
   };
 
   const setActiveClass = (id) => {

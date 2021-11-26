@@ -24,8 +24,11 @@ const ToolContextProvider = ({ children }) => {
   const [justification, setJustification] = useState({ html: [] });
   const [usage, setUsage] = useState({ html: [] });
 
-  const [diagnosticQuestions, setDiagnosticQuestions] = useState([]);
+  // state para determinar si se ha hecho una modificación en el contenido de la herramienta
+  const [modifiedContent, setModifiedContent] = useState(false);
 
+  // state para los diagnósticos
+  const [diagnosticQuestions, setDiagnosticQuestions] = useState([]);
   const [currentQuestionId, setCurrentQuestionId] = useState(null);
   const [questionEdit, setQuestionEdit] = useState(null);
   const [answerEdit, setAnswerEdit] = useState(null);
@@ -188,6 +191,8 @@ const ToolContextProvider = ({ children }) => {
       setUsage,
       justification,
       setJustification,
+      modifiedContent,
+      setModifiedContent,
       contentValidated,
       diagnosticQuestions,
       setDiagnosticQuestions,
