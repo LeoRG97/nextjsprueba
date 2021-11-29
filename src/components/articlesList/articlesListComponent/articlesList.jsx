@@ -12,7 +12,6 @@ const ArticlesListComponent = ({ articles, onFilter, showOptions = false }) => {
   const [successModal, setSuccessModal] = useState(false);
   const [modalError, setModalError] = useState(false);
   const [session] = useSession();
-
   const onDelete = async (id) => {
     setLoadModal(true);
     try {

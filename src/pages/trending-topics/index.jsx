@@ -20,7 +20,6 @@ const TrendingPage = ({
 }) => {
   const router = useRouter();
   const { query } = router;
-
   return (
     <Layout>
       <main>

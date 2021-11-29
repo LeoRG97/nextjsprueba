@@ -12,7 +12,7 @@ import { getProfile } from '@/services/profile';
 const UserPreferencesCourses = ({ initialData }) => {
   const [session] = useSession();
   const router = useRouter();
-  const [courses, setCourses] = useState(initialData);
+  const [courses, setCourses] = useState(initialData.data);
   const [pageNum, setPageNum] = useState(1);
   const [preferencesUser, setPreferencesUser] = useState([]);
 
@@ -28,9 +28,9 @@ const UserPreferencesCourses = ({ initialData }) => {
 
   useEffect(() => {
     if (data && pageNum === 1) {
-      setCourses(data);
+      setCourses(data.data);
     } else if (data && pageNum > 1) {
-      const array = courses.concat(data);
+      const array = courses.concat(data.data);
       const set = new Set(array.map(JSON.stringify));
       const arrSinDuplicaciones = Array.from(set).map(JSON.parse);
       setCourses(arrSinDuplicaciones);
@@ -125,12 +125,12 @@ const UserPreferencesCourses = ({ initialData }) => {
       ) : <></>}
       <div className="d-flex justify-content-center">
         {!data && <LoadingIndicator />}
-        {data && data.length > 0 && data.registros > 9 && (
+        {data && data.data.length > 0 && data.registros > courses.length && (
           <button
             className="button button--theme-secondary"
             onClick={() => setPageNum(pageNum + 1)}
           >
-            Ver más publicaciones
+            Ver más cursos
           </button>
         )}
       </div>
