@@ -61,3 +61,5 @@ export { default as MainCourses } from './courses/mainCourses/mainCourses';
 export { default as CoursesListComponent } from './courses/coursesComponent/coursesList';
 export { default as AutorCourseComponent } from './courses/courseSpecific/autorInfo/AutorInfo';
 export { default as ProfileCourseSubscription } from './profile/profileCourses/ProfileCourseSubscription';
+export { default as CheckboxComponent } from './thinkTools/diagnostic/CheckboxComponent';
+export { default as DiagnosticStartedComponent } from './thinkTools/diagnostic/DiagnosticStartedComponent';

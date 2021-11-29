@@ -32,5 +32,6 @@ module.exports = {
     UserNotes: 'notas/usuario',
     Cursos: 'cursos',
     CursosUserPreference: 'cursos/preferencias/usuario',
+    Diagnosticos: 'diagnosticos',
   },
 };

@@ -1,4 +1,6 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import {
   Footer, Layout, ToolsContent,
 } from '@/components';
@@ -6,27 +8,46 @@ import { ApiRoutes } from '@/global/constants';
 // import { fetchTools } from '@/services/tools';
 import { fetchData } from '@/services/swr';
 import { fetchToolBySlug, fetchToolsContent } from '@/services/tools';
+import DiagnosticStartedComponent from '@/components/thinkTools/diagnostic/DiagnosticStartedComponent';
 
 const GetTool = ({ toolsInfo, toolsCode }) => {
+  const { query } = useRouter();
+  const [session] = useSession();
+
   return (
     <Layout>
       {
         toolsInfo && toolsCode && (
-          <ToolsContent toolsInfo={toolsInfo} toolsCode={toolsCode} />
+          query.diagnostic
+            ? (
+              <>
+                {
+                  session && session.user && (
+                    <DiagnosticStartedComponent
+                      toolsInfo={toolsInfo}
+                      userId={session.user.id}
+                    />
+                  )
+                }
+              </>
+            )
+            : (<><ToolsContent toolsInfo={toolsInfo} toolsCode={toolsCode} /><Footer /></>)
         )
       }
       {
         !toolsInfo && (
-          <Container>
-            <Row className="container_top_">
-              <Col>
-                <h3 className="title">Herramienta no encontrada</h3>
-              </Col>
-            </Row>
-          </Container>
+          <>
+            <Container>
+              <Row className="container_top_">
+                <Col>
+                  <h3 className="title">Herramienta no encontrada</h3>
+                </Col>
+              </Row>
+            </Container>
+            <Footer />
+          </>
         )
       }
-      <Footer />
     </Layout>
   );
 };

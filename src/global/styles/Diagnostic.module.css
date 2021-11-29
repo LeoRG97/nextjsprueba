@@ -1,0 +1,64 @@
+.content {
+  background-image: url('/images/resourses/TexturaFondo.png');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: top;
+  min-height: 350px;
+  position: relative;
+}
+
+.content::after {
+  content: "";
+  position: absolute;
+  max-height: 100%;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  filter: brightness(80%);
+}
+
+.content_disgnostic_title {
+  padding-top: 8rem;
+  padding-bottom: 0rem;
+}
+
+.content_disgnostic {
+  margin-bottom: 5rem;
+}
+
+.diagnostic_question {
+  font-size: var(--font-size-lg);
+}
+
+.diagnostic_answer {
+  font-size: var(--font-size-md);
+}
+
+.check {
+  display: inline-flex;
+}
+
+.buttonChek {
+  display: contents;
+}
+
+.container_icon {
+  width: 6rem;
+  height: 6rem;
+  background-color: var(--colorPrimaryActive);
+  border-radius: 50%;
+}
+
+.container_icon > span {
+  position: relative;
+  top: 13%;
+  left: 1.5rem;
+}
+
+@media(max-width: 991px) {
+  .content {
+    top: 2.5rem;
+    background-size: 100% auto;
+  }
+}

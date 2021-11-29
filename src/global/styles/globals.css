@@ -114,6 +114,7 @@
 
   --icon-size-sm: 1rem;
   --icon-size-md: 1.5rem;
+  --icon-size-xl: 3rem;
   /* 16px */
 }
 
@@ -283,6 +284,11 @@ a {
   font-family: Icons;
   font-size: var(--icon-size-md);
   color: var(--text-color-secondary);
+}
+
+.icon-xl {
+  font-family: Icons;
+  font-size: var(--icon-size-xl);
 }
 
 .icon--theme-secondary {
