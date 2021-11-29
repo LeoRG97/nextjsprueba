@@ -13,7 +13,7 @@ import { LoadingIndicator, TrendingFilterComponent } from '@/components';
 const UserPreferencesPosts = ({ initialData }) => {
   const [session] = useSession();
   const router = useRouter();
-  const [articles, setArticles] = useState(initialData);
+  const [articles, setArticles] = useState(initialData && initialData.data ? initialData.data : []);
   const [pageNum, setPageNum] = useState(1);
   const [preferencesUser, setPreferencesUser] = useState([]);
 
@@ -21,23 +21,21 @@ const UserPreferencesPosts = ({ initialData }) => {
     [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
     fetchPaginatedDataWithAuthToken,
   );
-
   const onFilter = (filteredArticles) => {
     mutate([...data]);
     setArticles(filteredArticles);
   };
 
   useEffect(() => {
-    if (data && pageNum === 1) {
-      setArticles(data);
-    } else if (data && pageNum > 1) {
-      const array = articles.concat(data);
+    if (data && data.data && pageNum === 1) {
+      setArticles(data.data);
+    } else if (data && data.data && pageNum > 1) {
+      const array = articles.concat(data.data);
       const set = new Set(array.map(JSON.stringify));
       const arrSinDuplicaciones = Array.from(set).map(JSON.parse);
       setArticles(arrSinDuplicaciones);
     }
   }, [data]);
-
   useEffect(() => {
     setPageNum(1);
   }, [router.query]);
@@ -126,7 +124,7 @@ const UserPreferencesPosts = ({ initialData }) => {
       ) : <></>}
       <div className="d-flex justify-content-center">
         {!data && <LoadingIndicator />}
-        {data && data.length > 0 && data.registros > 9 && (
+        {data && data.data && data.data.length > 0 && data.registros > articles.length && (
           <button
             className="button button--theme-secondary"
             onClick={() => setPageNum(pageNum + 1)}
