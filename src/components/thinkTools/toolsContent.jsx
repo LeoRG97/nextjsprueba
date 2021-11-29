@@ -3,12 +3,22 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
+import { useDispatch } from 'react-redux';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './tools.module.css';
 import TooltipContainer from '../articleManager/editorComponents/tooltipContainer/TooltipContainer';
+import ModalAwaitDiagnostic from '../modalsIndicators/ModalAwaitDiagnostic';
+import { aviableDiagnostic } from '@/services/diagnostic';
+import { showSubscribeAlert } from '@/reducers/alert';
 
 const ToolsContent = ({ toolsInfo, toolsCode }) => {
+  const router = useRouter();
+  const [session] = useSession();
+  const dispatch = useDispatch();
   const [viewButton, setViewButton] = useState(true);
+  const [modalAwaitDiagnostic, setModalAwaitDiagnostic] = useState(false);
 
   const setImage = (url) => {
     let stylleImg = null;
@@ -32,6 +42,21 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
         }
       }
     }
+  };
+
+  const toStartDiagnostic = async () => {
+    if (toolsInfo && session && session.user) {
+      const res = await aviableDiagnostic(toolsInfo._id, session.user.id);
+      if (res.ok) {
+        router.push(`/think-tools/${toolsInfo.slug}?diagnostic=true`);
+      } else {
+        setModalAwaitDiagnostic(true);
+      }
+    }
+  };
+
+  const handleSubscribeModal = () => {
+    dispatch(showSubscribeAlert());
   };
 
   useEffect(() => {
@@ -86,10 +111,29 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   )}
                 </Col>
                 <Col className={`col-6 ${styles.right}`}>
-                  {toolsInfo.recursos && toolsInfo.recursos.length > 0 && (
-                    <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
-                      <button className="button button--theme-primary">Descargar</button>
-                    </a>
+                  {toolsInfo.recursos && toolsInfo.recursos.length > 0 && toolsInfo.tipo && toolsInfo.tipo === 'herramienta' && (
+                    <>
+                      {
+                        (session) ? (
+                          <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
+                            <button className="button button--theme-primary">Descargar</button>
+                          </a>
+                        ) : (
+                          <button onClick={handleSubscribeModal} className="button button--theme-primary">Descargar</button>
+                        )
+                      }
+                    </>
+                  )}
+                  {toolsInfo.diagnostico && toolsInfo.diagnostico.length > 0 && toolsInfo.tipo && toolsInfo.tipo === 'diagnostico' && (
+                    <>
+                      {
+                        (session) ? (
+                          <button onClick={() => toStartDiagnostic()} className="button button--theme-primary">Realizar diagnóstico</button>
+                        ) : (
+                          <button onClick={handleSubscribeModal} className="button button--theme-primary">Realizar diagnóstico</button>
+                        )
+                      }
+                    </>
                   )}
                 </Col>
               </Row>
@@ -144,23 +188,63 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
             </Col>
             <Col lg="2" className="col-1">
               <div className={`content-fixed rigth ${styles.floatingContent}`}>
-                {viewButton && toolsInfo.recursos.length > 0 && (
-                  <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
-                    <TooltipContainer placement="left" tooltipText="Descargar">
-                      <button
-                        onClick={() => {}}
-                        className="icon-button icon-button--primary m-2"
-                      >
-                        i
-                      </button>
-                    </TooltipContainer>
-                  </a>
+                {viewButton && toolsInfo.recursos.length > 0 && toolsInfo.tipo && toolsInfo.tipo === 'herramienta' && (
+                  <>
+                    {
+                      (session) ? (
+                        <a href={`${BUCKET_URL}${toolsInfo.recursos[0].ruta}`} target="_blank" rel="noreferrer">
+                          <TooltipContainer placement="left" tooltipText="Descargar">
+                            <button
+                              onClick={() => {}}
+                              className="icon-button icon-button--primary m-2"
+                            >
+                              i
+                            </button>
+                          </TooltipContainer>
+                        </a>
+                      ) : (
+                        <TooltipContainer placement="left" tooltipText="Descargar">
+                          <button
+                            onClick={handleSubscribeModal}
+                            className="icon-button icon-button--primary m-2"
+                          >
+                            i
+                          </button>
+                        </TooltipContainer>
+                      )
+                    }
+                  </>
+                )}
+                {viewButton && toolsInfo.diagnostico.length > 0 && toolsInfo.tipo && toolsInfo.tipo === 'diagnostico' && (
+                  <TooltipContainer placement="left" tooltipText="Realizar diagnóstico">
+                    {
+                      (session) ? (
+                        <button
+                          onClick={() => toStartDiagnostic()}
+                          className="icon-button icon-button--primary m-2"
+                        >
+                          o
+                        </button>
+                      ) : (
+                        <button
+                          onClick={handleSubscribeModal}
+                          className="icon-button icon-button--primary m-2"
+                        >
+                          o
+                        </button>
+                      )
+                    }
+                  </TooltipContainer>
                 )}
               </div>
             </Col>
           </Row>
         </Container>
       </Container>
+      <ModalAwaitDiagnostic
+        show={modalAwaitDiagnostic}
+        onClose={() => setModalAwaitDiagnostic(false)}
+      />
     </div>
   );
 };

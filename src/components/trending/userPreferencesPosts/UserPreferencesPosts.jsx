@@ -126,7 +126,6 @@ const UserPreferencesPosts = ({ initialData }) => {
       ) : <></>}
       <div className="d-flex justify-content-center">
         {!data && <LoadingIndicator />}
-        {console.log(initialData)}
         {data && data.length > 0 && data.registros > 9 && (
           <button
             className="button button--theme-secondary"
