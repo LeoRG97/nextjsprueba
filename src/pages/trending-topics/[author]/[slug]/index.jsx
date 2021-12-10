@@ -307,13 +307,15 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                                 }}
                                 className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
                               >
-                                c
+                                {
+                                  isLiked ? 'v' : 'c'
+                                }
                               </button>
                             </TooltipContainer>
                             {
                               (cssSaved !== '') ? (
                                 <TooltipContainer placement="left" tooltipText="Guardar">
-                                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={quitSaveThisArt}>U</button>
+                                  <button className={`icon-button icon-button--secondary m-2 ${cssSaved}`} onClick={quitSaveThisArt}>w</button>
                                 </TooltipContainer>
                               ) : (
                                 <TooltipContainer placement="left" tooltipText="Guardar">

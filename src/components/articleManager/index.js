@@ -689,7 +689,7 @@ const EditorComponent = ({
                 className={`icon-button icon-button--secondary ${styles.optionsItem}`}
                 onClick={() => setPreview(!preview)}
               >
-                C
+                8
               </button>
             </TooltipContainer>
             {

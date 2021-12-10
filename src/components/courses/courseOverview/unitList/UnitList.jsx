@@ -43,7 +43,11 @@ const UnitList = React.memo(({
                   }
                   className={`Btn-like ${isLiked && 'Btn-like__active m-2'}`}
                 >
-                  <i className={`icon-btn ${isLiked && 'text--theme-highlight'}`}>c</i>{!isLiked ? 'Valorar' : rateTotal}
+                  {
+                    !isLiked
+                      ? (<><i className={`icon-btn ${isLiked && 'text--theme-highlight'}`}>c</i>Valorar</>)
+                      : (<><i className={`icon-btn ${isLiked && 'text--theme-highlight'}`}>v</i>{rateTotal}</>)
+                  }
                 </button>
               </TooltipContainer>
             </Col>

@@ -154,19 +154,19 @@
 }
 
 .pink_icon {
-  background-color: var(--magenta-20);
+  background-color: var(--magenta);
 }
 
 .pink_icon span {
-  color: var(--magenta);
+  color: var(--white);
 }
 
 .green_icon {
-  background-color: var(--colorSuccessTransp);
+  background-color: var(--colorSuccess);
 }
 
 .green_icon span {
-  color: var(--colorSuccess);
+  color: var(--white);
 }
 
 .title_disp_text {

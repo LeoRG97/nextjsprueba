@@ -89,7 +89,7 @@ const AccordionCollapse = ({
 
   return (
     <div className={styles.content_tool}>
-      <div className="row d-flex mb-2 justify-content-between align-items-center" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <div className="row d-flex mb-4 justify-content-between align-items-center" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <div className="col-6 offset-2">
           {
             (session) ? (

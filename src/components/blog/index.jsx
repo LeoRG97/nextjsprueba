@@ -222,6 +222,7 @@ const BlogComponent = ({
             quitSaved={quitSaved}
             saveArt={saveArt}
             shareArt={shareArt}
+            rateTotal={rateTotal}
           />
 
           <ListComment

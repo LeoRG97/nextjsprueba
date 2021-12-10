@@ -69,7 +69,7 @@ const AutorComponent = ({
                         ? quitSaved() : dispatch(showSubscribeAlert());
                     }}
                   >
-                    U
+                    w
                   </button>
                 </TooltipContainer>
               ) : (
@@ -94,7 +94,13 @@ const AutorComponent = ({
                 }}
                 className={`Btn-like m-2  ${liked && 'Btn-like__active'}`}
               >
-                <i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>{!liked ? 'Valorar' : rateTotal}
+                {
+                  !liked ? (
+                    <><i className={`icon-btn ${liked && 'text--theme-highlight'}`}>c</i>Valorar</>
+                  ) : (
+                    <><i className={`icon-btn ${liked && 'text--theme-highlight'}`}>v</i>{rateTotal}</>
+                  )
+                }
               </button>
             </TooltipContainer>
           </div>
