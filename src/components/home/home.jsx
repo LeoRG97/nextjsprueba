@@ -163,7 +163,7 @@ const HomePage = ({ articulos }) => {
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
               <div className={`${styles.iconOutline} ${styles.faintOutlineSuccess}`}>
-                <span className={`icon icon--theme-success ${styles.largeIcon}`}>f</span>
+                <span className={`icon icon--theme-light ${styles.largeIcon}`}>f</span>
               </div>
               <p className="title">Aumenta<br />tu conocimiento</p>
               <Link href="/trending-topics" passHref>
@@ -174,7 +174,7 @@ const HomePage = ({ articulos }) => {
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
               <div className={`${styles.iconOutline} ${styles.faintOutlineYellow}`}>
-                <span className={`icon icon--theme-warning ${styles.largeIcon}`}>e</span>
+                <span className={`icon icon--theme-light ${styles.largeIcon}`}>e</span>
               </div>
               <p className="title">Desarrolla<br />nuevas habilidades</p>
               <Link href="/think-tools" passHref>
@@ -185,7 +185,7 @@ const HomePage = ({ articulos }) => {
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
               <div className={`${styles.iconOutline} ${styles.faintOutlinePrimary}`}>
-                <span className={`icon icon--theme-accent ${styles.largeIcon}`}>d</span>
+                <span className={`icon icon--theme-light ${styles.largeIcon}`}>d</span>
               </div>
               <p className="title">Comparte<br />tu opinión</p>
               <Link href="/think-team" passHref>

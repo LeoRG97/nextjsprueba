@@ -47,7 +47,7 @@ export default function Home() {
                   <div className={`${styles.content_m_text} `}>
                     <div className={`row d-flex align-items-center my-5 ${styles.movil_text_align}`}>
                       <Col xl="3" lg="3" sm="12" xs="12">
-                        <div className={`${styles.content_icon} ${styles.pink_icon} mr-4`}><span className="icon">C</span></div>
+                        <div className={`${styles.content_icon} ${styles.pink_icon} mr-4`}><span className="icon">8</span></div>
                       </Col>
                       <Col xl="9" lg="9" sm="12" xs="12">
                         <h6 className={`${styles.title_disp_text} title`}>Visión de grupo</h6>

@@ -123,7 +123,7 @@ const LoginForm = () => {
                 onChange={handleChange}
               />
               <button className="input__icon" onClick={handlePasswordType} type="button">
-                <span className="icon icon--theme-secondary">{passwordType === 'password' ? 'B' : 'C'}</span>
+                <span className="icon icon--theme-secondary">{passwordType === 'password' ? 'B' : '8'}</span>
               </button>
             </div>
           </label>

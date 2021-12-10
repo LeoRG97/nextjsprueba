@@ -123,15 +123,15 @@
 }
 
 .faintOutlineSuccess {
-  background-color: var(--green-20);
+  background-color: var(--green);
 }
 
 .faintOutlineYellow {
-  background-color: var(--colorWarningTransp);
+  background-color: var(--colorWarning);
 }
 
 .faintOutlinePrimary {
-  background-color: var(--cyan-20);
+  background-color: var(--cyan);
 }
 
 .largeIcon {
@@ -201,7 +201,7 @@
   }
 }
 
-@media (max-width: 380px) { 
+@media (max-width: 380px) {
   .marginNoArticles {
     position: relative;
     margin-top: 0% !important;

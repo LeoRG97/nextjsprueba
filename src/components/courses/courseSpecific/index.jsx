@@ -98,7 +98,6 @@ const CourseSpecific = ({ course }) => {
       checkIfSubcribeThisCourseFunc();
     }
   }, [session, course]);
-
   return (
     <Container fluid className="content-n-p">
       <div className={styles.container}>

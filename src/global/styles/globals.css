@@ -315,6 +315,10 @@ a {
   color: var(--colorSuccess);
 }
 
+.icon--theme-light {
+  color: var(--colorLight);
+}
+
 .icon-modal--succes {
   font-size: var(--icon-size-md);
   color: var(--colorSuccess);

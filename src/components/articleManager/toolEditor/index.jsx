@@ -397,7 +397,7 @@ const ToolEditorComponent = ({
                   onClick={() => setPreview()}
                   className={`icon-button icon-button--secondary ${styles.optionsItem}`}
                 >
-                  C
+                  8
                 </button>
               </TooltipContainer>
             </>

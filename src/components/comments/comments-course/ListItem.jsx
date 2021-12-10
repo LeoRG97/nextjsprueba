@@ -278,11 +278,13 @@ export const ListItem = ({ comment, mutateList }) => {
                 ))
             }
             <div className="d-flex align-items-center position-absolute end-0">
-              <small className={
-                comment.liked ? `icon ${styles.liked}` : `icon ${styles.noLiked}`
+              {
+                comment.liked ? (
+                  <small className={`icon ${styles.liked}`}>v</small>
+                ) : (
+                  <small className={`icon ${styles.noLiked}`}>c</small>
+                )
               }
-              >c
-              </small>
               <small className="text--theme-highlight">{comment.likes}</small>
             </div>
           </div>
