@@ -32,6 +32,20 @@
   left: 1px;
 }
 
+.error {
+  display: block;
+  margin-bottom: 1rem;
+  color: var(--text-color-error);
+}
+
+.buttonChek {
+  display: contents;
+}
+
+.check {
+  display: inline-flex;
+}
+
 .container_Policies {
   justify-content: center;
   align-items: center;

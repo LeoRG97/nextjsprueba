@@ -5,29 +5,21 @@ import Link from 'next/link';
 import styles from './modalsIndicator.module.css';
 
 const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
-  const [checkM, setCheckM] = useState({
-    check1: '',
-    check2: '',
-    check3: '',
-  });
+  const [consentimiento, setConsentimiento] = useState(false);
+  const [error, setError] = useState('');
+  const [errorStatus, setErrorStatus] = useState(false);
 
-  const actualizarState = (e) => {
-    setCheckM({
-      ...checkM,
-      [e.target.name]: e.target.checked,
-    });
+  const actualizarState = () => {
+    setConsentimiento(!consentimiento);
   };
 
   const verificarCheck = () => {
-    if (
-      checkM.check1 === true
-      && checkM.check2 === true
-      && checkM.check3 === true
-    ) {
+    if (consentimiento === true) {
       acceptDP();
-      setCheckM({ check1: false });
-      setCheckM({ check2: false });
-      setCheckM({ check3: false });
+      setConsentimiento(false);
+    } else {
+      setError('Para crear una cuenta, debes marcar la casilla');
+      setErrorStatus(true);
     }
   };
 
@@ -35,74 +27,77 @@ const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
     <>
       <Modal backdrop="static" show={show} size="md" centered>
         <Modal.Body className={styles.container_Policies}>
-          <div className="row d-flex justify-content-center">
-            {/* <LoadingIndicator /> */}
-          </div>
-          <div className="row mt-3">
-            <h1 className="title mt-3">
-              Información Básica de Protección de Datos
+          <div className="row mt-2">
+            <h1 className="title mt-2">
+              Información Básica de Privacidad
             </h1>
+            <div className="row d-flex justify-content-center mt-2">
+              {
+                errorStatus ? (
+                  <span className={`text-sm ${styles.error}`}>{error}</span>
+                ) : (
+                  <div />
+                )
+              }
+            </div>
           </div>
           <div className="row justify-content-center mt-2">
             <div className="col-10" align="left">
               <p className="text-sm">
-                <b>Responsable: </b>EVERIS SPAIN, S.L.U (everis)
+                <b>Responsable: </b>NTT DATA México S. de R.L. de C.V. (“NTT DATA México”)
               </p>
               <p className="text-sm">
-                <b>Finalidad: </b>gestionar las peticiones recibidas
-                (solicitudes de contacto o información), y el envio de
-                comunicaciones/newsletters sobre noticias, cursos, productos y
-                servicios relacionados con las actividades desarrolladas por
-                everis y/o su Grupo.
+                <b>Finalidades: </b>
+              </p>
+              <div className="text-sm">
+                <ul>
+                  <li>Gestionar y habilitar su acceso a la plataforma y al contenido de la misma
+                  </li>
+                  <li>
+                    Enviarle comunicaciones / newsletters sobre noticias,
+                    cursos, productos y servicios relacionados con las
+                    actividades desarrolladas por NTT DATA México
+                  </li>
+                  <li>
+                    Transferir sus datos personales a la sociedad del Grupo NTT
+                    DATA en LATAM según el país al que pertenezca, en su caso.
+                  </li>
+                </ul>
+              </div>
+              <p className="text-sm">
+                <b>Ejercicio de Derechos: </b>tiene el derecho de ejercer en
+                cualquier momento sus derechos de acceso, rectificación,
+                cancelación y oposición (los `&quot;`Derechos ARCO`&quot;`) de su información.
               </p>
               <p className="text-sm">
-                <b>Ejercicio de Derechos: </b>Tiene derecho a acceder,
-                rectificar y suprimir los datos, así como otros derechos, como
-                se explica en la información adicional.
+                <b>Información adicional: </b>consulte nuestro{' '}
+                <Link href="/policies/privacy" passHref><a target="_blank" rel="noopener noreferrer"> Aviso de privacidad </a></Link>
               </p>
+              <div className={styles.check}>
+                <button className={styles.buttonChek} onClick={actualizarState} type="button">
+                  <span className={`icon ${consentimiento ? 'icon--theme-highlight' : 'icon--theme-secondary'}`}>
+                    {consentimiento ? 'A' : '5'}
+                  </span>
+                </button>
+                <span className="text-sm d-block mb-2 ms-1">
+                  Consiento que mis datos personales sean tratados para las
+                  finalidades antes descritas.
+                </span>
+              </div>
+              <br />
               <p className="text-sm">
-                <b>Información adicional: </b>consulte nuestra{' '}
-                <Link href="/policies/privacy" passHref><a target="_blank" rel="noopener noreferrer"> politica de privacidad </a></Link>
+                Al hacer clic en Crear Cuenta, reconozco que he leído y aceptado
+                las <Link href="/policies/legal" passHref><a target="_blank" rel="noopener noreferrer"> Condiciones de uso </a></Link> y el <Link href="/policies/privacy" passHref><a target="_blank" rel="noopener noreferrer"> Aviso de privacidad </a></Link>
               </p>
-              <div className="text-sm">
-                <input
-                  type="checkbox"
-                  id=""
-                  className="micheckbox"
-                  value="true"
-                  name="check1"
-                  onChange={actualizarState}
-                />{' '}
-                He leído y entendido la politica de privacidad
-              </div>
-              <div className="text-sm">
-                <input
-                  type="checkbox"
-                  id=""
-                  className="micheckbox"
-                  value="true"
-                  name="check2"
-                  onChange={actualizarState}
-                />{' '}
-                Consiento el envío de comunicaciones comerciales o newsletters
-                sobre noticias, cursos, actividades, eventos propios o de
-                terceros, productos, productos, servicios, ofertas, promociones,
-                relacionados con las actividades desarrolladas por everis
-              </div>
-              <div className="text-sm">
-                <input
-                  type="checkbox"
-                  id=""
-                  className="micheckbox"
-                  value="true"
-                  name="check3"
-                  onChange={actualizarState}
-                />{' '}
-                Consiento la comunicación de mis dato a ñas empresas del Grupo
-                everis para recibir comunicaciones comerciales o newsletters
-                relacionados con las actividades desarrolladas por las empresas
-                del Grupo everis
-              </div>
+            </div>
+            <div className="row d-flex justify-content-center mt-2">
+              {
+                errorStatus ? (
+                  <span className={`text-sm ${styles.error}`}>{error}</span>
+                ) : (
+                  <div />
+                )
+              }
             </div>
           </div>
         </Modal.Body>
@@ -113,22 +108,11 @@ const DataPoliciesModal = ({ show, onClose, acceptDP }) => {
           >
             Cancelar
           </button>
-          {
-            checkM.check1 === true && checkM.check2 === true && checkM.check3 === true ? (
-              <button
-                onClick={() => verificarCheck()}
-                className="button button button--theme-primary"
-              >Crear cuenta
-              </button>
-            ) : (
-              <button
-                disabled
-                onClick={() => verificarCheck()}
-                className="button button button--theme-primary"
-              >Crear cuenta
-              </button>
-            )
-          }
+          <button
+            onClick={() => verificarCheck()}
+            className="button button button--theme-primary"
+          >Crear cuenta
+          </button>
         </Modal.Footer>
       </Modal>
     </>
