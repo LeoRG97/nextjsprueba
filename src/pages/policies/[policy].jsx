@@ -21,7 +21,7 @@ export default function PrivacyPolicies({ policy }) {
                 <div className="policies-nav">
                   <Link href="/policies/privacy" passHref>
                     <a className={`policies-title subtitle ${policy === 'privacy' && 'text--theme-light'}`}>
-                      Política de privacidad
+                      Aviso de privacidad
                     </a>
                   </Link>
                   <Link href="/policies/cookies" passHref>
@@ -31,7 +31,7 @@ export default function PrivacyPolicies({ policy }) {
                   </Link>
                   <Link href="/policies/legal" passHref>
                     <a className={`policies-title subtitle ${policy === 'legal' && 'text--theme-light'}`}>
-                      Aviso legal
+                      Aviso Legal y Condiciones de Uso
                     </a>
                   </Link>
                 </div>

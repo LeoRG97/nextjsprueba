@@ -107,7 +107,7 @@ const CreateAccountForm = ({ preferences }) => {
 
   const [preferencesState, setPreferencesState] = useState([]);
 
-  const [newsLetter, setNewsletterState] = useState(false);
+  const newsLetter = true;
   const [error, setError] = useState('');
   const [errorStatus, setErrorStatus] = useState(false);
   const [errorGeneral, setErrorGeneral] = useState(false);
@@ -341,10 +341,6 @@ const CreateAccountForm = ({ preferences }) => {
         setErrorGeneral(false);
       }
     }
-  };
-
-  const handleCheck = () => {
-    setNewsletterState(!newsLetter);
   };
 
   const withoutError = () => {
@@ -681,23 +677,6 @@ const CreateAccountForm = ({ preferences }) => {
                   />
                   {errorCity.status && <span className={`text-sm ${styles.error}`}>{errorCity.text}</span>}
                 </label>
-                <div className={styles.check}>
-                  <button className={styles.buttonChek} onClick={handleCheck} type="button">
-                    <span className={`icon ${newsLetter ? 'icon--theme-highlight' : 'icon--theme-secondary'}`}>
-                      {newsLetter ? 'A' : '5'}
-                    </span>
-                  </button>
-                  <span className="text-sm d-block mb-2 ms-1">
-                    Doy mi consentimiento para la comunicación a las filiales y empresas
-                    asociadas de NTT DATA con el fin de recibir comunicaciones
-                    comerciales relacionadas con los servicios de XXXX.
-                  </span>
-                </div>
-                <span className="text-sm d-block mb-3">
-                  Al hacer clic en Crear cuenta, reconozco que he leído y aceptado
-                  las <Link href="#" passHref><a className={styles.link}> Condiciones de uso </a></Link>
-                  y la <Link href="/policies/privacy" passHref><a className={styles.link} target="_blank" rel="noopener noreferrer"> Política de Privacidad</a></Link>.
-                </span>
                 {
                   errorStatus ? (
                     <span className={`text-sm ${styles.error}`}>{error}</span>
@@ -707,7 +686,7 @@ const CreateAccountForm = ({ preferences }) => {
                 }
                 <div className={styles.buttonContinue}>
                   <button className="button button--theme-primary" onClick={handleFirstForm} type="submit">
-                    Crear cuenta
+                    Siguiente
                   </button>
                 </div>
               </form>

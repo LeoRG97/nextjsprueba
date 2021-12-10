@@ -26,25 +26,19 @@ const Footer = () => {
             <Link href="/experts">
               <a className="text-md text--theme-light">Nuestros Expertos</a>
             </Link>
-            <Link href="/#">
-              <a className="text-md text--theme-light">Soporte Técnico</a>
-            </Link>
-            <Link href="/#">
-              <a className="text-md text--theme-light">Términos de Uso</a>
-            </Link>
             <a className="text-md text--theme-light" href="mailto:sofia.gutierrez.vallejo@nttdata.com">Contacto</a>
           </Col>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <p className="subtitle">Legales</p>
 
             <Link href="/policies/privacy">
-              <a className="text-md text--theme-light">Política de Privacidad</a>
+              <a className="text-md text--theme-light">Aviso de Privacidad</a>
             </Link>
             <Link href="/policies/cookies">
               <a className="text-md text--theme-light">Política de Cookies</a>
             </Link>
             <Link href="/policies/legal">
-              <a className="text-md text--theme-light">Aviso Legal</a>
+              <a className="text-md text--theme-light">Aviso Legal y Condiciones de Uso</a>
             </Link>
 
           </Col>
@@ -52,7 +46,7 @@ const Footer = () => {
         <Row className={styles.footer_container_row_copyright}>
           <Col sm="12" md="6">
             <a className="text-sm text--theme-light" href="https://mexico.nttdata.com/" target="_blank" rel="noreferrer">
-              © Copyright NTT Data EMEAL - Latam
+              © NTT DATA Spain and affilliates. 2021. Todos los derechos reservados.
             </a>
           </Col>
           <Col sm="12" md="6" className={styles.foote_mob_top}>
