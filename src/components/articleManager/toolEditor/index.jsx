@@ -344,7 +344,7 @@ const ToolEditorComponent = ({
               </p>
               <h1 className="title-xl text-center">¿Qué es?</h1>
               <VideoSection />
-              <h1 className="title-xl text-center">¿Por qué debería usarlo?</h1>
+              <h1 className="title-xl text-center">¿Por qué deberías usarlo?</h1>
               <JustificationSection />
               <h1 className="title-xl text-center">¿Cómo lo uso?</h1>
               <DescriptionSection />

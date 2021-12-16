@@ -130,7 +130,7 @@ const ToolPreview = () => {
           {justification.html.length > 0
             && (
               <div className={styles.previewMargin}>
-                <h5 className="title">¿Por qué debería usarlo?</h5>
+                <h5 className="title">¿Por qué deberías usarlo?</h5>
               </div>
             )}
           {justification.html.map((item) => {

@@ -93,6 +93,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           status: true,
           text: 'Introduce una empresa.',
         });
+        setCompany(value);
         setErrorGeneral(true);
       } else {
         setErrorCompany({
@@ -109,6 +110,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           status: true,
           text: 'Introduce tu puesto.',
         });
+        setPosition(value);
         setErrorGeneral(true);
       } else {
         setErrorPosition({
@@ -122,16 +124,18 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
     if (type === 'tel') {
       if (!value || value === '') {
         setErrorTel({
-          status: true,
-          text: 'Introduce un número de telefono.',
+          status: false,
+          text: '',
         });
-        setErrorGeneral(true);
+        setErrorGeneral(false);
+        setTel(value);
       } else if (value.length !== 10) {
         setErrorTel({
           status: true,
           text: 'Introduce solo 10 dígitos.',
         });
         setErrorGeneral(true);
+        setTel(value);
       } else {
         setErrorTel({
           status: false,
@@ -147,6 +151,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           status: true,
           text: 'Introduce una ciudad.',
         });
+        setCity(value);
         setErrorGeneral(true);
       } else {
         setErrorCity({
@@ -163,6 +168,8 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           status: true,
           text: 'Selecciona un país.',
         });
+        setCountry(value);
+        setState('');
         setErrorGeneral(true);
       } else {
         setErrorCountry({
@@ -170,6 +177,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           text: '',
         });
         setCountry(value);
+        setState('');
         setErrorGeneral(false);
       }
     }
@@ -179,6 +187,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
           status: true,
           text: 'Selecciona la región administrativa.',
         });
+        setState(value);
         setErrorGeneral(true);
       } else {
         setErrorState({
@@ -231,11 +240,10 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
       position,
       country,
       state,
-      city,
       tel,
+      city,
       preferences: (preferencesState.map((p) => p._id)),
     };
-
     if (preferencesState.length < 3) {
       setErrorPreferencesState({
         status: true,
@@ -266,7 +274,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
 
     if (company === ''
       || position === ''
-      || tel === ''
+      || (tel.length !== 10 && tel.length > 0)
       || city === ''
       || country === ''
       || state === '') {
@@ -306,7 +314,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
                 placeholder="Nombre de la empresa"
                 className="input"
                 value={company}
-                onChange={(event) => setCompany(event.target.value)}
+                onChange={(event) => validate(event.target.value, 'company')}
                 required
               />
               {errorCompany.status && <span className={`text-sm ${styles.error}`}>{errorCompany.text}</span>}
@@ -321,7 +329,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
                 placeholder="Puesto que ocupa"
                 className="input"
                 value={position}
-                onChange={(event) => setPosition(event.target.value)}
+                onChange={(event) => validate(event.target.value, 'position')}
                 required
               />
               {errorPosition.status && <span className={`text-sm ${styles.error}`}>{errorPosition.text}</span>}
@@ -339,7 +347,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
                   defaultOptionLabel="País"
                   className="select"
                   value={country}
-                  onChange={(val) => setCountry(val)}
+                  onChange={(val) => validate(val, 'country')}
                 />
               </div>
               {errorCountry.status && <span className={`text-sm ${styles.error}`}>{errorCountry.text}</span>}
@@ -355,7 +363,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
                   className="select"
                   country={country}
                   value={state}
-                  onChange={(val) => setState(val)}
+                  onChange={(val) => validate(val, 'state')}
                   required
                 />
                 {errorState.status && <span className={`text-sm ${styles.error}`}>{errorState.text}</span>}
@@ -371,12 +379,12 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
             placeholder="Ciudad o localidad"
             className="input"
             value={city}
-            onChange={(event) => setCity(event.target.value)}
+            onChange={(event) => validate(event.target.value, 'city')}
             required
           />
           {errorCity.status && <span className={`text-sm ${styles.error}`}>{errorCity.text}</span>}
         </label>
-        <label className="d-block subtitle mb-2" htmlFor="tel">Teléfono*
+        <label className="d-block subtitle mb-2" htmlFor="tel">Teléfono
           <input
             id="tel"
             name="tel"
@@ -384,8 +392,7 @@ const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
             placeholder="Número de teléfono"
             className="input"
             value={tel}
-            onChange={(event) => setTel(event.target.value)}
-            required
+            onChange={(event) => validate(event.target.value, 'tel')}
           />
           {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
         </label>

@@ -162,7 +162,7 @@ const HomePage = ({ articulos }) => {
         <Row className={styles.content_margin}>
           <Col xl="4" lg="4" sm="12">
             <div className={`${styles.content_centered} mb-4`}>
-              <div className={`${styles.iconOutline} ${styles.faintOutlineSuccess}`}>
+              <div className={`${styles.iconOutline} ${styles.faintOutlineOrange}`}>
                 <span className={`icon icon--theme-light ${styles.largeIcon}`}>f</span>
               </div>
               <p className="title">Aumenta<br />tu conocimiento</p>
