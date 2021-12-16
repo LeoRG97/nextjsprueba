@@ -75,7 +75,7 @@ const TrendingBannerComponent = ({ loggedIn }) => {
               <div>
                 Nuestros expertos crean y comparten artículos de relevancia,
               </div>
-              <div>especialmente diseñados para mentes visionarias, como tú.</div>
+              <div>especialmente diseñados para mentes visionarias, como la tuya.</div>
             </div>
             <Link href="/create-account" passHref>
               <button className={`button button--theme-primary ${styles.marginT}`}>Crear cuenta</button>

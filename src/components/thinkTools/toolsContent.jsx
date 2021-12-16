@@ -153,7 +153,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   }
                   {
                     toolsCode && toolsCode.justification && toolsCode.justification.html
-                    && toolsCode.justification.html.length > 0 && <h5 className={`title ${styles.content_title_use}`}>¿Por qué debería de usarlo?</h5>
+                    && toolsCode.justification.html.length > 0 && <h5 className={`title ${styles.content_title_use}`}>¿Por qué deberías usarlo?</h5>
                   }
                   {
                     toolsCode && toolsCode.justification && toolsCode.justification.html

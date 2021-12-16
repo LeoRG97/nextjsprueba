@@ -269,11 +269,11 @@ const CreateAccountForm = ({ preferences }) => {
     if (type === 'tel') {
       if (!value || value === '') {
         setErrorTel({
-          status: true,
-          text: 'Introduce un número de telefono.',
+          status: false,
+          text: '',
         });
         setTel(value);
-        setErrorGeneral(true);
+        setErrorGeneral(false);
       } else if (value.length !== 10) {
         setErrorTel({
           status: true,
@@ -397,7 +397,7 @@ const CreateAccountForm = ({ preferences }) => {
       || password === ''
       || company === ''
       || position === ''
-      || tel === ''
+      || (tel.length !== 10 && tel.length > 0)
       || city === ''
       || country === ''
       || state === '') {
@@ -472,14 +472,13 @@ const CreateAccountForm = ({ preferences }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const model = {
+    let model = {
       email,
       password,
       name: firstName,
       apellidos: lastName,
       position,
       company,
-      tel,
       city,
       country,
       state,
@@ -487,7 +486,9 @@ const CreateAccountForm = ({ preferences }) => {
       preferences: preferencesState,
       role: dataInvite ? dataInvite.role : 'user',
     };
-
+    if (tel !== '') {
+      model = { ...model, tel };
+    }
     if (preferencesState.length < 3) {
       setError('Por favor, selecciona por lo menos 3 preferencias');
       setErrorStatus(true);
@@ -616,7 +617,7 @@ const CreateAccountForm = ({ preferences }) => {
                     </label>
                   </div>
                 </div>
-                <label className="d-block subtitle mb-2" htmlFor="tel">Teléfono*
+                <label className="d-block subtitle mb-2" htmlFor="tel">Teléfono
                   <input
                     id="tel"
                     name="tel"
@@ -625,7 +626,6 @@ const CreateAccountForm = ({ preferences }) => {
                     className="input"
                     value={tel}
                     onChange={(event) => validate(event.target.value, 'tel')}
-                    required
                   />
                   {errorTel.status && <span className={`text-sm ${styles.error}`}>{errorTel.text}</span>}
                 </label>
