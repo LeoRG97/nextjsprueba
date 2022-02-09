@@ -132,7 +132,7 @@ const CourseDetailComponent = ({
           {
             curso.autor ? (
               <div onClick={showCourse} className={styles.cardNumbersContainer}>
-                <div className="text-sm">{'Un curso de '} {curso.usuario_id.name || ''} {curso.usuario_id.apellidos || ''}</div>
+                {/* <div className="text-sm">{'Un curso de '} {curso.usuario_id.name || ''} {curso.usuario_id.apellidos || ''}</div> */}
                 <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{curso.likes || 0}</div>
                 <div className={`text-sm ${styles.peopleContainer}`}><span className="icon">Z</span>{' '}{curso.subscripciones || 0}</div>
               </div>

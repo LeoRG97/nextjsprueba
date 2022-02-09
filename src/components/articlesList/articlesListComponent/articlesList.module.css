@@ -99,15 +99,16 @@
 
 .cardLikesContainer {
   display: flex;
+  justify-content: flex-end;
 }
 
-.cardLikesContainer div {
+/* .cardLikesContainer div {
   width: 30%;
 }
 
 .cardLikesContainer div:first-child {
   width: 70%;
-}
+} */
 
 .likesContainer,
 .viewsContainer {

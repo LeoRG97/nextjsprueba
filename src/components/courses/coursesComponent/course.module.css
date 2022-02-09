@@ -85,6 +85,7 @@
 }
 .cardNumbersContainer {
   display: flex;
+  justify-content: flex-end;
 }
 
 .cardNumbersContainer div {

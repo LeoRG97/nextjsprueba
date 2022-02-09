@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -135,7 +134,11 @@ const ArticlesDetailComponent = ({
           {
             article.usuario_id ? (
               <div onClick={showArticle} className={styles.cardLikesContainer}>
-                <div className="text-sm">{article.usuario_id.name} {article.usuario_id.apellidos}</div>
+                {/* <div className="text-sm">
+                  {article.usuario_id.name}
+                  {' '}
+                  {article.usuario_id.apellidos}
+                </div> */}
                 <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{article.likes}</div>
               </div>
             ) : (<></>)

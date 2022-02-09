@@ -1,17 +1,14 @@
-/* eslint-disable no-unused-expressions */
-import Image from 'next/image';
 import { Container, Row, Col } from 'react-bootstrap';
-import PropTypes from 'prop-types';
 import styles from '../courseSpecific.module.css';
 
 const AutorCourseComponent = ({
-  autor, suscrito, handleSubscribe, handleLesson,
+  suscrito, handleSubscribe, handleLesson,
 }) => {
   return (
     <Container className="content-n-p content-blog-autor mt-3">
       <Row className="m-0">
         <Col className="col-12" xl="6" lg="6">
-          <Row>
+          {/* <Row>
             <Image
               width="45"
               height="45"
@@ -23,7 +20,7 @@ const AutorCourseComponent = ({
               <label className="text-sm">Un curso de </label>
               <h3 className="text-md">{autor.name} {autor.apellidos}</h3>
             </Col>
-          </Row>
+          </Row> */}
         </Col>
         <Col xl="6" lg="6" sm="12" className="col-12 p-0">
           <div className={styles.buttonsContainer}>
@@ -49,7 +46,7 @@ const AutorCourseComponent = ({
 };
 
 AutorCourseComponent.propTypes = {
-  autor: PropTypes.shape(),
+  // autor: PropTypes.shape(),
 };
 
 AutorCourseComponent.defaultProps = {
