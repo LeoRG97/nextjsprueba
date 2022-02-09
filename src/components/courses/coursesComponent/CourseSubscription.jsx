@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable no-console */
 import React from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -10,8 +7,6 @@ import styles from './course.module.css';
 const CourseSubscription = ({
   curso, classContent,
 }) => {
-  /*  const { data } = useSelector((state) => state.profile);
-  const dispatch = useDispatch(); */
   const router = useRouter();
 
   const showCourse = () => {
@@ -65,7 +60,9 @@ const CourseSubscription = ({
           {
             curso.autor[0] ? (
               <div onClick={showCourse} className={styles.cardNumbersContainer}>
-                <div className="text-sm">{'Un curso de '} {curso.autor[0].name || ''} {curso.autor[0].apellidos || ''}</div>
+                {/* <div className="text-sm">
+                {'Un curso de '} {curso.autor[0].name || ''} {curso.autor[0].apellidos || ''}
+                </div> */}
                 <div className={`text-sm ${styles.likesContainer}`}><span className="icon">c</span>{' '}{curso.curso[0].likes.length || 0}</div>
                 <div className={`text-sm ${styles.peopleContainer}`}><span className="icon">Z</span>{' '}{curso.total || 0}</div>
               </div>

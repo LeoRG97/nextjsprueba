@@ -1,8 +1,6 @@
-/* eslint-disable react/jsx-filename-extension */
 /* eslint-disable react/no-danger */
 import React, { useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Image from 'next/image';
 import { useSession } from 'next-auth/client';
 import styles from '../courseEditor.module.css';
 import { getProfile } from '@/services/profile';
@@ -10,6 +8,7 @@ import { getProfile } from '@/services/profile';
 const CoursePreviewComponent = ({
   initialData, initialContent,
 }) => {
+  // eslint-disable-next-line no-unused-vars
   const [autor, setAutor] = useState({});
   const [session] = useSession();
   const authorInfo = async (idAutor) => {
@@ -68,7 +67,7 @@ const CoursePreviewComponent = ({
                 </Row>
               </div>
             </Col>
-            {
+            {/* {
               initialData && initialData.autor ? (
                 <Row className="m-0">
                   <Col className="col-12" xl="12" lg="12">
@@ -77,12 +76,15 @@ const CoursePreviewComponent = ({
                         width="45"
                         height="45"
                         layout="fixed"
-                        src={autor && autor.picture ? autor.picture : '/images/profile/no-profile-img.png'}
+                        src={autor && autor.picture
+                        ? autor.picture : '/images/profile/no-profile-img.png'}
                         className={styles.author_pict}
                       />
                       <Col>
                         <label className="text-sm">Un curso de</label>
-                        <h3 className="text-md">{autor && autor.nombre ? autor.nombre : 'Nombre del autor'}</h3>
+                        <h3 className="text-md">
+                        {autor && autor.nombre ? autor.nombre : 'Nombre del autor'}
+                        </h3>
                       </Col>
                     </Row>
                   </Col>
@@ -95,18 +97,22 @@ const CoursePreviewComponent = ({
                         width="45"
                         height="45"
                         layout="fixed"
-                        src={session && session.user && session.user.picture ? session.user.picture : '/images/profile/no-profile-img.png'}
+                        src={session && session.user && session.user.picture
+                        ? session.user.picture : '/images/profile/no-profile-img.png'}
                         className={styles.author_pict}
                       />
                       <Col>
                         <label className="text-sm">Un curso de</label>
-                        <h3 className="text-md">{session && session.user && session.user.name ? session.user.name : 'Nombre del autor'}</h3>
+                        <h3 className="text-md">
+                        {session && session.user && session.user.name
+                        ? session.user.name : 'Nombre del autor'}
+                        </h3>
                       </Col>
                     </Row>
                   </Col>
                 </Row>
               )
-            }
+            } */}
             <Col xs={12}>
               <div className="mt-5">
                 <h1 className="title">{initialData && initialData.objetivo ? initialData.objetivo : 'Objetivo del curso'}</h1>
