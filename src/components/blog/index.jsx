@@ -2,9 +2,10 @@
 /* eslint-disable react/no-danger */
 import { Container, Overlay, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
 import Image from 'next/image';
+import { useDispatch } from 'react-redux';
 import { AutorComponent } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
 import ModalNuevaNota from '../notas/ModalNuevaNota';
@@ -15,12 +16,15 @@ import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './blog.module.css';
 import Resources from './Resources';
+import { premiumUserAccess } from '@/helpers/accessVerifiers';
+import { showPremiumStaticAlert } from '@/reducers/alert';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
   renderResource, rateTotal,
 }) => {
-  const [session] = useSession();
+  const [session, loading] = useSession();
+  const dispatch = useDispatch();
   const [textSelected, setTextSelected] = useState('');
   const [selected, setSelected] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -123,6 +127,13 @@ const BlogComponent = ({
     );
   };
 
+  useEffect(() => {
+    // muestra el modal Premium si el usuario no tiene permisos para ver el contenido
+    if (!loading && blogInfo.premium && !premiumUserAccess(session?.user.role)) {
+      dispatch(showPremiumStaticAlert());
+    }
+  }, [session, loading]);
+
   return (
     <>
       <Container>
@@ -178,6 +189,7 @@ const BlogComponent = ({
                 })) : (<></>)
             }
           </div>
+
           {blogInfo.recursos && blogInfo.recursos.length > 0 && (
             <div className="content-btns-last">
               <label className="text-md">Ver en</label>
@@ -224,7 +236,6 @@ const BlogComponent = ({
             shareArt={shareArt}
             rateTotal={rateTotal}
           />
-
           <ListComment
             blogInfo={blogInfo._id}
           />

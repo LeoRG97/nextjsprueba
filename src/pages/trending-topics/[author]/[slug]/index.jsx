@@ -173,7 +173,10 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', checkscroll);
+    if (window) {
+      window.addEventListener('scroll', checkscroll);
+    }
+
     if (query.slug) {
       getBlog();
     }

@@ -10,8 +10,9 @@ import { AutorCourseComponent } from '@/components';
 import { checkIfSuscribeThisCourse, createSubscriptionService, getSubscriptionsUser } from '@/services/subscription';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import { showSubscribeAlert } from '@/reducers/alert';
+import { showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
 import ModalInfo from './ModalInfo';
+import { premiumUserAccess } from '@/helpers/accessVerifiers';
 
 const CourseSpecific = ({ course }) => {
   const router = useRouter();
@@ -60,21 +61,25 @@ const CourseSpecific = ({ course }) => {
   };
 
   const handleSubscribe = async () => {
-    const model = {
-      curso_id: course._id,
-      usuario_id: session.user.id,
-      lecciones: [],
-    };
-    setModalLoading(true);
-    const res = await createSubscriptionService(model);
-    if (res) {
-      setModalError(false);
-      setModalLoading(false);
-      setSuscrito(true);
+    if (course.exclusivo && !premiumUserAccess(session.user.role)) {
+      dispatchCourse(showPremiumAlert());
     } else {
-      setModalError(true);
-      setModalLoading(false);
-      setSuscrito(false);
+      const model = {
+        curso_id: course._id,
+        usuario_id: session.user.id,
+        lecciones: [],
+      };
+      setModalLoading(true);
+      const res = await createSubscriptionService(model);
+      if (res) {
+        setModalError(false);
+        setModalLoading(false);
+        setSuscrito(true);
+      } else {
+        setModalError(true);
+        setModalLoading(false);
+        setSuscrito(false);
+      }
     }
   };
 
