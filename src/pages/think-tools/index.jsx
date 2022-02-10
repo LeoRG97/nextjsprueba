@@ -23,7 +23,7 @@ export default function ThinkTools() {
           <div className="row p-5 d-flex align-items-center">
             <div className="col-lg-6 col-md-6 col-sm-12 px-4">
               <h1 className="title-xl">Soluciones creadas a la medida de tus objetivos</h1>
-              <p className="py-4 text-sm text--theme-light">
+              <p className="py-4 text-md text--theme-light">
                 Hemos preparado para ti, una serie de herramientas, especialmente
                 diseñadas para obtener mejores resultados e impulsar el desarrollo
                 de tu organización.

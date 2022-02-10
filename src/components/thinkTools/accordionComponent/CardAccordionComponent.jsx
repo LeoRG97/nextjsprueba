@@ -17,7 +17,7 @@ const CardAccordionComponent = ({
             </div>
           </div>
           <div className="col-8 col-lg-5 title">
-            <span className={styles.categoryTitle}>{data.nombre}</span>
+            <h2 className="title mb-0">{data.nombre}</h2>
           </div>
           <div className="col-2 offset-lg-3 col-lg-2 d-flex justify-content-end">
             <ContextAwareToggle eventKey={number.toString()} />
