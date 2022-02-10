@@ -95,8 +95,8 @@ const AccordionCollapse = ({
             (session) ? (
               <div onClick={() => showTool()} className={styles.toolTextContainer}>
                 <a>
-                  <div className="text-md">{herramienta.objetivo}</div>
-                  <div className="text--theme-secondary text-md">{herramienta.nombre}</div>
+                  <p className="text-md mb-0">{herramienta.objetivo}</p>
+                  <span className="text--theme-secondary text-sm">{herramienta.nombre}</span>
                 </a>
               </div>
             ) : (
@@ -104,8 +104,8 @@ const AccordionCollapse = ({
                 onClick={handleSubscribeModal}
                 className={styles.link_tool}
               >
-                <div className="text-md">{herramienta.objetivo}</div>
-                <div className="text--theme-secondary text-md">{herramienta.nombre}</div>
+                <p className="text-md mb-0">{herramienta.objetivo}</p>
+                <span className="text--theme-secondary text-sm">{herramienta.nombre}</span>
               </div>
             )
           }

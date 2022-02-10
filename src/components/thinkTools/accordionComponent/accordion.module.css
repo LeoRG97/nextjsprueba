@@ -1,3 +1,9 @@
+.accordion_wrapper {
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  width: 100%;
+}
+
 .accordion_container {
   background-color: transparent;
 }
@@ -7,12 +13,10 @@
 }
 
 .card_title {
-  letter-spacing: -1.4px;
   line-height: 1.8rem;
 }
 
 .card_body {
-  letter-spacing: -1.4px;
   line-height: 1.8rem;
 }
 
@@ -32,6 +36,7 @@
 
 .categoryTitle {
   line-height: 2rem;
+  margin: 0;
 }
 
 .premiumLabel {
@@ -68,7 +73,8 @@
   background-color: var(--colorBackgroundDarkSec);
 }
 
-.flag:hover , .flag_selected:hover {
+.flag:hover,
+.flag_selected:hover {
   filter: brightness(150%);
 }
 
@@ -179,11 +185,15 @@
   filter: brightness(95%);
 }
 
-.toolTextContainer{
+.toolTextContainer {
   cursor: pointer;
 }
 
 @media screen and (max-width: 575.98px) {
+  .accordion_wrapper {
+    padding-left: 0;
+    padding-right: 0;
+  }
   .icon_container {
     border: 1px solid var(--colorItemBorder);
     border-radius: 50%;

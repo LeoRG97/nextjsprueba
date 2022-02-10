@@ -34,7 +34,7 @@ const AccordionComponent = ({
     <div>
       <div className="row justify-content-center">
         {loading ? <LoadingIndicator /> : (
-          <div className="col-12">
+          <div className={styles.accordion_wrapper}>
             <Accordion className={styles.accordion_container}>
               {
                 accordionData ? (
