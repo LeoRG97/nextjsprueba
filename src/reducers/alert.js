@@ -5,6 +5,7 @@ export const {
   showSubscribeAlert,
   hideSubscribeAlert,
   showPremiumAlert,
+  showPremiumStaticAlert,
   hidePremiumAlert,
   showToolsModal,
   hideToolsModal,

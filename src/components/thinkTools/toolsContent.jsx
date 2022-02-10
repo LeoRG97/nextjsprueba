@@ -11,11 +11,12 @@ import styles from './tools.module.css';
 import TooltipContainer from '../articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import ModalAwaitDiagnostic from '../modalsIndicators/ModalAwaitDiagnostic';
 import { aviableDiagnostic } from '@/services/diagnostic';
-import { showSubscribeAlert } from '@/reducers/alert';
+import { showPremiumStaticAlert, showSubscribeAlert } from '@/reducers/alert';
+import { premiumUserAccess } from '@/helpers/accessVerifiers';
 
 const ToolsContent = ({ toolsInfo, toolsCode }) => {
   const router = useRouter();
-  const [session] = useSession();
+  const [session, loading] = useSession();
   const dispatch = useDispatch();
   const [viewButton, setViewButton] = useState(true);
   const [modalAwaitDiagnostic, setModalAwaitDiagnostic] = useState(false);
@@ -65,6 +66,12 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
       window.removeEventListener('scroll', checkscroll);
     };
   }, []);
+
+  useEffect(() => {
+    if (!loading && toolsInfo.premium && !premiumUserAccess(session?.user.role)) {
+      dispatch(showPremiumStaticAlert());
+    }
+  }, [session, loading]);
 
   return (
     <div className="texture-top">
@@ -184,7 +191,6 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
                   }
                 </Col>
               </Row>
-
             </Col>
             <Col lg="2" className="col-1">
               <div className={`content-fixed rigth ${styles.floatingContent}`}>

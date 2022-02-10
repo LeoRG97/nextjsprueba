@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import styles from './premium.module.css';
 
-const PremiumModal = ({ show, setModal }) => {
+const PremiumModal = ({ show, setModal, backdrop = true }) => {
   const { data } = useSelector((state) => state.profile);
   // const [show, setModal] = useState(false);
 
@@ -24,16 +24,17 @@ const PremiumModal = ({ show, setModal }) => {
         centered
         className={styles.modal_Subs}
         id="modalSubs"
+        backdrop={backdrop}
       >
         <Modal.Header className={styles.modal_header}>
           <Modal.Title className={styles.modal_title_cont}>
-            <img src="/images/resourses/HuellaDigital.png" alt="Unete" className={styles.modal_img} />
+            <img src="/images/resourses/Candado.png" alt="Unete" className={styles.modal_img} />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modal_body_cont}>
           <div className={styles.modal_container}>
-            <h1 className="title ">Este es un contenido premium</h1>
-            <p className="text-sm ">Comunicate con uno de nuestros administradores si quieres ser premium.</p>
+            <h1 className="title ">Este es un contenido Premium</h1>
+            <p className="text-sm ">Comunicate con uno de nuestros administradores si quieres ser Premium.</p>
             {
               data.role ? (
                 <div />

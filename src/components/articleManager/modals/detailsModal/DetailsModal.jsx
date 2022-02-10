@@ -44,21 +44,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
   };
 
   const handleSwitch = (e) => {
-    if (e.target.name === 'premium' && e.target.checked) {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.checked,
-        destacado: false,
-      });
-    } else if (e.target.name === 'destacado' && e.target.checked) {
-      setFormData({
-        ...formData,
-        [e.target.name]: e.target.checked,
-        premium: false,
-      });
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.checked });
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.checked });
   };
 
   const handleCoverChange = async (file) => {
