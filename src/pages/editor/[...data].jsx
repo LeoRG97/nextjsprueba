@@ -42,6 +42,8 @@ const BlogEditorPage = () => {
         return 'onlyVideo';
       case 'podcast':
         return 'onlyAudio';
+      case 'reporte':
+        return 'reporte';
       default:
         return '';
     }
