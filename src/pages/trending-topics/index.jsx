@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/client';

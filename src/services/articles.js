@@ -136,7 +136,7 @@ export const updateArticle = async (article, details, userId, initialData) => {
     const currentJsonKey = ruta.split('articles/')[1]; // obtener nombre del artículo
     fileRes = await saveFile(article, `${routeId}/articles`, currentJsonKey);
     if (details.portada) {
-      if (portada.ruta_imagen) {
+      if (portada?.ruta_imagen) {
         await remove(`${BUCKET_URL}${portada.ruta_imagen}`);
       }
       coverUrl = await saveFile(details.portada, `${routeId}/resources`);
