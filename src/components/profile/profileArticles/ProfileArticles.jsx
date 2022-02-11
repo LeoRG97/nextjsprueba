@@ -102,6 +102,7 @@ const ProfileArticles = ({ estado }) => {
                       { label: 'Blogs', value: 'Blog' },
                       { label: 'Videos', value: 'Video' },
                       { label: 'Podcasts', value: 'Podcast' },
+                      { label: 'Reportes', value: 'Reporte' },
                     ]}
                   />
                 </div>

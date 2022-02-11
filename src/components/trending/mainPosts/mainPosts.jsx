@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
 import Link from 'next/link';
-import ArticleListSelectComponent from '@/components/articlesList/articleListSelectComponent/ArticleListSelect';
-import TrendingFilterComponent from '../trendingFilter/TrendingFilter';
 import ArticlesListComponent from '@/components/articlesList/articlesListComponent/articlesList';
 import { fetchPaginatedData } from '@/services/swr';
 import styles from './mainPosts.module.css';
 import { ApiRoutes } from '@/global/constants';
-import { LoadingIndicator } from '@/components';
-import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
+import { LoadingIndicator, TrendingCategoryFilter } from '@/components';
+import TrendingPageFilters from '../trendingFilter/TrendingPageFilters';
 
 const AllPosts = ({ preferences, initialData, loggedIn }) => {
   const router = useRouter();
@@ -49,26 +47,6 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
     setPageNum(1);
   }, [router.query]);
 
-  const handleOrderChange = (item) => {
-    const { query, pathname } = router;
-    router.push({
-      pathname,
-      query: { ...query, sort: item.value },
-    }, undefined, { scroll: false, shallow: true });
-  };
-
-  const handleTypeChange = (item) => {
-    const { query, pathname } = router;
-    delete query.type;
-    router.push({
-      pathname,
-      query: {
-        ...query,
-        ...(item.value && { type: item.value }),
-      },
-    }, undefined, { scroll: false, shallow: true });
-  };
-
   const { query } = router;
 
   return (
@@ -81,43 +59,8 @@ const AllPosts = ({ preferences, initialData, loggedIn }) => {
           </h1>
         </div>
       )}
-      {!router.query.user && <TrendingFilterComponent preferences={preferences} />}
-      <div className="selects-container">
-        <div className="select-recent">
-          <ArticleListSelectComponent
-            defaultTitle="Más recientes"
-            currentValue={query.sort}
-            onChange={handleOrderChange}
-            selectN="1"
-            items={[
-              { label: 'Más recientes', value: 'desc' },
-              { label: 'Más antiguas', value: 'asc' },
-            ]}
-          />
-        </div>
-        <div className="select-filter">
-          <TooltipContainer
-            placement="top"
-            tooltipText="Filtrar por tipo de entrada"
-          >
-            <div>
-              <ArticleListSelectComponent
-                defaultTitle="Todos"
-                currentValue={query.type}
-                onChange={handleTypeChange}
-                selectN="2"
-                items={[
-                  { label: 'Todos', value: '' },
-                  { label: 'Blogs', value: 'Blog' },
-                  { label: 'Videos', value: 'Video' },
-                  { label: 'Podcasts', value: 'Podcast' },
-                  { label: 'Cursos', value: 'Cursos' },
-                ]}
-              />
-            </div>
-          </TooltipContainer>
-        </div>
-      </div>
+      {!router.query.user && <TrendingCategoryFilter preferences={preferences} />}
+      <TrendingPageFilters />
       {(articles) ? (
         <ArticlesListComponent
           articles={articles}

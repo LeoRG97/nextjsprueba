@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 export { default as GlobalModals } from './modalsIndicators/ModalContainer';
 export { default as Layout } from './layout/Layout';
 export { default as Footer } from './footer/Footer';
@@ -18,7 +17,7 @@ export { default as ProfileMenu } from './profile/profileMenu/ProfileMenu';
 export { default as MailPasswdComponent } from './profile/profileSettings/mailPasswdComponent';
 export { default as AboutMeComponent } from './profile/aboutMe/aboutMe';
 export { default as TrendingBannerComponent } from './trending/trendingBanner/TrendingBanner';
-export { default as TrendingFilterComponent } from './trending/trendingFilter/TrendingFilter';
+export { default as TrendingCategoryFilter } from './trending/trendingFilter/TrendingFilter';
 export { default as ArticleListSelectComponent } from './articlesList/articleListSelectComponent/ArticleListSelect';
 export { default as SelectImg } from './userInvitation/selectImg';
 export { default as FormGeneral } from './profile/profileSettings/FormGeneral';
@@ -57,7 +56,7 @@ export { default as FileInput } from './formComponents/fileInput/FileInput';
 export { default as EditorPreviewComponent } from './articleManager/articlePreview';
 export { default as ProfileCourses } from './profile/profileCourses/ProfileCourses';
 export { default as CourseSpecific } from './courses/courseSpecific';
-export { default as MainCourses } from './courses/mainCourses/mainCourses';
+export { default as MainCourses } from './trending/mainPosts/mainCourses';
 export { default as CoursesListComponent } from './courses/coursesComponent/coursesList';
 export { default as AutorCourseComponent } from './courses/courseSpecific/autorInfo/AutorInfo';
 export { default as ProfileCourseSubscription } from './profile/profileCourses/ProfileCourseSubscription';
