@@ -21,7 +21,7 @@ const UserPreferencesCourses = ({ initialData }) => {
   );
 
   const onFilter = (filteredCourses) => {
-    mutate([...data]);
+    mutate({ ...data });
     setCourses(filteredCourses);
   };
 

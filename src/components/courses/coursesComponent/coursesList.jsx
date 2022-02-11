@@ -5,6 +5,7 @@ import { CourseDetailComponent, SuccessIndicatorModal } from '@/components';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
+import { deleteCourse } from '@/services/courses';
 
 const CoursesListComponent = ({ cursos, onFilter, showOptions = false }) => {
   const [loadModal, setLoadModal] = useState(false);
@@ -13,9 +14,25 @@ const CoursesListComponent = ({ cursos, onFilter, showOptions = false }) => {
   const [session] = useSession();
 
   const onDelete = async (id) => {
-    console.log(onFilter);
-    console.log(id);
+    setLoadModal(true);
+    try {
+      const rs = await deleteCourse(id);
+      if (rs.ok) {
+        console.log(rs);
+        const filtered = await cursos.filter((item) => item._id !== id);
+        onFilter(filtered);
+        setLoadModal(false);
+        setSuccessModal(true);
+      }
+    } catch (error) {
+      setLoadModal(false);
+      setModalError(true);
+    }
   };
+  // const onDelete = async (id) => {
+  //   console.log(onFilter);
+  //   console.log(id);
+  // };
 
   return (
     <div>
@@ -75,8 +92,8 @@ const CoursesListComponent = ({ cursos, onFilter, showOptions = false }) => {
       <SuccessIndicatorModal
         show={successModal}
         onClose={() => setSuccessModal(false)}
-        textHeader="Articulo Eliminado"
-        textBody="Se ha eliminado el articulo correctamente"
+        textHeader="Curso eliminado"
+        textBody="Se ha eliminado el curso correctamente"
       />
       <ErrorIndicatorModal
         show={modalError}

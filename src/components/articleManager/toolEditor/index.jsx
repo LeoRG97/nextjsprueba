@@ -291,14 +291,16 @@ const ToolEditorComponent = ({
     let interval = null;
     if (isMounted.current && modifiedContent && initialData._id) {
       interval = setInterval(() => {
-        handleAutoPublish();
+        if (!showPublish) {
+          handleAutoPublish();
+        }
         setModifiedContent(false);
       }, 10000);
     }
     return () => {
       clearInterval(interval);
     };
-  }, [modifiedContent, isMounted.current]);
+  }, [modifiedContent, isMounted.current, showPublish]);
 
   useEffect(() => {
     isMounted.current = true;

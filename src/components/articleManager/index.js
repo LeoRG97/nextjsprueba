@@ -527,7 +527,9 @@ const EditorComponent = ({
     let interval = null;
     if (modifiedPost && isMounted.current) {
       interval = setInterval(() => {
-        handleAutoPublish(formData.estatus || 'borrador');
+        if (!showPublish) {
+          handleAutoPublish(formData.estatus || 'borrador');
+        }
         setModifiedPost(false);
       }, 10000);
     }
@@ -535,7 +537,7 @@ const EditorComponent = ({
       // stop interval
       clearInterval(interval);
     };
-  }, [arrayItemsEditor, initialContent, modifiedPost, isMounted.current]);
+  }, [arrayItemsEditor, initialContent, modifiedPost, isMounted.current, showPublish]);
 
   useEffect(() => {
     isMounted.current = true;
