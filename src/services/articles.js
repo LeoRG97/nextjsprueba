@@ -91,6 +91,8 @@ export const saveArticle = async (article, details, option, userId) => {
     entryType = 'Video';
   } else if (option === 'onlyAudio') {
     entryType = 'Podcast';
+  } else if (option === 'reporte') {
+    entryType = 'Reporte';
   }
 
   try {

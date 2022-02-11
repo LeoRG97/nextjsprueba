@@ -124,6 +124,9 @@ const ProfileArticles = ({ estado }) => {
                   <div className="drop-item" onClick={() => navigateToEditor('podcast')}>
                     <span className="drop-item__content">Podcast</span>
                   </div>
+                  <div className="drop-item" onClick={() => navigateToEditor('reporte')}>
+                    <span className="drop-item__content">Reporte</span>
+                  </div>
                 </div>
               </div>
             </div>

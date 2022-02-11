@@ -3,6 +3,80 @@ import PropTypes from 'prop-types';
 import TooltipContainer from '../tooltipContainer/TooltipContainer';
 import styles from './tools.module.css';
 
+const ArticleTools = ({
+  addTextFunct,
+  setModalShowVideo,
+  setModalShow,
+  addImage,
+  setModalShowLink,
+}) => (
+  <div className={styles.tools}>
+    <section>
+      <div className={`${styles.files} text-md`}>Insertar</div>
+    </section>
+    <section className={`${styles.tools_select} `}>
+      <div className="dropdown me-3">
+        <TooltipContainer placement="top" tooltipText="Texto">
+          <div className="dropdown-select">
+            <span id="select-span" className="text-sm">T<small>T</small></span>
+            <i className="icon">1</i>
+          </div>
+        </TooltipContainer>
+        <input type="hidden" name="option" />
+        <div className="select-dropdown">
+          <div className="drop-item text-sm" id="h1" onClick={() => addTextFunct('h1')}>
+            Cabecera
+          </div>
+          <div className="drop-item text-sm" id="h3" onClick={() => addTextFunct('h3')}>
+            Subcabecera
+          </div>
+          <div className="drop-item text-sm" id="p" onClick={() => addTextFunct('p')}>
+            Párrafo
+          </div>
+          <div className="drop-item text-sm" id="small" onClick={() => addTextFunct('small')}>
+            Pie de texto
+          </div>
+        </div>
+      </div>
+      <TooltipContainer placement="top" tooltipText="Imagen">
+        <span className={styles.tools_img_content}>
+          <label htmlFor="imagenAdd" id="labelInput">
+            <div className={`icon ${styles.tools_media}`}>E</div>
+          </label>
+          <input className={styles.tools_img} accept="image/png,image/jpeg,image/jpeg" id="imagenAdd" size="60" type="file" placeholder="Imagen" autoComplete="off" name="imagenAdd" required="required" onChange={(event) => addImage(event)} />
+        </span>
+
+      </TooltipContainer>
+
+      <TooltipContainer placement="top" tooltipText="Video">
+        <div
+          className={`icon ${styles.tools_media}`}
+          onClick={() => setModalShowVideo(true)}
+        >F
+        </div>
+      </TooltipContainer>
+
+      <TooltipContainer placement="top" tooltipText="Audio">
+        <div
+          onClick={() => setModalShow(true)}
+          className={`icon ${styles.tools_media}`}
+        >
+          G
+        </div>
+      </TooltipContainer>
+
+      <TooltipContainer placement="top" tooltipText="Link">
+        <div
+          onClick={() => setModalShowLink(true)}
+          className={`icon ${styles.tools_media}`}
+        >
+          l
+        </div>
+      </TooltipContainer>
+    </section>
+  </div>
+);
+
 const ToolsComponent = ({
   option,
   addTextFunct,
@@ -19,71 +93,23 @@ const ToolsComponent = ({
     switch (optionRender) {
       case '':
         return (
-          <div className={styles.tools}>
-            <section>
-              <div className={`${styles.files} text-md`}>Insertar</div>
-            </section>
-            <section className={`${styles.tools_select} `}>
-              <div className="dropdown me-3">
-                <TooltipContainer placement="top" tooltipText="Texto">
-                  <div className="dropdown-select">
-                    <span id="select-span" className="text-sm">T<small>T</small></span>
-                    <i className="icon">1</i>
-                  </div>
-                </TooltipContainer>
-                <input type="hidden" name="option" />
-                <div className="select-dropdown">
-                  <div className="drop-item text-sm" id="h1" onClick={() => addTextFunct('h1')}>
-                    Cabecera
-                  </div>
-                  <div className="drop-item text-sm" id="h3" onClick={() => addTextFunct('h3')}>
-                    Subcabecera
-                  </div>
-                  <div className="drop-item text-sm" id="p" onClick={() => addTextFunct('p')}>
-                    Párrafo
-                  </div>
-                  <div className="drop-item text-sm" id="small" onClick={() => addTextFunct('small')}>
-                    Pie de texto
-                  </div>
-                </div>
-              </div>
-              <TooltipContainer placement="top" tooltipText="Imagen">
-                <span className={styles.tools_img_content}>
-                  <label htmlFor="imagenAdd" id="labelInput">
-                    <div className={`icon ${styles.tools_media}`}>E</div>
-                  </label>
-                  <input className={styles.tools_img} accept="image/png,image/jpeg,image/jpeg" id="imagenAdd" size="60" type="file" placeholder="Imagen" autoComplete="off" name="imagenAdd" required="required" onChange={(event) => addImage(event)} />
-                </span>
-
-              </TooltipContainer>
-
-              <TooltipContainer placement="top" tooltipText="Video">
-                <div
-                  className={`icon ${styles.tools_media}`}
-                  onClick={() => setModalShowVideo(true)}
-                >F
-                </div>
-              </TooltipContainer>
-
-              <TooltipContainer placement="top" tooltipText="Audio">
-                <div
-                  onClick={() => setModalShow(true)}
-                  className={`icon ${styles.tools_media}`}
-                >
-                  G
-                </div>
-              </TooltipContainer>
-
-              <TooltipContainer placement="top" tooltipText="Link">
-                <div
-                  onClick={() => setModalShowLink(true)}
-                  className={`icon ${styles.tools_media}`}
-                >
-                  l
-                </div>
-              </TooltipContainer>
-            </section>
-          </div>
+          <ArticleTools
+            addTextFunct={addTextFunct}
+            setModalShowVideo={setModalShowVideo}
+            setModalShow={setModalShow}
+            addImage={addImage}
+            setModalShowLink={setModalShowLink}
+          />
+        );
+      case 'reporte':
+        return (
+          <ArticleTools
+            addTextFunct={addTextFunct}
+            setModalShowVideo={setModalShowVideo}
+            setModalShow={setModalShow}
+            addImage={addImage}
+            setModalShowLink={setModalShowLink}
+          />
         );
       case 'onlyVideo':
         return (
