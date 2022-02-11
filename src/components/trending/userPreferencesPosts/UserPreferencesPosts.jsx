@@ -20,8 +20,9 @@ const UserPreferencesPosts = ({ initialData }) => {
     [ApiRoutes.ArticlesUserPreference, router.query, pageNum],
     fetchPaginatedDataWithAuthToken,
   );
+
   const onFilter = (filteredArticles) => {
-    mutate([...data]);
+    mutate({ ...data });
     setArticles(filteredArticles);
   };
 
