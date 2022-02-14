@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import styles from './modalSubs.module.css';
 import { hideSubscribeAlert } from '@/reducers/alert';
 
-const SubscriptionModal = ({ show, setModal }) => {
+const SubscriptionModal = ({ show, setModal, backdrop }) => {
   const dispatch = useDispatch();
   // const [show, setModal] = useState(false);
 
@@ -29,6 +29,7 @@ const SubscriptionModal = ({ show, setModal }) => {
         centered
         className={styles.modal_Subs}
         id="modalSubs"
+        backdrop={backdrop}
       >
         <Modal.Header className={styles.modal_header}>
           <Modal.Title className={styles.modal_title_cont}>

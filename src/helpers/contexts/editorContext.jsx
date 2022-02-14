@@ -11,6 +11,7 @@ const EditorContextProvider = ({ children }) => {
     categorias: [],
     destacado: false,
     premium: false,
+    user_register: false,
     reporte: null,
     infografia: null,
     rutaPortada: '',

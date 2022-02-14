@@ -12,7 +12,7 @@ import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
 import { showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
 import ModalInfo from './ModalInfo';
-import { premiumUserAccess } from '@/helpers/accessVerifiers';
+import { vipUserAccess } from '@/helpers/accessVerifiers';
 
 const CourseSpecific = ({ course }) => {
   const router = useRouter();
@@ -61,7 +61,7 @@ const CourseSpecific = ({ course }) => {
   };
 
   const handleSubscribe = async () => {
-    if (course.exclusivo && !premiumUserAccess(session.user.role)) {
+    if (course.exclusivo && !vipUserAccess(session.user.role)) {
       dispatchCourse(showPremiumAlert());
     } else {
       const model = {

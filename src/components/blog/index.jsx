@@ -16,8 +16,8 @@ import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './blog.module.css';
 import Resources from './Resources';
-import { premiumUserAccess } from '@/helpers/accessVerifiers';
-import { showPremiumStaticAlert } from '@/reducers/alert';
+import { vipUserAccess, userAccess } from '@/helpers/accessVerifiers';
+import { showPremiumStaticAlert, showSubscribeStaticAlert } from '@/reducers/alert';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
@@ -129,8 +129,11 @@ const BlogComponent = ({
 
   useEffect(() => {
     // muestra el modal Premium si el usuario no tiene permisos para ver el contenido
-    if (!loading && blogInfo.premium && !premiumUserAccess(session?.user.role)) {
+    if (!loading && blogInfo.premium && !vipUserAccess(session?.user.role)) {
       dispatch(showPremiumStaticAlert());
+    }
+    if (!loading && blogInfo.user_register && !userAccess(session?.user.role)) {
+      dispatch(showSubscribeStaticAlert());
     }
   }, [session, loading]);
 

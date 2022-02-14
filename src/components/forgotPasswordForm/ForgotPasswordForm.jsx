@@ -22,7 +22,7 @@ const ForgotPassword = () => {
       const res = await forgotPasswordService(email);
       if (res.ok) {
         setStatus('success');
-      } else if (res.message.includes('email')) {
+      } else if (res.message && res.message.includes('email')) {
         setStatus('error');
         setError('El correo electrónico no está registrado.');
       } else {

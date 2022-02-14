@@ -43,6 +43,7 @@ const ModalContainer = () => {
       <SubscriptionModal
         show={showSubscribe}
         setModal={handleSubscriptionModal}
+        backdrop={backdrop}
       />
       <PremiumModal
         show={showPremium}

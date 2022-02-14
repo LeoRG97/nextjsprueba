@@ -72,6 +72,7 @@ const EditorComponent = ({
         videoUrl: initialData.videoUrl || '',
         categorias: initialData.categorias,
         destacado: initialData.destacado,
+        user_register: initialData.user_register || false,
         premium: initialData.premium,
         rutaPortada: portada && portada.ruta_imagen ? portada.ruta_imagen : '',
         rutaArticulo: initialData.ruta || '',
@@ -421,6 +422,7 @@ const EditorComponent = ({
       ...formData,
       estatus,
     };
+
     setShowPublish(false);
     setSubmitting(true);
     const blob = new Blob([JSON.stringify(arrayItemsEditor)], { type: 'application/json' });

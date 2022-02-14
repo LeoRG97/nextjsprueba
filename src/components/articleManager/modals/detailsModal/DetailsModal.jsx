@@ -44,7 +44,28 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
   };
 
   const handleSwitch = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.checked });
+    if (e.target.name === 'user_register' && e.target.checked) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.checked,
+        premium: false,
+      });
+    } else if (e.target.name === 'destacado' && e.target.checked) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.checked,
+        premium: false,
+      });
+    } else if (e.target.name === 'premium' && e.target.checked) {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.checked,
+        destacado: false,
+        user_register: false,
+      });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.checked });
+    }
   };
 
   const handleCoverChange = async (file) => {
@@ -87,7 +108,7 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
   };
 
   const {
-    titulo, descripcion, portada, destacado, premium, categorias, rutaPortada,
+    titulo, descripcion, portada, destacado, user_register, premium, categorias, rutaPortada,
   } = formData;
 
   return (
@@ -129,11 +150,8 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
               <span className="text-sm text--theme-error">{errors.titulo}</span>
             </Col>
             <Col md={6}>
-              <div className={styles.visibilitySection}>
+              <div className="mb-2">
                 <h3 className="title mb-2">Visibilidad</h3>
-                <small className="text-sm text--theme-error">
-                  {errors.premium}
-                </small>
                 <div className={styles.switchContainer}>
                   <label className="subtitle">Destacar publicación</label>
                   <Switch
@@ -145,22 +163,32 @@ const DetailsModal = ({ show, onClose, onPublish }) => {
                 <div className={styles.switchContainer}>
                   <label className="subtitle">Contenido exclusivo</label>
                   <Switch
+                    name="user_register"
+                    checked={user_register}
+                    onChange={handleSwitch}
+                  />
+                </div>
+                <div className={styles.switchContainer}>
+                  <label className="subtitle">Contenido VIP</label>
+                  <Switch
                     name="premium"
                     checked={premium}
                     onChange={handleSwitch}
                   />
                 </div>
-
-                <label className="d-block subtitle">Categoría(s) a la que pertenece</label>
-                <CategorySelector
-                  data={preferences}
-                  placeholder="Selecciona las categorías"
-                  initialSelectedItems={categorias}
-                  addCategory={handleAddCategory}
-                  deleteCategory={handleDeleteCategory}
-                />
-                <span className="text-sm text--theme-error">{errors.categorias}</span>
+                <small className="text-sm text--theme-error">
+                  {errors.premium}
+                </small>
               </div>
+              <label className="d-block subtitle">Categoría(s) a la que pertenece</label>
+              <CategorySelector
+                data={preferences}
+                placeholder="Selecciona las categorías"
+                initialSelectedItems={categorias}
+                addCategory={handleAddCategory}
+                deleteCategory={handleDeleteCategory}
+              />
+              <span className="text-sm text--theme-error">{errors.categorias}</span>
               <label className="d-block subtitle" htmlFor="description">Descripción
                 <textarea
                   type="text"
