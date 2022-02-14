@@ -11,8 +11,8 @@ import styles from './tools.module.css';
 import TooltipContainer from '../articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import ModalAwaitDiagnostic from '../modalsIndicators/ModalAwaitDiagnostic';
 import { aviableDiagnostic } from '@/services/diagnostic';
-import { showPremiumStaticAlert, showSubscribeAlert } from '@/reducers/alert';
-import { premiumUserAccess } from '@/helpers/accessVerifiers';
+import { showPremiumStaticAlert, showSubscribeAlert, showSubscribeStaticAlert } from '@/reducers/alert';
+import { vipUserAccess, userAccess } from '@/helpers/accessVerifiers';
 
 const ToolsContent = ({ toolsInfo, toolsCode }) => {
   const router = useRouter();
@@ -68,8 +68,11 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
   }, []);
 
   useEffect(() => {
-    if (!loading && toolsInfo.premium && !premiumUserAccess(session?.user.role)) {
+    if (!loading && toolsInfo.premium && !vipUserAccess(session?.user.role)) {
       dispatch(showPremiumStaticAlert());
+    }
+    if (!loading && !userAccess(session?.user.role)) {
+      dispatch(showSubscribeStaticAlert());
     }
   }, [session, loading]);
 

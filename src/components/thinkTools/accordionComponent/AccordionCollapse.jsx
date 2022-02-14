@@ -124,7 +124,7 @@ const AccordionCollapse = ({
           )}
           {(!isEditable && herramienta.premium) && (
             <div className={`text-sm text--theme-light ${styles.premiumLabel}`}>
-              Premium{' '}<span className="icon text--theme-light">R</span>
+              VIP{' '}<span className="icon text--theme-light">R</span>
             </div>
           )}
         </div>

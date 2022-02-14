@@ -12,7 +12,7 @@ export const authorAccess = (role) => {
   return (role === Roles.Admin || role === Roles.Reviewer || role === Roles.Author);
 };
 
-export const premiumUserAccess = (role) => {
+export const vipUserAccess = (role) => {
   return (role === Roles.Admin
     || role === Roles.Reviewer
     || role === Roles.Author

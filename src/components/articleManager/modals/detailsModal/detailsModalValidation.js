@@ -1,5 +1,6 @@
 export const detailsValidation = ({
   titulo, descripcion, portada, categorias, reporte, infografia, rutaPortada,
+  destacado, user_register, premium,
 }) => {
   const errors = {
     isValid: true,
@@ -27,6 +28,11 @@ export const detailsValidation = ({
   }
   if (infografia && (infografia.type !== 'image/jpeg' && infografia.type !== 'image/png' && infografia.type !== 'application/pdf')) {
     errors.infografia = 'Sólo se permiten JPEG, PNG y PDF';
+    errors.isValid = false;
+  }
+
+  if ((premium && destacado) || (premium && user_register)) {
+    errors.premium = 'Una publicación VIP no puede ser destacada o exclusiva.';
     errors.isValid = false;
   }
 

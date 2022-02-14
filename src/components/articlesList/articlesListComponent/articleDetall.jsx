@@ -7,8 +7,8 @@ import styles from './articlesList.module.css';
 // import Link from 'next/link';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
-import { showPremiumAlert } from '@/reducers/alert';
-import { premiumUserAccess } from '@/helpers/accessVerifiers';
+import { showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
+import { userAccess, vipUserAccess } from '@/helpers/accessVerifiers';
 
 const ArticlesDetailComponent = ({
   article, classContent, isAdmin = false, onDelete, estado,
@@ -32,8 +32,11 @@ const ArticlesDetailComponent = ({
     if (article.estatus === 'borrador') {
       return '';
     }
-    if (article.premium && !premiumUserAccess(profile.role)) {
+    if (article.premium && !vipUserAccess(profile.role)) {
       return dispatch(showPremiumAlert());
+    }
+    if (article.user_register && !userAccess(profile.role)) {
+      return dispatch(showSubscribeAlert());
     }
     return router.push(`/trending-topics/${article.usuario_id.slug}/${article.slug}`);
   };
@@ -107,9 +110,16 @@ const ArticlesDetailComponent = ({
             <div className={`text-sm text--theme-light ${styles.trendingLabel}`}>
               {article.tipo}{' '}<span className="icon text--theme-light">{getTypeIcon(article.tipo)}</span>
             </div>
+            {article.user_register && !isAdmin && (
+              <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
+                Premium
+                {/* {' '}
+                <span className="icon text--theme-light">R</span> */}
+              </div>
+            )}
             {article.premium && !isAdmin && (
               <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
-                Premium{' '}<span className="icon text--theme-light">R</span>
+                VIP{' '}<span className="icon text--theme-light">R</span>
               </div>
             )}
 

@@ -33,8 +33,8 @@ const PremiumModal = ({ show, setModal, backdrop = true }) => {
         </Modal.Header>
         <Modal.Body className={styles.modal_body_cont}>
           <div className={styles.modal_container}>
-            <h1 className="title ">Este es un contenido Premium</h1>
-            <p className="text-sm ">Comunicate con uno de nuestros administradores si quieres ser Premium.</p>
+            <h1 className="title ">Este es un contenido VIP</h1>
+            <p className="text-sm ">Comunicate con uno de nuestros administradores si quieres ser VIP.</p>
             {
               data.role ? (
                 <div />

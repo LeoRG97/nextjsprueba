@@ -10,7 +10,7 @@ import styles from './course.module.css';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
 import { DeleteModal } from '@/components';
 import { showPremiumAlert } from '@/reducers/alert';
-import { premiumUserAccess } from '@/helpers/accessVerifiers';
+import { vipUserAccess } from '@/helpers/accessVerifiers';
 
 const CourseDetailComponent = ({
   curso, classContent, isAdmin = false, onDelete, estado,
@@ -26,7 +26,7 @@ const CourseDetailComponent = ({
     if (curso.estatus === 'borrador') {
       return '';
     }
-    if (curso.exclusivo && !premiumUserAccess(profile.role)) {
+    if (curso.exclusivo && !vipUserAccess(profile.role)) {
       return dispatch(showPremiumAlert());
     }
     return router.push(`/courses/${curso.slug}`);
@@ -110,7 +110,7 @@ const CourseDetailComponent = ({
             </div>
             {curso.exclusivo && !isAdmin && (
               <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
-                Premium{' '}<span className="icon text--theme-light">R</span>
+                VIP{' '}<span className="icon text--theme-light">R</span>
               </div>
             )}
             <div className={styles.image}>

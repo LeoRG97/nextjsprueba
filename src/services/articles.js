@@ -110,6 +110,7 @@ export const saveArticle = async (article, details, option, userId) => {
       tipo: entryType,
       premium: details.premium,
       destacado: details.destacado,
+      user_register: details.user_register,
       portada: {
         descripcion: details.descripcion || undefined,
         titulo: details.titulo || undefined,
@@ -151,6 +152,7 @@ export const updateArticle = async (article, details, userId, initialData) => {
       estatus: details.estatus,
       premium: details.premium,
       destacado: details.destacado,
+      user_register: details.user_register,
       usuario_id_modificacion: userId,
       portada: {
         descripcion: details.descripcion || '',

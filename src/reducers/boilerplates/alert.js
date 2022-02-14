@@ -2,6 +2,7 @@ import { makeActionCreator, makeReducer } from '../creators';
 
 const Alert = () => {
   const SHOW_SUBSCRIBE = 'SHOW_SUBSCRIBE';
+  const SHOW_SUBSCRIBE_STATIC = 'SHOW_SUBSCRIBE_STATIC';
   const HIDE_SUBSCRIBE = 'HIDE_SUBSCRIBE';
   const SHOW_TOOLS_MODAL = 'SHOW_TOOLS_MODAL';
   const HIDE_TOOLS_MODAL = 'HIDE_TOOLS_MODAL';
@@ -18,6 +19,7 @@ const Alert = () => {
 
   // action creators
   const showSubscribe = makeActionCreator(SHOW_SUBSCRIBE);
+  const showSubscribeStatic = makeActionCreator(SHOW_SUBSCRIBE_STATIC);
   const hideSubscribe = makeActionCreator(HIDE_SUBSCRIBE);
 
   const showPremium = makeActionCreator(SHOW_PREMIUM);
@@ -33,9 +35,16 @@ const Alert = () => {
     showSubscribe: true,
   });
 
+  const showSubscribeStaticReduce = (state = initialState) => ({
+    ...state,
+    showSubscribe: true,
+    backdrop: 'static',
+  });
+
   const hideSubscribeReduce = (state = initialState) => ({
     ...state,
     showSubscribe: false,
+    backdrop: true,
   });
 
   const showModalReduce = (state = initialState) => ({
@@ -67,6 +76,7 @@ const Alert = () => {
 
   const reducer = makeReducer(initialState, {
     [SHOW_SUBSCRIBE]: showSubscribeReduce,
+    [SHOW_SUBSCRIBE_STATIC]: showSubscribeStaticReduce,
     [HIDE_SUBSCRIBE]: hideSubscribeReduce,
     [SHOW_PREMIUM]: showModalReduce,
     [SHOW_PREMIUM_STATIC]: showModalStaticReduce,
@@ -79,6 +89,9 @@ const Alert = () => {
     reducer,
     showSubscribeAlert: () => (dispatch) => {
       dispatch(showSubscribe());
+    },
+    showSubscribeStaticAlert: () => (dispatch) => {
+      dispatch(showSubscribeStatic());
     },
     hideSubscribeAlert: () => (dispatch) => {
       dispatch(hideSubscribe());

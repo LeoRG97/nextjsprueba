@@ -35,7 +35,7 @@ const CourseSubscription = ({
             </div>
             {curso.premium && (
               <div className={`text-sm text--theme-light ${styles.trendingLabel} ${styles.premium}`}>
-                Premium{' '}<span className="icon text--theme-light">R</span>
+                VIP{' '}<span className="icon text--theme-light">R</span>
               </div>
             )}
             <div className={styles.image}>
