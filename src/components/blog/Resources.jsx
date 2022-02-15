@@ -1,20 +1,16 @@
 import { useSession } from 'next-auth/client';
 import React from 'react';
-import { useDispatch } from 'react-redux';
 import styles from './blog.module.css';
-import { showSubscribeAlert } from '@/reducers/alert';
 import { BUCKET_URL } from '@/global/constants';
+import { vipUserAccess } from '@/helpers/accessVerifiers';
 
-const Resources = ({ resources }) => {
+const Resources = ({ resources, validateSession, vipArticle }) => {
   const [session] = useSession();
-  const dispatch = useDispatch();
-
-  const handleSubscribeModal = () => dispatch(showSubscribeAlert());
 
   const renderButton = (resource) => {
     switch (resource.tipo) {
       case 'reporte': {
-        if (session) {
+        if ((session && !vipArticle) || (vipArticle && vipUserAccess(session?.user.role))) {
           return (
             <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">P</span>
@@ -23,14 +19,14 @@ const Resources = ({ resources }) => {
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
+          <button onClick={validateSession} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">P</span>
             Reporte
           </button>
         );
       }
       case 'infografia': {
-        if (session) {
+        if ((session && !vipArticle) || (vipArticle && vipUserAccess(session?.user.role))) {
           return (
             <a href={`${BUCKET_URL}${resource.ruta}`} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">S</span>
@@ -39,14 +35,14 @@ const Resources = ({ resources }) => {
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
+          <button onClick={validateSession} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">S</span>
             Infografía
           </button>
         );
       }
       case 'video': {
-        if (session) {
+        if ((session && !vipArticle) || (vipArticle && vipUserAccess(session?.user.role))) {
           return (
             <a href={resource.ruta} className="button button--theme-resource ms-2 me-2" target="_blank" rel="noreferrer" key={resource._id}>
               <span className="button__icon-left">N</span>
@@ -55,7 +51,7 @@ const Resources = ({ resources }) => {
           );
         }
         return (
-          <button onClick={handleSubscribeModal} className="button button--theme-resource ms-2 me-2" key={resource._id}>
+          <button onClick={validateSession} className="button button--theme-resource ms-2 me-2" key={resource._id}>
             <span className="button__icon-left">N</span>
             Video
           </button>

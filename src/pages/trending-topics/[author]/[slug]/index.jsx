@@ -24,7 +24,8 @@ import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import HeadArticle from '@/components/blog/HeadArticle';
 import SocialShareModal from '@/components/modalsIndicators/SocialShareModal';
-import { showSubscribeAlert } from '@/reducers/alert';
+import { showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
+import { vipUserAccess } from '@/helpers/accessVerifiers';
 
 // página para ver un artículo en específico
 const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
@@ -208,18 +209,28 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
     );
   }
 
+  const validateSession = (callback) => {
+    if (blog.premium && !vipUserAccess(session?.user.role)) {
+      dispatch(showPremiumAlert());
+    } else if (!session) {
+      dispatch(showSubscribeAlert());
+    } else {
+      callback();
+    }
+  };
+
   const renderResource = (resource, placement) => {
     switch (resource.tipo) {
       case 'reporte': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Reporte">
-            {session ? (
+            {(session && !blog.premium) || (blog.premium && vipUserAccess(session?.user.role)) ? (
               <a href={`${BUCKET_URL}${resource.ruta}`} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
                 P
               </a>
             )
               : (
-                <button className="icon-button icon-button--secondary m-2" onClick={() => dispatch(showSubscribeAlert())}>
+                <button className="icon-button icon-button--secondary m-2" onClick={() => validateSession()}>
                   P
                 </button>
               )}
@@ -229,7 +240,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
       case 'infografia': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Infografía">
-            {session ? (
+            {(session && !blog.premium) || (blog.premium && vipUserAccess(session?.user.role)) ? (
               <a href={`${BUCKET_URL}${resource.ruta}`} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
                 S
               </a>
@@ -245,7 +256,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
       case 'video': {
         return (
           <TooltipContainer key={resource.ruta} placement={placement} tooltipText="Vídeo">
-            {session ? (
+            {(session && !blog.premium) || (blog.premium && vipUserAccess(session?.user.role)) ? (
               <a href={resource.ruta} className="icon-button icon-button--secondary m-2" target="_blank" rel="noreferrer">
                 N
               </a>
@@ -303,11 +314,7 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                           <div className="content-btns">
                             <TooltipContainer placement="left" tooltipText={!isLiked ? 'Valorar' : 'Quitar valoración'}>
                               <button
-                                onClick={() => {
-                                  session?.user
-                                    ? handleRateArticle()
-                                    : dispatch(showSubscribeAlert());
-                                }}
+                                onClick={() => validateSession(handleRateArticle)}
                                 className={`icon-button icon-button--secondary m-2 ${isLiked && 'button__active'}`}
                               >
                                 {
@@ -324,11 +331,9 @@ const ArticlePage = ({ artInfo, artCode, authorInfo }) => {
                                 <TooltipContainer placement="left" tooltipText="Guardar">
                                   <button
                                     className="icon-button icon-button--secondary m-2"
-                                    onClick={() => {
-                                      session?.user
-                                        ? saveThisArt() : dispatch(showSubscribeAlert());
-                                    }}
-                                  >U
+                                    onClick={() => validateSession(saveThisArt)}
+                                  >
+                                    U
                                   </button>
                                 </TooltipContainer>
                               )
