@@ -1,17 +1,12 @@
 /* eslint-disable no-unused-expressions */
 import { Container, Row, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import { useSession } from 'next-auth/client';
-import { useDispatch } from 'react-redux';
 import styles from './blog.module.css';
 import { TooltipContainer } from '@/components';
-import { showSubscribeAlert } from '@/reducers/alert';
 
 const AutorComponent = ({
-  dateBlog, onLike, liked, cssSaved, quitSaved, saveArt, shareArt, rateTotal,
+  dateBlog, onLike, liked, cssSaved, quitSaved, saveArt, shareArt, rateTotal, validateSession,
 }) => {
-  const [session] = useSession();
-  const dispatch = useDispatch();
   const converDate = (date) => {
     const dateFormat = new Date(date);
     let formattedDate = Intl.DateTimeFormat('en-US', {
@@ -64,8 +59,7 @@ const AutorComponent = ({
                   <button
                     className={`icon-button icon-button--secondary m-2 ${cssSaved}`}
                     onClick={() => {
-                      session?.user
-                        ? quitSaved() : dispatch(showSubscribeAlert());
+                      validateSession(quitSaved);
                     }}
                   >
                     w
@@ -76,8 +70,7 @@ const AutorComponent = ({
                   <button
                     className={`icon-button icon-button--secondary m-2 ${cssSaved}`}
                     onClick={() => {
-                      session?.user
-                        ? saveArt() : dispatch(showSubscribeAlert());
+                      validateSession(saveArt);
                     }}
                   >U
                   </button>
@@ -88,8 +81,7 @@ const AutorComponent = ({
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  session?.user
-                    ? (onLike()) : dispatch(showSubscribeAlert());
+                  validateSession(onLike);
                 }}
                 className={`Btn-like m-2  ${liked && 'Btn-like__active'}`}
               >

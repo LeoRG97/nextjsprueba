@@ -17,7 +17,12 @@ import { BUCKET_URL } from '@/global/constants';
 import styles from './blog.module.css';
 import Resources from './Resources';
 import { vipUserAccess, userAccess } from '@/helpers/accessVerifiers';
-import { showPremiumStaticAlert, showSubscribeStaticAlert } from '@/reducers/alert';
+import {
+  showPremiumAlert,
+  showPremiumStaticAlert,
+  showSubscribeAlert,
+  showSubscribeStaticAlert,
+} from '@/reducers/alert';
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,
@@ -137,6 +142,16 @@ const BlogComponent = ({
     }
   }, [session, loading]);
 
+  const validateSession = (callback) => {
+    if (blogInfo.premium && !vipUserAccess(session?.user.role)) {
+      dispatch(showPremiumAlert());
+    } else if (!session) {
+      dispatch(showSubscribeAlert());
+    } else {
+      callback();
+    }
+  };
+
   return (
     <>
       <Container>
@@ -155,9 +170,14 @@ const BlogComponent = ({
               ))
             }
           </ul>
-          <Resources resources={blogInfo.recursos} />
+          <Resources
+            resources={blogInfo.recursos}
+            validateSession={validateSession}
+            vipArticle={blogInfo.premium}
+          />
           <AutorComponent
             autor={autorInfo}
+            validateSession={validateSession}
             dateBlog={blogInfo.createdAt}
             onLike={onLike}
             liked={isLiked}
@@ -229,6 +249,7 @@ const BlogComponent = ({
           }
           <AutorComponent
             autor={autorInfo}
+            validateSession={validateSession}
             dateBlog={blogInfo.createdAt}
             onLike={onLike}
             liked={isLiked}
