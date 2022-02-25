@@ -83,7 +83,7 @@ export default function Home() {
                     <h1 className="title-xl text--theme-light">Guiarte a través <br />de la innovación</h1>
                     <Link href="/think-tools" passHref>
                       <button className="button button--theme-light me-2">
-                        <span className="button__icon-left text--theme-light">F</span>Muéstrame cómo
+                        Muéstrame cómo
                       </button>
                     </Link>
                   </div>
@@ -91,12 +91,14 @@ export default function Home() {
               </Row>
             </Container>
           </Container>
-          <Container fluid className={styles.content_observatory}>
+          <Container fluid>
             <Container>
               <Row className={`${styles.content_pt_sect} ${styles.content_pb_sect}`}>
                 <Col xl="6" lg="6" sm="12">
-                  <div className={`${styles.content_m_img} ${styles.image_content} `}>
-                    <img src="/images/resourses/vortice.png" alt="" className={styles.image_1} />
+                  <div className="video-background">
+                    <video width="100%" height="360" controls preload="true" autoPlay loop muted>
+                      <source src="/video/about.mp4" type="video/mp4" />
+                    </video>
                   </div>
                 </Col>
                 <Col xl="6" lg="6" sm="12" className="p-r">

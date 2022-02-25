@@ -1956,6 +1956,15 @@ div[disabled] {
   margin-bottom: 20px;
 }
 
+/** Videos **/
+.video-background {
+  margin-top: 5rem;
+  z-index: 99999;
+}
+
+.video-background video {
+  z-index: 1 !important;
+}
 
 @media (max-width: 1400px) {
   .mt-lg-title {
