@@ -1,7 +1,5 @@
-/* eslint-disable react/forbid-prop-types */
 import { signout, useSession } from 'next-auth/client';
 import { useDispatch, useSelector } from 'react-redux';
-import Script from 'next/script';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
@@ -43,6 +41,25 @@ const NavbarComponent = () => {
       setSearchText(router.query.search);
       setOnSearch(true);
     }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scroll = document.documentElement.scrollTop || document.body.scrollTop;
+      // Realizamos alguna accion cuando el scroll este entre la posicion 300 y 400
+      if (document.getElementById('navbar')) {
+        if (scroll >= 100 && window.matchMedia('(max-width: 999px)').matches === false) {
+          document.getElementById('navbar').style.transition = '0.5s';
+          document.getElementById('navbar').style.top = '-200px';
+        } else {
+          document.getElementById('navbar').style.top = '0';
+        }
+      }
+    };
+    if (window) {
+      window.addEventListener('scroll', handleScroll);
+    }
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleSearch = (e) => {
@@ -91,27 +108,6 @@ const NavbarComponent = () => {
 
   return (
     <div className={styles.navC}>
-      <>
-        <Script strategy="lazyOnload">
-          {`
-                 if (window.matchMedia("(max-width: 999px)").matches === false) {
-                 window.onscroll = () => {
-                  // Obtenemos la posicion del scroll en pantall
-                  const scroll = document.documentElement.scrollTop || document.body.scrollTop;
-                  // Realizamos alguna accion cuando el scroll este entre la posicion 300 y 400
-                   if (document.getElementById('navbar')) {
-                    if (scroll >= 100) {
-                      document.getElementById('navbar').style.transition = '0.5s';
-                      document.getElementById('navbar').style.top = '-200px';
-                    } else {
-                      document.getElementById('navbar').style.top = '0';
-                    }
-                  }
-                }
-              }
-           `}
-        </Script>
-      </>
       <Navbar
         className={styles.navbar}
         id="navbar"

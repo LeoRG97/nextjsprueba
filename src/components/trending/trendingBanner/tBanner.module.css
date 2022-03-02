@@ -55,11 +55,23 @@
 @media (max-width: 991.98px) {
   .bannerImage {
     font-size: 40px;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 8%;
+  }
+}
+
+@media (max-height: 649.98px) {
+  .bannerImage {
+    min-height: 100vh;
+    height: fit-content;
+    padding-top: 10%;
   }
 }
 
 @media (max-width: 575.98px) {
   .centeredTitle {
+    padding: 0 10%;
     width: 100%;
   }
 }
