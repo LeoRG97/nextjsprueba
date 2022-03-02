@@ -23,7 +23,6 @@ const HeadArticle = ({
       />
       <meta property="fb:app_id" content="your fb id" />
       <meta name="description" content="NTTDATA" />
-      <link rel="icon" href="/favicon.ico" />
       <title>{dataArticle.portada ? dataArticle.portada.titulo : ''}</title>
     </Head>
   );

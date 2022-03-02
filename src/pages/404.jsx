@@ -7,7 +7,6 @@ export default function ErrorPage() {
       <Head>
         <title>NTT Data</title>
         <meta name="description" content="NTT Data not found" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <ErrorPageComp />
     </Layout>

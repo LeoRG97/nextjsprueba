@@ -5,7 +5,7 @@ import styles from './accordion.module.css';
 import AccordionCollapse from './AccordionCollapse';
 
 const CardAccordionComponent = ({
-  data, number, isEditable, mutate,
+  data, number, isEditable, onDelete,
 }) => {
   return (
     <Card className={styles.card_container}>
@@ -33,7 +33,8 @@ const CardAccordionComponent = ({
                   key={herramienta._id}
                   herramienta={herramienta}
                   isEditable={isEditable}
-                  mutate={mutate}
+                  onDelete={onDelete}
+                  type="tool"
                 />
               );
             })

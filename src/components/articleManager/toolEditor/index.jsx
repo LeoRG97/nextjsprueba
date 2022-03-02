@@ -432,6 +432,7 @@ const ToolEditorComponent = ({
           show={showPublish}
           onClose={() => setShowPublish(false)}
           onPublish={handlePublish}
+          contentType={contentType}
         />
         <LoadingIndicatorModal
           show={submitting}

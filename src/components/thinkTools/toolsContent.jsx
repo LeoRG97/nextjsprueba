@@ -49,7 +49,7 @@ const ToolsContent = ({ toolsInfo, toolsCode }) => {
     if (toolsInfo && session && session.user) {
       const res = await aviableDiagnostic(toolsInfo._id, session.user.id);
       if (res.ok) {
-        router.push(`/think-tools/${toolsInfo.slug}?diagnostic=true`);
+        router.push(`/diagnostics/${toolsInfo.slug}?diagnostic=true`);
       } else {
         setModalAwaitDiagnostic(true);
       }

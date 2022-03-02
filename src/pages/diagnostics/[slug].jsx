@@ -1,23 +1,36 @@
 import { Container, Row, Col } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import {
   Footer, Layout, ToolsContent,
 } from '@/components';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
 import { fetchToolBySlug, fetchToolsContent } from '@/services/tools';
+import DiagnosticStartedComponent from '@/components/thinkTools/diagnostic/DiagnosticStartedComponent';
 
-const GetTool = ({ toolsInfo, toolsCode }) => {
+const DiagnosticSlugPage = ({ toolsInfo, toolsCode }) => {
+  const { query } = useRouter();
+  const [session] = useSession();
+
   return (
     <Layout>
       {
         toolsInfo && toolsCode && (
-          <>
-            <ToolsContent
-              toolsInfo={toolsInfo}
-              toolsCode={toolsCode}
-            />
-            <Footer />
-          </>
+          query.diagnostic
+            ? (
+              <>
+                {
+                  session && session.user && (
+                    <DiagnosticStartedComponent
+                      toolsInfo={toolsInfo}
+                      userId={session.user.id}
+                    />
+                  )
+                }
+              </>
+            )
+            : (<><ToolsContent toolsInfo={toolsInfo} toolsCode={toolsCode} /><Footer /></>)
         )
       }
       {
@@ -42,7 +55,7 @@ const GetTool = ({ toolsInfo, toolsCode }) => {
 export async function getStaticPaths() {
   const res = await fetchData(ApiRoutes.Tools);
   const paths = res.data.map((tools) => {
-    return { params: { slugTools: tools.slug } };
+    return { params: { slug: tools.slug } };
   });
 
   return {
@@ -53,7 +66,7 @@ export async function getStaticPaths() {
 
 // getStaticProps & revalidate
 export async function getStaticProps({ params }) {
-  const toolsInfo = await fetchToolBySlug(params.slugTools);
+  const toolsInfo = await fetchToolBySlug(params.slug);
 
   if (toolsInfo && toolsInfo.length > 0) {
     if (toolsInfo[0]) {
@@ -79,4 +92,4 @@ export async function getStaticProps({ params }) {
   return { notFound: true };
 }
 
-export default GetTool;
+export default DiagnosticSlugPage;

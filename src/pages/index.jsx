@@ -1,5 +1,3 @@
-import Head from 'next/head';
-/* eslint-disable import/extensions */
 import { Footer, Layout, HomePage } from '@/components';
 // import styles from '@/global/styles/Home.module.css';
 import { getArtForHomeSSR } from '@/services/articles';
@@ -7,10 +5,6 @@ import { getArtForHomeSSR } from '@/services/articles';
 const Home = ({ articulos }) => {
   return (
     <Layout>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
       <main>
         <HomePage articulos={articulos} />
       </main>

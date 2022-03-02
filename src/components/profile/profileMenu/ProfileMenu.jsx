@@ -14,6 +14,7 @@ const TabMenu = () => {
   const [session] = useSession();
 
   const { user } = session;
+  // servicio para obtener total de herramientas y diagnósticos por separado
   const { data } = useSWR(
     [ApiRoutes.UserTotals, session.user.id],
     fetchItemById,
@@ -21,7 +22,8 @@ const TabMenu = () => {
       fallbackData: {
         publicacones: 0,
         borradores: 0,
-        herramientas: 0,
+        herramientasHerramienta: 0,
+        herramientasDiagnostico: 0,
         foros: 0,
         publicaconesCursos: 0,
         subscripcionesCursos: 0,
@@ -95,7 +97,15 @@ const TabMenu = () => {
                   className={`subtitle ${styles.item} ${query.setting === 'tools' && styles.active}`}
                 >
                   Herramientas
-                  <span className="ms-2 text-md text--theme-secondary">{data.herramientas}</span>
+                  <span className="ms-2 text-md text--theme-secondary">{data.herramientasHerramienta}</span>
+                </a>
+              </Link>
+              <Link href="/profile/diagnostics" passHref scroll={false}>
+                <a
+                  className={`subtitle ${styles.item} ${query.setting === 'diagnostics' && styles.active}`}
+                >
+                  Diagnósticos
+                  <span className="ms-2 text-md text--theme-secondary">{data.herramientasDiagnostico}</span>
                 </a>
               </Link>
               <Link href="/profile/courses" passHref scroll={false}>

@@ -20,6 +20,7 @@ function MyApp({ Component, pageProps }) {
     >
       <Head>
         <title>NTT Data - CX</title>
+        <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
       <Script

@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,9 +14,6 @@ export default function Home() {
 
   return (
     <Layout>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main>
         <Container fluid className={styles.content_no_padd}>
           <Container fluid className={styles.content_title}>
