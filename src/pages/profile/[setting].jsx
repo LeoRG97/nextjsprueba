@@ -42,7 +42,8 @@ const ProfileScreen = () => {
         {query.setting === 'about-me' && <AboutMeComponent />}
         {query.setting === 'ratings' && <RatedArticles />}
         {query.setting === 'notes' && <ProfileNotes />}
-        {query.setting === 'tools' && <ProfileTools />}
+        {query.setting === 'tools' && <ProfileTools option="tool" />}
+        {query.setting === 'diagnostics' && <ProfileTools option="diagnostic" />}
         {query.setting === 'courses' && <ProfileCourses estado="publicado" />}
         {query.setting === 'courses-drafts' && <ProfileCourses estado="borrador" />}
         {query.setting === 'subscriptions' && <ProfileCourseSubscription />}

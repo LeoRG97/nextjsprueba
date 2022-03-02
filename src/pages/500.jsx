@@ -7,7 +7,6 @@ export default function ErrorServerPage() {
       <Head>
         <title>NTT Data</title>
         <meta name="description" content="NTT Server error" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <ErrorPageComp />
     </>

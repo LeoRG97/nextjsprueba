@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
 import { useState } from 'react';
@@ -17,9 +16,6 @@ export default function Home() {
 
   return (
     <div className="main-container main-bg">
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <main className="container pt-5">
         <h1 className="title-xl">
           Super Title (Light)

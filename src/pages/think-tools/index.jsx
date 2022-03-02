@@ -12,7 +12,6 @@ export default function ThinkTools() {
       <Head>
         <title>Think Tools</title>
         <meta name="description" content="NTT Data Think Tools" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`container-fluid pt-5 ${styles.textureBg}`}>
         <div className={

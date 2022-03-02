@@ -10,7 +10,9 @@ import { toolValidation } from './toolValidation';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
 
-const ToolDetailsModal = ({ show, onClose, onPublish }) => {
+const ToolDetailsModal = ({
+  show, onClose, onPublish, contentType,
+}) => {
   const {
     formData, setFormData, errors, setErrors,
   } = useContext(ToolContext);
@@ -58,6 +60,19 @@ const ToolDetailsModal = ({ show, onClose, onPublish }) => {
       setErrors(toolValidation(formData));
     }
   }, [formData]);
+
+  useEffect(() => {
+    // en caso de que la herramienta sea un "diagnóstico", se asignará automáticamente
+    // la siguiente categoría a los datos del formulario
+    if (toolsCategories && contentType === 'diagnostic') {
+      const category = toolsCategories.data.find((cat) => cat.nombre === 'Diagnosticar');
+      setFormData({
+        ...formData,
+        categoria_id: category._id,
+        categoria: category.nombre,
+      });
+    }
+  }, [contentType, toolsCategories]);
 
   const {
     nombre,
@@ -127,12 +142,20 @@ const ToolDetailsModal = ({ show, onClose, onPublish }) => {
                   value={categoria_id}
                   onChange={handleSelect}
                 >
-                  <option value="">Selecciona uno</option>
-                  {toolsCategories && toolsCategories.data.map((item) => (
-                    <option key={item._id} value={item._id}>
-                      {item.nombre}
-                    </option>
-                  ))}
+                  {/* <option value="">Selecciona uno</option> */}
+                  {toolsCategories && toolsCategories.data.map((item) => {
+                    if (contentType === 'diagnostic' && item.nombre !== 'Diagnosticar') {
+                      return null;
+                    }
+                    if (contentType === 'tool' && item.nombre === 'Diagnosticar') {
+                      return null;
+                    }
+                    return (
+                      <option key={item._id} value={item._id}>
+                        {item.nombre}
+                      </option>
+                    );
+                  })}
                 </select>
               </label>
               <span className="text-sm text--theme-error">{errors.categoria}</span>
