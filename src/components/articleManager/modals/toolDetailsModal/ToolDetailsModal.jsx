@@ -142,7 +142,7 @@ const ToolDetailsModal = ({
                   value={categoria_id}
                   onChange={handleSelect}
                 >
-                  {/* <option value="">Selecciona uno</option> */}
+                  {contentType !== 'diagnostic' && <option value="">Selecciona uno</option>}
                   {toolsCategories && toolsCategories.data.map((item) => {
                     if (contentType === 'diagnostic' && item.nombre !== 'Diagnosticar') {
                       return null;

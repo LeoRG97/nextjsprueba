@@ -63,9 +63,9 @@ const AccordionComponent = ({
 
   useEffect(() => {
     if (categories && tools) {
-      const filteredCategories = filter ? categories.data.filter((item) => (filter === 'diagnostic' ? item.nombre === 'Diagnosticar' : item.nombre !== 'Diagnosticar')) : categories.data;
-      const newArray = filteredCategories.map((cat) => {
-        const categoryTools = tools.data.filter((item) => item.categoria_id === cat._id);
+      const filteredTools = filter ? tools.data.filter((tool) => (filter === 'diagnostic' ? tool.tipo === 'diagnostico' : tool.tipo !== 'diagnostico')) : tools.data;
+      const newArray = categories.data.map((cat) => {
+        const categoryTools = filteredTools.filter((item) => item.categoria_id === cat._id);
         return {
           ...cat,
           herramientasCategoria: categoryTools,
