@@ -25,7 +25,7 @@ const ThinkToolsModal = () => {
         centered
         onHide={() => dispatch(hideToolsModal())}
       >
-        <div className={`container-fluid ${styles.modalInner}`}>
+        <div className={styles.modalInner}>
           <h1 className="title-xl text-center py-3">Me gustaría...</h1>
           <div className={styles.accordion}>
             <AccordionComponent />
