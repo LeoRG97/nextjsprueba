@@ -1,7 +1,10 @@
 import React from 'react';
-import GlobalModals from '../modalsIndicators/ModalContainer';
+import dynamic from 'next/dynamic';
 import NavbarComponent from '../navbar/Navbar';
-import ThinkToolsModal from '../thinkTools/thinkToolsModal/ThinkToolsModal';
+// import GlobalModals from '../modalsIndicators/ModalContainer';
+// import ThinkToolsModal from '../thinkTools/thinkToolsModal/ThinkToolsModal';
+const ThinkToolsModal = dynamic(() => import('../thinkTools/thinkToolsModal/ThinkToolsModal'));
+const GlobalModals = dynamic(() => import('../modalsIndicators/ModalContainer'));
 
 const Layout = ({ children, className }) => {
   return (

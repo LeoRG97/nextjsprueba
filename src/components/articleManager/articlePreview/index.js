@@ -122,10 +122,13 @@ const EditorPreviewComponent = ({ initialData, initialContent }) => {
 
           {initialData && initialData.portada && initialData.portada.ruta_imagen && (
             <div className={`${styles.cover_gradient} mt-2`}>
-              <img
+              <Image
                 src={`${BUCKET_URL}${initialData.portada.ruta_imagen}`}
                 alt={initialData.portada.titulo}
-                className={styles.cover}
+                layout="responsive"
+                objectFit="cover"
+                width={720}
+                height={480}
               />
             </div>
           )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Accordion, Card } from 'react-bootstrap';
+import Image from 'next/image';
 import ContextAwareToggle from './ContextAwareToggle';
 import styles from './accordion.module.css';
 import AccordionCollapse from './AccordionCollapse';
@@ -13,7 +14,15 @@ const CardAccordionComponent = ({
         <div className="row align-items-center">
           <div className="col-2 col-lg-2 ">
             <div className={styles.icon_container}>
-              <img src={data.imagen} alt={data.imagen ? data.imagen.split('icons/')[1] : ''} className={styles.icon_card} />
+              <Image
+                loading="lazy"
+                src={data.imagen}
+                alt={data.imagen ? data.imagen.split('icons/')[1] : ''}
+                className={styles.icon_card}
+                layout="intrinsic"
+                width={24}
+                height={24}
+              />
             </div>
           </div>
           <div className="col-8 col-lg-5 title">

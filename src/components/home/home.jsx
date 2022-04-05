@@ -218,7 +218,13 @@ const HomePage = ({ articulos }) => {
           </Col>
           <Col xl="6" lg="6" sm="12">
             <div className={styles.expert_img}>
-              <img src="/images/home/Rompecabezas.png" alt="" />
+              <Image
+                src="/images/home/Rompecabezas.png"
+                alt=""
+                layout="intrinsic"
+                width={480}
+                height={480}
+              />
             </div>
           </Col>
         </Row>

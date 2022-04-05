@@ -121,12 +121,14 @@ const NavbarComponent = () => {
                 <Image
                   src="/images/logos/Marca.png"
                   alt="Logo"
-                  layout="fill"
+                  layout="responsive"
+                  width={180}
+                  height={60}
                 />
               </div>
             </Navbar.Brand>
           </Link>
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-web">
             <Nav className={styles.linksContainer}>
               <div className={styles.divNavItemStyle}>
                 <Nav.Item>
@@ -226,7 +228,7 @@ const NavbarComponent = () => {
         fixed="top"
       >
         <Container fluid className={expanded === 'expanded' ? styles.containerFluidExpanded : styles.containerFluid}>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" className={`${expanded === 'expanded' || expanded ? styles.iconToggleExpanded : styles.iconToggle} ${styles.iconToggleMovil}`} onClick={() => setExpanded(!expanded)} />
+          <Navbar.Toggle aria-controls="basic-navbar-mobile" className={`${expanded === 'expanded' || expanded ? styles.iconToggleExpanded : styles.iconToggle} ${styles.iconToggleMovil}`} onClick={() => setExpanded(!expanded)} />
           <Navbar.Brand>
             <Link href="/" passHref>
               <div className={styles.logo}>
@@ -261,7 +263,7 @@ const NavbarComponent = () => {
               )
             }
           </Navbar.Brand>
-          <Navbar.Collapse id="basic-navbar-nav" className={`${styles.expandenMenuMobile} mt-4`}>
+          <Navbar.Collapse id="basic-navbar-mobile" className={`${styles.expandenMenuMobile} mt-4`}>
             <Nav className={styles.linksContainer}>
               <div className="row">
                 <div className="col-12">

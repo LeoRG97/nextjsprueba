@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
+import Image from 'next/image';
 import styles from './footer.module.css';
 
 const Footer = () => {
@@ -10,7 +11,15 @@ const Footer = () => {
       <Container className={styles.footer_container}>
         <Row className={styles.footer_container_row}>
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
-            <img src="/images/logos/Marca.png" alt="NTT" className={styles.img_NTT} />
+            <div className={styles.img_NTT}>
+              <Image
+                src="/images/logos/Marca.png"
+                alt="NTT"
+                layout="intrinsic"
+                width={128}
+                height={44}
+              />
+            </div>
             <Link href="/about" passHref>
               <a className="text-md text--theme-light">About Us</a>
             </Link>

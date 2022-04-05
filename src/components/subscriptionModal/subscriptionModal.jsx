@@ -1,20 +1,14 @@
-// import { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import {
   Modal,
 } from 'react-bootstrap';
 import Link from 'next/link';
 import { useDispatch } from 'react-redux';
+import Image from 'next/image';
 import styles from './modalSubs.module.css';
 import { hideSubscribeAlert } from '@/reducers/alert';
 
 const SubscriptionModal = ({ show, setModal, backdrop }) => {
   const dispatch = useDispatch();
-  // const [show, setModal] = useState(false);
-
-  /* useEffect(() => {
-
-  }, []); */
 
   const handleCloseModal = () => {
     dispatch(hideSubscribeAlert());
@@ -33,7 +27,14 @@ const SubscriptionModal = ({ show, setModal, backdrop }) => {
       >
         <Modal.Header className={styles.modal_header}>
           <Modal.Title className={styles.modal_title_cont}>
-            <img src="/images/resourses/HuellaDigital.png" alt="Unete" className={styles.modal_img} />
+            <Image
+              src="/images/resourses/HuellaDigital.png"
+              alt="Únete"
+              className={styles.modal_img}
+              layout="intrinsic"
+              width={720}
+              height={540}
+            />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modal_body_cont}>

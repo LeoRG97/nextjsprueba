@@ -1,19 +1,13 @@
-// import { useState, useEffect } from 'react';
-// import PropTypes from 'prop-types';
 import {
   Modal,
 } from 'react-bootstrap';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
+import Image from 'next/image';
 import styles from './premium.module.css';
 
 const PremiumModal = ({ show, setModal, backdrop = true }) => {
   const { data } = useSelector((state) => state.profile);
-  // const [show, setModal] = useState(false);
-
-  /* useEffect(() => {
-
-  }, []); */
 
   return (
     <>
@@ -28,7 +22,14 @@ const PremiumModal = ({ show, setModal, backdrop = true }) => {
       >
         <Modal.Header className={styles.modal_header}>
           <Modal.Title className={styles.modal_title_cont}>
-            <img src="/images/resourses/Candado.png" alt="Unete" className={styles.modal_img} />
+            <Image
+              src="/images/resourses/Candado.png"
+              alt="Unete"
+              className={styles.modal_img}
+              layout="intrinsic"
+              width={720}
+              height={540}
+            />
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className={styles.modal_body_cont}>

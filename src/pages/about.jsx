@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEmblaCarousel } from 'embla-carousel/react';
+import Image from 'next/image';
 import styles from '@/global/styles/Us.module.css';
 import { Footer, Layout } from '@/components';
 import WorldComponent from '../components/world/World';
@@ -92,7 +93,7 @@ export default function Home() {
               <Row className={`${styles.content_pt_sect} ${styles.content_pb_sect}`}>
                 <Col xl="6" lg="6" sm="12">
                   <div className="video-background">
-                    <video width="100%" height="360" controls preload="true" autoPlay loop muted>
+                    <video width="100%" height="360" controls preload="false" autoPlay loop muted>
                       <source src="/video/about.mp4" type="video/mp4" />
                     </video>
                   </div>
@@ -150,10 +151,22 @@ export default function Home() {
                     <div className="embla__viewport" ref={viewportRef}>
                       <div className={`${styles.container_carousel} embla__container`}>
                         <a target="_blank" href="https://amiti.org.mx" rel="noopener noreferrer" className={`${styles.container_carousel} embla__slide`}>
-                          <img src="/images/aliados/amiti-color.jpg" alt="" className={styles.image_carousel} />
+                          <Image
+                            src="/images/aliados/amiti-color.jpg"
+                            alt=""
+                            className={styles.image_carousel}
+                            layout="fill"
+                            objectFit="contain"
+                          />
                         </a>
                         <a target="_blank" href="https://www.amvo.org.mx/" rel="noopener noreferrer" className={`${styles.container_carousel} embla__slide`}>
-                          <img src="/images/aliados/amvo-color.png" alt="" className={styles.image_carousel} />
+                          <Image
+                            src="/images/aliados/amvo-color.png"
+                            alt=""
+                            className={styles.image_carousel}
+                            layout="fill"
+                            objectFit="contain"
+                          />
                         </a>
                       </div>
                     </div>
