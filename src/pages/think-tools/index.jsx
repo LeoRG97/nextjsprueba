@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
+import Image from 'next/image';
 import { Layout } from '@/components';
 import styles from '@/global/styles/ThinkTools.module.css';
 import { showToolsModal } from '@/reducers/alert';
@@ -35,7 +36,14 @@ export default function ThinkTools() {
             </div>
 
             <div className="col-lg-6 col-md-6 col-sm-12">
-              <img className="img-fluid my-2" src="/images/think-tools/Laboratorio.png" alt="Laboratorio" />
+              <Image
+                className="img-fluid my-2"
+                src="/images/think-tools/Laboratorio.png"
+                alt="Laboratorio"
+                layout="intrinsic"
+                width={1200}
+                height={840}
+              />
             </div>
           </div>
         </div>

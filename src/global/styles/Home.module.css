@@ -75,11 +75,6 @@
   text-align: center;
 }
 
-.expert_img img {
-  max-width: 480px;
-  margin: auto;
-}
-
 .content_centered {
   text-align: center;
 }
@@ -152,8 +147,9 @@
   .help_img {
     max-width: 100%;
   }
-  .expert_img img {
-    max-width: 20rem;
+  .expert_img {
+    width: 20rem;
+    height: 20rem;
     margin: auto;
   }
   .margin_movil_y {

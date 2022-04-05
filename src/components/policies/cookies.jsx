@@ -15,7 +15,7 @@ const Cookies = () => {
           POLÍTICA DE COOKIES
         </div>
         <div className="text--theme-light text-md policies-subtitle-m">
-          EVERIS SPAIN, S.L.U. (en adelante, everis) le informa a través de la
+          Por NTT DATA México S. de R.L. de C.V. (en adelante, NTT DATA) le informa a través de la
           presente Política de Cookies acerca de la utilización de dispositivos
           de almacenamiento y recuperación de datos en equipos terminales de los
           Usuarios.
@@ -44,16 +44,16 @@ const Cookies = () => {
           </p>
           <p className="text--theme-light text-md">
             - Cookies propias: Son aquellas que se envían al equipo terminal del
-            usuario desde un equipo o dominio gestionado por everis y desde el
+            usuario desde un equipo o dominio gestionado por NTT DATA y desde el
             que se presta el servicio solicitado por el usuario..
           </p>
           <p className="text--theme-light text-md">
             - Cookies de terceros: Son aquéllas que se envían al equipo terminal
             del Usuario desde un equipo o dominio que puede o no ser gestionado
-            por everis, pero su uso lo realiza otra entidad que trata los datos
+            por NTT DATA, pero su uso lo realiza otra entidad que trata los datos
             obtenidos través de las cookies para sus propios fines. Las cookies
             propias se identifican en esta política indicando que el titular es
-            “everis”. Las restantes son titularidad de los terceros que
+            “NTT DATA”. Las restantes son titularidad de los terceros que
             aparezcan indicados en cada caso. Haciendo click sobre el nombre del
             tercero puede acceder a su respectiva política de cookies,
             incluyendo las transferencias a terceros países que, en su caso,
@@ -290,7 +290,7 @@ const Cookies = () => {
         </div>
         <div>
           <p className="text--theme-light text-md">
-            Las cookies everis y otros dispositivos de almacenamiento también se
+            Las cookies NTT DATA y otros dispositivos de almacenamiento también se
             utilizan cuando accedes al Sitio Web desde dispositivos móviles.
           </p>
           <p className="text--theme-light text-md">

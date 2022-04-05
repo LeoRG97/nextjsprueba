@@ -24,17 +24,12 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Component {...pageProps} />
       <Script
-        src="https://code.jquery.com/jquery-3.5.0.js"
-        id="jQuery"
-        strategy="beforeInteractive"
-      />
-      <Script
         type="text/javascript"
         id="hs-script-loader"
         async
         defer
         src="//js.hs-scripts.com/20382611.js"
-        strategy="beforeInteractive"
+        strategy="lazyOnload"
       />
     </Provider>
   );
