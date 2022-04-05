@@ -1,11 +1,14 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 import { useSession } from 'next-auth/client';
-import { CourseDetailComponent, SuccessIndicatorModal } from '@/components';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+import dynamic from 'next/dynamic';
+import { CourseDetailComponent } from '@/components';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
 import { deleteCourse } from '@/services/courses';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const CoursesListComponent = ({ cursos, onFilter, showOptions = false }) => {
   const [loadModal, setLoadModal] = useState(false);

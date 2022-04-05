@@ -1,13 +1,14 @@
 .bannerImage {
   height: 80vh;
   width: 100%;
-  background-image: url("/images/resourses/BannerTrendingTopics.png");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
   display: grid;
   align-items: center;
   padding-left: 15%;
+  position: relative;
+}
+
+.bannerTitle {
+  z-index: 3;
 }
 
 .centeredTitle {

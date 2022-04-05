@@ -3,13 +3,15 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import { SuccessIndicatorModal } from '@/components';
+import dynamic from 'next/dynamic';
 import styles from './profileS.module.css';
 import {
   update as updateProfile,
 } from '@/reducers/profile';
 import { updateUserProfile } from '@/services/user';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
 
 const RedesSocialesForm = ({ data }) => {
   const dispatch = useDispatch();

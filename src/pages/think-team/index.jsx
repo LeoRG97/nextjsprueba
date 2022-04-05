@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic';
 import {
-  Layout, ForumsComponent, Footer,
+  Layout, ForumsComponent,
 } from '@/components';
 import { fetchForums } from '@/services/forums';
 import styles from './think.module.css';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 const ThinkTeam = ({ forums }) => {
   return (

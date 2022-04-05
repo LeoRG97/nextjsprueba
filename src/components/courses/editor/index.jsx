@@ -1,19 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/client';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import styles from './courseEditor.module.css';
 import Units from './units/Units';
 import { CourseContext } from '@/helpers/contexts/CourseContext';
-import ModalDetailsLesson from '../modals/coursesLesson/ModalDetailsLesson';
 import { saveCourse, updateCourse } from '@/services/courses';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
-import ModalDetailsCourse from '../modals/detailsCourseModal/DetailsCourseModal';
-import ModalDeleteCourse from '../modals/deleteUnitModal/deleteUnitModal';
-import ModalDeleteLesson from '../modals/deleteLessonModal/deleteLessonModal';
 import CoursePreviewComponent from './coursePreview';
+
+const ModalDetailsCourse = dynamic(() => import('../modals/detailsCourseModal/DetailsCourseModal'));
+const ModalDetailsLesson = dynamic(() => import('../modals/coursesLesson/ModalDetailsLesson'));
+const ModalDeleteCourse = dynamic(() => import('../modals/deleteUnitModal/deleteUnitModal'));
+const ModalDeleteLesson = dynamic(() => import('../modals/deleteLessonModal/deleteLessonModal'));
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const CourseEditor = ({ initialData }) => {
   const [session] = useSession();

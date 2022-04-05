@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Image from 'next/image';
 import styles from './footer.module.css';
@@ -18,6 +17,7 @@ const Footer = () => {
                 layout="intrinsic"
                 width={128}
                 height={44}
+                loading="lazy"
               />
             </div>
             <Link href="/about" passHref>
@@ -40,13 +40,13 @@ const Footer = () => {
           <Col xs="12" md="4" className={`${styles.footer_content}`}>
             <p className="subtitle">Legales</p>
 
-            <Link href="/policies/privacy">
+            <Link href="/policies/privacy" prefetch={false}>
               <a className="text-md text--theme-light">Aviso de Privacidad</a>
             </Link>
-            <Link href="/policies/cookies">
+            <Link href="/policies/cookies" prefetch={false}>
               <a className="text-md text--theme-light">Política de Cookies</a>
             </Link>
-            <Link href="/policies/legal">
+            <Link href="/policies/legal" prefetch={false}>
               <a className="text-md text--theme-light">Aviso Legal y Condiciones de Uso</a>
             </Link>
 
@@ -55,7 +55,7 @@ const Footer = () => {
         <Row className={styles.footer_container_row_copyright}>
           <Col sm="12" md="6">
             <a className="text-sm text--theme-light" href="https://mexico.nttdata.com/" target="_blank" rel="noreferrer">
-              © NTT DATA Spain and affilliates. 2021. Todos los derechos reservados.
+              © NTT DATA México S. de R.L. de C.V. 2021. Todos los derechos reservados.
             </a>
           </Col>
           <Col sm="12" md="6" className={styles.foote_mob_top}>

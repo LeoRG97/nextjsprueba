@@ -3,12 +3,15 @@ import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
-import { LoadingIndicator, SuccessIndicatorModal } from '@/components';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
+import { LoadingIndicator } from '@/components';
 import CourseSubscription from '@/components/courses/coursesComponent/CourseSubscription';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ProfileCourseSubscription = () => {
   const router = useRouter();

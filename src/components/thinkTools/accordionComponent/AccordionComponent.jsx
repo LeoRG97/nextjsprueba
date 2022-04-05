@@ -2,15 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Accordion } from 'react-bootstrap';
 import useSWR, { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import CardAccordionComponent from './CardAccordionComponent';
 import styles from './accordion.module.css';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
-import { DeleteModal, LoadingIndicator, SuccessIndicatorModal } from '@/components';
+import { DeleteModal, LoadingIndicator } from '@/components';
 import CardDiagnosticsComponent from './CardDiagnosticsComponent';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { deleteToolService } from '@/services/tools';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const AccordionComponent = ({
   isEditable, isModalClose, filter,

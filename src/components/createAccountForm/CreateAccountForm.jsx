@@ -5,13 +5,15 @@ import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { useRouter } from 'next/router';
 import { signIn } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import styles from './createAccountForm.module.css';
 import { registerService } from '@/services/register';
 import CategorySelector from '../categorySelector/CategorySelector';
-import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
 import DataPoliciesModal from '../modalsIndicators/DataPolicies';
-import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const CreateAccountForm = ({ preferences }) => {
   const [nextStep, setNextStep] = useState(false);

@@ -2,14 +2,16 @@
 import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
+import dynamic from 'next/dynamic';
 import { updateUserData, uploadImgProfile } from '@/services/profile';
 import { update as updateProfile } from '@/reducers/profile';
 import styles from './profileS.module.css';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { reduceImageSize } from '@/helpers/images';
 import { remove } from '@/services/aws';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const FormGeneral = ({
   id,

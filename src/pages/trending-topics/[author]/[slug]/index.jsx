@@ -5,9 +5,10 @@ import { useRouter } from 'next/router';
 // import { useEmblaCarousel } from 'embla-carousel/react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import {
-  Footer, Layout, BlogComponent, CarouselPrefArt, TooltipContainer,
+  Layout, BlogComponent, TooltipContainer,
 } from '@/components';
 import {
   getArticleBySlug,
@@ -23,9 +24,12 @@ import { BASE_URL_PROYECT, BUCKET_URL } from '@/global/constants';
 import { getProfileBySlug } from '@/services/profile';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import HeadArticle from '@/components/blog/HeadArticle';
-import SocialShareModal from '@/components/modalsIndicators/SocialShareModal';
 import { showPremiumAlert, showSubscribeAlert } from '@/reducers/alert';
 import { vipUserAccess } from '@/helpers/accessVerifiers';
+
+const SocialShareModal = dynamic(() => import('@/components/modalsIndicators/SocialShareModal'));
+const Footer = dynamic(() => import('@/components/footer/Footer'));
+const CarouselPrefArt = dynamic(() => import('@/components/blog/carouselPrefArt'));
 
 // página para ver un artículo en específico
 const ArticlePage = ({ artInfo, artCode, authorInfo }) => {

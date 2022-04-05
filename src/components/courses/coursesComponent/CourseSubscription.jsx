@@ -42,7 +42,7 @@ const CourseSubscription = ({
               {
                 curso.curso[0]?.portada ? (
                   <Image
-                    src={curso.curso[0]?.portada ? `${BUCKET_URL}${curso.curso[0]?.portada}` : '/images/imgpr2.jpg'}
+                    src={`${BUCKET_URL}${curso.curso[0]?.portada}`}
                     alt={curso.curso[0].titulo || ''}
                     layout="fill"
                     onClick={showCourse}

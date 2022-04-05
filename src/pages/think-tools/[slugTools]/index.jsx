@@ -1,11 +1,11 @@
 import { Container, Row, Col } from 'react-bootstrap';
-import {
-  Footer, Layout, ToolsContent,
-} from '@/components';
+import dynamic from 'next/dynamic';
+import { Layout, ToolsContent } from '@/components';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
 import { fetchToolBySlug, fetchToolsContent } from '@/services/tools';
 
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 const GetTool = ({ toolsInfo, toolsCode }) => {
   return (
     <Layout>

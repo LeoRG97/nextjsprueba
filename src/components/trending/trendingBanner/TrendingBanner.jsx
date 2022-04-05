@@ -1,9 +1,8 @@
-/* eslint-disable no-console */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import Link from 'next/link';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
 import Switch from '@/components/switch/Switch';
 import styles from './tBanner.module.css';
 
@@ -64,24 +63,32 @@ const TrendingBannerComponent = ({ loggedIn }) => {
   return (
     <>
       {!loggedIn && !query.search && (
-        <div className={styles.bannerImage}>
-          <div>
-            <div className="text-md">Trending topics</div>
-            <div className={`title-xl ${styles.marginT}`}>
-              <div>Descubre nuevas formas</div>
-              <div>de ver el mundo.</div>
-            </div>
-            <div className="text-md">
-              <div>
-                Nuestros expertos crean y comparten artículos de relevancia,
+        <>
+          <div className={styles.bannerImage}>
+            <Image
+              src="/images/resourses/BannerTrendingTopics.png"
+              alt=""
+              layout="fill"
+              objectFit="cover"
+            />
+            <div className={styles.bannerTitle}>
+              <div className="text-md">Trending topics</div>
+              <div className={`title-xl ${styles.marginT}`}>
+                <div>Descubre nuevas formas</div>
+                <div>de ver el mundo.</div>
               </div>
-              <div>especialmente diseñados para mentes visionarias, como la tuya.</div>
+              <div className="text-md">
+                <div>
+                  Nuestros expertos crean y comparten artículos de relevancia,
+                </div>
+                <div>especialmente diseñados para mentes visionarias, como la tuya.</div>
+              </div>
+              <Link href="/create-account" passHref>
+                <button className={`button button--theme-primary ${styles.marginT}`}>Crear cuenta</button>
+              </Link>
             </div>
-            <Link href="/create-account" passHref>
-              <button className={`button button--theme-primary ${styles.marginT}`}>Crear cuenta</button>
-            </Link>
           </div>
-        </div>
+        </>
       )}
       <div className={styles.centeredTitle}>
         {

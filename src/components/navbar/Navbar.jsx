@@ -1,6 +1,7 @@
 import { signout, useSession } from 'next-auth/client';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import React, { useEffect, useState } from 'react';
 import { Container, Navbar, Nav } from 'react-bootstrap';
 import Link from 'next/link';
@@ -8,8 +9,9 @@ import { useRouter } from 'next/router';
 import { fetch as fetchProfile } from '@/reducers/profile';
 import styles from './navbar.module.css';
 import LoadingIndicator from '../loadingIndicator/LoadingIndicator';
-import UserNavbarComponent from './UserNavbar';
 import { showToolsModal } from '@/reducers/alert';
+
+const UserNavbarComponent = dynamic(() => import('./UserNavbar'));
 
 const NavbarComponent = () => {
   const router = useRouter();
@@ -138,7 +140,7 @@ const NavbarComponent = () => {
                 </Nav.Item>
 
                 <Nav.Item>
-                  <Link href="/trending-topics" passHref>
+                  <Link href="/trending-topics" passHref prefetch={false}>
                     <Nav.Link className={`text-md text--theme-light ${router && router.pathname && router.pathname === '/trending-topics' ? 'active' : ''}`}>Trending Topics</Nav.Link>
                   </Link>
                 </Nav.Item>

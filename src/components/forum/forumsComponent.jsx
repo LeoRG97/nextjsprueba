@@ -3,18 +3,22 @@ import { useSWRConfig } from 'swr';
 import { Container, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useSession } from 'next-auth/client';
 import { useDispatch } from 'react-redux';
 import { BUCKET_URL, ApiRoutes } from '@/global/constants';
 import styles from './forums.module.css';
-import ForumModal from './forumEditor/ForumEditor';
-import DeleteModal from '../modalsIndicators/DeleteModal';
+
 import { deleteForum } from '@/services/forums';
-import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import OptionDropdown from '../optionsDropdown/OptionsDropdown';
 import { showSubscribeAlert } from '@/reducers/alert';
+
+const ForumModal = dynamic(() => import('./forumEditor/ForumEditor'));
+const DeleteModal = dynamic(() => import('../modalsIndicators/DeleteModal'));
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ForumsComponent = ({
   showOptions, showSubs, data,

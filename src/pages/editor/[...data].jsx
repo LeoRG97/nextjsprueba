@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import EditorContextProvider from '@/helpers/contexts/editorContext';
 import {
-  EditorComponent, Layout, LoadingIndicator,
+  Layout, LoadingIndicator,
 } from '@/components';
 import withAuth from '@/helpers/withAuth';
 import { Roles } from '@/global/constants';
 import { fetchArticleById, fetchArticleContent } from '@/services/articles';
+
+const EditorComponent = dynamic(() => import('@/components/articleManager'));
 
 // page with catch-all-route
 const BlogEditorPage = () => {

@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 import { useSession } from 'next-auth/client';
 import useSWRInfinite from 'swr/infinite';
 import useSWR, { useSWRConfig } from 'swr';
+import dynamic from 'next/dynamic';
 import NoteComponent from './NoteComponent';
 import ModalEditNote from './ModalEditNote';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import { deleteNotesService, updateNotesService } from '@/services/notes';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ProfileNotes = () => {
   const { mutate: globalMutate } = useSWRConfig();

@@ -1,9 +1,11 @@
 import React, { useContext, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import styles from '../../editor.module.css';
-import QuestionModal from './modals/questionModal/QuestionModal';
 import QuestionsList from './questionsList/QuestionsList';
-import AnswerModal from './modals/answerModal/AnswerModal';
+
+const QuestionModal = dynamic(() => import('./modals/questionModal/QuestionModal'));
+const AnswerModal = dynamic(() => import('./modals/answerModal/AnswerModal'));
 
 const DiagnosticEditor = ({ initialData }) => {
   const {

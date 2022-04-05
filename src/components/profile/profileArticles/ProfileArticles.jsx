@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
 import { useSWRConfig } from 'swr';
+import dynamic from 'next/dynamic';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
 import {
@@ -12,11 +13,12 @@ import {
 } from '@/components';
 import ArticlesDetailComponent from '@/components/articlesList/articlesListComponent/articleDetall';
 import { deleteArticle } from '@/services/articles';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import styles from './profile.module.css';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ProfileArticles = ({ estado }) => {
   const router = useRouter();

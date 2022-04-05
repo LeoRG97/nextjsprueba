@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Col, Container, Row } from 'react-bootstrap';
+import dynamic from 'next/dynamic';
 import { fetch as fetchProfile } from '@/reducers/profile';
 import {
-  Footer, Layout, ProfileNavComponent, MailPasswdComponent,
+  Layout, ProfileNavComponent, MailPasswdComponent,
 } from '@/components';
 import FormGeneral from '@/components/profile/profileSettings/FormGeneral';
 import DataAndPreferencesForm from '@/components/profile/profileSettings/DataAndPreferencesForm';
@@ -12,6 +13,7 @@ import RedesSocialesForm from '@/components/profile/profileSettings/RedesSociale
 import { getPreferencesService } from '@/services/preferences';
 import withAuth from '@/helpers/withAuth';
 
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 const EditProfile = ({ preferences }) => {
   const dispatch = useDispatch();
   const { data, fetched } = useSelector((state) => state.profile);

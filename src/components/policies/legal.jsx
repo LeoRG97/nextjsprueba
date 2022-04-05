@@ -1,7 +1,6 @@
 import React from 'react';
 // import Link from 'next/link';
 import { Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
 
 const Legal = () => {

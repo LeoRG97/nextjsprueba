@@ -1,9 +1,12 @@
 import React from 'react';
 import { getSession } from 'next-auth/client';
-import { CourseOverview, Footer, Layout } from '@/components';
+import dynamic from 'next/dynamic';
+import { CourseOverview, Layout } from '@/components';
 import withAuth from '@/helpers/withAuth';
 import { getCourseBySlug } from '@/services/courses';
 import { getSubscriptionsUser } from '@/services/subscription';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 const CourseLessonPage = ({ courseInfo, subsInfo }) => {
   return (

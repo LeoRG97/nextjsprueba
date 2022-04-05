@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import { deleteArticle } from '@/services/articles';
 import ArticlesDetailComponent from './articleDetall';
-import { SuccessIndicatorModal } from '@/components';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { reviewerAccess } from '@/helpers/accessVerifiers';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ArticlesListComponent = ({ articles, onFilter, showOptions = false }) => {
   const [loadModal, setLoadModal] = useState(false);

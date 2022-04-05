@@ -5,14 +5,11 @@ import PropTypes from 'prop-types';
 import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/client';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { useDispatch } from 'react-redux';
 import { AutorComponent } from '@/components';
 import { ListComment } from '../comments/comments-article/ListComment';
-import ModalNuevaNota from '../notas/ModalNuevaNota';
 import { addNotesService } from '@/services/notes';
-import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import { BUCKET_URL } from '@/global/constants';
 import styles from './blog.module.css';
 import Resources from './Resources';
@@ -23,6 +20,11 @@ import {
   showSubscribeAlert,
   showSubscribeStaticAlert,
 } from '@/reducers/alert';
+
+const ModalNuevaNota = dynamic(() => import('../notas/ModalNuevaNota'));
+const LoadingIndicatorModal = dynamic(() => import('../modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('../modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('../modalsIndicators/ErrorModal'));
 
 const BlogComponent = ({
   blogInfo, htmlCode, autorInfo, onLike, cssSaved, quitSaved, saveArt, isLiked, shareArt,

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import styles from './profileMembersAndInvitations.module.css';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import { SuccessIndicatorModal } from '@/components';
 import { sendInvitationService } from '@/services/email';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const InviteMemberForm = () => {
   const router = useRouter();

@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { Container, Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEmblaCarousel } from 'embla-carousel/react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import styles from '@/global/styles/Us.module.css';
-import { Footer, Layout } from '@/components';
+import { Layout } from '@/components';
 import WorldComponent from '../components/world/World';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 export default function Home() {
   const [viewportRef] = useEmblaCarousel({

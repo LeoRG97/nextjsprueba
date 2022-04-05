@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import {
   Layout,
   LoadingIndicator,
-  ToolEditorComponent,
 } from '@/components';
 import ToolContextProvider from '@/helpers/contexts/toolContext';
 import { fetchToolById, fetchToolContent } from '@/services/tools';
 import withAuth from '@/helpers/withAuth';
 import { Roles } from '@/global/constants';
+
+const ToolEditorComponent = dynamic(() => import('@/components/articleManager/toolEditor'));
 
 const ToolEditor = () => {
   const router = useRouter();
