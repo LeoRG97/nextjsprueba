@@ -1,10 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import {
-  CourseSpecific, Footer, Layout, LoadingIndicator,
+  CourseSpecific, Layout, LoadingIndicator,
 } from '@/components';
 import { ApiRoutes } from '@/global/constants';
 import { fetchCoursesSSR, getCourseBySlug } from '@/services/courses';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 const CoursePage = ({ courseInfo }) => {
   const router = useRouter();

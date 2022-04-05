@@ -19,6 +19,7 @@ const UserCard = ({ user }) => {
           layout="fill"
           objectFit="cover"
           src={renderPicture(user.picture)}
+          loading="lazy"
         />
       </div>
       <div className={styles.info}>

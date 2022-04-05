@@ -1,17 +1,19 @@
 import React, { useState } from 'react';
 import useSWRInfinite from 'swr/infinite';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import InviteMemberForm from './InviteMemberForm';
 import TableMember from './TableMembers';
 import { fetchData } from '@/services/swr';
 import { ApiRoutes } from '@/global/constants';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import { SuccessIndicatorModal } from '@/components';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import styles from './profileMembersAndInvitations.module.css';
 import { adminAccess } from '@/helpers/accessVerifiers';
 import LoadingIndicator from '@/components/loadingIndicator/LoadingIndicator';
 import { disableUserAccount } from '@/services/user';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ProfileMembersAndInvitations = () => {
   const [session] = useSession();

@@ -1,16 +1,27 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
+import dynamic from 'next/dynamic';
 import {
-  Footer, Layout, ProfileHeader, ProfileMenu, AboutMeComponent, ProfileArticles,
-  RatedArticles, ProfileSavedArts, ProfileTools, ProfileForums, ProfileCourses,
-  ProfileCourseSubscription,
+  Layout,
+  ProfileHeader,
+  ProfileMenu,
+  AboutMeComponent,
 } from '@/components';
 
 import withAuth from '@/helpers/withAuth';
 import { fetch as fetchProfile } from '@/reducers/profile';
-import ProfileMembersAndInvitations from '@/components/profile/profileMembersAndInvitation/ProfileMembersAndInvitations';
-import ProfileNotes from '@/components/profile/profileNotes/ProfileNotes';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
+const ProfileArticles = dynamic(() => import('@/components/profile/profileArticles/ProfileArticles'));
+const RatedArticles = dynamic(() => import('@/components/profile/ratedArticles/RatedArticles'));
+const ProfileSavedArts = dynamic(() => import('@/components/profile/profileMySavedArts/profileSavedArts'));
+const ProfileNotes = dynamic(() => import('@/components/profile/profileNotes/ProfileNotes'));
+const ProfileTools = dynamic(() => import('@/components/profile/profileTools/ProfileTools'));
+const ProfileForums = dynamic(() => import('@/components/profile/profileForums/ProfileForums'));
+const ProfileCourses = dynamic(() => import('@/components/profile/profileCourses/ProfileCourses'));
+const ProfileCourseSubscription = dynamic(() => import('@/components/profile/profileCourses/ProfileCourseSubscription'));
+const ProfileMembersAndInvitations = dynamic(() => import('@/components/profile/profileMembersAndInvitation/ProfileMembersAndInvitations'));
 
 const ProfileScreen = () => {
   const { query } = useRouter();

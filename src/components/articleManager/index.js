@@ -4,26 +4,28 @@ import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import { useRouter } from 'next/router';
 import { saveArticle, updateArticle, updateArticleResources } from '@/services/articles';
 import { EditorContext } from '@/helpers/contexts/editorContext';
 import { upload, remove } from '@/services/aws';
 import styles from './editor.module.css';
-import DetailsModal from './modals/detailsModal/DetailsModal';
-import ModalVideo from './modals/addVideoModal/addVideoModal';
-import ModalAudio from './modals/addAudioModal/addAudioModal';
 import EditorOptionRender from './editorComponents/renderOptions/renderContainer';
 import ToolsComponent from './editorComponents/toolsComponent/tools';
 import TooltipContainer from './editorComponents/tooltipContainer/TooltipContainer';
-import LoadingIndicatorModal from '../modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '../modalsIndicators/SuccesModal';
 import ResourcesModal from './modals/articleResourcesModal/ArticleResourcesModal';
-import ErrorIndicatorModal from '../modalsIndicators/ErrorModal';
 import EditorPreviewComponent from './articlePreview';
 import ModalLink from './modals/addLinkModal/addLinkModal';
 import { reduceImageSize } from '@/helpers/images';
 import AutoSaveIndicator from './editorComponents/autoSaveIndicator/AutoSaveIndicator';
+
+const DetailsModal = dynamic(() => import('./modals/detailsModal/DetailsModal'));
+const ModalVideo = dynamic(() => import('./modals/addVideoModal/addVideoModal'));
+const ModalAudio = dynamic(() => import('./modals/addAudioModal/addAudioModal'));
+const LoadingIndicatorModal = dynamic(() => import('../modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('../modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('../modalsIndicators/ErrorModal'));
 
 const EditorComponent = ({
   option, initialData, setInitialData, initialContent, setInitialContent,

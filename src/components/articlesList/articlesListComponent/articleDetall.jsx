@@ -131,6 +131,7 @@ const ArticlesDetailComponent = ({
                   layout="fill"
                   objectFit="cover"
                   onClick={showArticle}
+                  loading="lazy"
                 />
               ) : (
                 <div className={styles.emptyImg}>

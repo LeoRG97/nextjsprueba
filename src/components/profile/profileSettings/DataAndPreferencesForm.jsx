@@ -4,12 +4,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { CountryDropdown, RegionDropdown } from 'react-country-region-selector';
 import { useDispatch } from 'react-redux';
+import dynamic from 'next/dynamic';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import { updateUserProfile } from '@/services/user';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import styles from './profileS.module.css';
 import { update as updateProfile } from '@/reducers/profile';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
 
 const DataAndPreferencesForm = ({ data, companydta, preferences }) => {
   const dispatch = useDispatch();

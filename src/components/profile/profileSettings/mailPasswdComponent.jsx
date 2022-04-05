@@ -2,12 +2,14 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSession } from 'next-auth/client';
 import { Row, Col } from 'react-bootstrap';
+import dynamic from 'next/dynamic';
 import { fetch as fetchProfile, update as updateProfile } from '@/reducers/profile';
 import { updatePassword, updateEmail } from '@/services/profile';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
 import styles from './profileS.module.css';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const MailPasswdComponent = () => {
   const [formMail, setFormMail] = useState('');

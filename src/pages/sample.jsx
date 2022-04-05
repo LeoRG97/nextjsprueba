@@ -1,13 +1,16 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import useSWR from 'swr';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import {
-  Footer, LoadingIndicator, Switch, SubscriptionModal, CourseDetailComponent,
+  LoadingIndicator, Switch, SubscriptionModal, CourseDetailComponent,
 } from '@/components';
 import TooltipContainer from '@/components/articleManager/editorComponents/tooltipContainer/TooltipContainer';
 import { fetchData } from '@/services/swr';
 import CategorySelector from '@/components/categorySelector/CategorySelector';
 import OptionDropdown from '@/components/optionsDropdown/OptionsDropdown';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 export default function Home() {
   const { data } = useSWR('preferencias', fetchData);

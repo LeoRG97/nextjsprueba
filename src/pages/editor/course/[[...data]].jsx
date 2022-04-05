@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { CourseEditor, Layout, LoadingIndicator } from '@/components';
+import dynamic from 'next/dynamic';
+import { Layout, LoadingIndicator } from '@/components';
 import CourseContextProvider from '@/helpers/contexts/CourseContext';
 import withAuth from '@/helpers/withAuth';
 import { fetchCourseById } from '@/services/courses';
 import { Roles } from '@/global/constants';
+
+const CourseEditor = dynamic(() => import('@/components/courses/editor'));
 
 const CourseEditorPage = () => {
   const router = useRouter();

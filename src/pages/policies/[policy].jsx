@@ -1,14 +1,15 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import {
-  Footer,
   Layout,
   Cookies,
   Privacy,
   Legal,
 } from '@/components';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 export default function PrivacyPolicies({ policy }) {
   return (

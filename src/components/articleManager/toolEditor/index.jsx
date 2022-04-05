@@ -2,25 +2,25 @@
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 import styles from '../editor.module.css';
 import ToolPreview from './toolPreview';
 import TooltipContainer from '../editorComponents/tooltipContainer/TooltipContainer';
-import LoadingIndicatorModal from '../../modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '../../modalsIndicators/SuccesModal';
 import VideoSection from './toolContentEditor/VideoSection';
 import DescriptionSection from './toolContentEditor/DescriptionSection';
 import JustificationSection from './toolContentEditor/JustificationSection';
-import ToolDetailsModal from '../modals/toolDetailsModal/ToolDetailsModal';
 import { ToolContext } from '@/helpers/contexts/toolContext';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { saveDiagnosticTool, saveTool, updateTool, updateToolFile } from '@/services/tools';
-import ModalZip from './ModalZip';
-
 import DiagnosticEditor from './diagnosticEditor';
-import EmailModal from './diagnosticEditor/modals/emailModal/EmailModal';
 import { validateDiagnosticContent } from '@/helpers/diagnostics';
 import AutoSaveIndicator from '../editorComponents/autoSaveIndicator/AutoSaveIndicator';
 
+const ToolDetailsModal = dynamic(() => import('../modals/toolDetailsModal/ToolDetailsModal'));
+const ModalZip = dynamic(() => import('./ModalZip'));
+const EmailModal = dynamic(() => import('./diagnosticEditor/modals/emailModal/EmailModal'));
+const LoadingIndicatorModal = dynamic(() => import('../../modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('../../modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('../../modalsIndicators/ErrorModal'));
 /*
   Componente raíz del editor de herramientas.
   Contiene la vista principal del editor, la vista previa de la herramienta y

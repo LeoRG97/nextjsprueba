@@ -1,11 +1,13 @@
 /* eslint-disable object-curly-newline */
 import React, { useState, useEffect, useContext } from 'react';
+import dynamic from 'next/dynamic';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import styles from '../../editor.module.css';
-import ModalVideo from '../../modals/addVideoModal/addVideoModal';
 import EditorOptionRender from '../../editorComponents/renderOptions/renderContainer';
 import ToolsComponent from '../../editorComponents/toolsComponent/tools';
 import { ToolContext } from '@/helpers/contexts/toolContext';
+
+const ModalVideo = dynamic(() => import('../../modals/addVideoModal/addVideoModal'));
 
 const VideoSection = () => {
   const {

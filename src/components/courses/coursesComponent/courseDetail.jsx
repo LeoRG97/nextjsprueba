@@ -121,6 +121,7 @@ const CourseDetailComponent = ({
                   layout="fill"
                   onClick={showCourse}
                   objectFit="cover"
+                  loading="lazy"
                 />
               ) : (
                 <div className={styles.emptyImg}>

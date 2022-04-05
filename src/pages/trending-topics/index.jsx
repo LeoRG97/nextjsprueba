@@ -2,10 +2,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import {
   Layout,
   TrendingBannerComponent,
-  Footer,
   MainPosts,
   UserPreferencesPosts,
   MainCourses,
@@ -14,6 +14,8 @@ import { getPreferencesService } from '@/services/preferences';
 import { fetchArticlesSSR, fetchArticlesByUserPreferenceSSR } from '@/services/articles';
 import { fetchCoursesByUserPreferenceSSR, fetchCoursesSSR } from '@/services/courses';
 import UserPreferencesCourses from '@/components/trending/userPreferencesPosts/UserPreferencesCourses';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 // página general de trending topics
 const TrendingPage = ({

@@ -1,6 +1,9 @@
-import { Footer, Layout, HomePage } from '@/components';
-// import styles from '@/global/styles/Home.module.css';
+import dynamic from 'next/dynamic';
 import { getArtForHomeSSR } from '@/services/articles';
+import Layout from '@/components/layout/Layout';
+import HomePage from '@/components/home/home';
+
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 const Home = ({ articulos }) => {
   return (

@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
 import { ToolContext } from '@/helpers/contexts/toolContext';
 import { BUCKET_URL } from '@/global/constants';

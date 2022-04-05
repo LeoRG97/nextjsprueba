@@ -1,14 +1,16 @@
 import { Container, Row, Col } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import {
-  Footer, Layout, ToolsContent,
+  Layout, ToolsContent,
 } from '@/components';
 import { ApiRoutes } from '@/global/constants';
 import { fetchData } from '@/services/swr';
 import { fetchToolBySlug, fetchToolsContent } from '@/services/tools';
 import DiagnosticStartedComponent from '@/components/thinkTools/diagnostic/DiagnosticStartedComponent';
 
+const Footer = dynamic(() => import('@/components/footer/Footer'));
 const DiagnosticSlugPage = ({ toolsInfo, toolsCode }) => {
   const { query } = useRouter();
   const [session] = useSession();

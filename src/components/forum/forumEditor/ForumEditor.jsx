@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import useSWR, { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/client';
+import dynamic from 'next/dynamic';
 import ImagePicker from '@/components/formComponents/imagePicker/ImagePicker';
 import styles from './forumEditor.module.css';
 import { saveForum, updateForum } from '@/services/forums';
 import { ApiRoutes } from '@/global/constants';
-import LoadingIndicatorModal from '@/components/modalsIndicators/LoadingModal';
-import SuccessIndicatorModal from '@/components/modalsIndicators/SuccesModal';
-import ErrorIndicatorModal from '@/components/modalsIndicators/ErrorModal';
 import { forumValidation } from './forumValidation';
+
+const LoadingIndicatorModal = dynamic(() => import('@/components/modalsIndicators/LoadingModal'));
+const SuccessIndicatorModal = dynamic(() => import('@/components/modalsIndicators/SuccesModal'));
+const ErrorIndicatorModal = dynamic(() => import('@/components/modalsIndicators/ErrorModal'));
 
 const ForumModal = ({ show, onClose, idEdit }) => {
   const { mutate } = useSWRConfig();

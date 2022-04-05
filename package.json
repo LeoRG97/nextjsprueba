@@ -2,6 +2,9 @@
   "name": "web-app-cliente",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "NODE_OPTIONS=--max_old_space_size=8192 next dev -p 3001",
     "build": "next build",
@@ -34,9 +37,11 @@
     "redux": "^4.1.1",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "sharp": "^0.30.3",
     "swr": "^1.0.0"
   },
   "devDependencies": {
+    "duplicate-package-checker-webpack-plugin": "^3.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-next": "11.0.1",
