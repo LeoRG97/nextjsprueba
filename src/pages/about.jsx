@@ -5,8 +5,8 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import styles from '@/global/styles/Us.module.css';
 import { Layout } from '@/components';
-import WorldComponent from '../components/world/World';
 
+const WorldComponent = dynamic(() => import('@/components/world/World'));
 const Footer = dynamic(() => import('@/components/footer/Footer'));
 
 export default function Home() {
