@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps }) {
       session={pageProps.session}
     >
       <Head>
-        <title>NTT Data - CX</title>
+        <title>NTT DATA - CX</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Component {...pageProps} />
@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }) {
         async
         defer
         src="//js.hs-scripts.com/20382611.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
       />
     </Provider>
   );
