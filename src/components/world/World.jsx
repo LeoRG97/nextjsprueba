@@ -1,10 +1,19 @@
 // import Image from 'next/image';
+import Image from 'next/image';
 import React from 'react';
 import styles from './world.module.css';
 
 const WorldComponent = () => {
   return (
-    <img className={styles.map} src="/images/home/mapa.gif" alt="impactgo geográfico" loading="lazy" />
+    <Image
+      className={styles.map}
+      src="/images/home/mapa.gif"
+      alt="impactgo geográfico"
+      loading="lazy"
+      width={860}
+      height={520}
+      layout="intrinsic"
+    />
   );
 };
 
