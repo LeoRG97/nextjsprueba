@@ -13,6 +13,7 @@ const WorldComponent = () => {
       width={860}
       height={520}
       layout="intrinsic"
+      unoptimized
     />
   );
 };
