@@ -11,7 +11,6 @@ const WorldComponent = () => {
       alt="impactgo geográfico"
       loading="lazy"
       width={860}
-      priority
       height={520}
       layout="intrinsic"
       unoptimized
