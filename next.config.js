@@ -9,6 +9,7 @@ module.exports = {
     domains: [
       'ilovet-app.s3.us-east-2.amazonaws.com',
       'everis-resources.s3.us-east-2.amazonaws.com',
+      'main.d27nm0rha6zups.amplifyapp.com',
     ],
   },
   env: {
