@@ -8,7 +8,7 @@ const WorldComponent = () => {
     <Image
       className={styles.map}
       src="/images/home/mapa.gif"
-      alt="impactgo geográfico"
+      alt="Impacto geográfico"
       loading="lazy"
       width={860}
       height={520}
