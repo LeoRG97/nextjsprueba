@@ -70,6 +70,7 @@ const TrendingBannerComponent = ({ loggedIn }) => {
               alt=""
               layout="fill"
               objectFit="cover"
+              priority
             />
             <div className={styles.bannerTitle}>
               <div className="text-md">Trending topics</div>
